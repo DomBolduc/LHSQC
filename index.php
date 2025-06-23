@@ -112,26 +112,11 @@ STHSErrorIndex:
             </a>
         </div>
 
-        <div id="news-carousel" style="max-height:400px; overflow-y:auto; position:relative;">
-<?php
-$side=3;
-ob_start();
-include "components/NewsSub.php";
-$newsHtml = ob_get_clean();
-
-
-
-
-preg_match_all('/<div class="news-item.*?<\/div>/is', $newsHtml, $matches);
-$newsArray = $matches[0] ?? [];
-$newsArray = array_slice($newsArray, 0, 5);
-
-
-foreach ($newsArray as $i => $news) {
-    $display = $i === 0 ? '' : 'style="display:none"';
-    echo "<div class='news-slide' $display>$news</div>";
-}
-?>
+        <div id="news-list" style="max-height:400px; overflow-y:auto; position:relative;">
+    <?php
+    $side = 3;
+    include "components/NewsSub.php";
+    ?>
 </div>
         
     </div>
@@ -153,20 +138,7 @@ foreach ($newsArray as $i => $news) {
     </header>
 </div> <!-- container-fluid -->
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const slides = document.querySelectorAll("#news-carousel .news-slide");
-    let current = 0;
-    if (slides.length > 1) {
-        setInterval(() => {
-            slides[current].style.display = "none";
-            current = (current + 1) % slides.length;
-            slides[current].style.display = "";
-        }, 5000);
-    }
-});
 
-</script>
 </body>
 
 <?php include "Footer.php"; ?>
