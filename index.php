@@ -105,14 +105,9 @@ STHSErrorIndex:
     <div class="col-lg-4 col-12 mb-3 mb-lg-0">
         <?php $side = 0; include "components/StandingsCard.php"; ?>
     </div>
-    <div class="col-lg-4 col-12 mb-3 mb-lg-0 d-flex flex-column align-items-center justify-content-center">
-        <div class="text-center my-3">
-            <a href="NewsEditor.php" class="btn btn-light text-dark border">
-                <i class="bi bi-plus-circle"></i> Ajouter un article
-            </a>
-        </div>
-
-        <div id="news-list" style="max-height:400px; overflow-y:auto; position:relative;">
+    <div class="col-lg-4 col-12 mb-3 mb-lg-0 d-flex flex-column align-items-start justify-content-start">
+        
+        <div id="news-list" style="max-height:800px; overflow-y:auto; position:relative;">
     <?php
     $side = 3;
     include "components/NewsSub.php";
