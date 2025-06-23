@@ -1010,21 +1010,23 @@ echo "<td></td><td></td></tr></tbody>";
 <th data-priority="3" title="Morale" class="STHSW25">MO</th>
 <th data-priority="critical" title="Overall" class="STHSW25">OV</th>
 
+
 <?php
 if ($LeagueOutputOption != Null){
-	if ($LeagueOutputOption['MergeRosterPlayerInfo'] == "True"){ 
-		echo "<th data-priority=\"6\" title=\"Star Power\" class=\"columnSelector-false STHSW25\">SP</th>";	
-		echo "<th data-priority=\"5\" class=\"STHSW25\" title=\"Age\">" . $PlayersLang['Age'] . "</th>";
-		echo "<th data-priority=\"5\" class=\"STHSW25\" title=\"Contract\">" . $PlayersLang['Contract'] . "</th>";
-		if ($LeagueFinance['SalaryCapOption'] == 4 OR $LeagueFinance['SalaryCapOption'] == 5 OR $LeagueFinance['SalaryCapOption'] == 6){
-			echo "<th data-priority=\"5\" class=\"STHSW65\" title=\"Salary Average\">" . $PlayersLang['SalaryAverage'] ."</th>";
-		}else{
-			echo "<th data-priority=\"5\" class=\"STHSW65\" title=\"Salary\">" . $PlayersLang['Salary'] ."</th>";
-		}
-	}else{
-		echo "<th data-priority=\"5\" title=\"Star Power\" class=\"STHSW25\">SP</th>";	
-	}
-}	
+    echo "<th data-priority=\"5\" class=\"STHSW25\" title=\"Age\">" . $PlayersLang['Age'] . "</th>";
+    echo "<th data-priority=\"5\" class=\"STHSW25\" title=\"Contract\">" . $PlayersLang['Contract'] . "</th>";
+    // Toujours afficher la colonne salaire
+    if ($LeagueFinance['SalaryCapOption'] == 4 OR $LeagueFinance['SalaryCapOption'] == 5 OR $LeagueFinance['SalaryCapOption'] == 6){
+        echo "<th data-priority=\"5\" class=\"STHSW65\" title=\"Salary Average\">" . $PlayersLang['SalaryAverage'] ."</th>";
+    }else{
+        echo "<th data-priority=\"5\" class=\"STHSW65\" title=\"Salary\">" . $PlayersLang['Salary'] ."</th>";
+    }
+    if ($LeagueOutputOption['MergeRosterPlayerInfo'] == "True"){ 
+        echo "<th data-priority=\"6\" title=\"Star Power\" class=\"columnSelector-false STHSW25\">SP</th>";	
+    }else{
+        echo "<th data-priority=\"5\" title=\"Star Power\" class=\"STHSW25\">SP</th>";	
+    }
+}
 echo "</tr></thead>";
 If ($TeamInfo <> Null){
 If ($LeagueOutputOption['MergeRosterPlayerInfo'] == "True"){$LoopEnd = 0;$Colspan=24;}else{$LoopEnd = 2;$Colspan=21;}
@@ -2330,10 +2332,10 @@ $(function(){
       columnSelector_container : $('#tablesorter_ColumnSelector1P'),
       columnSelector_layout : '<label><input type="checkbox">{name}</label>',
       columnSelector_name  : 'title',
-      columnSelector_mediaquery: true,
+      columnSelector_mediaquery: false,
       columnSelector_mediaqueryName: 'Automatic',
-      columnSelector_mediaqueryState: true,
-      columnSelector_mediaqueryHidden: true,
+      columnSelector_mediaqueryState: false,
+      columnSelector_mediaqueryHidden: false,
       columnSelector_breakpoints : [ '20em', '40em', '60em', '80em', '90em', '95em' ],
 	  filter_columnFilters: true,
       filter_placeholder: { search : '<?php echo $TableSorterLang['Search'];?>' },
@@ -2347,10 +2349,10 @@ $(function(){
       columnSelector_container : $('#tablesorter_ColumnSelector1G'),
       columnSelector_layout : '<label><input type="checkbox">{name}</label>',
       columnSelector_name  : 'title',
-      columnSelector_mediaquery: true,
+      columnSelector_mediaquery: false,
       columnSelector_mediaqueryName: 'Automatic',
-      columnSelector_mediaqueryState: true,
-      columnSelector_mediaqueryHidden: true,
+      columnSelector_mediaqueryState: false,
+      columnSelector_mediaqueryHidden: false,
       columnSelector_breakpoints : [ '20em', '40em', '60em', '80em', '90em', '95em' ],
 	  filter_columnFilters: true,
       filter_placeholder: { search : '<?php echo $TableSorterLang['Search'];?>' },
@@ -2364,10 +2366,10 @@ $(function(){
       columnSelector_container : $('#tablesorter_ColumnSelector3'),
       columnSelector_layout : '<label><input type="checkbox">{name}</label>',
       columnSelector_name  : 'title',
-      columnSelector_mediaquery: true,
+      columnSelector_mediaquery: false,
       columnSelector_mediaqueryName: 'Automatic',
-      columnSelector_mediaqueryState: true,
-      columnSelector_mediaqueryHidden: true,
+      columnSelector_mediaqueryState: false,
+      columnSelector_mediaqueryHidden: false,
       columnSelector_breakpoints : [ '20em', '40em', '60em', '80em', '90em', '95em' ],
 	  filter_columnFilters: true,
       filter_placeholder: { search : '<?php echo $TableSorterLang['Search'];?>' },
@@ -2381,10 +2383,10 @@ $(function(){
       columnSelector_container : $('#tablesorter_ColumnSelector6'),
       columnSelector_layout : '<label><input type="checkbox">{name}</label>',
       columnSelector_name  : 'title',
-      columnSelector_mediaquery: true,
+      columnSelector_mediaquery: false,
       columnSelector_mediaqueryName: 'Automatic',
-      columnSelector_mediaqueryState: true,
-      columnSelector_mediaqueryHidden: true,
+      columnSelector_mediaqueryState: false,
+      columnSelector_mediaqueryHidden: false,
       columnSelector_breakpoints : [ '20em', '40em', '60em', '80em', '90em', '95em' ],
 	  filter_columnFilters: true,
       filter_placeholder: { search : '<?php echo $TableSorterLang['Search'];?>' },
@@ -2398,10 +2400,10 @@ $(function(){
       columnSelector_container : $('#tablesorter_ColumnSelector2P'),
       columnSelector_layout : '<label><input type="checkbox">{name}</label>',
       columnSelector_name  : 'title',
-      columnSelector_mediaquery: true,
+      columnSelector_mediaquery: false,
       columnSelector_mediaqueryName: 'Automatic',
-      columnSelector_mediaqueryState: true,
-      columnSelector_mediaqueryHidden: true,
+      columnSelector_mediaqueryState: false,
+      columnSelector_mediaqueryHidden: false,
       columnSelector_breakpoints : [ '20em', '40em', '60em', '80em', '90em', '95em' ],
 	  filter_columnFilters: true,
       filter_placeholder: { search : '<?php echo $TableSorterLang['Search'];?>' },

@@ -101,34 +101,73 @@ STHSErrorIndex:
 		<div class="STHSIndex_TheNews"><?php echo $LeagueName . $IndexLang['News'];?></div>
 
 		
-		<div class="row mt-2  mx-2 " >
-		<div class="text-center my-3">
-		<a href="NewsEditor.php" class="btn btn-light text-dark border">
-        <i class="bi bi-plus-circle"></i> Ajouter un article
-    </a>
+		<div class="row mt-2 mx-2 align-items-stretch">
+    <div class="col-lg-4 col-12 mb-3 mb-lg-0">
+        <?php $side = 0; include "components/StandingsCard.php"; ?>
+    </div>
+    <div class="col-lg-4 col-12 mb-3 mb-lg-0 d-flex flex-column align-items-center justify-content-center">
+        <div class="text-center my-3">
+            <a href="NewsEditor.php" class="btn btn-light text-dark border">
+                <i class="bi bi-plus-circle"></i> Ajouter un article
+            </a>
+        </div>
+
+        <div id="news-carousel" style="max-height:400px; overflow-y:auto; position:relative;">
+<?php
+$side=3;
+ob_start();
+include "components/NewsSub.php";
+$newsHtml = ob_get_clean();
+
+
+
+
+preg_match_all('/<div class="news-item.*?<\/div>/is', $newsHtml, $matches);
+$newsArray = $matches[0] ?? [];
+$newsArray = array_slice($newsArray, 0, 5);
+
+
+foreach ($newsArray as $i => $news) {
+    $display = $i === 0 ? '' : 'style="display:none"';
+    echo "<div class='news-slide' $display>$news</div>";
+}
+?>
+</div>
+        
+    </div>
+    <div class="col-lg-4 col-12 mb-3 mb-lg-0">
+        <?php $side = 1; include "components/StandingsCard.php"; ?>
+    </div>
 </div>
 
-			<div class="col-lg-4 col-12 mx-auto text-center">
-    <div> <?php $side=3; include "components/NewsSub.php"; ?> </div>
-</div>
- 
-				
-            </div>
-            
-
-            <div class="row mt-2  mx-2 " >
-			
-				<div class="col-lg-4 col-12"><div> <?php $side=3; include "components/StandingsCard.php"; ?> </div> </div>
-                <div class="col-lg-4 col-12"><div> <?php          include "components/TopStars.html";     ?> </div> </div>   
-                <div class="col-lg-4 col-12"><div> <?php $side=0; include "components/StandingsCard.php"; ?> </div> </div> 
-            </div>
+<div class="row mt-2 mx-2">
+	<div class="col-lg-12 col-12"></div>
+            <?php include "components/TopStars.html"; ?>
+        </div>
 
 			<div class="row mt-2  mx-2 " >
 				<div class="col-lg-12 col-12 transaction-card"> <?php include "components/Transaction2.php"; ?> <?= $$LeagueGeneral['Today3StarPro1'] ?> </div> 
             </div>
         </div>
+		</div>
     </header>
 </div> <!-- container-fluid -->
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const slides = document.querySelectorAll("#news-carousel .news-slide");
+    let current = 0;
+    if (slides.length > 1) {
+        setInterval(() => {
+            slides[current].style.display = "none";
+            current = (current + 1) % slides.length;
+            slides[current].style.display = "";
+        }, 5000);
+    }
+});
+
+</script>
+</body>
 
 <?php include "Footer.php"; ?>
 

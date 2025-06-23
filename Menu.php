@@ -286,22 +286,27 @@ if ($MenuQueryOK == True) {
 
         <li><div> Teams  <i class="fa fa-chevron-right"></i></div><ul> <?php echo $menuMobileTeamsItems; ?> </ul></li>
 
-        <li><div> GM's Corner  <i class="fa fa-chevron-right"></i></div><ul>
-            <a class=" " href="WebClientRoster.php?TeamID=<?php echo $CookieTeamNumber ?>">Roster Editor</a>
-            <a class=" " href="WebClientLines.php?TeamID=<?php echo $CookieTeamNumber ?>">Lines Editor NHL</a>
-            <a class=" " href="WebClientLines.php?League=Farm&TeamID=<?php echo $CookieTeamNumber ?>">Lines Editor AHL</a>
-            <a class=" " href="TeamSalaryCapDetail.php?TeamID=<?php echo $CookieTeamNumber ?>">Contract Overview</a></li>
-            <a class=" " href="PlayersCompare.php">Players Compare</a></li>
-            <a class=" " href="Trade.php">Trade</a></li>
-            <a class=" " href="EntryDraftProjection.php">Draft Projection</a></li>               
-        </ul>
+       
+   
 
-        </li>
+<li>
+    <div> GM's Corner  <i class="fa fa-chevron-right"></i></div>
+    <ul>
+        <li><a href="WebClientRoster.php?TeamID=<?php echo $CookieTeamNumber ?>">Roster Editor</a></li>
+        <li><a href="WebClientLines.php?TeamID=<?php echo $CookieTeamNumber ?>">Lines Editor NHL</a></li>
+        <li><a href="WebClientLines.php?League=Farm&TeamID=<?php echo $CookieTeamNumber ?>">Lines Editor AHL</a></li>
+        <li><a href="TeamSalaryCapDetail.php?TeamID=<?php echo $CookieTeamNumber ?>">Contract Overview</a></li>
+        <li><a href="PlayersCompare.php">Players Compare</a></li>
+        <li><a href="Trade.php">Trade</a></li>
+        <li><a href="EntryDraftProjection.php">Draft Projection</a></li>
+    </ul>
+</li>  
+        
         
         <li><div> League <i class="fa fa-chevron-right"></i></div>
             <ul>
-                <li><a href="Players.php">Players</a></li>
-                <li><a href="Goalies.php">Goalies</a></li>
+                <li><a href="PlayersRoster.php">Players</a></li>
+                <li><a href="GoaliesRoster.php">Goalies</a></li>
                 <li><a href="Prospects.php">Prospects</a></li>
                 <li><a href="Coaches.php">Coaches</a></li>
                 <li><a href="PlayersRoster.php?Type=0&FreeAgent=1">UFA</a></li>
@@ -322,7 +327,12 @@ if ($MenuQueryOK == True) {
             </ul>
         </li>
         
-        <li><a href="Login.php">LOGIN</a></li>
+     
+           <?php if (isset($_COOKIE[$Cookie_Name])): ?>
+            <li><a href="Login.php?Logoff=STHS" class="button yellow-bg">LOGOUT</a></li>
+        <?php else: ?>
+            <li><a href="Login.php" class="button yellow-bg">LOGIN</a></li>
+        <?php endif; ?>     
     </ul>	
 
     <ul class="button-menu">			

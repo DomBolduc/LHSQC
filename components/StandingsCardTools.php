@@ -1,21 +1,40 @@
-
 <?php
-
-function PrintStandingTableRow($row, $TypeText, $StandardStandingOutput, $LeagueGeneral, $LoopCount,$DatabaseFile,$ImagesCDNPath)
-{
-	echo "<tr><td>" . $LoopCount . "</td>";
-	echo "<td><span class=\"" . $TypeText . "Standing_Team" . $row['Number'] . "\"></span>";
-	If ($row['TeamThemeID'] > 0){echo "<img src=\"" . $ImagesCDNPath . "/images/" . $row['TeamThemeID'] .".png\" alt=\"\" class=\"STHSPHPStandingTeamImageMainPage\" />";}
-	echo "<div class=\"darkText\"><a href=\"" . $TypeText . "Team.php?Team=" . $row['Number'] . "\">" . $row['Name'] . "</a></div>";
-	echo "</td><td>" . $row['GP'] . "</td>";
-    echo "<td>" . ($row['W'] + $row['OTW'] + $row['SOW']) . "</td>";
-    echo "<td>" . $row['L'] . "</td>";
-    echo "<td>" . ($row['OTL'] + $row['SOL']) . "</td>";
-	echo "<td><strong>" . $row['Points'] . "</strong></td>";
-	
-    $dbS = new SQLite3($DatabaseFile);
-	$Query = "SELECT count(*) AS count FROM Schedule" . $TypeText . " WHERE (VisitorTeam = " . $row['Number'] . " OR HomeTeam = " . $row['Number'] . ") AND Play = 'False' ORDER BY GameNumber LIMIT 1";
-	$Result = $dbS->querySingle($Query,true);
+function printEmptyStandings($db, $division, $conference, $ColumnPerTable, $TypeTextTeam = "Pro") {
+    $table = ($TypeTextTeam === "Farm") ? "TeamFarmInfo" : "TeamProInfo";
+    $teams = [];
+    $res = $db->query("SELECT Name, DivisionNumber, Conference FROM $table WHERE LOWER(DivisionNumber) = LOWER('$division') AND Conference = '$conference'");
+    while ($row = $res->fetchArray()) {
+        $teams[] = $row['Name'];
+    }
+    if (count($teams) == 0) {
+        $res = $db->query("SELECT Name FROM $table WHERE Conference = '$conference'");
+        while ($row = $res->fetchArray()) {
+            $teams[] = $row['Name'];
+        }
+    }
+    foreach ($teams as $team) {
+        echo "<tr>
+            <td>0</td>
+            <td>$team</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+        </tr>";
+    }
 }
-
+?>
+<?php
+function PrintStandingTableRow($row, $TypeText, $showPO, $LeagueGeneral, $LoopCount, $DatabaseFile, $ImagesCDNPath) {
+    echo "<tr>";
+    echo "<td>{$LoopCount}</td>";
+    echo "<td>{$row['Name']}</td>";
+    echo "<td>{$row['GP']}</td>";
+    echo "<td>{$row['W']}</td>";
+    echo "<td>{$row['L']}</td>";
+    echo "<td>{$row['OTL']}</td>";
+    echo "<td>{$row['Points']}</td>";
+    echo "</tr>";
+}
 ?>
