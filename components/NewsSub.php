@@ -84,18 +84,22 @@ if($CountNews > 0 && !empty($NewsItems)){
                 ?>
                 <div class="d-block w-100 p-4 bg-light rounded news-carousel-slide"
                      style="width:1080px; height:720px; max-width:100%; max-height:100%; margin:auto; display:flex; flex-direction:column; justify-content:flex-start; align-items:center;">
-                    <div class="carousel-caption d-block position-relative text-dark p-0" style="width:100%; text-align:center;">
-                        <h5 class="mb-4" style="font-size:2.2rem; font-weight:bold; text-align:center; width:100%; margin-left:auto; margin-right:auto; display:block;">
+                    <div style="width:100%; display:flex; justify-content:center; align-items:center; margin-bottom:20px;">
+                        <h5 style="font-size:2.2rem; font-weight:bold; text-align:center; margin:0; display:block;">
                             <?php echo htmlspecialchars($newsItem['title']); ?>
                         </h5>
                     </div>
                     <?php if ($imgSrc): ?>
-                        <img src="<?php echo htmlspecialchars($imgSrc); ?>" alt="News image" style="max-width:100%; max-height:300px; object-fit:contain; margin-bottom:24px; margin-top:0; margin-left:auto; margin-right:auto; display:block;" />
+                        <div style="width:100%; display:flex; justify-content:center; align-items:center; margin-bottom:24px;">
+                            <img src="<?php echo htmlspecialchars($imgSrc); ?>" alt="News image" style="max-width:100%; max-height:300px; object-fit:contain; display:block;" />
+                        </div>
                     <?php else: ?>
-                        <img src="images/Western.png" alt="Image par défaut" style="max-width:100%; max-height:300px; object-fit:contain; margin-bottom:24px; margin-top:0; margin-left:auto; margin-right:auto; display:block;" />
+                        <div style="width:100%; display:flex; justify-content:center; align-items:center; margin-bottom:24px;">
+                            <img src="images/Western.png" alt="Image par défaut" style="max-width:100%; max-height:300px; object-fit:contain; display:block;" />
+                        </div>
                     <?php endif; ?>
-                    <div style="width:100%; text-align:center;">
-                        <div class="mb-0" style="font-size:1.2rem; margin-top:0; display:block; width:100%; clear:both; overflow-wrap:break-word;">
+                    <div style="width:100%; text-align:center; display:flex; justify-content:center; align-items:center;">
+                        <div class="mb-0" style="font-size:1.2rem; margin:0; display:block; width:100%; text-align:center; overflow-wrap:break-word;">
                             <?php echo $message; ?>
                         </div>
                     </div>
