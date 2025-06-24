@@ -91,11 +91,11 @@ if($CountNews > 0 && !empty($NewsItems)){
                     </div>
                     <?php if ($imgSrc): ?>
                         <div style="width:100%; display:flex; justify-content:center; align-items:center; margin-bottom:24px;">
-                            <img src="<?php echo htmlspecialchars($imgSrc); ?>" alt="News image" style="max-width:100%; max-height:300px; object-fit:contain; display:block;" />
+                            <img src="<?php echo htmlspecialchars($imgSrc); ?>" alt="News image" style="width:475px; height:200px; object-fit:cover; margin-bottom:24px; margin-top:0; margin-left:auto; margin-right:auto; display:block;" />
                         </div>
                     <?php else: ?>
                         <div style="width:100%; display:flex; justify-content:center; align-items:center; margin-bottom:24px;">
-                            <img src="images/Western.png" alt="Image par défaut" style="max-width:100%; max-height:300px; object-fit:contain; display:block;" />
+                            <img src="images/LHSQC_NEWS.png" alt="Image par défaut" style="width:475px; height:200px; object-fit:cover; margin-bottom:24px; margin-top:0; margin-left:auto; margin-right:auto; display:block;" />
                         </div>
                     <?php endif; ?>
                     <div style="width:100%; text-align:center; display:flex; justify-content:center; align-items:center;">
