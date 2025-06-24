@@ -52,8 +52,8 @@ try {
         while ($row = $DraftPicksResult->fetchArray()) {
             $year = $row['Year'];
             $round = $row['Round'];
-            $team = isset($row['Team']) ? $row['Team'] : (isset($row['OwnerTeam']) ? $row['OwnerTeam'] : 1);
-            
+            $team = isset($row['TeamNumber']) ? $row['TeamNumber'] : (isset($row['FromTeam']) ? $row['FromTeam'] : 1);
+
             if (!in_array($year, $years)) {
                 $years[] = $year;
             }
@@ -128,77 +128,33 @@ function getTeamName($teamNumber, $teams) {
 }
 ?>
 
-<div class="draft-picks-table-container">
-    <h3>Draft Picks</h3>
-    <table class="draft-picks-table">
-        <thead>
-            <tr>
-                <th>Year</th>
-                <th>RD 1</th>
-                <th>RD 2</th>
-                <th>RD 3</th>
-                <th>RD 4</th>
-                <th>RD 5</th>
-                <th>RD 6</th>
-                <th>RD 7</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($years as $year): ?>
-            <tr>
-                <td><?php echo $year; ?></td>
-                <?php for ($round = 1; $round <= 7; $round++): ?>
-                    <td>
-                        <?php 
-                        $teamNumber = isset($draftPicksData[$year][$round]) ? $draftPicksData[$year][$round] : $selectedTeam;
-                        $teamImage = getTeamImage($teamNumber, $teams);
-                        $teamName = getTeamName($teamNumber, $teams);
-                        ?>
-                        <img src="<?php echo $teamImage; ?>" 
-                             alt="<?php echo $teamName; ?>" 
-                             title="<?php echo $teamName; ?>" 
-                             width="32"
-                             onerror="this.src='images/Default.png'">
-                    </td>
-                <?php endfor; ?>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-</div>
-
-<style>
-.draft-picks-table-container {
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    padding: 24px;
-    margin: 24px auto;
-    max-width: 900px;
+<br />
+<h3 class="STHSTeamProspect_DraftPick"><?php echo $TeamLang['DraftPicks'];?></h3>
+<table class="STHSPHPTeamStat_Table"><tr><th class="STHSW140"><?php echo $TeamLang['Year'];?></th>
+<?php
+// Créer l'en-tête basé sur le nombre de rondes
+for($x = 1; $x <= 7; $x++){
+    echo "<th class=\"STHSW140\">R" . $x . "</th>";
 }
+echo "</tr>\n";
 
-.draft-picks-table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: center;
-    background: #f9f9f9;
+// Afficher les données des draft picks
+foreach ($years as $year) {
+    echo "<tr><td>" . $year . "</td>";
+    for ($round = 1; $round <= 7; $round++) {
+        echo "<td>";
+        $teamNumber = isset($draftPicksData[$year][$round]) ? $draftPicksData[$year][$round] : $selectedTeam;
+        $teamName = getTeamName($teamNumber, $teams);
+        
+        // Afficher l'image de l'équipe comme dans ProTeam.php
+        if ($teamNumber > 0) {
+            echo "<img src=\"images/" . $teamNumber . ".png\" alt=\"\" class=\"STHSPHPDraftPickTeamImage\" /> ";
+        } else {
+            echo $teamName . " ";
+        }
+        echo "</td>";
+    }
+    echo "</tr>\n";
 }
-
-.draft-picks-table th, .draft-picks-table td {
-    border: 1px solid #e0e0e0;
-    padding: 8px;
-    vertical-align: middle;
-}
-
-.draft-picks-table th {
-    background: #f1f1f1;
-    font-weight: bold;
-}
-
-.draft-picks-table img {
-    display: inline-block;
-    vertical-align: middle;
-    max-width: 32px;
-    max-height: 32px;
-}
-</style>
+?>
+</table>
