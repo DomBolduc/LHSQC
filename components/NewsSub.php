@@ -57,8 +57,8 @@ if($CountNews > 0 && !empty($NewsItems)){
     <a href="NewsEditor.php" class="btn btn-primary" style="font-weight:bold;">Ajouter</a>
 </div>
 <!-- News Carousel -->
-<div id="news-carousel-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
-    <div id="newsCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="2000">
+<div id="news-carousel-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center; width:525px; height:768px; margin:0 auto; overflow:hidden;">
+    <div id="newsCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="2000" style="width:525px; height:768px;">
         <!-- Indicators -->
         <div class="carousel-indicators">
             <?php for($i = 0; $i < count($NewsItems); $i++): ?>
@@ -83,7 +83,7 @@ if($CountNews > 0 && !empty($NewsItems)){
                 }
                 ?>
                 <div class="d-block w-100 p-4 bg-light rounded news-carousel-slide"
-                     style="width:1080px; height:720px; max-width:100%; max-height:100%; margin:auto; display:flex; flex-direction:column; justify-content:flex-start; align-items:center;">
+                     style="width:100%; height:100%; margin:auto; display:flex; flex-direction:column; justify-content:flex-start; align-items:center; box-sizing:border-box;">
                     <div style="width:100%; display:flex; justify-content:center; align-items:center; margin-bottom:20px;">
                         <h5 style="font-size:2.2rem; font-weight:bold; text-align:center; margin:0; display:block;">
                             <?php echo htmlspecialchars($newsItem['title']); ?>
@@ -91,11 +91,11 @@ if($CountNews > 0 && !empty($NewsItems)){
                     </div>
                     <?php if ($imgSrc): ?>
                         <div style="width:100%; display:flex; justify-content:center; align-items:center; margin-bottom:24px;">
-                            <img src="<?php echo htmlspecialchars($imgSrc); ?>" alt="News image" style="width:475px; height:200px; object-fit:cover; margin-bottom:24px; margin-top:0; margin-left:auto; margin-right:auto; display:block;" />
+                            <img src="<?php echo htmlspecialchars($imgSrc); ?>" alt="News image" style="max-width:450px; height:200px; object-fit:cover; display:block;" />
                         </div>
                     <?php else: ?>
                         <div style="width:100%; display:flex; justify-content:center; align-items:center; margin-bottom:24px;">
-                            <img src="images/LHSQC_NEWS.png" alt="Image par défaut" style="width:475px; height:200px; object-fit:cover; margin-bottom:24px; margin-top:0; margin-left:auto; margin-right:auto; display:block;" />
+                            <img src="images/LHSQC_NEWS.png" alt="Image par défaut" style="max-width:450px; height:200px; object-fit:cover; display:block;" />
                         </div>
                     <?php endif; ?>
                     <div style="width:100%; text-align:center; display:flex; justify-content:center; align-items:center;">
