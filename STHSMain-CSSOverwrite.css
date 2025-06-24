@@ -2135,3 +2135,15 @@ body, html {
         height: auto;
     }
 }
+
+/* Cacher le menu hamburger sur desktop */
+.nav-mobile {
+  display: none;
+}
+
+/* Afficher le menu hamburger seulement sur mobile */
+@media (max-width: 890px) {
+  .nav-mobile {
+    display: block;
+  }
+}
