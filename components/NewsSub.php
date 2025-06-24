@@ -69,9 +69,9 @@ if($CountNews > 0 && !empty($NewsItems)){
         </div>
 
         <!-- Carousel Inner -->
-        <div class="carousel-inner">
+        <div class="carousel-inner" style="background-color:#fff;">
             <?php foreach($NewsItems as $index => $newsItem): ?>
-            <div class="carousel-item <?php echo ($index == 0) ? 'active' : ''; ?>">
+            <div class="carousel-item <?php echo ($index == 0) ? 'active' : ''; ?>" style="background-color:#fff !important;">
                 <?php
                 // Chercher une balise <img> dans le message
                 $message = $newsItem['message'];
@@ -83,7 +83,7 @@ if($CountNews > 0 && !empty($NewsItems)){
                 }
                 ?>
                 <div class="d-block w-100 p-4 bg-light rounded news-carousel-slide"
-                     style="width:100%; height:100%; margin:auto; display:flex; flex-direction:column; justify-content:flex-start; align-items:center; box-sizing:border-box;">
+                     style="width:100%; height:100%; margin:auto; display:flex; flex-direction:column; justify-content:flex-start; align-items:center; box-sizing:border-box; background-color:#fff;">
                     <div style="width:100%; display:flex; justify-content:center; align-items:center; margin-bottom:20px;">
                         <h5 style="font-size:2.2rem; font-weight:bold; text-align:center; margin:0; display:block;">
                             <?php echo htmlspecialchars($newsItem['title']); ?>
