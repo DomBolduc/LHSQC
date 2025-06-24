@@ -1,6 +1,8 @@
 <?php include "Header.php"; ?>
 
 
+
+
 <?php
 
 $Team = (integer)0;
@@ -97,7 +99,12 @@ If ($lang == "fr"){include 'LanguageFR-Stat.php';}else{include 'LanguageEN-Stat.
     });
     </script>
 
-
+<?php 
+// Inclure le composant Draft Picks si une équipe est sélectionnée
+if ($Team > 0 && $Team < 100) {
+    include "components/draftpick.php";
+}
+?>
    
 
 
@@ -268,6 +275,8 @@ echo $TeamLang['SalaryCapSimulationNote'] . "<br /><br /><br />";
 	</table>
 </form>
 </div>
+
+
 
 </div>
 
