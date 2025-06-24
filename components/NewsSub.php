@@ -65,7 +65,7 @@ if($CountNews > 0 && !empty($NewsItems)){
 }
 </style>
 <div id="news-carousel-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center; width:525px; height:768px; margin:0 auto; overflow:hidden;">
-    <div id="newsCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="2000" style="width:525px; height:768px;">
+    <div id="newsCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="4000" style="width:525px; height:768px;">
         <!-- Indicators -->
         <div class="carousel-indicators">
             <?php for($i = 0; $i < count($NewsItems); $i++): ?>
@@ -105,8 +105,8 @@ if($CountNews > 0 && !empty($NewsItems)){
                             <img src="images/LHSQC_NEWS.png" alt="Image par défaut" style="max-width:450px; height:200px; object-fit:cover; display:block;" />
                         </div>
                     <?php endif; ?>
-                    <div style="width:100%; text-align:center; display:flex; justify-content:center; align-items:center;">
-                        <div class="mb-0" style="font-size:1.2rem; margin:0; display:block; width:100%; text-align:center; overflow-wrap:break-word;">
+                    <div style="width:100%; text-align:center;">
+                        <div class="mb-0" style="font-size:1.2rem; margin-top:0; display:block; width:100%; clear:both; overflow-wrap:break-word; max-height:480px; overflow-y:auto;">
                             <?php echo $message; ?>
                         </div>
                     </div>
