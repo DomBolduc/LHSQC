@@ -107,7 +107,7 @@ STHSErrorIndex:
     </div>
     <div class="col-lg-4 col-12 mb-3 mb-lg-0 d-flex flex-column align-items-start justify-content-start">
         
-        <div id="news-list" style="max-height:800px; overflow-y:auto; position:relative;">
+        <div id="news-carousel-container">
     <?php
     $side = 3;
     include "components/NewsSub.php";
@@ -137,6 +137,3 @@ STHSErrorIndex:
 </body>
 
 <?php include "Footer.php"; ?>
-
-
-

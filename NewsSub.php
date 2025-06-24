@@ -1,175 +1,100 @@
 <?php
 
-
+$NewsItems = array(); /* Array to store news items for carousel */
 
 Function PrintMainNews($row, $IndexLang, $dbNews, $ImagesCDNPath ){
-
 	/* This Function Print a News */
-
-	$UTC = new DateTimeZone("UTC");
-
-	$ServerTimeZone = new DateTimeZone(date_default_timezone_get());
-
-	echo "<h2>" . $row['Title'] . "</h2>";
-
-	$Date = new DateTime($row['Time'], $UTC );
-
-	$Date->setTimezone($ServerTimeZone);
-
+	global $NewsItems;
 	
-
-	/* The following two lines publish the news */
-
+	$newsItem = array(
+		'title' => $row['Title'],
+		'message' => $row['Message']
+	);
 	
-
-	echo "<strong>" . $IndexLang['By'] . " " . $row['Owner'];
-
-	If ($row['TeamNumber'] > 0 AND $row['TeamNumber'] <= 100){echo " (";If ($row['TeamThemeID'] > 0){echo "<img src=\"" . $ImagesCDNPath . "/images/" . $row['TeamThemeID'] .".png\" alt=\"\" class=\"STHSIndex_TheNewsTeamImage\" />";}echo $row['Name'] . ") ";}
-
-	echo $IndexLang['On'] . " " . $Date->format('l jS F Y / g:ia ')  . "</strong><br />";
-
-	echo $row['Message'] . "\n"; /* The \n is for a new line in the HTML Code */
-
-	
-
-	/* Get the Number of Reply */
-
-	$NewsReplyCount = Null;
-
-	$Query = "Select Count(Message) as CountMessage FROM LeagueNews WHERE Remove = 'False' AND AnswerNumber = " . $row['Number'] . " ORDER BY Number";
-
-	$NewsReplyCount = $dbNews->querySingle($Query,true);
-
-	
-
-	If ($NewsReplyCount['CountMessage'] > 0 ){ /* If Reply are Found */
-
-
-
-		/* Query Reply */
-
-		$NewsReply = Null;
-
-		$Query = "Select LeagueNews.*, TeamProInfo.TeamThemeID, TeamProInfo.Name FROM LeagueNews LEFT JOIN TeamProInfo ON LeagueNews.TeamNumber = TeamProInfo.Number WHERE Remove = 'False' AND AnswerNumber = " . $row['Number'] . " ORDER BY Number";
-
-		$NewsReply = $dbNews->query($Query);
-
-	
-
-		/* Show the Number of News + Create the Link */
-
-		echo "<a href=\"javascript:toggleDiv('News" . $row['Number'] . "');\">" . $IndexLang['Viewcomments'] . " (" .  $NewsReplyCount['CountMessage'] . ")</a>"; 
-
-
-
-		/* Publish all the Comments in Table */
-
-		echo "<table class=\"STHSIndex_NewsReplyTable\" id=\"News" . $row['Number'] . "\"><tbody>";
-
-		if (empty($NewsReply) == false){
-
-			while ($ReplyRow = $NewsReply ->fetchArray()) { 
-
-			$Date = new DateTime($ReplyRow['Time'], $UTC );
-
-			$Date->setTimezone($ServerTimeZone);
-
-			echo "<tr><td><span class=\"STHSIndex_NewsReplyOwner\">" . $ReplyRow['Owner'];
-
-			If ($ReplyRow['TeamNumber'] > 0){echo " (";If ($ReplyRow['TeamThemeID'] > 0){echo "<img src=\"" . $ImagesCDNPath . "/images/" . $ReplyRow['TeamThemeID'] .".png\" alt=\"\" class=\"STHSIndex_TheNewsTeamImage\" />";}echo $ReplyRow['Name'] . ") ";}
-
-			echo "</span> <span class=\"STHSIndex_NewsReplyTime\">" . $IndexLang['On'] . " " . $Date->format('jS F / g:ia ') . "</span> : " . $ReplyRow['Message'] . "</td></tr>";			
-
-		}}
-
-		echo "<tr><td><a href=\"NewsEditor.php?ReplyNews=" . $row['Number'] . "\">" . $IndexLang['Comment'] . "</a><hr /></td></tr>";
-
-		echo "</tbody></table>";
-
-	
-
-	}else{
-
-		/* No Reply, print link to create the first reply */
-
-		echo "<a href=\"NewsEditor.php?ReplyNews=" . $row['Number'] . "\">" . $IndexLang['Comment'] . "</a><hr />\n";	
-
-	}
-
+	array_push($NewsItems, $newsItem);
 }
-
-
 
 $NewsPublish = array(); /* Array that Contain News Publish Already Publish */
-
 $CountNews = 0; /* Number of New Publish so we can apply the STHS option 'Number of News in Home Page' */
 
-
-
 if (empty($LeagueNews) == false){while ($row = $LeagueNews ->fetchArray()) { /* Loop News in Reserve Order of Publish Time */
-
 	if (in_array($row['Number'],$NewsPublish) == FALSE AND in_array($row['AnswerNumber'],$NewsPublish) == FALSE ){ /* Make sure we already didn't publish this news */
-
 		if ($row['AnswerNumber'] == 0){
-
 			/* This row of the Table is not answer comment so it's main news */
-
 			PrintMainNews($row, $IndexLang, $dbNews,$ImagesCDNPath );  /* Print the News */
-
 			
-
 			/* Increment the Number of News Publish */
-
 			$CountNews +=1; 
-
 			
-
 			/* If we publish enough news based on the the STHS option 'Number of News in Home Page', we close the loop */
-
 			If ($CountNews >= $LeagueOutputOption['NumberofNewsinPHPHomePage']){break;} 
-
 		}else{
-
 			/* This is row is answer to previous news. Finding the Main News Information */
-
 			
-
 			$Query = "Select LeagueNews.*, TeamProInfo.TeamThemeID, TeamProInfo.Name FROM LeagueNews LEFT JOIN TeamProInfo ON LeagueNews.TeamNumber = TeamProInfo.Number WHERE Remove = 'False' AND LeagueNews.Number = " . $row['AnswerNumber'];
-
 			$NewsTemp = $dbNews->querySingle($Query,True);
-
 					
-
 			/* Print the News */
-
 			PrintMainNews($NewsTemp, $IndexLang, $dbNews,$ImagesCDNPath );  
-
 			
-
 			/* Increment the Number of News Publish */
-
 			$CountNews +=1; 
-
 			
-
 			/* If we publish enough news based on the the STHS option 'Number of News in Home Page', we close the loop */
-
 			If ($CountNews >= $LeagueOutputOption['NumberofNewsinPHPHomePage']){break;} 
-
 			
-
 			/* Add in the Array the Main News will be publish */
-
 			array_push($NewsPublish, $row['AnswerNumber']); 
-
 		}
-
 	}
+}}
 
+/* Generate Carousel HTML */
+if($CountNews > 0 && !empty($NewsItems)){
+?>
+<!-- News Carousel -->
+<div id="newsCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+    <!-- Indicators -->
+    <div class="carousel-indicators">
+        <?php for($i = 0; $i < count($NewsItems); $i++): ?>
+        <button type="button" data-bs-target="#newsCarousel" data-bs-slide-to="<?php echo $i; ?>" 
+                <?php echo ($i == 0) ? 'class="active" aria-current="true"' : ''; ?> 
+                aria-label="Slide <?php echo ($i + 1); ?>"></button>
+        <?php endfor; ?>
+    </div>
+
+    <!-- Carousel Inner -->
+    <div class="carousel-inner">
+        <?php foreach($NewsItems as $index => $newsItem): ?>
+        <div class="carousel-item <?php echo ($index == 0) ? 'active' : ''; ?>">
+            div class="d-block w-100 p-4 bg-light rounded"
+     style="width:800px; height:600px; max-width:100%; max-height:100%; margin:auto; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+                    <h5 class="mb-3"><?php echo htmlspecialchars($newsItem['title']); ?></h5>
+                    <p class="mb-0"><?php echo $newsItem['message']; ?></p>
+                </div>
+            </div>
+        </div>
+        <?php endforeach; ?>
+    </div>
+
+    <!-- Controls -->
+    <?php if(count($NewsItems) > 1): ?>
+    <button class="carousel-control-prev" type="button" data-bs-target="#newsCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#newsCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+    <?php endif; ?>
+</div>
+<?php
+}else{
+    if(isset($NewsDatabaseNotFound) && $NewsDatabaseNotFound == True){
+        echo "<div class='alert alert-warning'><h3>" . $NewsDatabaseNotFound . "</h3></div>";
+    } else {
+        echo "<div class='alert alert-info'><h3>" . (isset($SearchLang['NoNewsFound']) ? $SearchLang['NoNewsFound'] : 'No news found') . "</h3></div>";
+    }
 }
-
-if($CountNews == 0){Echo $SearchLang ['NoNewsFound'];}
-
-}else{  If (isset($NewsDatabaseNotFound) == True){echo "<br /><h3>" . $NewsDatabaseNotFound . "</h3>";}}
-
 ?>
