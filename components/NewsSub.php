@@ -52,44 +52,70 @@ if (empty($LeagueNews) == false){while ($row = $LeagueNews ->fetchArray()) { /* 
 /* Generate Carousel HTML */
 if($CountNews > 0 && !empty($NewsItems)){
 ?>
+<!-- Bouton Ajouter -->
+<div style="margin:auto; text-align:right; margin-bottom:10px;">
+    <a href="NewsEditor.php" class="btn btn-primary" style="font-weight:bold;">Ajouter</a>
+</div>
 <!-- News Carousel -->
-<div id="newsCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="2000">
-    <!-- Indicators -->
-    <div class="carousel-indicators">
-        <?php for($i = 0; $i < count($NewsItems); $i++): ?>
-        <button type="button" data-bs-target="#newsCarousel" data-bs-slide-to="<?php echo $i; ?>" 
-                <?php echo ($i == 0) ? 'class="active" aria-current="true"' : ''; ?> 
-                aria-label="Slide <?php echo ($i + 1); ?>"></button>
-        <?php endfor; ?>
-    </div>
+<div id="news-carousel-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
+    <div id="newsCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="2000">
+        <!-- Indicators -->
+        <div class="carousel-indicators">
+            <?php for($i = 0; $i < count($NewsItems); $i++): ?>
+            <button type="button" data-bs-target="#newsCarousel" data-bs-slide-to="<?php echo $i; ?>" 
+                    <?php echo ($i == 0) ? 'class="active" aria-current="true"' : ''; ?> 
+                    aria-label="Slide <?php echo ($i + 1); ?>"></button>
+            <?php endfor; ?>
+        </div>
 
-    <!-- Carousel Inner -->
-    <div class="carousel-inner">
-        <?php foreach($NewsItems as $index => $newsItem): ?>
-        <div class="carousel-item <?php echo ($index == 0) ? 'active' : ''; ?>">
-            
-<div class="d-block w-100 p-4 bg-light rounded"
-     style="width:800px; height:600px; max-width:100%; max-height:100%; margin:auto; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-                <div class="carousel-caption d-block position-relative text-dark p-0">
-                    <h5 class="mb-3"><?php echo htmlspecialchars($newsItem['title']); ?></h5>
-                    <p class="mb-0"><?php echo $newsItem['message']; ?></p>
+        <!-- Carousel Inner -->
+        <div class="carousel-inner">
+            <?php foreach($NewsItems as $index => $newsItem): ?>
+            <div class="carousel-item <?php echo ($index == 0) ? 'active' : ''; ?>">
+                <?php
+                // Chercher une balise <img> dans le message
+                $message = $newsItem['message'];
+                $imgSrc = null;
+                if (preg_match('/<img[^>]+src=["\']([^"\']+)["\']/i', $message, $matches)) {
+                    $imgSrc = $matches[1];
+                    // Retirer la première balise <img> du message
+                    $message = preg_replace('/<img[^>]+src=["\']'.preg_quote($imgSrc, '/').'["\'][^>]*>/i', '', $message, 1);
+                }
+                ?>
+                <div class="d-block w-100 p-4 bg-light rounded news-carousel-slide"
+                     style="width:1080px; height:720px; max-width:100%; max-height:100%; margin:auto; display:flex; flex-direction:column; justify-content:flex-start; align-items:center;">
+                    <div class="carousel-caption d-block position-relative text-dark p-0" style="width:100%; text-align:center;">
+                        <h5 class="mb-4" style="font-size:2.2rem; font-weight:bold; text-align:center; width:100%; margin-left:auto; margin-right:auto; display:block;">
+                            <?php echo htmlspecialchars($newsItem['title']); ?>
+                        </h5>
+                    </div>
+                    <?php if ($imgSrc): ?>
+                        <img src="<?php echo htmlspecialchars($imgSrc); ?>" alt="News image" style="max-width:100%; max-height:300px; object-fit:contain; margin-bottom:24px; margin-top:0; margin-left:auto; margin-right:auto; display:block;" />
+                    <?php else: ?>
+                        <img src="images/Western.png" alt="Image par défaut" style="max-width:100%; max-height:300px; object-fit:contain; margin-bottom:24px; margin-top:0; margin-left:auto; margin-right:auto; display:block;" />
+                    <?php endif; ?>
+                    <div style="width:100%; text-align:center;">
+                        <div class="mb-0" style="font-size:1.2rem; margin-top:0; display:block; width:100%; clear:both; overflow-wrap:break-word;">
+                            <?php echo $message; ?>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <?php endforeach; ?>
         </div>
-        <?php endforeach; ?>
-    </div>
 
-    <!-- Controls -->
-    <?php if(count($NewsItems) > 1): ?>
-    <button class="carousel-control-prev" type="button" data-bs-target="#newsCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#newsCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
-    <?php endif; ?>
+        <!-- Controls -->
+        <?php if(count($NewsItems) > 1): ?>
+        <button class="carousel-control-prev" type="button" data-bs-target="#newsCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#newsCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+        <?php endif; ?>
+    </div>
 </div>
 <?php
 }else{
