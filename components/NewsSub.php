@@ -57,6 +57,13 @@ if($CountNews > 0 && !empty($NewsItems)){
     <a href="NewsEditor.php" class="btn btn-primary" style="font-weight:bold;">Ajouter</a>
 </div>
 <!-- News Carousel -->
+<style>
+.carousel-inner,
+.carousel-item,
+.carousel-item.active {
+    background-color: white !important;
+}
+</style>
 <div id="news-carousel-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center; width:525px; height:768px; margin:0 auto; overflow:hidden;">
     <div id="newsCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="2000" style="width:525px; height:768px;">
         <!-- Indicators -->
