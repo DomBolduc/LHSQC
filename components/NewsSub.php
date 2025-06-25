@@ -3,56 +3,41 @@
 $NewsItems = array(); /* Array to store news items for carousel */
 
 Function PrintMainNews($row, $IndexLang, $dbNews, $ImagesCDNPath ){
-	/* This Function Print a News */
-	global $NewsItems;
-	
-	$newsItem = array(
-		'number' => $row['Number'],
-		'title' => $row['Title'],
-		'message' => $row['Message'],
-		'time' => $row['Time'],
-		'author' => $row['Author'] ?? 'LHSQC'
-	);
-	
-	array_push($NewsItems, $newsItem);
+    global $NewsItems;
+    $newsItem = array(
+        'number' => $row['Number'],
+        'title' => $row['Title'],
+        'message' => $row['Message'],
+        'time' => $row['Time'],
+        'author' => $row['Author'] ?? 'LHSQC',
+        'teamNumber' => $row['TeamNumber'] ?? 0,
+        'teamThemeID' => $row['TeamThemeID'] ?? 0
+    );
+    array_push($NewsItems, $newsItem);
 }
 
-$NewsPublish = array(); /* Array that Contain News Publish Already Publish */
-$CountNews = 0; /* Number of New Publish so we can apply the STHS option 'Number of News in Home Page' */
+$NewsPublish = array();
+$CountNews = 0;
 
-if (empty($LeagueNews) == false){while ($row = $LeagueNews ->fetchArray()) { /* Loop News in Reserve Order of Publish Time */
-	if (in_array($row['Number'],$NewsPublish) == FALSE AND in_array($row['AnswerNumber'],$NewsPublish) == FALSE ){ /* Make sure we already didn't publish this news */
-		if ($row['AnswerNumber'] == 0){
-			/* This row of the Table is not answer comment so it's main news */
-			PrintMainNews($row, $IndexLang, $dbNews,$ImagesCDNPath );  /* Print the News */
-			
-			/* Increment the Number of News Publish */
-			$CountNews +=1; 
-			
-			/* If we publish enough news based on the the STHS option 'Number of News in Home Page', we close the loop */
-			If ($CountNews >= $LeagueOutputOption['NumberofNewsinPHPHomePage']){break;} 
-		}else{
-			/* This is row is answer to previous news. Finding the Main News Information */
-			
-			$Query = "Select LeagueNews.*, TeamProInfo.TeamThemeID, TeamProInfo.Name FROM LeagueNews LEFT JOIN TeamProInfo ON LeagueNews.TeamNumber = TeamProInfo.Number WHERE Remove = 'False' AND LeagueNews.Number = " . $row['AnswerNumber'];
-			$NewsTemp = $dbNews->querySingle($Query,True);
-					
-			/* Print the News */
-			PrintMainNews($NewsTemp, $IndexLang, $dbNews,$ImagesCDNPath );  
-			
-			/* Increment the Number of News Publish */
-			$CountNews +=1; 
-			
-			/* If we publish enough news based on the the STHS option 'Number of News in Home Page', we close the loop */
-			If ($CountNews >= $LeagueOutputOption['NumberofNewsinPHPHomePage']){break;} 
-			
-			/* Add in the Array the Main News will be publish */
-			array_push($NewsPublish, $row['AnswerNumber']); 
-		}
-	}
-}}
+if (empty($LeagueNews) == false){
+    while ($row = $LeagueNews ->fetchArray()) {
+        if (!in_array($row['Number'],$NewsPublish) && !in_array($row['AnswerNumber'],$NewsPublish)){
+            if ($row['AnswerNumber'] == 0){
+                PrintMainNews($row, $IndexLang, $dbNews,$ImagesCDNPath );
+                $CountNews +=1;
+                if ($CountNews >= $LeagueOutputOption['NumberofNewsinPHPHomePage']){break;}
+            }else{
+                $Query = "Select LeagueNews.*, TeamProInfo.TeamThemeID, TeamProInfo.Name FROM LeagueNews LEFT JOIN TeamProInfo ON LeagueNews.TeamNumber = TeamProInfo.Number WHERE Remove = 'False' AND LeagueNews.Number = " . $row['AnswerNumber'];
+                $NewsTemp = $dbNews->querySingle($Query,True);
+                PrintMainNews($NewsTemp, $IndexLang, $dbNews,$ImagesCDNPath );
+                $CountNews +=1;
+                if ($CountNews >= $LeagueOutputOption['NumberofNewsinPHPHomePage']){break;}
+                array_push($NewsPublish, $row['AnswerNumber']);
+            }
+        }
+    }
+}
 
-/* Generate Carousel HTML */
 if($CountNews > 0 && !empty($NewsItems)){
 ?>
 <!-- Bouton Ajouter -->
@@ -61,49 +46,150 @@ if($CountNews > 0 && !empty($NewsItems)){
 </div>
 <!-- News Carousel -->
 <style>
-.carousel-inner,
-.carousel-item,
-.carousel-item.active {
+#news-carousel-container {
+    width: 800px;
+    max-width: 100%;
+    margin: 0 auto;
     background-color: white !important;
-}
-
-.read-more-image {
-    width: 100%;
-    max-width: 450px;
-    height: 200px;
-    object-fit: cover;
     border-radius: 8px;
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: block;
+    padding: 2px;
+}
+#newsCarousel {
+    width: 800px !important;
+    height: 600px !important;
+    max-width: 100% !important;
     margin: 0 auto;
 }
-
-.read-more-image:hover {
-    transform: scale(1.02);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+.carousel-inner {
+    width: 800px !important;
+    height: 600px !important;
+    max-width: 100% !important;
+    margin: 0 auto;
 }
-
+.carousel-item {
+    width: 800px !important;
+    height: 600px !important;
+    max-width: 100% !important;
+    margin: 0 auto;
+    display: flex !important;
+    align-items: stretch;
+    justify-content: center;
+    background-color: #fff !important;
+}
+.news-carousel-slide {
+    width: 800px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #fff !important;
+    border-radius: 8px;
+    box-sizing: border-box;
+    overflow: hidden;
+    margin: 0 auto;
+}
+.image-container {
+    position: relative;
+    width: 100%;
+    height: 350px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    background: #eee;
+}
+.read-more-image {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+    display: block;
+    margin: 0 auto;
+    position: relative;
+}
+.image-title-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.7);
+    border-radius: 0 0 8px 8px;
+    padding: 5px 10px;
+    color: white;
+    font-size: 20px !important;
+    text-align: center;
+}
+.image-title-overlay h6 {
+    font-size: 28px !important;
+    margin: 0;
+    font-weight: bold;
+    color: #fff !important;
+}
+.news-carousel-message {
+    width: 100%;
+    max-height: 180px;
+    min-height: 80px;
+    overflow-y: scroll;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 1.1rem;
+    padding: 15px 20px 10px 20px;
+    margin: 0;
+    background: #fff;
+    border-radius: 0 0 8px 8px;
+}
+.news-carousel-message::-webkit-scrollbar {
+    width: 8px;
+}
+.news-carousel-message::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 4px;
+}
 .article-meta {
     text-align: center;
-    margin-top: 15px;
+    margin-top: 10px;
     font-size: 0.9rem;
     color: #666;
 }
-
 .article-author {
     font-weight: 600;
     color: #1e3c72;
     margin-bottom: 5px;
 }
-
 .article-date {
     color: #888;
     font-size: 0.8rem;
 }
+.image-navigation {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+.image-navigation:hover {
+    background: rgba(0, 0, 0, 0.8);
+    transform: translateY(-50%) scale(1.1);
+}
+.image-navigation.prev {
+    left: 5px;
+}
+.image-navigation.next {
+    right: 5px;
+}
 </style>
-<div id="news-carousel-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center; width:525px; margin:0 auto;">
-    <div id="newsCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="4000" style="width:525px;">
+<div id="news-carousel-container">
+    <div id="newsCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="4000">
         <!-- Indicators -->
         <div class="carousel-indicators">
             <?php for($i = 0; $i < count($NewsItems); $i++): ?>
@@ -112,11 +198,10 @@ if($CountNews > 0 && !empty($NewsItems)){
                     aria-label="Slide <?php echo ($i + 1); ?>"></button>
             <?php endfor; ?>
         </div>
-
         <!-- Carousel Inner -->
-        <div class="carousel-inner" style="background-color:#fff;">
+        <div class="carousel-inner">
             <?php foreach($NewsItems as $index => $newsItem): ?>
-            <div class="carousel-item <?php echo ($index == 0) ? 'active' : ''; ?>" style="background-color:#fff !important;">
+            <div class="carousel-item <?php echo ($index == 0) ? 'active' : ''; ?>">
                 <?php
                 // Chercher une balise <img> dans le message
                 $message = $newsItem['message'];
@@ -126,55 +211,45 @@ if($CountNews > 0 && !empty($NewsItems)){
                     // Retirer la première balise <img> du message
                     $message = preg_replace('/<img[^>]+src=["\']'.preg_quote($imgSrc, '/').'["\'][^>]*>/i', '', $message, 1);
                 }
-                
                 // Tronquer le message pour l'aperçu
                 $previewMessage = strip_tags($message);
                 if (strlen($previewMessage) > 200) {
                     $previewMessage = substr($previewMessage, 0, 200) . '...';
                 }
                 ?>
-                <div class="d-block w-100 p-4 bg-light rounded news-carousel-slide"
-                     style="width:100%; height:100%; margin:auto; display:flex; flex-direction:column; justify-content:center; align-items:center; box-sizing:border-box; background-color:#fff;">
-                    <div style="width:100%; display:flex; justify-content:center; align-items:center; margin-bottom:30px;">
-                        <h5 style="font-size:2.2rem; font-weight:bold; text-align:center; margin:0; display:block;">
-                            <?php echo htmlspecialchars($newsItem['title']); ?>
-                        </h5>
-                    </div>
-                    <div style="width:100%; display:flex; justify-content:center; align-items:center;">
-                        <?php if ($imgSrc): ?>
-                            <a href="Article.php?id=<?php echo $newsItem['number']; ?>">
-                                <img src="<?php echo htmlspecialchars($imgSrc); ?>" 
-                                     alt="<?php echo htmlspecialchars($newsItem['title']); ?>" 
-                                     class="read-more-image" />
-                            </a>
-                        <?php else: ?>
-                            <a href="Article.php?id=<?php echo $newsItem['number']; ?>">
-                                <img src="images/LHSQC_NEWS.png" 
-                                     alt="<?php echo htmlspecialchars($newsItem['title']); ?>" 
-                                     class="read-more-image" />
-                            </a>
-                        <?php endif; ?>
+                <div class="news-carousel-slide">
+                    <a href="Article.php?id=<?php echo $newsItem['number']; ?>" style="width:100%;text-decoration:none;">
+                        <div class="image-container">
+                            <img src="<?php echo htmlspecialchars($imgSrc ? $imgSrc : (
+                                $newsItem['teamThemeID'] > 0
+                                ? "images/" . $newsItem['teamThemeID'] . "_News.jpg"
+                                : "images/LHSQC_NEWS.png"
+                            )); ?>"
+                                 alt="<?php echo htmlspecialchars($newsItem['title']); ?>"
+                                 class="read-more-image" />
+                            <div class="image-title-overlay">
+                                <h6><?php echo htmlspecialchars($newsItem['title']); ?></h6>
+                            </div>
+                            <button class="image-navigation prev" data-bs-target="#newsCarousel" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            </button>
+                            <button class="image-navigation next" data-bs-target="#newsCarousel" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </a>
+                    <div class="news-carousel-message">
+                        <?php echo $previewMessage; ?>
                     </div>
                     <div class="article-meta">
-                        <div class="article-author"><?php echo htmlspecialchars($newsItem['author']); ?></div>
-                        <div class="article-date"><?php echo htmlspecialchars($newsItem['time']); ?></div>
+                        <span class="article-author"><?php echo htmlspecialchars($newsItem['author']); ?></span>
+                        <span class="article-date"><?php echo htmlspecialchars($newsItem['time']); ?></span>
                     </div>
                 </div>
             </div>
             <?php endforeach; ?>
         </div>
-
-        <!-- Controls -->
-        <?php if(count($NewsItems) > 1): ?>
-        <button class="carousel-control-prev" type="button" data-bs-target="#newsCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#newsCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-        <?php endif; ?>
+        <!-- Controls (flèches déjà intégrées sur l'image) -->
     </div>
 </div>
 <?php
@@ -186,3 +261,31 @@ if($CountNews > 0 && !empty($NewsItems)){
     }
 }
 ?>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Gérer les clics sur les flèches de navigation des images
+    const imageNavButtons = document.querySelectorAll('.image-navigation');
+    imageNavButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const target = this.getAttribute('data-bs-target');
+            const slide = this.getAttribute('data-bs-slide');
+            if (target && slide) {
+                const carousel = document.querySelector(target);
+                if (carousel) {
+                    const carouselInstance = bootstrap.Carousel.getInstance(carousel);
+                    if (carouselInstance) {
+                        if (slide === 'prev') {
+                            carouselInstance.prev();
+                        } else if (slide === 'next') {
+                            carouselInstance.next();
+                        }
+                    }
+                }
+            }
+        });
+    });
+});
+</script>

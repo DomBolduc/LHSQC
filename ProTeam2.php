@@ -151,8 +151,8 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
     <table class="STHSPHPTeamHeader_Table">
         <tr>
             <td rowspan="2" class="STHSPHPTeamHeader_Logo">
-                <?php if (file_exists("images/" . $Team . ".png")): ?>
-                    <img src="images/<?php echo $Team; ?>.png" 
+                <?php if ($TeamInfo['TeamThemeID'] > 0): ?>
+                    <img src="<?php echo $ImagesCDNPath; ?>/images/<?php echo $TeamInfo['TeamThemeID']; ?>.png" 
                          alt="<?php echo $TeamName; ?>" 
                          class="STHSPHPTeamStatImage">
                 <?php else: ?>
@@ -161,7 +161,12 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                     </div>
                 <?php endif; ?>
             </td>
-            <td class="STHSPHPTeamHeader_TeamName"> <?php echo $TeamName; ?> </td>
+            <td class="STHSPHPTeamHeader_TeamName"> 
+                <?php echo $TeamName; ?>
+                <?php if (!empty($TeamInfo['City'])): ?>
+                    <?php echo htmlspecialchars($TeamInfo['City']); ?>
+                <?php endif; ?>
+            </td>
         </tr>
         <tr>
             <td class="STHSPHPTeamHeader_Stat">
@@ -170,15 +175,6 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                 L: <?php echo $TeamStat['L'] ?? 0; ?> | 
                 OTL: <?php echo ($TeamStat['OTL'] ?? 0) + ($TeamStat['SOL'] ?? 0); ?> | 
                 P: <?php echo $TeamStat['Points'] ?? 0; ?>
-                <br />
-                GF: <?php echo $TeamStat['GF'] ?? 0; ?> | 
-                GA: <?php echo $TeamStat['GA'] ?? 0; ?> | 
-                PP%: <?php echo ($TeamStat['PPAttemp'] ?? 0) > 0 ? number_format(($TeamStat['PPGoal'] ?? 0) / ($TeamStat['PPAttemp'] ?? 1) * 100, 1) : "0.0"; ?>% | 
-                PK%: <?php echo ($TeamStat['PKAttemp'] ?? 0) > 0 ? number_format((($TeamStat['PKAttemp'] ?? 0) - ($TeamStat['PKGoalGA'] ?? 0)) / ($TeamStat['PKAttemp'] ?? 1) * 100, 1) : "0.0"; ?>%
-                <br />
-                <?php echo $TeamLang['GM'] ?? 'GM: '; ?><?php echo $TeamInfo['GMName'] ?? 'N/A'; ?> | 
-                <?php echo $TeamLang['Morale'] ?? 'Morale: '; ?><?php echo $TeamInfo['Morale'] ?? 'N/A'; ?> | 
-                <?php echo $TeamLang['TeamOverall'] ?? 'Overall: '; ?><?php echo $TeamInfo['TeamOverall'] ?? 'N/A'; ?>
             </td>
         </tr>
     </table>
@@ -240,14 +236,14 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                                         echo "<img src='images/" . $HomeTeam . ".png' alt='" . $HomeTeamName . "' class='team-logo-mini'>";
                                     }
                                     echo "<span class='team-name'>" . $HomeTeamName . "</span>";
-                                    echo "<span class='score'>" . $HomeScore . "</span>";
+                                    echo "<span class=" . ($isHome ? "team-score win" : "team-score loss") . "'>" . $HomeScore . "</span>";
                                     echo "</div>";
                                     echo "<div class='team-info'>";
                                     if (file_exists("images/" . $AwayTeam . ".png")) {
                                         echo "<img src='images/" . $AwayTeam . ".png' alt='" . $AwayTeamName . "' class='team-logo-mini'>";
                                     }
                                     echo "<span class='team-name'>" . $AwayTeamName . "</span>";
-                                    echo "<span class='score'>" . $AwayScore . "</span>";
+                                    echo "<span class=" . ($isHome ? "team-score loss" : "team-score win") . "'>" . $AwayScore . "</span>";
                                     echo "</div>";
                                     echo "</div>";
                                     echo "</div>";
@@ -310,7 +306,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
             
             <!-- Cartes de statistiques modernes -->
             <div class="stats-grid">
-                <div class="stat-card">
+                <div class="stat-card span-2">
                     <h3>Team Leaders</h3>
                     <div class="stat-item">
                         <span class="stat-label">Points Leader</span>
@@ -331,26 +327,6 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                 </div>
 
                 <div class="stat-card">
-                    <h3>Team Performance</h3>
-                    <div class="stat-item">
-                        <span class="stat-label">Goals Per Game</span>
-                        <span class="stat-value"><?php echo ($TeamStat['GP'] ?? 0) > 0 ? number_format(($TeamStat['GF'] ?? 0) / ($TeamStat['GP'] ?? 1), 2) : "0.00"; ?></span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">Goals Against Per Game</span>
-                        <span class="stat-value"><?php echo ($TeamStat['GP'] ?? 0) > 0 ? number_format(($TeamStat['GA'] ?? 0) / ($TeamStat['GP'] ?? 1), 2) : "0.00"; ?></span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">Power Play %</span>
-                        <span class="stat-value"><?php echo ($TeamStat['PPAttemp'] ?? 0) > 0 ? number_format(($TeamStat['PPGoal'] ?? 0) / ($TeamStat['PPAttemp'] ?? 1) * 100, 1) : "0.0"; ?>%</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">Penalty Kill %</span>
-                        <span class="stat-value"><?php echo ($TeamStat['PKAttemp'] ?? 0) > 0 ? number_format((($TeamStat['PKAttemp'] ?? 0) - ($TeamStat['PKGoalGA'] ?? 0)) / ($TeamStat['PKAttemp'] ?? 1) * 100, 1) : "0.0"; ?>%</span>
-                    </div>
-                </div>
-
-                <div class="stat-card">
                     <h3>Team Info</h3>
                     <div class="stat-item">
                         <span class="stat-label">General Manager</span>
@@ -367,26 +343,6 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                     <div class="stat-item">
                         <span class="stat-label">Assistant Captain</span>
                         <span class="stat-value"><?php echo $TeamLeader['Assistant1'] ?? 'N/A'; ?></span>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <h3>Team Finance</h3>
-                    <div class="stat-item">
-                        <span class="stat-label">Salary Cap</span>
-                        <span class="stat-value">$<?php echo number_format($TeamFinance['TotalPlayersSalaries'] ?? 0); ?></span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">Budget</span>
-                        <span class="stat-value">$<?php echo number_format($TeamFinance['Budget'] ?? 0); ?></span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">Available</span>
-                        <span class="stat-value">$<?php echo number_format(($TeamFinance['Budget'] ?? 0) - ($TeamFinance['TotalPlayersSalaries'] ?? 0)); ?></span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">Cap Space</span>
-                        <span class="stat-value"><?php echo ($TeamFinance['Budget'] ?? 0) > 0 ? number_format((($TeamFinance['Budget'] ?? 0) - ($TeamFinance['TotalPlayersSalaries'] ?? 0)) / ($TeamFinance['Budget'] ?? 1) * 100, 1) : "0.0"; ?>%</span>
                     </div>
                 </div>
 
@@ -415,6 +371,46 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                     <div class="stat-item">
                         <span class="stat-label">Shorthanded Goals</span>
                         <span class="stat-value"><?php echo number_format($TeamStat['PKGoalGA'] ?? 0); ?></span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Team Performance</h3>
+                    <div class="stat-item">
+                        <span class="stat-label">Goals Per Game</span>
+                        <span class="stat-value"><?php echo ($TeamStat['GP'] ?? 0) > 0 ? number_format(($TeamStat['GF'] ?? 0) / ($TeamStat['GP'] ?? 1), 2) : "0.00"; ?></span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Goals Against Per Game</span>
+                        <span class="stat-value"><?php echo ($TeamStat['GP'] ?? 0) > 0 ? number_format(($TeamStat['GA'] ?? 0) / ($TeamStat['GP'] ?? 1), 2) : "0.00"; ?></span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Power Play %</span>
+                        <span class="stat-value"><?php echo ($TeamStat['PPAttemp'] ?? 0) > 0 ? number_format(($TeamStat['PPGoal'] ?? 0) / ($TeamStat['PPAttemp'] ?? 1) * 100, 1) : "0.0"; ?>%</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Penalty Kill %</span>
+                        <span class="stat-value"><?php echo ($TeamStat['PKAttemp'] ?? 0) > 0 ? number_format((($TeamStat['PKAttemp'] ?? 0) - ($TeamStat['PKGoalGA'] ?? 0)) / ($TeamStat['PKAttemp'] ?? 1) * 100, 1) : "0.0"; ?>%</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Team Finance</h3>
+                    <div class="stat-item">
+                        <span class="stat-label">Salary Cap</span>
+                        <span class="stat-value">$<?php echo number_format($TeamFinance['TotalPlayersSalaries'] ?? 0); ?></span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Budget</span>
+                        <span class="stat-value">$<?php echo number_format($TeamFinance['Budget'] ?? 0); ?></span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Available</span>
+                        <span class="stat-value">$<?php echo number_format(($TeamFinance['Budget'] ?? 0) - ($TeamFinance['TotalPlayersSalaries'] ?? 0)); ?></span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Cap Space</span>
+                        <span class="stat-value"><?php echo ($TeamFinance['Budget'] ?? 0) > 0 ? number_format((($TeamFinance['Budget'] ?? 0) - ($TeamFinance['TotalPlayersSalaries'] ?? 0)) / ($TeamFinance['Budget'] ?? 1) * 100, 1) : "0.0"; ?>%</span>
                     </div>
                 </div>
             </div>

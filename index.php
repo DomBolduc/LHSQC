@@ -114,6 +114,11 @@ STHSErrorIndex:
     ?>
 </div>
         
+        <!-- Composant Power Ranking -->
+        <div id="power-ranking-container" style="width:525px; margin:0 auto;">
+            <?php include "components/PowerRanking.php"; ?>
+        </div>
+        
     </div>
     <div class="col-lg-4 col-12 mb-3 mb-lg-0">
         <?php $side = 1; include "components/StandingsCard.php"; ?>

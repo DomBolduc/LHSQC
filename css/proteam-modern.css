@@ -198,8 +198,13 @@ tr:hover {
     background: var(--white);
     border-radius: var(--border-radius-lg);
     padding: 1.5rem;
-    box-shadow: var(--shadow-md);
-    border: 1px solid var(--gray-200);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s ease;
+    border: 1px solid var(--gray-100);
+}
+
+.stat-card.span-2 {
+    grid-column: span 2;
 }
 
 .stat-card h3 {
