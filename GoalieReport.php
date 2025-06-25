@@ -107,7 +107,7 @@ If ($Goalie == 0){
 
 		If (file_exists($CareerStatDatabaseFile) == true){ /* CareerStat */
 			$CareerStatdb = new SQLite3($CareerStatDatabaseFile);
-			
+
 			// Vérifier si la table GoalerProStatCareer existe
 			$CareerTableCheck = $CareerStatdb->querySingle("SELECT Count(name) AS CountName FROM sqlite_master WHERE type='table' AND name='GoalerProStatCareer'",true);
 			If ($CareerTableCheck['CountName'] == 1){
@@ -131,7 +131,7 @@ If ($Goalie == 0){
                          WHERE UniqueID = " . $GoalieInfo['UniqueID'] . " AND Playoff = 'True'";
 				$GoalieProCareerPlayoffTotals = $CareerStatdb->querySingle($Query, true);
 				
-				$GoalieCareerStatFound = true;	
+				$GoalieCareerStatFound = true;
 			}
 			If (isset($PerformanceMonitorStart)){echo "<script>console.log(\"STHS CareerStat Query PHP Performance : " . (microtime(true)-$PerformanceMonitorStart) . "\"); </script>";}
 		}
@@ -376,7 +376,7 @@ echo "</style>";
                 <p>No pro stats available.</p>
             <?php endif; ?>
     </div>
-</div>
+        </div>
 
     <!-- Pro Stats Section -->
 <div class="container-fluid p-0">
@@ -421,7 +421,7 @@ echo "</style>";
             <?php else: ?>
                 <p>No pro stats available.</p>
             <?php endif; ?>
-    </div>
+        </div>
 </div>
 
         <!-- Farm Stats Section -->
