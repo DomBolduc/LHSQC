@@ -1010,7 +1010,7 @@ foreach ($PlayerPositions as $position => $value) {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.9);
     padding-top: 50px;
     border-radius: 10px;
     color: white;
@@ -1166,6 +1166,21 @@ foreach ($PlayerPositions as $position => $value) {
 .table tbody td img {
     display: inline-block !important;
     margin: 0 auto !important;
+}
+
+/* Centrer toutes les images dans les cellules du tableau */
+.table td img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+    /* Optionnel : pour centrer verticalement si la cellule est haute */
+    vertical-align: middle;
+}
+.table td {
+    text-align: center;
+    vertical-align: middle;
 }
 </style>
 

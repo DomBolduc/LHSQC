@@ -7,8 +7,11 @@ Function PrintMainNews($row, $IndexLang, $dbNews, $ImagesCDNPath ){
 	global $NewsItems;
 	
 	$newsItem = array(
+		'number' => $row['Number'],
 		'title' => $row['Title'],
-		'message' => $row['Message']
+		'message' => $row['Message'],
+		'time' => $row['Time'],
+		'author' => $row['Author'] ?? 'LHSQC'
 	);
 	
 	array_push($NewsItems, $newsItem);
@@ -63,9 +66,44 @@ if($CountNews > 0 && !empty($NewsItems)){
 .carousel-item.active {
     background-color: white !important;
 }
+
+.read-more-image {
+    width: 100%;
+    max-width: 450px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: block;
+    margin: 0 auto;
+}
+
+.read-more-image:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.article-meta {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.article-author {
+    font-weight: 600;
+    color: #1e3c72;
+    margin-bottom: 5px;
+}
+
+.article-date {
+    color: #888;
+    font-size: 0.8rem;
+}
 </style>
-<div id="news-carousel-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center; width:525px; height:768px; margin:0 auto; overflow:hidden;">
-    <div id="newsCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="4000" style="width:525px; height:768px;">
+<div id="news-carousel-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center; width:525px; margin:0 auto;">
+    <div id="newsCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="4000" style="width:525px;">
         <!-- Indicators -->
         <div class="carousel-indicators">
             <?php for($i = 0; $i < count($NewsItems); $i++): ?>
@@ -88,27 +126,38 @@ if($CountNews > 0 && !empty($NewsItems)){
                     // Retirer la première balise <img> du message
                     $message = preg_replace('/<img[^>]+src=["\']'.preg_quote($imgSrc, '/').'["\'][^>]*>/i', '', $message, 1);
                 }
+                
+                // Tronquer le message pour l'aperçu
+                $previewMessage = strip_tags($message);
+                if (strlen($previewMessage) > 200) {
+                    $previewMessage = substr($previewMessage, 0, 200) . '...';
+                }
                 ?>
                 <div class="d-block w-100 p-4 bg-light rounded news-carousel-slide"
-                     style="width:100%; height:100%; margin:auto; display:flex; flex-direction:column; justify-content:flex-start; align-items:center; box-sizing:border-box; background-color:#fff;">
-                    <div style="width:100%; display:flex; justify-content:center; align-items:center; margin-bottom:20px;">
+                     style="width:100%; height:100%; margin:auto; display:flex; flex-direction:column; justify-content:center; align-items:center; box-sizing:border-box; background-color:#fff;">
+                    <div style="width:100%; display:flex; justify-content:center; align-items:center; margin-bottom:30px;">
                         <h5 style="font-size:2.2rem; font-weight:bold; text-align:center; margin:0; display:block;">
                             <?php echo htmlspecialchars($newsItem['title']); ?>
                         </h5>
                     </div>
-                    <?php if ($imgSrc): ?>
-                        <div style="width:100%; display:flex; justify-content:center; align-items:center; margin-bottom:24px;">
-                            <img src="<?php echo htmlspecialchars($imgSrc); ?>" alt="News image" style="max-width:450px; height:200px; object-fit:cover; display:block;" />
-                        </div>
-                    <?php else: ?>
-                        <div style="width:100%; display:flex; justify-content:center; align-items:center; margin-bottom:24px;">
-                            <img src="images/LHSQC_NEWS.png" alt="Image par défaut" style="max-width:450px; height:200px; object-fit:cover; display:block;" />
-                        </div>
-                    <?php endif; ?>
-                    <div style="width:100%; text-align:center;">
-                        <div class="mb-0" style="font-size:1.2rem; margin-top:0; display:block; width:100%; clear:both; overflow-wrap:break-word; max-height:480px; overflow-y:auto;">
-                            <?php echo $message; ?>
-                        </div>
+                    <div style="width:100%; display:flex; justify-content:center; align-items:center;">
+                        <?php if ($imgSrc): ?>
+                            <a href="Article.php?id=<?php echo $newsItem['number']; ?>">
+                                <img src="<?php echo htmlspecialchars($imgSrc); ?>" 
+                                     alt="<?php echo htmlspecialchars($newsItem['title']); ?>" 
+                                     class="read-more-image" />
+                            </a>
+                        <?php else: ?>
+                            <a href="Article.php?id=<?php echo $newsItem['number']; ?>">
+                                <img src="images/LHSQC_NEWS.png" 
+                                     alt="<?php echo htmlspecialchars($newsItem['title']); ?>" 
+                                     class="read-more-image" />
+                            </a>
+                        <?php endif; ?>
+                    </div>
+                    <div class="article-meta">
+                        <div class="article-author"><?php echo htmlspecialchars($newsItem['author']); ?></div>
+                        <div class="article-date"><?php echo htmlspecialchars($newsItem['time']); ?></div>
                     </div>
                 </div>
             </div>

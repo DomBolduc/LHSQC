@@ -27,6 +27,8 @@ $GoalieFarmCareerSumSeasonOnly = Null;
 $GoalieFarmCareerSumPlayoffOnly = Null;
 $GoalieProStatMultipleTeamFound = (boolean)FALSE;
 $GoalieFarmStatMultipleTeamFound = (boolean)FALSE;
+$GoalieProCareerStat = Null;
+$GoalieProCareerPlayoffTotals = Null;
 
 
 if(isset($_GET['Goalie'])){$Goalie = filter_var($_GET['Goalie'], FILTER_SANITIZE_NUMBER_INT);} 
@@ -105,56 +107,32 @@ If ($Goalie == 0){
 
 		If (file_exists($CareerStatDatabaseFile) == true){ /* CareerStat */
 			$CareerStatdb = new SQLite3($CareerStatDatabaseFile);
-
 			
-
-			$CareerDBFormatV2CheckCheck = $CareerStatdb->querySingle("SELECT Count(name) AS CountName FROM sqlite_master WHERE type='table' AND name='LeagueGeneral'",true);
-
-			If ($CareerDBFormatV2CheckCheck['CountName'] == 1){
-
+			// Vérifier si la table GoalerProStatCareer existe
+			$CareerTableCheck = $CareerStatdb->querySingle("SELECT Count(name) AS CountName FROM sqlite_master WHERE type='table' AND name='GoalerProStatCareer'",true);
+			If ($CareerTableCheck['CountName'] == 1){
 				
-
-				include "APIFunction.php";			
-			
-				$GoalieProCareerSeason = APIPost(array('GoalerStatProHistoryAllSeasonPerYear' => '', 'UniqueID' => $GoalieInfo['UniqueID']));
-
-				If (isset($PerformanceMonitorStart)){echo "<script>console.log(\"STHS ProCareerSeason Page PHP Performance : " . (microtime(true)-$PerformanceMonitorStart) . "\"); </script>";}
-
-				$GoalieProCareerPlayoff = APIPost(array('GoalerStatProHistoryAllSeasonPerYear' => '', 'UniqueID' => $GoalieInfo['UniqueID'], 'Playoff' => ''));
-
-				If (isset($PerformanceMonitorStart)){echo "<script>console.log(\"STHS ProCareerPlayoff Page PHP Performance : " . (microtime(true)-$PerformanceMonitorStart) . "\"); </script>";}
-
-				$GoalieProCareerSumSeasonOnly = APIPost(array('GoalerStatProHistoryAllSeasonMerge' => '', 'UniqueID' => $GoalieInfo['UniqueID']));
-
-				If (isset($PerformanceMonitorStart)){echo "<script>console.log(\"STHS ProCareerSumSeasonOnly Page PHP Performance : " . (microtime(true)-$PerformanceMonitorStart) . "\"); </script>";}
-
-				$GoalieProCareerSumPlayoffOnly = APIPost(array('GoalerStatProHistoryAllSeasonMerge' => '', 'UniqueID' => $GoalieInfo['UniqueID'], 'Playoff' => ''));
-
-				If (isset($PerformanceMonitorStart)){echo "<script>console.log(\"STHS ProCareerSumPlayoffOnly Page PHP Performance : " . (microtime(true)-$PerformanceMonitorStart) . "\"); </script>";}
-
+				// Récupérer les statistiques de carrière totales depuis GoalerProStatCareer
+				$Query = "SELECT * FROM GoalerProStatCareer WHERE UniqueID = " . $GoalieInfo['UniqueID'];
+				$GoalieProCareerStat = $CareerStatdb->querySingle($Query, true);
 				
-
-				$GoalieFarmCareerSeason = APIPost(array('GoalerStatFarmHistoryAllSeasonPerYear' => '', 'UniqueID' => $GoalieInfo['UniqueID']));
-
-				If (isset($PerformanceMonitorStart)){echo "<script>console.log(\"STHS FarmCareerSeason  Page PHP Performance : " . (microtime(true)-$PerformanceMonitorStart) . "\"); </script>";}
-
-				$GoalieFarmCareerPlayoff = APIPost(array('GoalerStatFarmHistoryAllSeasonPerYear' => '', 'UniqueID' => $GoalieInfo['UniqueID'], 'Playoff' => ''));
-
-				If (isset($PerformanceMonitorStart)){echo "<script>console.log(\"STHS FarmCareerPlayoff Page PHP Performance : " . (microtime(true)-$PerformanceMonitorStart) . "\"); </script>";}
-
-				$GoalieFarmCareerSumSeasonOnly = APIPost(array('GoalerStatFarmHistoryAllSeasonMerge' => '', 'UniqueID' => $GoalieInfo['UniqueID']));
-
-				If (isset($PerformanceMonitorStart)){echo "<script>console.log(\"STHS FarmCareerSumSeasonOnly Page PHP Performance : " . (microtime(true)-$PerformanceMonitorStart) . "\"); </script>";}
-
-				$GoalieFarmCareerSumPlayoffOnly = APIPost(array('GoalerStatFarmHistoryAllSeasonMerge' => '', 'UniqueID' => $GoalieInfo['UniqueID'], 'Playoff' => ''));		
-
-				If (isset($PerformanceMonitorStart)){echo "<script>console.log(\"STHS FarmCareerSumPlayoffOnly Page PHP Performance : " . (microtime(true)-$PerformanceMonitorStart) . "\"); </script>";}
-
+				// Récupérer les statistiques par saison (saison régulière)
+				$Query = "SELECT * FROM GoalerProStatHistory WHERE UniqueID = " . $GoalieInfo['UniqueID'] . " AND Playoff = 'False' ORDER BY Season DESC";
+				$GoalieProCareerSeason = $CareerStatdb->query($Query);
 				
-				$GoalieCareerStatFound = true;
-
+				// Récupérer les statistiques de playoffs par saison
+				$Query = "SELECT * FROM GoalerProStatHistory WHERE UniqueID = " . $GoalieInfo['UniqueID'] . " AND Playoff = 'True' ORDER BY Season DESC";
+				$GoalieProCareerPlayoff = $CareerStatdb->query($Query);
+				
+				// Récupérer les totaux de playoffs depuis GoalerProStatHistory
+				$Query = "SELECT SUM(GP) as GP, SUM(W) as W, SUM(L) as L, SUM(OTL) as OTL, SUM(Shootout) as Shootout, 
+                         SUM(GA) as GA, SUM(SA) as SA, MIN(Year) as FirstYear, MAX(Year) as LastYear 
+                         FROM GoalerProStatHistory 
+                         WHERE UniqueID = " . $GoalieInfo['UniqueID'] . " AND Playoff = 'True'";
+				$GoalieProCareerPlayoffTotals = $CareerStatdb->querySingle($Query, true);
+				
+				$GoalieCareerStatFound = true;	
 			}
-
 			If (isset($PerformanceMonitorStart)){echo "<script>console.log(\"STHS CareerStat Query PHP Performance : " . (microtime(true)-$PerformanceMonitorStart) . "\"); </script>";}
 		}
 		
@@ -344,9 +322,9 @@ echo "</style>";
        
 <!-- Player rating Section -->
         
-<div class="container-fluid p-0 ">
-        <!-- Pro Stats -->
-        <div class="col-md-12 ">
+<div class="container-fluid p-0">
+    <div class="col-md-12 border-top border-bottom mb-4">
+        <h3 class="text-center mt-3 mb-3" style="color: white !important;">Player Ratings</h3>
            
             <?php if ($GoalieProStat): ?>
                 <table class="table table-bordered text-center">
@@ -397,13 +375,13 @@ echo "</style>";
             <?php else: ?>
                 <p>No pro stats available.</p>
             <?php endif; ?>
-        </div>
+    </div>
+</div>
 
-
-    <!-- Player Statistics Section -->
-    <div class="container-fluid p-0 ">
-        <!-- Pro Stats -->
-        <div class="col-md-12 border-top border-bottom ">
+    <!-- Pro Stats Section -->
+<div class="container-fluid p-0">
+    <div class="col-md-12 border-top border-bottom mb-4">
+        <h3 class="text-center mt-3 mb-3" style="color: white !important;">Pro Stats</h3>
            
             <?php if ($GoalieProStat): ?>
                 <table class="table table-bordered text-center">
@@ -443,10 +421,378 @@ echo "</style>";
             <?php else: ?>
                 <p>No pro stats available.</p>
             <?php endif; ?>
+    </div>
+</div>
+
+        <!-- Farm Stats Section -->
+<div class="container-fluid p-0">
+    <div class="col-md-12 border-top border-bottom mb-4">
+        <h3 class="text-center mt-3 mb-3" style="color: white !important;">Farm Stats</h3>
+    
+    <?php if ($GoalieFarmStat): ?>
+        <table class="table table-bordered text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>GP</th>
+                    <th>GS</th>
+                    <th>W</th>
+                    <th>L</th>
+                    <th>OTL</th>
+                    <th>SA</th>
+                    <th>GA</th>
+                    <th>GAA</th>
+                    <th>SV%</th>
+                    <th>SO</th>
+                    <th>A</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><?php echo $GoalieFarmStat['GP']; ?></td>
+                    <td><?php echo $GoalieFarmStat['StartGoaler']; ?></td>
+                    <td><?php echo $GoalieFarmStat['W']; ?></td>
+                    <td><?php echo $GoalieFarmStat['L']; ?></td>
+                    <td><?php echo $GoalieFarmStat['OTL']; ?></td>
+                    <td><?php echo $GoalieFarmStat['SA']; ?></td>
+                    <td><?php echo $GoalieFarmStat['GA']; ?></td>
+                    <td><?php echo $GoalieFarmStat['GAA']; ?></td>
+                    <td><?php echo $GoalieFarmStat['PCT'] . '%'; ?></td>
+                    <td><?php echo $GoalieFarmStat['Shootout']; ?></td>
+                    <td><?php echo $GoalieFarmStat['A']; ?></td>
+                </tr>
+            </tbody>
+        </table>
+    <?php else: ?>
+        <p class="text-center">No farm stats available.</p>
+    <?php endif; ?>
+    </div>
+</div>
+
+    <!-- Career Statistics Section -->
+    <?php if ($GoalieCareerStatFound): ?>
+        <div class="container-fluid p-0">
+            <div class="col-md-12 border-top border-bottom mb-4">
+                <h3 class="text-center mt-3 mb-3" style="color: white !important;">Career Statistics</h3>
+                
+                <!-- Pro Career Totals from GoalerProStatCareer -->
+                <?php if ($GoalieProCareerStat): ?>
+                    <div class="border-top border-bottom mb-4">
+                        <h4 class="text-center mt-3 mb-3" style="color: #28a745 !important;">Pro League - Career Totals</h4>
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-center table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Year</th>
+                                        <th>Team</th>
+                                        <th>GP</th>
+                                        <th>W</th>
+                                        <th>L</th>
+                                        <th>OTL</th>
+                                        <th>Shootout</th>
+                                        <th>GA</th>
+                                        <th>SA</th>
+                                        <th>Avg</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="background-color: rgba(255, 255, 255, 0.9);">
+                                    <?php 
+                                    // Tableau de correspondance des équipes
+                                    $teamLogoMapping = [
+                                        'Penguins' => '1.png',
+                                        'Islanders' => '2.png',
+                                        'Rangers' => '3.png',
+                                        'Devils' => '4.png',
+                                        'Flyers' => '5.png',
+                                        'Hurricanes' => '6.png',
+                                        'Lightnings' => '7.png',
+                                        'Jets' => '8.png',
+                                        'Capitals' => '9.png',
+                                        'Panthers' => '10.png',
+                                        'Bruins' => '11.png',
+                                        'Senators' => '12.png',
+                                        'Canadiens' => '13.png',
+                                        'Sabres' => '14.png',
+                                        'Maple Leafs' => '15.png',
+                                        'Blues' => '16.png',
+                                        'Red Wings' => '17.png',
+                                        'Blackhawks' => '18.png',
+                                        'Blue Jackets' => '19.png',
+                                        'Predators' => '20.png',
+                                        'Wilds' => '21.png',
+                                        'Oilers' => '22.png',
+                                        'Flames' => '23.png',
+                                        'Canucks' => '24.png',
+                                        'Avalanche' => '25.png',
+                                        'Kings' => '26.png',
+                                        'Utah Hockey Club' => '27.png',
+                                        'Stars' => '28.png',
+                                        'Ducks' => '29.png',
+                                        'Sharks' => '30.png',
+                                        'Golden Knights' => '32.png',
+                                        'Kraken' => '33.png',
+                                    ];
+                                    
+                                    $teamName = $GoalieProCareerStat['TeamName'] ?? '';
+                                    $teamLogo = $teamLogoMapping[$teamName] ?? null;
+                                    
+                                    // Calculer le pourcentage d'arrêt
+                                    $savePercentage = 0;
+                                    if ($GoalieProCareerStat['SA'] > 0) {
+                                        $savePercentage = round((($GoalieProCareerStat['SA'] - $GoalieProCareerStat['GA']) / $GoalieProCareerStat['SA']) * 100, 3);
+                                    }
+                                    ?>
+                                    <tr style="background-color: rgba(40, 167, 69, 0.1);">
+                                        <td><strong>Regular Season</strong></td>
+                                        <td><?php echo $GoalieProCareerStat['Year'] ?? 'N/A'; ?></td>
+                                        <td>
+                                            <?php if ($teamLogo): ?>
+                                                <img src="<?php echo $ImagesCDNPath . '/images/' . $teamLogo; ?>" 
+                                                     alt="<?php echo $teamName; ?>" 
+                                                     style="width: 30px; height: 30px;">
+                                            <?php else: ?>
+                                                <?php echo $teamName ?: 'N/A'; ?>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td><strong><?php echo $GoalieProCareerStat['GP'] ?? 0; ?></strong></td>
+                                        <td><strong><?php echo $GoalieProCareerStat['W'] ?? 0; ?></strong></td>
+                                        <td><strong><?php echo $GoalieProCareerStat['L'] ?? 0; ?></strong></td>
+                                        <td><strong><?php echo $GoalieProCareerStat['OTL'] ?? 0; ?></strong></td>
+                                        <td><strong><?php echo $GoalieProCareerStat['Shootout'] ?? 0; ?></strong></td>
+                                        <td><strong><?php echo $GoalieProCareerStat['GA'] ?? 0; ?></strong></td>
+                                        <td><strong><?php echo $GoalieProCareerStat['SA'] ?? 0; ?></strong></td>
+                                        <td><strong><?php echo $savePercentage . '%'; ?></strong></td>
+                                    </tr>
+                                    <?php if ($GoalieProCareerPlayoffTotals && !empty($GoalieProCareerPlayoffTotals)): ?>
+                                        <?php 
+                                        // Calculer le pourcentage d'arrêt pour les playoffs
+                                        $playoffSavePercentage = 0;
+                                        if ($GoalieProCareerPlayoffTotals['SA'] > 0) {
+                                            $playoffSavePercentage = round((($GoalieProCareerPlayoffTotals['SA'] - $GoalieProCareerPlayoffTotals['GA']) / $GoalieProCareerPlayoffTotals['SA']) * 100, 3);
+                                        }
+                                        ?>
+                                        <tr style="background-color: rgba(220, 53, 69, 0.1);">
+                                            <td><strong>Playoffs</strong></td>
+                                            <td><?php echo ($GoalieProCareerPlayoffTotals['FirstYear'] && $GoalieProCareerPlayoffTotals['LastYear']) ? $GoalieProCareerPlayoffTotals['FirstYear'] . '-' . $GoalieProCareerPlayoffTotals['LastYear'] : 'N/A'; ?></td>
+                                            <td>N/A</td>
+                                            <td><strong><?php echo $GoalieProCareerPlayoffTotals['GP'] ?? 0; ?></strong></td>
+                                            <td><strong><?php echo $GoalieProCareerPlayoffTotals['W'] ?? 0; ?></strong></td>
+                                            <td><strong><?php echo $GoalieProCareerPlayoffTotals['L'] ?? 0; ?></strong></td>
+                                            <td><strong><?php echo $GoalieProCareerPlayoffTotals['OTL'] ?? 0; ?></strong></td>
+                                            <td><strong><?php echo $GoalieProCareerPlayoffTotals['Shootout'] ?? 0; ?></strong></td>
+                                            <td><strong><?php echo $GoalieProCareerPlayoffTotals['GA'] ?? 0; ?></strong></td>
+                                            <td><strong><?php echo $GoalieProCareerPlayoffTotals['SA'] ?? 0; ?></strong></td>
+                                            <td><strong><?php echo $playoffSavePercentage . '%'; ?></strong></td>
+                                        </tr>
+                                    <?php endif; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            </div>
         </div>
+    <?php endif; ?>
 
+    <!-- Pro Career Season Stats -->
+    <?php if ($GoalieProCareerSeason && $GoalieProCareerSeason->numColumns() > 0): ?>
+        <div class="container-fluid p-0">
+            <div class="col-md-12 border-top border-bottom mb-4">
+                <h4 class="text-center mt-3 mb-3" style="color: #007bff !important;">Pro League - Season by Season</h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Season</th>
+                                <th>Year</th>
+                                <th>Team</th>
+                                <th>GP</th>
+                                <th>W</th>
+                                <th>L</th>
+                                <th>OTL</th>
+                                <th>Shootout</th>
+                                <th>GA</th>
+                                <th>SA</th>
+                                <th>Avg</th>
+                            </tr>
+                        </thead>
+                        <tbody style="background-color: rgba(255, 255, 255, 0.9);">
+                            <?php 
+                            // Tableau de correspondance des équipes
+                            $teamLogoMapping = [
+                                'Penguins' => '1.png',
+                                'Islanders' => '2.png',
+                                'Rangers' => '3.png',
+                                'Devils' => '4.png',
+                                'Flyers' => '5.png',
+                                'Hurricanes' => '6.png',
+                                'Lightnings' => '7.png',
+                                'Jets' => '8.png',
+                                'Capitals' => '9.png',
+                                'Panthers' => '10.png',
+                                'Bruins' => '11.png',
+                                'Senators' => '12.png',
+                                'Canadiens' => '13.png',
+                                'Sabres' => '14.png',
+                                'Maple Leafs' => '15.png',
+                                'Blues' => '16.png',
+                                'Red Wings' => '17.png',
+                                'Blackhawks' => '18.png',
+                                'Blue Jackets' => '19.png',
+                                'Predators' => '20.png',
+                                'Wilds' => '21.png',
+                                'Oilers' => '22.png',
+                                'Flames' => '23.png',
+                                'Canucks' => '24.png',
+                                'Avalanche' => '25.png',
+                                'Kings' => '26.png',
+                                'Utah Hockey Club' => '27.png',
+                                'Stars' => '28.png',
+                                'Ducks' => '29.png',
+                                'Sharks' => '30.png',
+                                'Golden Knights' => '32.png',
+                                'Kraken' => '33.png',
+                            ];
+                            ?>
+                            <?php while ($season = $GoalieProCareerSeason->fetchArray()): ?>
+                                <?php 
+                                $teamName = $season['TeamName'] ?? '';
+                                $teamLogo = $teamLogoMapping[$teamName] ?? null;
+                                
+                                // Calculer le pourcentage d'arrêt
+                                $savePercentage = 0;
+                                if ($season['SA'] > 0) {
+                                    $savePercentage = round((($season['SA'] - $season['GA']) / $season['SA']) * 100, 3);
+                                }
+                                ?>
+                                <tr>
+                                    <td><strong><?php echo $season['Season']; ?></strong></td>
+                                    <td><?php echo $season['Year'] ?? 'N/A'; ?></td>
+                                    <td>
+                                        <?php if ($teamLogo): ?>
+                                            <img src="<?php echo $ImagesCDNPath . '/images/' . $teamLogo; ?>" 
+                                                 alt="<?php echo $teamName; ?>" 
+                                                 style="width: 30px; height: 30px;">
+                                        <?php else: ?>
+                                            <?php echo $teamName ?: 'N/A'; ?>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td><?php echo $season['GP'] ?? 0; ?></td>
+                                    <td><?php echo $season['W'] ?? 0; ?></td>
+                                    <td><?php echo $season['L'] ?? 0; ?></td>
+                                    <td><?php echo $season['OTL'] ?? 0; ?></td>
+                                    <td><?php echo $season['Shootout'] ?? 0; ?></td>
+                                    <td><?php echo $season['GA'] ?? 0; ?></td>
+                                    <td><?php echo $season['SA'] ?? 0; ?></td>
+                                    <td><strong><?php echo $savePercentage . '%'; ?></strong></td>
+                                </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
 
-
+    <!-- Pro Career Playoff Stats -->
+    <?php if ($GoalieProCareerPlayoff && $GoalieProCareerPlayoff->numColumns() > 0): ?>
+        <div class="container-fluid p-0">
+            <div class="col-md-12 border-top border-bottom mb-4">
+                <h4 class="text-center mt-3 mb-3" style="color: #dc3545 !important;">Pro League - Playoff Statistics</h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Season</th>
+                                <th>Year</th>
+                                <th>Team</th>
+                                <th>GP</th>
+                                <th>W</th>
+                                <th>L</th>
+                                <th>OTL</th>
+                                <th>Shootout</th>
+                                <th>GA</th>
+                                <th>SA</th>
+                                <th>Avg</th>
+                            </tr>
+                        </thead>
+                        <tbody style="background-color: rgba(255, 255, 255, 0.9);">
+                            <?php 
+                            // Tableau de correspondance des équipes
+                            $teamLogoMapping = [
+                                'Penguins' => '1.png',
+                                'Islanders' => '2.png',
+                                'Rangers' => '3.png',
+                                'Devils' => '4.png',
+                                'Flyers' => '5.png',
+                                'Hurricanes' => '6.png',
+                                'Lightnings' => '7.png',
+                                'Jets' => '8.png',
+                                'Capitals' => '9.png',
+                                'Panthers' => '10.png',
+                                'Bruins' => '11.png',
+                                'Senators' => '12.png',
+                                'Canadiens' => '13.png',
+                                'Sabres' => '14.png',
+                                'Maple Leafs' => '15.png',
+                                'Blues' => '16.png',
+                                'Red Wings' => '17.png',
+                                'Blackhawks' => '18.png',
+                                'Blue Jackets' => '19.png',
+                                'Predators' => '20.png',
+                                'Wilds' => '21.png',
+                                'Oilers' => '22.png',
+                                'Flames' => '23.png',
+                                'Canucks' => '24.png',
+                                'Avalanche' => '25.png',
+                                'Kings' => '26.png',
+                                'Utah Hockey Club' => '27.png',
+                                'Stars' => '28.png',
+                                'Ducks' => '29.png',
+                                'Sharks' => '30.png',
+                                'Golden Knights' => '32.png',
+                                'Kraken' => '33.png',
+                            ];
+                            ?>
+                            <?php while ($playoff = $GoalieProCareerPlayoff->fetchArray()): ?>
+                                <?php 
+                                $teamName = $playoff['TeamName'] ?? '';
+                                $teamLogo = $teamLogoMapping[$teamName] ?? null;
+                                
+                                // Calculer le pourcentage d'arrêt
+                                $savePercentage = 0;
+                                if ($playoff['SA'] > 0) {
+                                    $savePercentage = round((($playoff['SA'] - $playoff['GA']) / $playoff['SA']) * 100, 3);
+                                }
+                                ?>
+                                <tr>
+                                    <td><strong><?php echo $playoff['Season']; ?></strong></td>
+                                    <td><?php echo $playoff['Year'] ?? 'N/A'; ?></td>
+                                    <td>
+                                        <?php if ($teamLogo): ?>
+                                            <img src="<?php echo $ImagesCDNPath . '/images/' . $teamLogo; ?>" 
+                                                 alt="<?php echo $teamName; ?>" 
+                                                 style="width: 30px; height: 30px;">
+                                        <?php else: ?>
+                                            <?php echo $teamName ?: 'N/A'; ?>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td><?php echo $playoff['GP'] ?? 0; ?></td>
+                                    <td><?php echo $playoff['W'] ?? 0; ?></td>
+                                    <td><?php echo $playoff['L'] ?? 0; ?></td>
+                                    <td><?php echo $playoff['OTL'] ?? 0; ?></td>
+                                    <td><?php echo $playoff['Shootout'] ?? 0; ?></td>
+                                    <td><?php echo $playoff['GA'] ?? 0; ?></td>
+                                    <td><?php echo $playoff['SA'] ?? 0; ?></td>
+                                    <td><strong><?php echo $savePercentage . '%'; ?></strong></td>
+                                </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
 </div>
     
    </body> 
@@ -476,7 +822,7 @@ echo "</style>";
     top: 50%; /* Start in the middle of the container */
     left: 50%; /* Center horizontally */
     transform: translate(-50%, -50%); /* Center the overlay perfectly */
-    background: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
+    background: rgba(0, 0, 0, 0.9); /* 90% opaque black background */
     padding-top: 50px; /* Add space inside the overlay */
     border-radius: 10px; /* Rounded corners */
     color: white; /* Text color */
