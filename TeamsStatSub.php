@@ -1,5 +1,5 @@
 <?php if (isset($TeamLang) == False){include 'LanguageEN.php';include 'LanguageEN-Stat.php';} if (isset($Team) == False){$Team = (integer)-1;} if (isset($CareerLeaderSubPrintOut ) == False){$CareerLeaderSubPrintOut  = (integer)-1;} ?> 
-<th class="sorter-false"  colspan="5"></th><th class="sorter-false" colspan="12"><?php echo $TeamLang['Overall'];?></th><th class="sorter-false" colspan="11"><?php echo $TeamLang['Home'];?></th><th class="sorter-false" colspan="11"><?php echo $TeamLang['Visitor'];?></th><th class="sorter-false" colspan="42"></th></tr><tr>
+<th class="sorter-false"  colspan="2"></th><th class="sorter-false" colspan="10"><?php echo $TeamLang['Overall'];?></th><th class="sorter-false" colspan="11"><?php echo $TeamLang['Home'];?></th><th class="sorter-false" colspan="11"><?php echo $TeamLang['Visitor'];?></th><th class="sorter-false" colspan="43"></th></tr><tr>
 <th data-priority="3" title="Order Number" class="STHSW10 sorter-false">#</th>
 <th data-priority="critical" title="Team Name" class="STHSW200"><?php if ($Team <> 0){echo "VS ";}?><?php echo $TeamLang['TeamName'];?></th>
 <th data-priority="1" title="Overall Games Played" class="STHSW25">GP</th>
