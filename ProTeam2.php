@@ -1240,6 +1240,1107 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
             </div>
         </div>
 
+        <!-- Onglet Lines -->
+        <div class="tabmain" id="tabmain4" style="padding: 0px !important;">
+            <h3>Team Lines</h3>
+            
+            <?php
+            // Récupération des lignes d'équipe (même requête que ProTeam.php)
+            $Query = "SELECT * FROM TeamProLines WHERE TeamNumber = " . $Team . " AND Day = 1";
+            $TeamLines = $db->querySingle($Query, true);
+            
+            if ($TeamLines) {
+            ?>
+            
+            <!-- Lignes d'attaque 5vs5 -->
+            <div class="lines-section">
+                <h4>Lignes d'attaque 5vs5</h4>
+                <div class="lines-table-container">
+                    <table class="lines-table">
+                        <thead>
+                            <tr>
+                                <th>Ligne</th>
+                                <th>Ailier gauche</th>
+                                <th>Centre</th>
+                                <th>Ailier droit</th>
+                                <th>Temps %</th>
+                                <th>PHY</th>
+                                <th>DF</th>
+                                <th>OF</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if ($TeamLines != null) { ?>
+                            <tr>
+                                <td>1</td>
+                                <td><?php echo $TeamLines['Line15vs5ForwardLeftWing']; ?></td>
+                                <td><?php echo $TeamLines['Line15vs5ForwardCenter']; ?></td>
+                                <td><?php echo $TeamLines['Line15vs5ForwardRightWing']; ?></td>
+                                <td><?php echo $TeamLines['Line15vs5ForwardTime']; ?></td>
+                                <td><?php echo $TeamLines['Line15vs5ForwardPhy']; ?></td>
+                                <td><?php echo $TeamLines['Line15vs5ForwardDF']; ?></td>
+                                <td><?php echo $TeamLines['Line15vs5ForwardOF']; ?></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><?php echo $TeamLines['Line25vs5ForwardLeftWing']; ?></td>
+                                <td><?php echo $TeamLines['Line25vs5ForwardCenter']; ?></td>
+                                <td><?php echo $TeamLines['Line25vs5ForwardRightWing']; ?></td>
+                                <td><?php echo $TeamLines['Line25vs5ForwardTime']; ?></td>
+                                <td><?php echo $TeamLines['Line25vs5ForwardPhy']; ?></td>
+                                <td><?php echo $TeamLines['Line25vs5ForwardDF']; ?></td>
+                                <td><?php echo $TeamLines['Line25vs5ForwardOF']; ?></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><?php echo $TeamLines['Line35vs5ForwardLeftWing']; ?></td>
+                                <td><?php echo $TeamLines['Line35vs5ForwardCenter']; ?></td>
+                                <td><?php echo $TeamLines['Line35vs5ForwardRightWing']; ?></td>
+                                <td><?php echo $TeamLines['Line35vs5ForwardTime']; ?></td>
+                                <td><?php echo $TeamLines['Line35vs5ForwardPhy']; ?></td>
+                                <td><?php echo $TeamLines['Line35vs5ForwardDF']; ?></td>
+                                <td><?php echo $TeamLines['Line35vs5ForwardOF']; ?></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><?php echo $TeamLines['Line45vs5ForwardLeftWing']; ?></td>
+                                <td><?php echo $TeamLines['Line45vs5ForwardCenter']; ?></td>
+                                <td><?php echo $TeamLines['Line45vs5ForwardRightWing']; ?></td>
+                                <td><?php echo $TeamLines['Line45vs5ForwardTime']; ?></td>
+                                <td><?php echo $TeamLines['Line45vs5ForwardPhy']; ?></td>
+                                <td><?php echo $TeamLines['Line45vs5ForwardDF']; ?></td>
+                                <td><?php echo $TeamLines['Line45vs5ForwardOF']; ?></td>
+                            </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Lignes de défense 5vs5 -->
+            <div class="lines-section">
+                <h4>Lignes de défense 5vs5</h4>
+                <div class="lines-table-container">
+                    <table class="lines-table">
+                        <thead>
+                            <tr>
+                                <th>Ligne</th>
+                                <th>Défenseur</th>
+                                <th>Défenseur</th>
+                                <th></th>
+                                <th>Temps %</th>
+                                <th>PHY</th>
+                                <th>DF</th>
+                                <th>OF</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if ($TeamLines != null) { ?>
+                            <tr>
+                                <td>1</td>
+                                <td><?php echo $TeamLines['Line15vs5DefenseDefense1']; ?></td>
+                                <td><?php echo $TeamLines['Line15vs5DefenseDefense2']; ?></td>
+                                <td></td>
+                                <td><?php echo $TeamLines['Line15vs5DefenseTime']; ?></td>
+                                <td><?php echo $TeamLines['Line15vs5DefensePhy']; ?></td>
+                                <td><?php echo $TeamLines['Line15vs5DefenseDF']; ?></td>
+                                <td><?php echo $TeamLines['Line15vs5DefenseOF']; ?></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><?php echo $TeamLines['Line25vs5DefenseDefense1']; ?></td>
+                                <td><?php echo $TeamLines['Line25vs5DefenseDefense2']; ?></td>
+                                <td></td>
+                                <td><?php echo $TeamLines['Line25vs5DefenseTime']; ?></td>
+                                <td><?php echo $TeamLines['Line25vs5DefensePhy']; ?></td>
+                                <td><?php echo $TeamLines['Line25vs5DefenseDF']; ?></td>
+                                <td><?php echo $TeamLines['Line25vs5DefenseOF']; ?></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><?php echo $TeamLines['Line35vs5DefenseDefense1']; ?></td>
+                                <td><?php echo $TeamLines['Line35vs5DefenseDefense2']; ?></td>
+                                <td></td>
+                                <td><?php echo $TeamLines['Line35vs5DefenseTime']; ?></td>
+                                <td><?php echo $TeamLines['Line35vs5DefensePhy']; ?></td>
+                                <td><?php echo $TeamLines['Line35vs5DefenseDF']; ?></td>
+                                <td><?php echo $TeamLines['Line35vs5DefenseOF']; ?></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><?php echo $TeamLines['Line45vs5DefenseDefense1']; ?></td>
+                                <td><?php echo $TeamLines['Line45vs5DefenseDefense2']; ?></td>
+                                <td></td>
+                                <td><?php echo $TeamLines['Line45vs5DefenseTime']; ?></td>
+                                <td><?php echo $TeamLines['Line45vs5DefensePhy']; ?></td>
+                                <td><?php echo $TeamLines['Line45vs5DefenseDF']; ?></td>
+                                <td><?php echo $TeamLines['Line45vs5DefenseOF']; ?></td>
+                            </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Lignes d'attaque puissance numérique -->
+            <div class="lines-section">
+                <h4>Lignes d'attaque puissance numérique</h4>
+                <div class="lines-table-container">
+                    <table class="lines-table">
+                        <thead>
+                            <tr>
+                                <th>Ligne</th>
+                                <th>Ailier gauche</th>
+                                <th>Centre</th>
+                                <th>Ailier droit</th>
+                                <th>Temps %</th>
+                                <th>PHY</th>
+                                <th>DF</th>
+                                <th>OF</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if ($TeamLines != null) { ?>
+                            <tr>
+                                <td>1</td>
+                                <td><?php echo $TeamLines['Line1PPForwardLeftWing']; ?></td>
+                                <td><?php echo $TeamLines['Line1PPForwardCenter']; ?></td>
+                                <td><?php echo $TeamLines['Line1PPForwardRightWing']; ?></td>
+                                <td><?php echo $TeamLines['Line1PPForwardTime']; ?></td>
+                                <td><?php echo $TeamLines['Line1PPForwardPhy']; ?></td>
+                                <td><?php echo $TeamLines['Line1PPForwardDF']; ?></td>
+                                <td><?php echo $TeamLines['Line1PPForwardOF']; ?></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><?php echo $TeamLines['Line2PPForwardLeftWing']; ?></td>
+                                <td><?php echo $TeamLines['Line2PPForwardCenter']; ?></td>
+                                <td><?php echo $TeamLines['Line2PPForwardRightWing']; ?></td>
+                                <td><?php echo $TeamLines['Line2PPForwardTime']; ?></td>
+                                <td><?php echo $TeamLines['Line2PPForwardPhy']; ?></td>
+                                <td><?php echo $TeamLines['Line2PPForwardDF']; ?></td>
+                                <td><?php echo $TeamLines['Line2PPForwardOF']; ?></td>
+                            </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Lignes de défense puissance numérique -->
+            <div class="lines-section">
+                <h4>Lignes de défense puissance numérique</h4>
+                <div class="lines-table-container">
+                    <table class="lines-table">
+                        <thead>
+                            <tr>
+                                <th>Ligne</th>
+                                <th>Défenseur</th>
+                                <th>Défenseur</th>
+                                <th></th>
+                                <th>Temps %</th>
+                                <th>PHY</th>
+                                <th>DF</th>
+                                <th>OF</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if ($TeamLines != null) { ?>
+                            <tr>
+                                <td>1</td>
+                                <td><?php echo $TeamLines['Line1PPDefenseDefense1']; ?></td>
+                                <td><?php echo $TeamLines['Line1PPDefenseDefense2']; ?></td>
+                                <td></td>
+                                <td><?php echo $TeamLines['Line1PPDefenseTime']; ?></td>
+                                <td><?php echo $TeamLines['Line1PPDefensePhy']; ?></td>
+                                <td><?php echo $TeamLines['Line1PPDefenseDF']; ?></td>
+                                <td><?php echo $TeamLines['Line1PPDefenseOF']; ?></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><?php echo $TeamLines['Line2PPDefenseDefense1']; ?></td>
+                                <td><?php echo $TeamLines['Line2PPDefenseDefense2']; ?></td>
+                                <td></td>
+                                <td><?php echo $TeamLines['Line2PPDefenseTime']; ?></td>
+                                <td><?php echo $TeamLines['Line2PPDefensePhy']; ?></td>
+                                <td><?php echo $TeamLines['Line2PPDefenseDF']; ?></td>
+                                <td><?php echo $TeamLines['Line2PPDefenseOF']; ?></td>
+                            </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Lignes d'attaque pénalité 4 joueurs -->
+            <div class="lines-section">
+                <h4>Lignes d'attaque pénalité 4 joueurs</h4>
+                <div class="lines-table-container">
+                    <table class="lines-table">
+                        <thead>
+                            <tr>
+                                <th>Ligne</th>
+                                <th>Centre</th>
+                                <th>Ailier</th>
+                                <th>Temps %</th>
+                                <th>PHY</th>
+                                <th>DF</th>
+                                <th>OF</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if ($TeamLines != null) { ?>
+                            <tr>
+                                <td>1</td>
+                                <td><?php echo $TeamLines['Line1PK4ForwardCenter']; ?></td>
+                                <td><?php echo $TeamLines['Line1PK4ForwardWing']; ?></td>
+                                <td><?php echo $TeamLines['Line1PK4ForwardTime']; ?></td>
+                                <td><?php echo $TeamLines['Line1PK4ForwardPhy']; ?></td>
+                                <td><?php echo $TeamLines['Line1PK4ForwardDF']; ?></td>
+                                <td><?php echo $TeamLines['Line1PK4ForwardOF']; ?></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><?php echo $TeamLines['Line2PK4ForwardCenter']; ?></td>
+                                <td><?php echo $TeamLines['Line2PK4ForwardWing']; ?></td>
+                                <td><?php echo $TeamLines['Line2PK4ForwardTime']; ?></td>
+                                <td><?php echo $TeamLines['Line2PK4ForwardPhy']; ?></td>
+                                <td><?php echo $TeamLines['Line2PK4ForwardDF']; ?></td>
+                                <td><?php echo $TeamLines['Line2PK4ForwardOF']; ?></td>
+                            </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Lignes de défense pénalité 4 joueurs -->
+            <div class="lines-section">
+                <h4>Lignes de défense pénalité 4 joueurs</h4>
+                <div class="lines-table-container">
+                    <table class="lines-table">
+                        <thead>
+                            <tr>
+                                <th>Ligne</th>
+                                <th>Défenseur</th>
+                                <th>Défenseur</th>
+                                <th>Temps %</th>
+                                <th>PHY</th>
+                                <th>DF</th>
+                                <th>OF</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if ($TeamLines != null) { ?>
+                            <tr>
+                                <td>1</td>
+                                <td><?php echo $TeamLines['Line1PK4DefenseDefense1']; ?></td>
+                                <td><?php echo $TeamLines['Line1PK4DefenseDefense2']; ?></td>
+                                <td><?php echo $TeamLines['Line1PK4DefenseTime']; ?></td>
+                                <td><?php echo $TeamLines['Line1PK4DefensePhy']; ?></td>
+                                <td><?php echo $TeamLines['Line1PK4DefenseDF']; ?></td>
+                                <td><?php echo $TeamLines['Line1PK4DefenseOF']; ?></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><?php echo $TeamLines['Line2PK4DefenseDefense1']; ?></td>
+                                <td><?php echo $TeamLines['Line2PK4DefenseDefense2']; ?></td>
+                                <td><?php echo $TeamLines['Line2PK4DefenseTime']; ?></td>
+                                <td><?php echo $TeamLines['Line2PK4DefensePhy']; ?></td>
+                                <td><?php echo $TeamLines['Line2PK4DefenseDF']; ?></td>
+                                <td><?php echo $TeamLines['Line2PK4DefenseOF']; ?></td>
+                            </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Lignes pénalité 3 joueurs -->
+            <div class="lines-section">
+                <h4>Lignes pénalité 3 joueurs</h4>
+                <div class="lines-table-container">
+                    <table class="lines-table">
+                        <thead>
+                            <tr>
+                                <th>Ligne</th>
+                                <th>Ailier</th>
+                                <th>Temps %</th>
+                                <th>PHY</th>
+                                <th>DF</th>
+                                <th>OF</th>
+                                <th>Défenseur</th>
+                                <th>Défenseur</th>
+                                <th>Temps %</th>
+                                <th>PHY</th>
+                                <th>DF</th>
+                                <th>OF</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if ($TeamLines != null) { ?>
+                            <tr>
+                                <td>1</td>
+                                <td><?php echo $TeamLines['Line1PK3ForwardCenter']; ?></td>
+                                <td><?php echo $TeamLines['Line1PK3ForwardTime']; ?></td>
+                                <td><?php echo $TeamLines['Line1PK3ForwardPhy']; ?></td>
+                                <td><?php echo $TeamLines['Line1PK3ForwardDF']; ?></td>
+                                <td><?php echo $TeamLines['Line1PK3ForwardOF']; ?></td>
+                                <td><?php echo $TeamLines['Line1PK3DefenseDefense1']; ?></td>
+                                <td><?php echo $TeamLines['Line1PK3DefenseDefense2']; ?></td>
+                                <td><?php echo $TeamLines['Line1PK3DefenseTime']; ?></td>
+                                <td><?php echo $TeamLines['Line1PK3DefensePhy']; ?></td>
+                                <td><?php echo $TeamLines['Line1PK3DefenseDF']; ?></td>
+                                <td><?php echo $TeamLines['Line1PK3DefenseOF']; ?></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><?php echo $TeamLines['Line2PK3ForwardCenter']; ?></td>
+                                <td><?php echo $TeamLines['Line2PK3ForwardTime']; ?></td>
+                                <td><?php echo $TeamLines['Line2PK3ForwardPhy']; ?></td>
+                                <td><?php echo $TeamLines['Line2PK3ForwardDF']; ?></td>
+                                <td><?php echo $TeamLines['Line2PK3ForwardOF']; ?></td>
+                                <td><?php echo $TeamLines['Line2PK3DefenseDefense1']; ?></td>
+                                <td><?php echo $TeamLines['Line2PK3DefenseDefense2']; ?></td>
+                                <td><?php echo $TeamLines['Line2PK3DefenseTime']; ?></td>
+                                <td><?php echo $TeamLines['Line2PK3DefensePhy']; ?></td>
+                                <td><?php echo $TeamLines['Line2PK3DefenseDF']; ?></td>
+                                <td><?php echo $TeamLines['Line2PK3DefenseOF']; ?></td>
+                            </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Tirs de barrage -->
+            <div class="lines-section">
+                <h4>Tirs de barrage</h4>
+                <div class="lines-table-container">
+                    <table class="lines-table">
+                        <thead>
+                            <tr>
+                                <th>Joueurs</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if ($TeamLines != null) { ?>
+                            <tr>
+                                <td><?php echo $TeamLines['PenaltyShots1'] . ", " . $TeamLines['PenaltyShots2'] . ", " . $TeamLines['PenaltyShots3'] . ", " . $TeamLines['PenaltyShots4'] . ", " . $TeamLines['PenaltyShots5']; ?></td>
+                            </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Gardiens -->
+            <div class="lines-section">
+                <h4>Gardiens</h4>
+                <div class="lines-table-container">
+                    <table class="lines-table">
+                        <thead>
+                            <tr>
+                                <th>Ordre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if ($TeamLines != null) { ?>
+                            <tr>
+                                <td>#1 : <?php echo $TeamLines['Goaler1']; ?>, #2 : <?php echo $TeamLines['Goaler2']; ?><?php if($TeamLines['Goaler3'] != ""){echo ", #3 : " . $TeamLines['Goaler3'];} ?></td>
+                            </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Prolongation attaque -->
+            <div class="lines-section">
+                <h4>Prolongation attaque</h4>
+                <div class="lines-table-container">
+                    <table class="lines-table">
+                        <thead>
+                            <tr>
+                                <th>Joueurs</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if ($TeamLines != null) { ?>
+                            <tr>
+                                <td><?php echo $TeamLines['OTForward1'] . ", " . $TeamLines['OTForward2'] . ", " . $TeamLines['OTForward3'] . ", " . $TeamLines['OTForward4'] . ", " . $TeamLines['OTForward5']; ?></td>
+                            </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Prolongation défense -->
+            <div class="lines-section">
+                <h4>Prolongation défense</h4>
+                <div class="lines-table-container">
+                    <table class="lines-table">
+                        <thead>
+                            <tr>
+                                <th>Joueurs</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if ($TeamLines != null) { ?>
+                            <tr>
+                                <td><?php echo $TeamLines['OTDefense1'] . ", " . $TeamLines['OTDefense2'] . ", " . $TeamLines['OTDefense3'] . ", " . $TeamLines['OTDefense4'] . ", " . $TeamLines['OTDefense5']; ?></td>
+                            </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <?php } else { ?>
+                <div class="no-lines-message">
+                    <p>Aucune information de lignes disponible pour cette équipe.</p>
+                </div>
+            <?php } ?>
+            
+        </div>
+
+        <!-- Onglet Depth -->
+        <div class="tabmain" id="tabmain5" style="padding: 0px !important;">
+            <h3>Depth Chart</h3>
+            
+            <?php
+            // Récupération des données pour le Depth Chart (même requête que ProTeam.php)
+            if ($Team != 0) {
+                $Query = "SELECT PlayerInfo.Name, PlayerInfo.Number, PlayerInfo.PosLW, PlayerInfo.PosC, PlayerInfo.PosRW, PlayerInfo.PosD, PlayerInfo.Rookie, PlayerInfo.Age, PlayerInfo.PO, PlayerInfo.Overall FROM PlayerInfo WHERE (PlayerInfo.Team)=" . $Team . " ORDER By Overall DESC, PO DESC";
+                if (file_exists($DatabaseFile) == true) {
+                    $PlayerDepthChartC = $db->query($Query);	
+                    $PlayerDepthChartLW = $db->query($Query);	
+                    $PlayerDepthChartRW = $db->query($Query);	
+                    $PlayerDepthChartD = $db->query($Query);
+                }
+                
+                // Récupération des gardiens pour le Depth Chart
+                $Query = "SELECT GoalerInfo.Name, GoalerInfo.Number, GoalerInfo.Rookie, GoalerInfo.Age, GoalerInfo.PO, GoalerInfo.Overall FROM GoalerInfo WHERE (GoalerInfo.Team)=" . $Team . " ORDER By Overall DESC, PO DESC";
+                $GoalieDepthChart = $db->query($Query);
+            }
+            ?>
+            
+            <!-- Depth Chart des attaquants -->
+            <div class="depth-section">
+                <h4>Attaquants</h4>
+                <div class="depth-chart-container">
+                    <table class="depth-chart-table">
+                        <thead>
+                            <tr>
+                                <th style="width:33%;">Ailier gauche</th>
+                                <th style="width:33%;">Centre</th>
+                                <th style="width:33%;">Ailier droit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="depth-column">
+                                    <table class="depth-player-list">
+                                        <?php
+                                        if (!empty($PlayerDepthChartC)) {
+                                            $PlayerDepthChartC->reset();
+                                            while ($Row = $PlayerDepthChartC->fetchArray()) {
+                                                if ($Row['PosLW'] == "True") {
+                                                    echo "<tr>";
+                                                    echo "<td class='player-name'>";
+                                                    $strTemp = (string)$Row['Name'];
+                                                    if ($Row['Rookie'] == "True") { 
+                                                        $strTemp = $strTemp . " (R)"; 
+                                                    }
+                                                    echo "<a href='PlayerReport.php?Player=" . $Row['Number'] . "'>" . $strTemp . "</a>";
+                                                    echo "</td>";
+                                                    echo "<td class='player-stats'>";
+                                                    echo "<span class='stat-item'>AGE: " . $Row['Age'] . "</span>";
+                                                    echo "<span class='stat-item'>PO: " . $Row['PO'] . "</span>";
+                                                    echo "<span class='stat-item'>OV: " . $Row['Overall'] . "</span>";
+                                                    echo "</td>";
+                                                    echo "</tr>";
+                                                }
+                                            }
+                                        }
+                                        ?>
+                                    </table>
+                                </td>
+                                <td class="depth-column">
+                                    <table class="depth-player-list">
+                                        <?php
+                                        if (!empty($PlayerDepthChartLW)) {
+                                            $PlayerDepthChartLW->reset();
+                                            while ($Row = $PlayerDepthChartLW->fetchArray()) {
+                                                if ($Row['PosC'] == "True") {
+                                                    echo "<tr>";
+                                                    echo "<td class='player-name'>";
+                                                    $strTemp = (string)$Row['Name'];
+                                                    if ($Row['Rookie'] == "True") { 
+                                                        $strTemp = $strTemp . " (R)"; 
+                                                    }
+                                                    echo "<a href='PlayerReport.php?Player=" . $Row['Number'] . "'>" . $strTemp . "</a>";
+                                                    echo "</td>";
+                                                    echo "<td class='player-stats'>";
+                                                    echo "<span class='stat-item'>AGE: " . $Row['Age'] . "</span>";
+                                                    echo "<span class='stat-item'>PO: " . $Row['PO'] . "</span>";
+                                                    echo "<span class='stat-item'>OV: " . $Row['Overall'] . "</span>";
+                                                    echo "</td>";
+                                                    echo "</tr>";
+                                                }
+                                            }
+                                        }
+                                        ?>
+                                    </table>
+                                </td>
+                                <td class="depth-column">
+                                    <table class="depth-player-list">
+                                        <?php
+                                        if (!empty($PlayerDepthChartRW)) {
+                                            $PlayerDepthChartRW->reset();
+                                            while ($Row = $PlayerDepthChartRW->fetchArray()) {
+                                                if ($Row['PosRW'] == "True") {
+                                                    echo "<tr>";
+                                                    echo "<td class='player-name'>";
+                                                    $strTemp = (string)$Row['Name'];
+                                                    if ($Row['Rookie'] == "True") { 
+                                                        $strTemp = $strTemp . " (R)"; 
+                                                    }
+                                                    echo "<a href='PlayerReport.php?Player=" . $Row['Number'] . "'>" . $strTemp . "</a>";
+                                                    echo "</td>";
+                                                    echo "<td class='player-stats'>";
+                                                    echo "<span class='stat-item'>AGE: " . $Row['Age'] . "</span>";
+                                                    echo "<span class='stat-item'>PO: " . $Row['PO'] . "</span>";
+                                                    echo "<span class='stat-item'>OV: " . $Row['Overall'] . "</span>";
+                                                    echo "</td>";
+                                                    echo "</tr>";
+                                                }
+                                            }
+                                        }
+                                        ?>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Depth Chart des défenseurs et gardiens -->
+            <div class="depth-section">
+                <h4>Défenseurs et Gardiens</h4>
+                <div class="depth-chart-container">
+                    <table class="depth-chart-table">
+                        <thead>
+                            <tr>
+                                <th style="width:33%;">Défenseur #1</th>
+                                <th style="width:33%;">Défenseur #2</th>
+                                <th style="width:33%;">Gardien</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="depth-column">
+                                    <table class="depth-player-list">
+                                        <?php
+                                        $NumOfD = 0;
+                                        $Count = 0;
+                                        if (!empty($PlayerDepthChart)) {
+                                            $PlayerDepthChart->reset();
+                                            while ($Row = $PlayerDepthChart->fetchArray()) {
+                                                if ($Row['PosD'] == "True") {
+                                                    $NumOfD++;
+                                                }
+                                            }
+                                        }
+                                        $NumOfD = round($NumOfD / 2);
+                                        
+                                        if (!empty($PlayerDepthChartD)) {
+                                            $PlayerDepthChartD->reset();
+                                            while ($Row = $PlayerDepthChartD->fetchArray()) {
+                                                if ($Row['PosD'] == "True") {
+                                                    echo "<tr>";
+                                                    echo "<td class='player-name'>";
+                                                    $strTemp = (string)$Row['Name'];
+                                                    if ($Row['Rookie'] == "True") { 
+                                                        $strTemp = $strTemp . " (R)"; 
+                                                    }
+                                                    echo "<a href='PlayerReport.php?Player=" . $Row['Number'] . "'>" . $strTemp . "</a>";
+                                                    echo "</td>";
+                                                    echo "<td class='player-stats'>";
+                                                    echo "<span class='stat-item'>AGE: " . $Row['Age'] . "</span>";
+                                                    echo "<span class='stat-item'>PO: " . $Row['PO'] . "</span>";
+                                                    echo "<span class='stat-item'>OV: " . $Row['Overall'] . "</span>";
+                                                    echo "</td>";
+                                                    echo "</tr>";
+                                                    $Count++;
+                                                    if ($NumOfD == $Count) {
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        ?>
+                                    </table>
+                                </td>
+                                <td class="depth-column">
+                                    <table class="depth-player-list">
+                                        <?php
+                                        if (!empty($PlayerDepthChartD)) {
+                                            $PlayerDepthChartD->reset();
+                                            $Count = 0;
+                                            $skipCount = 0;
+                                            while ($Row = $PlayerDepthChartD->fetchArray()) {
+                                                if ($Row['PosD'] == "True") {
+                                                    $skipCount++;
+                                                    if ($skipCount > $NumOfD) {
+                                                        echo "<tr>";
+                                                        echo "<td class='player-name'>";
+                                                        $strTemp = (string)$Row['Name'];
+                                                        if ($Row['Rookie'] == "True") { 
+                                                            $strTemp = $strTemp . " (R)"; 
+                                                        }
+                                                        echo "<a href='PlayerReport.php?Player=" . $Row['Number'] . "'>" . $strTemp . "</a>";
+                                                        echo "</td>";
+                                                        echo "<td class='player-stats'>";
+                                                        echo "<span class='stat-item'>AGE: " . $Row['Age'] . "</span>";
+                                                        echo "<span class='stat-item'>PO: " . $Row['PO'] . "</span>";
+                                                        echo "<span class='stat-item'>OV: " . $Row['Overall'] . "</span>";
+                                                        echo "</td>";
+                                                        echo "</tr>";
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        ?>
+                                    </table>
+                                </td>
+                                <td class="depth-column">
+                                    <table class="depth-player-list">
+                                        <?php
+                                        if (!empty($GoalieDepthChart)) {
+                                            while ($Row = $GoalieDepthChart->fetchArray()) {
+                                                echo "<tr>";
+                                                echo "<td class='player-name'>";
+                                                $strTemp = (string)$Row['Name'];
+                                                if ($Row['Rookie'] == "True") { 
+                                                    $strTemp = $strTemp . " (R)"; 
+                                                }
+                                                echo "<a href='GoalieReport.php?Goalie=" . $Row['Number'] . "'>" . $strTemp . "</a>";
+                                                echo "</td>";
+                                                echo "<td class='player-stats'>";
+                                                echo "<span class='stat-item'>AGE: " . $Row['Age'] . "</span>";
+                                                echo "<span class='stat-item'>PO: " . $Row['PO'] . "</span>";
+                                                echo "<span class='stat-item'>OV: " . $Row['Overall'] . "</span>";
+                                                echo "</td>";
+                                                echo "</tr>";
+                                            }
+                                        }
+                                        ?>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- Onglet Capology -->
+        <div class="tabmain" id="tabmain6" style="padding: 0px !important;">
+            <h3>Salary Cap Overview</h3>
+            
+            <?php
+            // Récupération des informations de la ligue pour le salary cap (même requête que TeamSalaryCapDetail.php)
+            $Query = "Select SalaryCapOption, ProSalaryCapValue, BonusIncludeSalaryCap from LeagueFinance";
+            $LeagueFinance = $db->querySingle($Query, true);
+            $Query = "Select FreeAgentUseDateInsteadofDay, FreeAgentRealDate from LeagueOutputOption";
+            $LeagueOutputOption = $db->querySingle($Query, true);
+            $Query = "Select Name, RFAAge, UFAAge, LeagueYearOutput from LeagueGeneral";
+            $LeagueGeneral = $db->querySingle($Query, true);
+            $LeagueYear = (int)$LeagueGeneral['LeagueYearOutput'];
+            $SalaryCap = (int)$LeagueFinance['ProSalaryCapValue'];
+            
+            // Récupération des informations financières de l'équipe
+            $Query = "Select Number, Name, CurrentBankAccount, SpecialSalaryCapY1, SpecialSalaryCapY2, SpecialSalaryCapY3, SpecialSalaryCapY4, SpecialSalaryCapY5 from TeamProFinance WHERE Number = " . $Team;
+            $TeamFinance = $db->querySingle($Query, true);
+            
+            // Ajustement du salary cap selon les options de la ligue
+            if ($LeagueFinance['SalaryCapOption'] == 2 OR $LeagueFinance['SalaryCapOption'] == 5) {
+                $SalaryCap = $SalaryCap + $TeamFinance['CurrentBankAccount'];
+            }
+            
+            // Récupération des joueurs avec leurs contrats (même requête que TeamSalaryCapDetail.php)
+            $Query = "SELECT MainTable.* FROM (SELECT PlayerInfo.Number, PlayerInfo.Name, PlayerInfo.Team, PlayerInfo.TeamName, PlayerInfo.ProTeamName, PlayerInfo.Age, PlayerInfo.AgeDate, PlayerInfo.Contract, PlayerInfo.Rookie, PlayerInfo.NoTrade, PlayerInfo.CanPlayPro, PlayerInfo.CanPlayFarm, PlayerInfo.ForceWaiver, PlayerInfo.WaiverPossible, PlayerInfo.ExcludeSalaryCap, PlayerInfo.ProSalaryinFarm, PlayerInfo.SalaryAverage, PlayerInfo.Salary1, PlayerInfo.Salary2, PlayerInfo.Salary3, PlayerInfo.Salary4, PlayerInfo.Salary5, PlayerInfo.Salary6, PlayerInfo.Salary7, PlayerInfo.Salary8, PlayerInfo.Salary9, PlayerInfo.Salary10, PlayerInfo.SalaryRemaining, PlayerInfo.SalaryAverageRemaining, PlayerInfo.SalaryCap, PlayerInfo.SalaryCapRemaining, PlayerInfo.Condition, PlayerInfo.Status1, PlayerInfo.URLLink, PlayerInfo.NHLID, PlayerInfo.PProtected, PlayerInfo.PosC, PlayerInfo.PosLW, PlayerInfo.PosRW, PlayerInfo.PosD, 'False' AS PosG, PlayerInfo.Retire as Retire FROM PlayerInfo WHERE Team = " . $Team . " AND Retire = 'False' AND Status1 >= 2 UNION ALL SELECT GoalerInfo.Number + 10000, GoalerInfo.Name, GoalerInfo.Team, GoalerInfo.TeamName, GoalerInfo.ProTeamName, GoalerInfo.Age, GoalerInfo.AgeDate, GoalerInfo.Contract, GoalerInfo.Rookie, GoalerInfo.NoTrade, GoalerInfo.CanPlayPro, GoalerInfo.CanPlayFarm, GoalerInfo.ForceWaiver, GoalerInfo.WaiverPossible, GoalerInfo.ExcludeSalaryCap, GoalerInfo.ProSalaryinFarm, GoalerInfo.SalaryAverage, GoalerInfo.Salary1, GoalerInfo.Salary2, GoalerInfo.Salary3, GoalerInfo.Salary4, GoalerInfo.Salary5, GoalerInfo.Salary6, GoalerInfo.Salary7, GoalerInfo.Salary8, GoalerInfo.Salary9, GoalerInfo.Salary10, GoalerInfo.SalaryRemaining, GoalerInfo.SalaryAverageRemaining, GoalerInfo.SalaryCap, GoalerInfo.SalaryCapRemaining, GoalerInfo.Condition, GoalerInfo.Status1, GoalerInfo.URLLink, GoalerInfo.NHLID, GoalerInfo.PProtected, 'False' AS PosC, 'False' AS PosLW, 'False' AS PosRW, 'False' AS PosD, 'True' AS PosG, GoalerInfo.Retire as Retire FROM GoalerInfo WHERE Team = " . $Team . " AND Retire = 'False' AND Status1 >= 2) AS MainTable ORDER BY PosG ASC, PosD ASC, Name ASC";
+            $PlayerSalaryCap = $db->query($Query);
+            ?>
+            
+            <!-- Résumé du salary cap -->
+            <div class="cap-summary" style="margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px; border: 1px solid #e9ecef;">
+                <h4 style="margin-bottom: 15px; color: var(--primary-color);">Salary Cap Summary</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 24px; font-weight: bold; color: #333;">$<?php echo number_format($SalaryCap); ?></div>
+                        <div style="font-size: 12px; color: #666;">League Salary Cap</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 24px; font-weight: bold; color: #333;">$<?php echo number_format($TeamFinance['CurrentBankAccount'] ?? 0); ?></div>
+                        <div style="font-size: 12px; color: #666;">Current Bank Account</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 24px; font-weight: bold; color: #333;"><?php echo $LeagueYear; ?></div>
+                        <div style="font-size: 12px; color: #666;">Current League Year</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tableau des contrats -->
+            <div class="cap-table-container" style="overflow-x: auto;">
+                <table class="cap-table" style="width: 100%; font-size: 11px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
+                    <thead>
+                        <tr style="background: #f5f5f5; border-bottom: 2px solid #ddd;">
+                            <th style="width: 140px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: left; font-weight: bold;">Player Name</th>
+                            <th style="width: 45px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">POS</th>
+                            <th style="width: 25px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Age</th>
+                            <th style="width: 45px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Birthday</th>
+                            <th style="width: 35px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Terms</th>
+                            <th style="width: 25px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Contract</th>
+                            <th style="width: 25px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Cap %</th>
+                            <?php
+                            echo "<th style=\"width: 75px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;\">Year " . $LeagueYear . "</th>";
+                            echo "<th style=\"width: 75px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;\">Year " . ($LeagueYear + 1) . "</th>";
+                            echo "<th style=\"width: 75px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;\">Year " . ($LeagueYear + 2) . "</th>";
+                            echo "<th style=\"width: 75px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;\">Year " . ($LeagueYear + 3) . "</th>";
+                            echo "<th style=\"width: 75px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;\">Year " . ($LeagueYear + 4) . "</th>";
+                            ?>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        // Section des attaquants
+                        echo "<tr style=\"background: #e3f2fd; font-weight: bold;\"><td colspan=\"12\" style=\"padding: 8px 4px; border: 1px solid #ddd;\">Forwards</td></tr>";
+                        
+                        $FoundD = false;
+                        $FoundG = false;
+                        $AverageAge = 0;
+                        $AverageCap1 = 0;
+                        $AverageCap2 = 0;
+                        $AverageCap3 = 0;
+                        $AverageCap4 = 0;
+                        $AverageCap5 = 0;
+                        $AverageCount = 0;
+                        $AverageTotalCap1 = 0;
+                        $AverageTotalCap2 = 0;
+                        $AverageTotalCap3 = 0;
+                        $AverageTotalCap4 = 0;
+                        $AverageTotalCap5 = 0;
+                        $AverageTotalCount = 0;
+                        
+                        if ($PlayerSalaryCap) {
+                            while ($Row = $PlayerSalaryCap->fetchArray()) {
+                                // Séparateur pour les défenseurs
+                                if ($Row['PosD'] == "True" && $FoundD == false) {
+                                    if ($AverageCount > 0) {
+                                        echo "<tr style=\"background: #f8f9fa; font-weight: bold;\">";
+                                        echo "<td colspan=\"2\">Average (" . $AverageCount . ")</td>";
+                                        echo "<td style=\"text-align: center;\">" . number_format($AverageAge / $AverageCount, 2) . "</td>";
+                                        echo "<td colspan=\"3\"></td>";
+                                        if ($SalaryCap > 0) {
+                                            echo "<td style=\"text-align: center;\">" . number_format(($AverageCap1 / $SalaryCap) * 100, 2) . "%</td>";
+                                        } else {
+                                            echo "<td style=\"text-align: center;\">N/A</td>";
+                                        }
+                                        echo "<td style=\"text-align: center;\">" . number_format($AverageCap1, 0) . "$</td>";
+                                        echo "<td style=\"text-align: center;\">" . number_format($AverageCap2, 0) . "$</td>";
+                                        echo "<td style=\"text-align: center;\">" . number_format($AverageCap3, 0) . "$</td>";
+                                        echo "<td style=\"text-align: center;\">" . number_format($AverageCap4, 0) . "$</td>";
+                                        echo "<td style=\"text-align: center;\">" . number_format($AverageCap5, 0) . "$</td>";
+                                        echo "</tr>";
+                                    }
+                                    echo "<tr style=\"background: #e3f2fd; font-weight: bold;\"><td colspan=\"12\" style=\"padding: 8px 4px; border: 1px solid #ddd;\">Defensemen</td></tr>";
+                                    $AverageTotalCap1 = $AverageTotalCap1 + $AverageCap1;
+                                    $AverageTotalCap2 = $AverageTotalCap2 + $AverageCap2;
+                                    $AverageTotalCap3 = $AverageTotalCap3 + $AverageCap3;
+                                    $AverageTotalCap4 = $AverageTotalCap4 + $AverageCap4;
+                                    $AverageTotalCap5 = $AverageTotalCap5 + $AverageCap5;
+                                    $AverageTotalCount = $AverageTotalCount + $AverageCount;
+                                    $AverageAge = 0;
+                                    $AverageCap1 = 0;
+                                    $AverageCap2 = 0;
+                                    $AverageCap3 = 0;
+                                    $AverageCap4 = 0;
+                                    $AverageCap5 = 0;
+                                    $AverageCount = 0;
+                                    $FoundD = true;
+                                }
+                                
+                                // Séparateur pour les gardiens
+                                if ($Row['PosG'] == "True" && $FoundG == false) {
+                                    if ($AverageCount > 0) {
+                                        echo "<tr style=\"background: #f8f9fa; font-weight: bold;\">";
+                                        echo "<td colspan=\"2\">Average (" . $AverageCount . ")</td>";
+                                        echo "<td style=\"text-align: center;\">" . number_format($AverageAge / $AverageCount, 2) . "</td>";
+                                        echo "<td colspan=\"3\"></td>";
+                                        if ($SalaryCap > 0) {
+                                            echo "<td style=\"text-align: center;\">" . number_format(($AverageCap1 / $SalaryCap) * 100, 2) . "%</td>";
+                                        } else {
+                                            echo "<td style=\"text-align: center;\">N/A</td>";
+                                        }
+                                        echo "<td style=\"text-align: center;\">" . number_format($AverageCap1, 0) . "$</td>";
+                                        echo "<td style=\"text-align: center;\">" . number_format($AverageCap2, 0) . "$</td>";
+                                        echo "<td style=\"text-align: center;\">" . number_format($AverageCap3, 0) . "$</td>";
+                                        echo "<td style=\"text-align: center;\">" . number_format($AverageCap4, 0) . "$</td>";
+                                        echo "<td style=\"text-align: center;\">" . number_format($AverageCap5, 0) . "$</td>";
+                                        echo "</tr>";
+                                    }
+                                    echo "<tr style=\"background: #e3f2fd; font-weight: bold;\"><td colspan=\"12\" style=\"padding: 8px 4px; border: 1px solid #ddd;\">Goalies</td></tr>";
+                                    $AverageTotalCap1 = $AverageTotalCap1 + $AverageCap1;
+                                    $AverageTotalCap2 = $AverageTotalCap2 + $AverageCap2;
+                                    $AverageTotalCap3 = $AverageTotalCap3 + $AverageCap3;
+                                    $AverageTotalCap4 = $AverageTotalCap4 + $AverageCap4;
+                                    $AverageTotalCap5 = $AverageTotalCap5 + $AverageCap5;
+                                    $AverageTotalCount = $AverageTotalCount + $AverageCount;
+                                    $AverageAge = 0;
+                                    $AverageCap1 = 0;
+                                    $AverageCap2 = 0;
+                                    $AverageCap3 = 0;
+                                    $AverageCap4 = 0;
+                                    $AverageCap5 = 0;
+                                    $AverageCount = 0;
+                                    $FoundG = true;
+                                }
+                                
+                                $AverageCount = $AverageCount + 1;
+                                
+                                echo "<tr>";
+                                // Nom du joueur avec lien
+                                echo "<td style=\"padding: 6px 4px; border: 1px solid #ddd;\">";
+                                if ($Row['PosG'] == "True") {
+                                    echo "<a href=\"GoalieReport.php?Goalie=" . ($Row['Number'] - 10000) . "\">";
+                                } else {
+                                    echo "<a href=\"PlayerReport.php?Player=" . $Row['Number'] . "\">";
+                                }
+                                echo $Row['Name'] . "</a></td>";
+                                
+                                // Position
+                                $Position = "";
+                                if ($Row['PosC'] == "True") {
+                                    if ($Position == "") {
+                                        $Position = "C";
+                                    } else {
+                                        $Position = $Position . "/C";
+                                    }
+                                }
+                                if ($Row['PosLW'] == "True") {
+                                    if ($Position == "") {
+                                        $Position = "LW";
+                                    } else {
+                                        $Position = $Position . "/LW";
+                                    }
+                                }
+                                if ($Row['PosRW'] == "True") {
+                                    if ($Position == "") {
+                                        $Position = "RW";
+                                    } else {
+                                        $Position = $Position . "/RW";
+                                    }
+                                }
+                                if ($Row['PosD'] == "True") {
+                                    if ($Position == "") {
+                                        $Position = "D";
+                                    } else {
+                                        $Position = $Position . "/D";
+                                    }
+                                }
+                                if ($Row['PosG'] == "True") {
+                                    if ($Position == "") {
+                                        $Position = "G";
+                                    }
+                                }
+                                echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . $Position . "</td>";
+                                
+                                // Âge
+                                echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . $Row['Age'] . "</td>";
+                                $AverageAge = $AverageAge + $Row['Age'];
+                                
+                                // Date de naissance
+                                echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . $Row['AgeDate'] . "</td>";
+                                
+                                // Termes spéciaux
+                                echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">";
+                                if ($Row['ForceWaiver'] == "True") {
+                                    echo "FV ";
+                                }
+                                if ($Row['NoTrade'] == "True") {
+                                    echo "NT ";
+                                }
+                                if ($Row['Condition'] < '95') {
+                                    echo "IN ";
+                                }
+                                if ($Row['CanPlayPro'] == "True" && $Row['CanPlayFarm'] == "True") {
+                                    echo "TW ";
+                                }
+                                echo "</td>";
+                                
+                                // Durée du contrat
+                                echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . $Row['Contract'] . "</td>";
+                                
+                                // Pourcentage du salary cap
+                                if ($SalaryCap > 0) {
+                                    echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format(($Row['SalaryCap'] / $SalaryCap) * 100, 2) . "%</td>";
+                                } else {
+                                    echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">N/A</td>";
+                                }
+                                
+                                // Salaires par année
+                                for ($i = 1; $i <= 5; $i = $i + 1) {
+                                    if ($Row['Contract'] >= $i) {
+                                        if ($i == 1) {
+                                            echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format($Row['SalaryCap'], 0) . "$</td>";
+                                            $AverageCap1 = $AverageCap1 + $Row['SalaryCap'];
+                                        } else {
+                                            if ($LeagueFinance['SalaryCapOption'] >= 1 && $LeagueFinance['SalaryCapOption'] <= 3) {
+                                                if ($i == 2) {
+                                                    echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format($Row['Salary2'], 0) . "$</td>";
+                                                    $AverageCap2 = $AverageCap2 + $Row['Salary2'];
+                                                }
+                                                if ($i == 3) {
+                                                    echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format($Row['Salary3'], 0) . "$</td>";
+                                                    $AverageCap3 = $AverageCap3 + $Row['Salary3'];
+                                                }
+                                                if ($i == 4) {
+                                                    echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format($Row['Salary4'], 0) . "$</td>";
+                                                    $AverageCap4 = $AverageCap4 + $Row['Salary4'];
+                                                }
+                                                if ($i == 5) {
+                                                    echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format($Row['Salary5'], 0) . "$</td>";
+                                                    $AverageCap5 = $AverageCap5 + $Row['Salary5'];
+                                                }
+                                            } elseif ($LeagueFinance['SalaryCapOption'] >= 4 && $LeagueFinance['SalaryCapOption'] <= 6) {
+                                                echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format($Row['SalaryCap'], 0) . "$</td>";
+                                                if ($i == 2) {
+                                                    $AverageCap2 = $AverageCap2 + $Row['SalaryAverage'];
+                                                }
+                                                if ($i == 3) {
+                                                    $AverageCap3 = $AverageCap3 + $Row['SalaryAverage'];
+                                                }
+                                                if ($i == 4) {
+                                                    $AverageCap4 = $AverageCap4 + $Row['SalaryAverage'];
+                                                }
+                                                if ($i == 5) {
+                                                    $AverageCap5 = $AverageCap5 + $Row['SalaryAverage'];
+                                                }
+                                            } else {
+                                                echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\"></td>";
+                                            }
+                                        }
+                                    } elseif ($Row['Contract'] + 1 == $i) {
+                                        if ($LeagueOutputOption['FreeAgentUseDateInsteadofDay'] == "True") {
+                                            $age = date_diff(date_create($Row['AgeDate']), date_create($LeagueOutputOption['FreeAgentRealDate']))->y;
+                                        } else {
+                                            $age = $Row['Age'];
+                                        }
+                                        if ($age + $i > $LeagueGeneral['UFAAge']) {
+                                            echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd; background-color: #ffebee; color: #c62828;\">UFA [Age: " . ($age + $i - 1) . "]</td>";
+                                        } elseif ($age + $i > $LeagueGeneral['RFAAge']) {
+                                            echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd; background-color: #fff3e0; color: #ef6c00;\">RFA [Age: " . ($age + $i - 1) . "]</td>";
+                                        }
+                                    } else {
+                                        echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\"></td>";
+                                    }
+                                }
+                                echo "</tr>";
+                            }
+                        }
+                        
+                        // Moyenne de la dernière section
+                        if ($AverageCount > 0) {
+                            echo "<tr style=\"background: #f8f9fa; font-weight: bold;\">";
+                            echo "<td colspan=\"2\">Average (" . $AverageCount . ")</td>";
+                            echo "<td style=\"text-align: center;\">" . number_format($AverageAge / $AverageCount, 2) . "</td>";
+                            echo "<td colspan=\"3\"></td>";
+                            if ($SalaryCap > 0) {
+                                echo "<td style=\"text-align: center;\">" . number_format(($AverageCap1 / $SalaryCap) * 100, 2) . "%</td>";
+                            } else {
+                                echo "<td style=\"text-align: center;\">N/A</td>";
+                            }
+                            echo "<td style=\"text-align: center;\">" . number_format($AverageCap1, 0) . "$</td>";
+                            echo "<td style=\"text-align: center;\">" . number_format($AverageCap2, 0) . "$</td>";
+                            echo "<td style=\"text-align: center;\">" . number_format($AverageCap3, 0) . "$</td>";
+                            echo "<td style=\"text-align: center;\">" . number_format($AverageCap4, 0) . "$</td>";
+                            echo "<td style=\"text-align: center;\">" . number_format($AverageCap5, 0) . "$</td>";
+                            echo "</tr>";
+                            $AverageTotalCap1 = $AverageTotalCap1 + $AverageCap1;
+                            $AverageTotalCap2 = $AverageTotalCap2 + $AverageCap2;
+                            $AverageTotalCap3 = $AverageTotalCap3 + $AverageCap3;
+                            $AverageTotalCap4 = $AverageTotalCap4 + $AverageCap4;
+                            $AverageTotalCap5 = $AverageTotalCap5 + $AverageCap5;
+                            $AverageTotalCount = $AverageTotalCount + $AverageCount;
+                        }
+                        
+                        // Salary cap spécial si activé
+                        if ($LeagueFinance['BonusIncludeSalaryCap'] == "True") {
+                            echo "<tr style=\"background: #e8f5e8; font-weight: bold;\">";
+                            echo "<td colspan=\"7\" style=\"padding: 6px 4px; border: 1px solid #ddd;\">Special Salary Cap Value</td>";
+                            echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format($TeamFinance['SpecialSalaryCapY1'], 0) . "$</td>";
+                            echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format($TeamFinance['SpecialSalaryCapY2'], 0) . "$</td>";
+                            echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format($TeamFinance['SpecialSalaryCapY3'], 0) . "$</td>";
+                            echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format($TeamFinance['SpecialSalaryCapY4'], 0) . "$</td>";
+                            echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format($TeamFinance['SpecialSalaryCapY5'], 0) . "$</td>";
+                            echo "</tr>";
+                            $AverageTotalCap1 = $AverageTotalCap1 + $TeamFinance['SpecialSalaryCapY1'];
+                            $AverageTotalCap2 = $AverageTotalCap2 + $TeamFinance['SpecialSalaryCapY2'];
+                            $AverageTotalCap3 = $AverageTotalCap3 + $TeamFinance['SpecialSalaryCapY3'];
+                            $AverageTotalCap4 = $AverageTotalCap4 + $TeamFinance['SpecialSalaryCapY4'];
+                            $AverageTotalCap5 = $AverageTotalCap5 + $TeamFinance['SpecialSalaryCapY5'];
+                        }
+                        
+                        // Total
+                        echo "<tr style=\"background: #f0f8ff; font-weight: bold;\">";
+                        echo "<td colspan=\"6\" style=\"padding: 6px 4px; border: 1px solid #ddd;\">Total (" . $AverageTotalCount . ")</td>";
+                        if ($SalaryCap > 0) {
+                            if ($AverageTotalCap1 / $SalaryCap > 1) {
+                                echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd; background-color: #f44336; color: #fff;\">" . number_format(($AverageTotalCap1 / $SalaryCap) * 100, 2) . "%</td>";
+                            } elseif ($AverageTotalCap1 / $SalaryCap > 0.95) {
+                                echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd; background-color: #FFA500;\">" . number_format(($AverageTotalCap1 / $SalaryCap) * 100, 2) . "%</td>";
+                            } elseif ($AverageTotalCap1 / $SalaryCap > 0.90) {
+                                echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd; background-color: #FFFF00;\">" . number_format(($AverageTotalCap1 / $SalaryCap) * 100, 2) . "%</td>";
+                            } else {
+                                echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd; background-color: #00ff00;\">" . number_format(($AverageTotalCap1 / $SalaryCap) * 100, 2) . "%</td>";
+                            }
+                        } else {
+                            echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">N/A</td>";
+                        }
+                        echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format($AverageTotalCap1, 0) . "$</td>";
+                        echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format($AverageTotalCap2, 0) . "$</td>";
+                        echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format($AverageTotalCap3, 0) . "$</td>";
+                        echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format($AverageTotalCap4, 0) . "$</td>";
+                        echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format($AverageTotalCap5, 0) . "$</td>";
+                        echo "</tr>";
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Légende -->
+            <div class="cap-legend" style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px; border: 1px solid #e9ecef;">
+                <h4 style="margin-bottom: 15px; color: var(--primary-color);">Terms Legend</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-size: 12px;">
+                    <div><strong>FV:</strong> Force Waiver</div>
+                    <div><strong>NT:</strong> No Trade Clause</div>
+                    <div><strong>IN:</strong> Injured</div>
+                    <div><strong>TW:</strong> Two-Way Contract</div>
+                    <div><strong>RFA:</strong> Restricted Free Agent</div>
+                    <div><strong>UFA:</strong> Unrestricted Free Agent</div>
+                </div>
+                <div style="margin-top: 15px; font-size: 12px; color: #666;">
+                    <strong>Note:</strong> Salary Cap Overview based on league salary cap of <strong>$<?php echo number_format($SalaryCap); ?></strong>.
+                </div>
+            </div>
+        </div>
+
         <!-- Onglet Prospects -->
         <div class="tabmain" id="tabmain9">
             <h3>Top Prospects</h3>

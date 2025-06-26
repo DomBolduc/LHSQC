@@ -1618,5 +1618,368 @@ h3 {
     }
 }
 
+/* Styles spécifiques pour l'onglet Lines */
+#tabmain4 {
+    padding: 1rem !important;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+#tabmain4 .lines-section {
+    margin-bottom: 2rem;
+}
+
+#tabmain4 .lines-section h4 {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--gray-200);
+}
+
+#tabmain4 .lines-table-container {
+    overflow-x: auto;
+    margin-bottom: 1rem;
+}
+
+#tabmain4 .lines-table {
+    width: 100%;
+    min-width: 800px;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#tabmain4 .lines-table th {
+    background: var(--primary-color);
+    color: white;
+    padding: 12px 8px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: 1px solid var(--primary-color);
+}
+
+#tabmain4 .lines-table td {
+    padding: 10px 8px;
+    text-align: center;
+    border: 1px solid var(--gray-200);
+    font-size: 0.9rem;
+}
+
+#tabmain4 .lines-table tr:nth-child(even) {
+    background: var(--gray-50);
+}
+
+#tabmain4 .lines-table tr:hover {
+    background: var(--gray-100);
+}
+
+#tabmain4 .lines-table th:first-child,
+#tabmain4 .lines-table td:first-child {
+    background: var(--secondary-color);
+    color: white;
+    font-weight: 600;
+}
+
+#tabmain4 .no-lines-message {
+    text-align: center;
+    padding: 2rem;
+    color: var(--gray-500);
+    font-style: italic;
+}
+
+/* Responsive pour l'onglet Lines */
+@media (max-width: 1200px) {
+    #tabmain4 .lines-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 0.75rem;
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    #tabmain4 {
+        padding: 0.5rem !important;
+    }
+    
+    #tabmain4 .lines-grid {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        padding: 0.75rem;
+    }
+    
+    #tabmain4 .line-header {
+        padding: 0.5rem 0.75rem;
+    }
+    
+    #tabmain4 .line-players {
+        padding: 0.75rem;
+    }
+    
+    #tabmain4 .special-line .line-players {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    #tabmain4 .player-line-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+    
+    #tabmain4 .line-position {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+}
+
+/* Styles spécifiques pour l'onglet Depth Chart */
+#tabmain5 {
+    padding: 1rem !important;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+#tabmain5 .depth-section {
+    margin-bottom: 2rem;
+}
+
+#tabmain5 .depth-section h4 {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--gray-200);
+}
+
+#tabmain5 .depth-chart-container {
+    overflow-x: auto;
+    margin-bottom: 1rem;
+}
+
+#tabmain5 .depth-chart-table {
+    width: 100%;
+    min-width: 900px;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#tabmain5 .depth-chart-table th {
+    background: var(--primary-color);
+    color: white;
+    padding: 12px 8px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: 1px solid var(--primary-color);
+}
+
+#tabmain5 .depth-column {
+    vertical-align: top;
+    padding: 0;
+    border: 1px solid var(--gray-200);
+}
+
+#tabmain5 .depth-player-list {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#tabmain5 .depth-player-list tr {
+    border-bottom: 1px solid var(--gray-100);
+}
+
+#tabmain5 .depth-player-list tr:last-child {
+    border-bottom: none;
+}
+
+#tabmain5 .depth-player-list tr:hover {
+    background: var(--gray-50);
+}
+
+#tabmain5 .depth-player-list td {
+    padding: 8px 12px;
+    border: none;
+}
+
+#tabmain5 .player-name {
+    font-weight: 500;
+    color: var(--gray-800);
+}
+
+#tabmain5 .player-name a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+#tabmain5 .player-name a:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+
+#tabmain5 .player-stats {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+#tabmain5 .stat-item {
+    background: var(--gray-100);
+    color: var(--gray-600);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+#tabmain5 .depth-player-stats .stat-item {
+    font-size: 10px;
+    color: var(--gray-600);
+    margin-right: 8px;
+}
+
+/* Styles spécifiques pour l'onglet Capology */
+#tabmain6 {
+    padding: 1rem !important;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+#tabmain6 .cap-summary {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+#tabmain6 .cap-summary h4 {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+#tabmain6 .cap-table-container {
+    overflow-x: auto;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#tabmain6 .cap-table {
+    width: 100%;
+    min-width: 1200px;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#tabmain6 .cap-table th {
+    background: var(--primary-color);
+    color: white;
+    padding: 8px 6px;
+    border: 1px solid #ddd;
+    text-align: center;
+    font-weight: 600;
+    font-size: 11px;
+}
+
+#tabmain6 .cap-table td {
+    padding: 6px 4px;
+    border: 1px solid #ddd;
+    font-size: 11px;
+}
+
+#tabmain6 .cap-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#tabmain6 .cap-table tr:hover {
+    background-color: #f0f8ff;
+}
+
+#tabmain6 .cap-table a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+#tabmain6 .cap-table a:hover {
+    text-decoration: underline;
+}
+
+#tabmain6 .cap-legend {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+#tabmain6 .cap-legend h4 {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+#tabmain6 .cap-legend div {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    font-size: 12px;
+}
+
+/* Couleurs pour les statuts de free agents */
+#tabmain6 .cap-table .rfa-status {
+    background-color: #fff3e0;
+    color: #ef6c00;
+    font-weight: 500;
+}
+
+#tabmain6 .cap-table .ufa-status {
+    background-color: #ffebee;
+    color: #c62828;
+    font-weight: 500;
+}
+
+/* Couleurs pour les pourcentages du salary cap */
+#tabmain6 .cap-table .cap-over {
+    background-color: #f44336;
+    color: #fff;
+    font-weight: bold;
+}
+
+#tabmain6 .cap-table .cap-warning {
+    background-color: #FFA500;
+    color: #000;
+    font-weight: bold;
+}
+
+#tabmain6 .cap-table .cap-caution {
+    background-color: #FFFF00;
+    color: #000;
+    font-weight: bold;
+}
+
+#tabmain6 .cap-table .cap-good {
+    background-color: #00ff00;
+    color: #000;
+    font-weight: bold;
+}
+
 
 
