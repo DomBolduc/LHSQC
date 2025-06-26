@@ -926,7 +926,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                 <table class="stats-table" style="width: 100%; font-size: 10px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
                     <thead>
                         <tr style="background: #f5f5f5; border-bottom: 2px solid #ddd;">
-                            <th style="width: 150px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: left; font-weight: bold;">Name</th>
+                            <th style="width: 150px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Player</th>
                             <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">GP</th>
                             <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">G</th>
                             <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">A</th>
@@ -936,8 +936,8 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                             <th style="width: 35px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Shots</th>
                             <th style="width: 35px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Hits</th>
                             <th style="width: 35px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">PPG</th>
-                            <th style="width: 40px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">GiveAway</th>
-                            <th style="width: 40px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">TakeAway</th>
+                            <th style="width: 40px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">GA</th>
+                            <th style="width: 40px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">TA</th>
                         </tr>
                     </thead>
                     <tbody>
