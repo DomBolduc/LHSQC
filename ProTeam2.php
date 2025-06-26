@@ -92,11 +92,99 @@ try {
             $Query = "SELECT ProspectInfo.*, ProspectStat.* FROM ProspectInfo INNER JOIN ProspectStat ON ProspectInfo.Number = ProspectStat.Number WHERE ProspectInfo.Team = " . $Team . " ORDER BY ProspectStat.P DESC LIMIT 10";
             $Prospects = $db->query($Query);
             
+            // Récupération des moyennes de la ligue pour le graphique
+            $Query = "SELECT 
+                AVG(CAST(GF AS REAL) / CAST(GP AS REAL)) as AvgGFPerGame,
+                AVG(CAST(GA AS REAL) / CAST(GP AS REAL)) as AvgGAPerGame,
+                AVG(CAST(ShotsFor AS REAL) / CAST(GP AS REAL)) as AvgShotsForPerGame,
+                AVG(CAST(ShotsAga AS REAL) / CAST(GP AS REAL)) as AvgShotsAgaPerGame,
+                AVG(CASE WHEN PPAttemp > 0 THEN CAST(PPGoal AS REAL) / CAST(PPAttemp AS REAL) * 100 ELSE 0 END) as AvgPPPercentage,
+                AVG(CASE WHEN PKAttemp > 0 THEN (CAST(PKAttemp AS REAL) - CAST(PKGoalGA AS REAL)) / CAST(PKAttemp AS REAL) * 100 ELSE 0 END) as AvgPKPercentage,
+                AVG(CAST(Pim AS REAL) / CAST(GP AS REAL)) as AvgPimPerGame,
+                AVG(CAST(Hits AS REAL) / CAST(GP AS REAL)) as AvgHitsPerGame
+                FROM TeamProStat WHERE GP > 0";
+            $LeagueAverages = $db->querySingle($Query, true);
+            
+            // Récupération des valeurs maximales de la ligue pour normaliser les barres
+            $Query = "SELECT 
+                MAX(CAST(GF AS REAL) / CAST(GP AS REAL)) as MaxGFPerGame,
+                MAX(CAST(GA AS REAL) / CAST(GP AS REAL)) as MaxGAPerGame,
+                MAX(CAST(ShotsFor AS REAL) / CAST(GP AS REAL)) as MaxShotsForPerGame,
+                MAX(CAST(ShotsAga AS REAL) / CAST(GP AS REAL)) as MaxShotsAgaPerGame,
+                MAX(CASE WHEN PPAttemp > 0 THEN CAST(PPGoal AS REAL) / CAST(PPAttemp AS REAL) * 100 ELSE 0 END) as MaxPPPercentage,
+                MAX(CASE WHEN PKAttemp > 0 THEN (CAST(PKAttemp AS REAL) - CAST(PKGoalGA AS REAL)) / CAST(PKAttemp AS REAL) * 100 ELSE 0 END) as MaxPKPercentage,
+                MAX(CAST(Pim AS REAL) / CAST(GP AS REAL)) as MaxPimPerGame,
+                MAX(CAST(Hits AS REAL) / CAST(GP AS REAL)) as MaxHitsPerGame
+                FROM TeamProStat WHERE GP > 0";
+            $LeagueMax = $db->querySingle($Query, true);
+            
+            // Récupération des noms des équipes avec les meilleures performances
+            $Query = "SELECT TeamProInfo.Name as TeamName, 
+                CAST(TeamProStat.GF AS REAL) / CAST(TeamProStat.GP AS REAL) as GFPerGame
+                FROM TeamProStat 
+                INNER JOIN TeamProInfo ON TeamProStat.Number = TeamProInfo.Number 
+                WHERE TeamProStat.GP > 0 
+                ORDER BY GFPerGame DESC LIMIT 1";
+            $BestGFTeam = $db->querySingle($Query, true);
+            
+            $Query = "SELECT TeamProInfo.Name as TeamName, 
+                CAST(TeamProStat.GA AS REAL) / CAST(TeamProStat.GP AS REAL) as GAPerGame
+                FROM TeamProStat 
+                INNER JOIN TeamProInfo ON TeamProStat.Number = TeamProInfo.Number 
+                WHERE TeamProStat.GP > 0 
+                ORDER BY GAPerGame DESC LIMIT 1";
+            $BestGATeam = $db->querySingle($Query, true);
+            
+            $Query = "SELECT TeamProInfo.Name as TeamName, 
+                CAST(TeamProStat.ShotsFor AS REAL) / CAST(TeamProStat.GP AS REAL) as ShotsForPerGame
+                FROM TeamProStat 
+                INNER JOIN TeamProInfo ON TeamProStat.Number = TeamProInfo.Number 
+                WHERE TeamProStat.GP > 0 
+                ORDER BY ShotsForPerGame DESC LIMIT 1";
+            $BestShotsForTeam = $db->querySingle($Query, true);
+            
+            $Query = "SELECT TeamProInfo.Name as TeamName, 
+                CASE WHEN TeamProStat.PPAttemp > 0 THEN CAST(TeamProStat.PPGoal AS REAL) / CAST(TeamProStat.PPAttemp AS REAL) * 100 ELSE 0 END as PPPercentage
+                FROM TeamProStat 
+                INNER JOIN TeamProInfo ON TeamProStat.Number = TeamProInfo.Number 
+                WHERE TeamProStat.GP > 0 
+                ORDER BY PPPercentage DESC LIMIT 1";
+            $BestPPTeam = $db->querySingle($Query, true);
+            
+            $Query = "SELECT TeamProInfo.Name as TeamName, 
+                CASE WHEN TeamProStat.PKAttemp > 0 THEN (CAST(TeamProStat.PKAttemp AS REAL) - CAST(TeamProStat.PKGoalGA AS REAL)) / CAST(TeamProStat.PKAttemp AS REAL) * 100 ELSE 0 END as PKPercentage
+                FROM TeamProStat 
+                INNER JOIN TeamProInfo ON TeamProStat.Number = TeamProInfo.Number 
+                WHERE TeamProStat.GP > 0 
+                ORDER BY PKPercentage DESC LIMIT 1";
+            $BestPKTeam = $db->querySingle($Query, true);
+            
+            $Query = "SELECT TeamProInfo.Name as TeamName, 
+                CAST(TeamProStat.Hits AS REAL) / CAST(TeamProStat.GP AS REAL) as HitsPerGame
+                FROM TeamProStat 
+                INNER JOIN TeamProInfo ON TeamProStat.Number = TeamProInfo.Number 
+                WHERE TeamProStat.GP > 0 
+                ORDER BY HitsPerGame DESC LIMIT 1";
+            $BestHitsTeam = $db->querySingle($Query, true);
+            
+            // Calcul des statistiques de l'équipe pour le graphique
+            $TeamGraphStats = array();
+            if ($TeamStat['GP'] > 0) {
+                $TeamGraphStats['GFPerGame'] = round($TeamStat['GF'] / $TeamStat['GP'], 2);
+                $TeamGraphStats['GAPerGame'] = round($TeamStat['GA'] / $TeamStat['GP'], 2);
+                $TeamGraphStats['ShotsForPerGame'] = round($TeamStat['ShotsFor'] / $TeamStat['GP'], 1);
+                $TeamGraphStats['ShotsAgaPerGame'] = round($TeamStat['ShotsAga'] / $TeamStat['GP'], 1);
+                $TeamGraphStats['PPPercentage'] = $TeamStat['PPAttemp'] > 0 ? round(($TeamStat['PPGoal'] / $TeamStat['PPAttemp']) * 100, 1) : 0;
+                $TeamGraphStats['PKPercentage'] = $TeamStat['PKAttemp'] > 0 ? round((($TeamStat['PKAttemp'] - $TeamStat['PKGoalGA']) / $TeamStat['PKAttemp']) * 100, 1) : 0;
+                $TeamGraphStats['PimPerGame'] = round($TeamStat['Pim'] / $TeamStat['GP'], 1);
+                $TeamGraphStats['HitsPerGame'] = round($TeamStat['Hits'] / $TeamStat['GP'], 1);
+            }
+            
             // Requêtes corrigées pour SchedulePro
-            $Query = "SELECT * FROM SchedulePro WHERE Play = 'True' AND (VisitorTeam = " . $Team . " OR HomeTeam = " . $Team . ") ORDER BY GameNumber DESC LIMIT 3";
+            $Query = "SELECT * FROM SchedulePro WHERE Play = 'True' AND (VisitorTeam = " . $Team . " OR HomeTeam = " . $Team . ") ORDER BY GameNumber DESC LIMIT 2";
             $Last3Days = $db->query($Query);
             
-            $Query = "SELECT * FROM SchedulePro WHERE Play = 'False' AND (VisitorTeam = " . $Team . " OR HomeTeam = " . $Team . ") ORDER BY GameNumber ASC LIMIT 4";
+            $Query = "SELECT * FROM SchedulePro WHERE Play = 'False' AND (VisitorTeam = " . $Team . " OR HomeTeam = " . $Team . ") ORDER BY GameNumber ASC LIMIT 3";
             $Next4Days = $db->query($Query);
             
             // Récupération des transactions récentes
@@ -196,170 +284,125 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
     <div class="cardbook">
     <div class="tabmain active" id="tabmain0">
             
-<!-- Weekly Schedule avec les bonnes colonnes -->
-<div class="weekly-schedule">
-    <h3>Weekly Schedule</h3>
-    
-    <!-- Informations de débogage -->
-    <div style="background-color: #f8f9fa; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 5px;">
-        <p><strong>Débogage:</strong> Équipe sélectionnée: <?php echo $Team; ?></p>
-        
-        <?php
-        // Vérifier si la table SchedulePro existe
-        $tableCheck = $db->query("SELECT name FROM sqlite_master WHERE type='table' AND name='SchedulePro'");
-        $tableExists = $tableCheck->fetchArray();
-        if (!$tableExists) {
-            echo "<p style='color: red;'>La table SchedulePro n'existe pas dans la base de données.</p>";
-        } else {
-            echo "<p style='color: green;'>La table SchedulePro existe dans la base de données.</p>";
-            
-            // Compter les matchs joués et à venir
-            $playedQuery = $db->query("SELECT COUNT(*) as count FROM SchedulePro WHERE (HomeTeam = $Team OR VisitorTeam = $Team) AND Play = 1");
-            $playedCount = $playedQuery->fetchArray();
-            echo "<p>Matchs joués pour l'équipe $Team: " . $playedCount['count'] . "</p>";
-            
-            $upcomingQuery = $db->query("SELECT COUNT(*) as count FROM SchedulePro WHERE (HomeTeam = $Team OR VisitorTeam = $Team) AND Play = 0");
-            $upcomingCount = $upcomingQuery->fetchArray();
-            echo "<p>Matchs à venir pour l'équipe $Team: " . $upcomingCount['count'] . "</p>";
-            
-            // Vérifier si le dossier images existe
-            if (!is_dir("images")) {
-                echo "<p style='color: red;'>Le dossier 'images' n'existe pas.</p>";
-            } else {
-                echo "<p style='color: green;'>Le dossier 'images' existe.</p>";
-            }
-        }
-        ?>
-    </div>
-    
-    <div class="schedule-container">
-    <div class="weekly-schedule">
-    <h3>Weekly Schedule</h3>
-    <div class="schedule-container">
-        <div class="schedule-section">
-            <h4>Last 3 Games</h4>
-            <div class="schedule-days">
-                <?php
-                if ($Last3Days) {
-                    while ($Game = $Last3Days->fetchArray()) {
-                        $HomeTeam = $Game['HomeTeam'];
-                        $VisitorTeam = $Game['VisitorTeam'];
-                        $HomeScore = $Game['HomeScore'];
-                        $VisitorScore = $Game['VisitorScore'];
-                        $GameNumber = $Game['GameNumber'];
-                        $IsOvertime = ($Game['Overtime'] ?? '') == 'True';
-                        $IsShootout = ($Game['Shootout'] ?? '') == 'True';
-                        
-                        // Récupérer les noms d'équipes depuis TeamProInfo
-                        $Query = "SELECT Name, TeamThemeID FROM TeamProInfo WHERE Number = " . $HomeTeam;
-                        $HomeTeamInfo = $db->querySingle($Query, true);
-                        $Query = "SELECT Name, TeamThemeID FROM TeamProInfo WHERE Number = " . $VisitorTeam;
-                        $VisitorTeamInfo = $db->querySingle($Query, true);
-                        
-                        $HomeTeamName = $HomeTeamInfo['Name'] ?? 'Team ' . $HomeTeam;
-                        $VisitorTeamName = $VisitorTeamInfo['Name'] ?? 'Team ' . $VisitorTeam;
-                        $HomeTeamThemeID = $HomeTeamInfo['TeamThemeID'] ?? null;
-                        $VisitorTeamThemeID = $VisitorTeamInfo['TeamThemeID'] ?? null;
-                        
-                        $isHome = ($HomeTeam == $Team);
-                        $isWin = ($isHome && $HomeScore > $VisitorScore) || (!$isHome && $VisitorScore > $HomeScore);
-                        
-                        echo "<div class='schedule-day'>";
-                        echo "<div class='game-date'>Game " . $GameNumber . "</div>";
-                        echo "<div class='game-matchup " . ($isWin ? 'win' : 'loss') . "'>";
-                        
-                        // Équipe visiteuse
-                        echo "<div class='team-info'>";
-                        if ($VisitorTeamThemeID && file_exists("images/" . $VisitorTeamThemeID . ".png")) {
-                            echo "<img src='images/" . $VisitorTeamThemeID . ".png' alt='" . $VisitorTeamName . "' class='team-logo-mini'>";
-                        }
-                        echo "<span class='team-name'>" . $VisitorTeamName . "</span>";
-                        echo "<span class='score'>" . $VisitorScore . "</span>";
-                        echo "</div>";
-                        
-                        // Équipe locale
-                        echo "<div class='team-info'>";
-                        if ($HomeTeamThemeID && file_exists("images/" . $HomeTeamThemeID . ".png")) {
-                            echo "<img src='images/" . $HomeTeamThemeID . ".png' alt='" . $HomeTeamName . "' class='team-logo-mini'>";
-                        }
-                        echo "<span class='team-name'>" . $HomeTeamName . "</span>";
-                        echo "<span class='score'>" . $HomeScore . "</span>";
-                        echo "</div>";
-                        
-                        // Indicateurs OT/SO si disponibles
-                        if ($IsShootout) {
-                            echo "<div class='game-type'>SO</div>";
-                        } elseif ($IsOvertime) {
-                            echo "<div class='game-type'>OT</div>";
-                        }
-                        
-                        echo "</div>";
-                        echo "</div>";
-                    }
-                } else {
-                    echo "<div class='no-games'>No recent games</div>";
-                }
-                ?>
-            </div>
-        </div>
-        
-        <div class="schedule-section">
-            <h4>Next 4 Games</h4>
-            <div class="schedule-days">
-                <?php
-                if ($Next4Days) {
-                    while ($Game = $Next4Days->fetchArray()) {
-                        $HomeTeam = $Game['HomeTeam'];
-                        $VisitorTeam = $Game['VisitorTeam'];
-                        $GameNumber = $Game['GameNumber'];
-                        
-                        // Récupérer les noms d'équipes depuis TeamProInfo
-                        $Query = "SELECT Name, TeamThemeID FROM TeamProInfo WHERE Number = " . $HomeTeam;
-                        $HomeTeamInfo = $db->querySingle($Query, true);
-                        $Query = "SELECT Name, TeamThemeID FROM TeamProInfo WHERE Number = " . $VisitorTeam;
-                        $VisitorTeamInfo = $db->querySingle($Query, true);
-                        
-                        $HomeTeamName = $HomeTeamInfo['Name'] ?? 'Team ' . $HomeTeam;
-                        $VisitorTeamName = $VisitorTeamInfo['Name'] ?? 'Team ' . $VisitorTeam;
-                        $HomeTeamThemeID = $HomeTeamInfo['TeamThemeID'] ?? null;
-                        $VisitorTeamThemeID = $VisitorTeamInfo['TeamThemeID'] ?? null;
-                        
-                        $isHome = ($HomeTeam == $Team);
-                        
-                        echo "<div class='schedule-day'>";
-                        echo "<div class='game-date'>Game " . $GameNumber . "</div>";
-                        echo "<div class='game-matchup upcoming'>";
-                        
-                        // Équipe visiteuse
-                        echo "<div class='team-info'>";
-                        if ($VisitorTeamThemeID && file_exists("images/" . $VisitorTeamThemeID . ".png")) {
-                            echo "<img src='images/" . $VisitorTeamThemeID . ".png' alt='" . $VisitorTeamName . "' class='team-logo-mini'>";
-                        }
-                        echo "<span class='team-name'>" . $VisitorTeamName . "</span>";
-                        echo "</div>";
-                        
-                        // Équipe locale
-                        echo "<div class='team-info'>";
-                        if ($HomeTeamThemeID && file_exists("images/" . $HomeTeamThemeID . ".png")) {
-                            echo "<img src='images/" . $HomeTeamThemeID . ".png' alt='" . $HomeTeamName . "' class='team-logo-mini'>";
-                        }
-                        echo "<span class='team-name'>" . $HomeTeamName . "</span>";
-                        echo "</div>";
-                        
-                        echo "</div>";
-                        echo "</div>";
-                    }
-                } else {
-                    echo "<div class='no-games'>No upcoming games</div>";
-                }
-                ?>
-            </div>
-        </div>
-    </div>
-</div>
-            
             <!-- Grille de statistiques -->
             <div class="stats-grid">
+                <!-- Weekly Schedule dans la grille -->
+                <div class="stat-card weekly-schedule-in-grid">
+                    <h3>Weekly Schedule</h3>
+                    <div class="schedule-days-compact">
+                        <?php
+                        // Afficher d'abord les 3 derniers matchs joués
+                        if ($Last3Days) {
+                            while ($Game = $Last3Days->fetchArray()) {
+                                $HomeTeam = $Game['HomeTeam'];
+                                $VisitorTeam = $Game['VisitorTeam'];
+                                $HomeScore = $Game['HomeScore'];
+                                $VisitorScore = $Game['VisitorScore'];
+                                $GameNumber = $Game['GameNumber'];
+                                $IsOvertime = ($Game['Overtime'] ?? '') == 'True';
+                                $IsShootout = ($Game['Shootout'] ?? '') == 'True';
+                                
+                                // Récupérer les noms d'équipes depuis TeamProInfo
+                                $Query = "SELECT Name, TeamThemeID FROM TeamProInfo WHERE Number = " . $HomeTeam;
+                                $HomeTeamInfo = $db->querySingle($Query, true);
+                                $Query = "SELECT Name, TeamThemeID FROM TeamProInfo WHERE Number = " . $VisitorTeam;
+                                $VisitorTeamInfo = $db->querySingle($Query, true);
+                                
+                                $HomeTeamName = $HomeTeamInfo['Name'] ?? 'Team ' . $HomeTeam;
+                                $VisitorTeamName = $VisitorTeamInfo['Name'] ?? 'Team ' . $VisitorTeam;
+                                $HomeTeamThemeID = $HomeTeamInfo['TeamThemeID'] ?? null;
+                                $VisitorTeamThemeID = $VisitorTeamInfo['TeamThemeID'] ?? null;
+                                
+                                $isHome = ($HomeTeam == $Team);
+                                $isWin = ($isHome && $HomeScore > $VisitorScore) || (!$isHome && $VisitorScore > $HomeScore);
+                                
+                                echo "<div class='schedule-day-compact'>";
+                                echo "<div class='game-date-compact'>Game " . $GameNumber . "</div>";
+                                echo "<div class='game-matchup-compact " . ($isWin ? 'win' : 'loss') . "'>";
+                                
+                                // Équipe visiteuse
+                                echo "<div class='team-info-compact'>";
+                                if ($VisitorTeamThemeID && file_exists("images/" . $VisitorTeamThemeID . ".png")) {
+                                    echo "<img src='images/" . $VisitorTeamThemeID . ".png' alt='" . $VisitorTeamName . "' class='team-logo-mini-compact'>";
+                                }
+                                echo "<span class='team-name-compact'>" . $VisitorTeamName . "</span>";
+                                echo "<span class=" . ($isWin ? "'score-compact win'" : "'score-compact loss'") . ">" . $VisitorScore . "</span>";
+                                echo "</div>";
+                                
+                                // Équipe locale
+                                echo "<div class='team-info-compact'>";
+                                if ($HomeTeamThemeID && file_exists("images/" . $HomeTeamThemeID . ".png")) {
+                                    echo "<img src='images/" . $HomeTeamThemeID . ".png' alt='" . $HomeTeamName . "' class='team-logo-mini-compact'>";
+                                }
+                                echo "<span class='team-name-compact'>" . $HomeTeamName . "</span>";
+                                echo "<span class=" . ($isWin ? "'score-compact win'" : "'score-compact loss'") . ">" . $HomeScore . "</span>";
+                                echo "</div>";
+                                
+                                // Indicateurs OT/SO si disponibles
+                                if ($IsShootout) {
+                                    echo "<div class='game-type-compact'>SO</div>";
+                                } elseif ($IsOvertime) {
+                                    echo "<div class='game-type-compact'>OT</div>";
+                                }
+                                
+                                echo "</div>";
+                                echo "</div>";
+                            }
+                        }
+                        
+                        // Puis afficher les 4 prochains matchs
+                        if ($Next4Days) {
+                            while ($Game = $Next4Days->fetchArray()) {
+                                $HomeTeam = $Game['HomeTeam'];
+                                $VisitorTeam = $Game['VisitorTeam'];
+                                $GameNumber = $Game['GameNumber'];
+                                
+                                // Récupérer les noms d'équipes depuis TeamProInfo
+                                $Query = "SELECT Name, TeamThemeID FROM TeamProInfo WHERE Number = " . $HomeTeam;
+                                $HomeTeamInfo = $db->querySingle($Query, true);
+                                $Query = "SELECT Name, TeamThemeID FROM TeamProInfo WHERE Number = " . $VisitorTeam;
+                                $VisitorTeamInfo = $db->querySingle($Query, true);
+                                
+                                $HomeTeamName = $HomeTeamInfo['Name'] ?? 'Team ' . $HomeTeam;
+                                $VisitorTeamName = $VisitorTeamInfo['Name'] ?? 'Team ' . $VisitorTeam;
+                                $HomeTeamThemeID = $HomeTeamInfo['TeamThemeID'] ?? null;
+                                $VisitorTeamThemeID = $VisitorTeamInfo['TeamThemeID'] ?? null;
+                                
+                                $isHome = ($HomeTeam == $Team);
+                                
+                                echo "<div class='schedule-day-compact'>";
+                                echo "<div class='game-date-compact'>Game " . $GameNumber . "</div>";
+                                echo "<div class='game-matchup-compact upcoming'>";
+                                
+                                // Équipe visiteuse
+                                echo "<div class='team-info-compact'>";
+                                if ($VisitorTeamThemeID && file_exists("images/" . $VisitorTeamThemeID . ".png")) {
+                                    echo "<img src='images/" . $VisitorTeamThemeID . ".png' alt='" . $VisitorTeamName . "' class='team-logo-mini-compact'>";
+                                }
+                                echo "<span class='team-name-compact'>" . $VisitorTeamName . "</span>";
+                                echo "</div>";
+                                
+                                // Équipe locale
+                                echo "<div class='team-info-compact'>";
+                                if ($HomeTeamThemeID && file_exists("images/" . $HomeTeamThemeID . ".png")) {
+                                    echo "<img src='images/" . $HomeTeamThemeID . ".png' alt='" . $HomeTeamName . "' class='team-logo-mini-compact'>";
+                                }
+                                echo "<span class='team-name-compact'>" . $HomeTeamName . "</span>";
+                                echo "</div>";
+                                
+                                echo "</div>";
+                                echo "</div>";
+                            }
+                        }
+                        
+                        // Si aucun match trouvé
+                        if (!$Last3Days && !$Next4Days) {
+                            echo "<div class='no-games-compact'>No games found</div>";
+                        }
+                        ?>
+                    </div>
+                </div>
+                
                 <!-- Section Team Leaders style Sportsnet -->
                 <div class="stat-card team-leaders">
                     <h3>Team Leaders</h3>
@@ -572,103 +615,306 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                         <span class="stat-value"><?php echo ($TeamFinance['Budget'] ?? 0) > 0 ? number_format((($TeamFinance['Budget'] ?? 0) - ($TeamFinance['TotalPlayersSalaries'] ?? 0)) / ($TeamFinance['Budget'] ?? 1) * 100, 1) : "0.0"; ?>%</span>
                     </div>
                 </div>
+                
+                <!-- Nouvelle div avec la même largeur que Weekly Schedule -->
+                <div class="stat-card new-section">
+                    <h3>Team vs League Average</h3>
+                    <div class="team-graph-container">
+                        <?php if (!empty($TeamGraphStats) && !empty($LeagueAverages)): ?>
+                            <div class="graph-row">
+                                <div class="graph-label">Goals For/Game</div>
+                                <div class="graph-bar-container">
+                                    <div class="graph-bar team-bar" style="width: <?php echo min(85, ($TeamGraphStats['GFPerGame'] / max($LeagueMax['MaxGFPerGame'], 1)) * 100); ?>%">
+                                        <span class="bar-value"><?php echo $TeamGraphStats['GFPerGame']; ?></span>
+                                    </div>
+                                    <div class="graph-bar league-avg" style="left: <?php echo min(85, ($LeagueAverages['AvgGFPerGame'] / max($LeagueMax['MaxGFPerGame'], 1)) * 100); ?>%"></div>
+                                    <div class="best-team-label"><?php echo htmlspecialchars($BestGFTeam['TeamName'] ?? 'N/A'); ?>: <?php echo round($LeagueMax['MaxGFPerGame'], 2); ?></div>
+                                </div>
+                            </div>
+                            
+                            <div class="graph-row">
+                                <div class="graph-label">Goals Against/Game</div>
+                                <div class="graph-bar-container">
+                                    <div class="graph-bar team-bar" style="width: <?php echo min(85, ($TeamGraphStats['GAPerGame'] / max($LeagueMax['MaxGAPerGame'], 1)) * 100); ?>%">
+                                        <span class="bar-value"><?php echo $TeamGraphStats['GAPerGame']; ?></span>
+                                    </div>
+                                    <div class="graph-bar league-avg" style="left: <?php echo min(85, ($LeagueAverages['AvgGAPerGame'] / max($LeagueMax['MaxGAPerGame'], 1)) * 100); ?>%"></div>
+                                    <div class="best-team-label"><?php echo htmlspecialchars($BestGATeam['TeamName'] ?? 'N/A'); ?>: <?php echo round($LeagueMax['MaxGAPerGame'], 2); ?></div>
+                                </div>
+                            </div>
+                            
+                            <div class="graph-row">
+                                <div class="graph-label">Shots For/Game</div>
+                                <div class="graph-bar-container">
+                                    <div class="graph-bar team-bar" style="width: <?php echo min(85, ($TeamGraphStats['ShotsForPerGame'] / max($LeagueMax['MaxShotsForPerGame'], 1)) * 100); ?>%">
+                                        <span class="bar-value"><?php echo $TeamGraphStats['ShotsForPerGame']; ?></span>
+                                    </div>
+                                    <div class="graph-bar league-avg" style="left: <?php echo min(85, ($LeagueAverages['AvgShotsForPerGame'] / max($LeagueMax['MaxShotsForPerGame'], 1)) * 100); ?>%"></div>
+                                    <div class="best-team-label"><?php echo htmlspecialchars($BestShotsForTeam['TeamName'] ?? 'N/A'); ?>: <?php echo round($LeagueMax['MaxShotsForPerGame'], 1); ?></div>
+                                </div>
+                            </div>
+                            
+                            <div class="graph-row">
+                                <div class="graph-label">Power Play %</div>
+                                <div class="graph-bar-container">
+                                    <div class="graph-bar team-bar" style="width: <?php echo min(85, ($TeamGraphStats['PPPercentage'] / max($LeagueMax['MaxPPPercentage'], 1)) * 100); ?>%">
+                                        <span class="bar-value"><?php echo $TeamGraphStats['PPPercentage']; ?>%</span>
+                                    </div>
+                                    <div class="graph-bar league-avg" style="left: <?php echo min(85, ($LeagueAverages['AvgPPPercentage'] / max($LeagueMax['MaxPPPercentage'], 1)) * 100); ?>%"></div>
+                                    <div class="best-team-label"><?php echo htmlspecialchars($BestPPTeam['TeamName'] ?? 'N/A'); ?>: <?php echo round($LeagueMax['MaxPPPercentage'], 1); ?>%</div>
+                                </div>
+                            </div>
+                            
+                            <div class="graph-row">
+                                <div class="graph-label">Penalty Kill %</div>
+                                <div class="graph-bar-container">
+                                    <div class="graph-bar team-bar" style="width: <?php echo min(85, ($TeamGraphStats['PKPercentage'] / max($LeagueMax['MaxPKPercentage'], 1)) * 100); ?>%">
+                                        <span class="bar-value"><?php echo $TeamGraphStats['PKPercentage']; ?>%</span>
+                                    </div>
+                                    <div class="graph-bar league-avg" style="left: <?php echo min(85, ($LeagueAverages['AvgPKPercentage'] / max($LeagueMax['MaxPKPercentage'], 1)) * 100); ?>%"></div>
+                                    <div class="best-team-label"><?php echo htmlspecialchars($BestPKTeam['TeamName'] ?? 'N/A'); ?>: <?php echo round($LeagueMax['MaxPKPercentage'], 1); ?>%</div>
+                                </div>
+                            </div>
+                            
+                            <div class="graph-row">
+                                <div class="graph-label">Hits/Game</div>
+                                <div class="graph-bar-container">
+                                    <div class="graph-bar team-bar" style="width: <?php echo min(85, ($TeamGraphStats['HitsPerGame'] / max($LeagueMax['MaxHitsPerGame'], 1)) * 100); ?>%">
+                                        <span class="bar-value"><?php echo $TeamGraphStats['HitsPerGame']; ?></span>
+                                    </div>
+                                    <div class="graph-bar league-avg" style="left: <?php echo min(85, ($LeagueAverages['AvgHitsPerGame'] / max($LeagueMax['MaxHitsPerGame'], 1)) * 100); ?>%"></div>
+                                    <div class="best-team-label"><?php echo htmlspecialchars($BestHitsTeam['TeamName'] ?? 'N/A'); ?>: <?php echo round($LeagueMax['MaxHitsPerGame'], 1); ?></div>
+                                </div>
+                            </div>
+                            
+                            <div class="graph-legend">
+                                <div class="legend-item">
+                                    <div class="legend-color team-color"></div>
+                                    <span>Team</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color league-color"></div>
+                                    <span>League Average</span>
+                                </div>
+                            </div>
+                        <?php else: ?>
+                            <p>Aucune donnée disponible pour le graphique</p>
+                        <?php endif; ?>
+                    </div>
+                </div>
             </div>
 
         </div>
 
         <!-- Onglet Roster -->
-        <div class="tabmain" id="tabmain1">
+        <div class="tabmain" id="tabmain1" style="padding: 0px !important;">
             <h3>Team Roster</h3>
-            <table class="STHSPHPPlayerStat_Table">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Player</th>
-                        <th>POS</th>
-                        <th>Country</th>
-                        <th>Age</th>
-                        <th>Height</th>
-                        <th>Weight</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    // Récupération du roster complet des joueurs avec informations de base
-                    $Query = "SELECT PlayerInfo.Number, PlayerInfo.Name, PlayerInfo.Jersey, PlayerInfo.PosC, PlayerInfo.PosLW, PlayerInfo.PosRW, PlayerInfo.PosD, PlayerInfo.Country, PlayerInfo.AgeDate, PlayerInfo.Height, PlayerInfo.Weight FROM PlayerInfo WHERE PlayerInfo.Team = " . $Team . " AND PlayerInfo.Status1 >= 2 ORDER BY PlayerInfo.Name ASC";
-                    $PlayerRoster = $db->query($Query);
-                    
-                    if ($PlayerRoster) {
-                        while ($Player = $PlayerRoster->fetchArray()) {
-                            $Position = "";
-                            if ($Player['PosC'] == "True") $Position .= "C";
-                            if ($Player['PosLW'] == "True") $Position .= ($Position ? "/" : "") . "LW";
-                            if ($Player['PosRW'] == "True") $Position .= ($Position ? "/" : "") . "RW";
-                            if ($Player['PosD'] == "True") $Position .= ($Position ? "/" : "") . "D";
-                            
-                            // Calcul de l'âge à partir de AgeDate
-                            $Age = "";
-                            if ($Player['AgeDate']) {
-                                $birthDate = new DateTime($Player['AgeDate']);
-                                $today = new DateTime();
-                                $Age = $today->diff($birthDate)->y;
+            
+            <!-- Table des joueurs avec ratings -->
+            <div class="roster-container">
+                <table class="roster-table" style="width: 100%; font-size: 10px; border-collapse: collapse;">
+                    <thead>
+                        <tr>
+                            <th style="width: 112px !important; padding: 0px !important;">Player</th>
+                            <th style="width: 20px !important; padding: 0px !important;">POS</th>
+                            <th style="width: 40px !important; padding: 0px !important;">CON</th>
+                            <th style="width: 30px !important; padding: 0px !important;">CK</th>
+                            <th style="width: 30px !important; padding: 0px !important;">FG</th>
+                            <th style="width: 30px !important; padding: 0px !important;">DI</th>
+                            <th style="width: 30px !important; padding: 0px !important;">SK</th>
+                            <th style="width: 30px !important; padding: 0px !important;">ST</th>
+                            <th style="width: 30px !important; padding: 0px !important;">EN</th>
+                            <th style="width: 30px !important; padding: 0px !important;">DU</th>
+                            <th style="width: 30px !important; padding: 0px !important;">PH</th>
+                            <th style="width: 30px !important; padding: 0px !important;">FO</th>
+                            <th style="width: 30px !important; padding: 0px !important;">PA</th>
+                            <th style="width: 30px !important; padding: 0px !important;">SC</th>
+                            <th style="width: 30px !important; padding: 0px !important;">DF</th>
+                            <th style="width: 30px !important; padding: 0px !important;">PS</th>
+                            <th style="width: 30px !important; padding: 0px !important;">EX</th>
+                            <th style="width: 30px !important; padding: 0px !important;">LD</th>
+                            <th style="width: 30px !important; padding: 0px !important;">PO</th>
+                            <th style="width: 30px !important; padding: 0px !important;">MO</th>
+                            <th style="width: 35px !important; padding: 0px !important;">OV</th>
+                            <th style="width: 35px !important; padding: 0px !important;">Age</th>
+                            <th style="width: 20px !important; padding: 0px !important;">Years</th>
+                            <th style="width: 45px !important; padding: 0px !important;">Salary</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        // Récupération du roster complet des joueurs avec tous les ratings
+                        $Query = "SELECT PlayerInfo.*, PlayerProStat.GP, PlayerProStat.G, PlayerProStat.A, PlayerProStat.P, PlayerProStat.PlusMinus FROM PlayerInfo LEFT JOIN PlayerProStat ON PlayerInfo.Number = PlayerProStat.Number WHERE PlayerInfo.Team = " . $Team . " AND PlayerInfo.Status1 >= 2 ORDER BY PlayerInfo.PosD, PlayerInfo.Overall DESC";
+                        $PlayerRoster = $db->query($Query);
+                        
+                        if ($PlayerRoster) {
+                            while ($Player = $PlayerRoster->fetchArray()) {
+                                $strTemp = (string)$Player['Name'];
+                                $playerClasses = "";
+                                
+                                if ($Player['Rookie'] == "True") { 
+                                    $strTemp = $strTemp . " (R)"; 
+                                    $playerClasses .= " rookie";
+                                }
+                                if ($TeamLeader['Captain'] == $Player['Number']) { 
+                                    $strTemp = $strTemp . " (C)"; 
+                                    $playerClasses .= " captain";
+                                }
+                                if ($TeamLeader['Assistant1'] == $Player['Number']) { 
+                                    $strTemp = $strTemp . " (A)"; 
+                                    $playerClasses .= " assistant";
+                                }
+                                if ($TeamLeader['Assistant2'] == $Player['Number']) { 
+                                    $strTemp = $strTemp . " (A)"; 
+                                    $playerClasses .= " assistant";
+                                }
+                                
+                                echo "<tr>";
+                                echo "<td class='player-name" . $playerClasses . "'><a href='PlayerReport.php?Player=" . $Player['Number'] . "'>" . $strTemp . "</a></td>";
+                                
+                                // Détermination de la position principale
+                                $mainPosition = "";
+                                if ($Player['PosD'] == "True") {
+                                    $mainPosition = "D";
+                                } elseif ($Player['PosC'] == "True") {
+                                    $mainPosition = "C";
+                                } elseif ($Player['PosLW'] == "True") {
+                                    $mainPosition = "LW";
+                                } elseif ($Player['PosRW'] == "True") {
+                                    $mainPosition = "RW";
+                                } else {
+                                    $mainPosition = "-";
+                                }
+                                echo "<td class='position-cell'>" . $mainPosition . "</td>";
+                                
+                                // Condition avec gestion des suspensions
+                                $conditionClass = "condition-cell";
+                                if ($Player['Suspension'] == 99) {
+                                    echo "<td class='" . $conditionClass . " holdout'>HO</td>";
+                                } elseif ($Player['Suspension'] > 0) {
+                                    echo "<td class='" . $conditionClass . " suspended'>S" . $Player['Suspension'] . "</td>";
+                                } else {
+                                    echo "<td class='" . $conditionClass . "'>" . number_format(str_replace(",", ".", $Player['ConditionDecimal']), 2) . "</td>";
+                                }
+                                
+                                // Tous les ratings
+                                echo "<td>" . $Player['CK'] . "</td>";
+                                echo "<td>" . $Player['FG'] . "</td>";
+                                echo "<td>" . $Player['DI'] . "</td>";
+                                echo "<td>" . $Player['SK'] . "</td>";
+                                echo "<td>" . $Player['ST'] . "</td>";
+                                echo "<td>" . $Player['EN'] . "</td>";
+                                echo "<td>" . $Player['DU'] . "</td>";
+                                echo "<td>" . $Player['PH'] . "</td>";
+                                echo "<td>" . $Player['FO'] . "</td>";
+                                echo "<td>" . $Player['PA'] . "</td>";
+                                echo "<td>" . $Player['SC'] . "</td>";
+                                echo "<td>" . $Player['DF'] . "</td>";
+                                echo "<td>" . $Player['PS'] . "</td>";
+                                echo "<td>" . $Player['EX'] . "</td>";
+                                echo "<td>" . $Player['LD'] . "</td>";
+                                echo "<td>" . $Player['PO'] . "</td>";
+                                echo "<td>" . $Player['MO'] . "</td>";
+                                echo "<td class='overall-cell'>" . $Player['Overall'] . "</td>";
+                                
+                                // Informations supplémentaires
+                                echo "<td>" . ($Player['Age'] ?? '-') . "</td>";
+                                echo "<td>" . ($Player['Contract'] ?? '-') . "</td>";
+                                echo "<td class='salary-cell'>$" . number_format($Player['Salary1'] ?? 0, 0) . "</td>";
+                                echo "</tr>";
                             }
-                            
-                            echo "<tr>";
-                            echo "<td>" . ($Player['Jersey'] ?? '-') . "</td>";
-                            echo "<td><a href='PlayerReport.php?Player=" . $Player['Number'] . "' class='player-link'>" . $Player['Name'] . "</a></td>";
-                            echo "<td>" . $Position . "</td>";
-                            echo "<td>" . getCountryFlag($Player['Country'] ?? '') . "</td>";
-                            echo "<td>" . ($Age ?: '-') . "</td>";
-                            echo "<td>" . ($Player['Height'] ?? '-') . "</td>";
-                            echo "<td>" . ($Player['Weight'] ?? '-') . "</td>";
-                            echo "</tr>";
                         }
-                    }
-                    ?>
-                </tbody>
-            </table>
+                        ?>
+                    </tbody>
+                </table>
+            </div>
 
             <h3>Goaltenders</h3>
-            <table class="STHSPHPGoalerStat_Table">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Goaltender</th>
-                        <th>Country</th>
-                        <th>Age</th>
-                        <th>Height</th>
-                        <th>Weight</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    // Récupération du roster des gardiens avec informations de base
-                    $Query = "SELECT GoalerInfo.Number, GoalerInfo.Name, GoalerInfo.Jersey, GoalerInfo.Country, GoalerInfo.AgeDate, GoalerInfo.Height, GoalerInfo.Weight FROM GoalerInfo WHERE GoalerInfo.Team = " . $Team . " ORDER BY GoalerInfo.Name ASC";
-                    $GoalieRoster = $db->query($Query);
-                    
-                    if ($GoalieRoster) {
-                        while ($Goalie = $GoalieRoster->fetchArray()) {
-                            // Calcul de l'âge à partir de AgeDate
-                            $Age = "";
-                            if ($Goalie['AgeDate']) {
-                                $birthDate = new DateTime($Goalie['AgeDate']);
-                                $today = new DateTime();
-                                $Age = $today->diff($birthDate)->y;
+            <div class="roster-container">
+                <table class="roster-table" style="width: 100%; font-size: 10px; border-collapse: collapse;">
+                    <thead>
+                        <tr>
+                            <th style="width: 90px !important; padding: 0px !important;">Goaltender</th>
+                            <th style="width: 35px !important; padding: 0px !important;">CON</th>
+                            <th style="width: 25px !important; padding: 0px !important;">SK</th>
+                            <th style="width: 25px !important; padding: 0px !important;">DU</th>
+                            <th style="width: 25px !important; padding: 0px !important;">EN</th>
+                            <th style="width: 25px !important; padding: 0px !important;">SZ</th>
+                            <th style="width: 25px !important; padding: 0px !important;">AG</th>
+                            <th style="width: 25px !important; padding: 0px !important;">RB</th>
+                            <th style="width: 25px !important; padding: 0px !important;">SC</th>
+                            <th style="width: 25px !important; padding: 0px !important;">HS</th>
+                            <th style="width: 25px !important; padding: 0px !important;">RT</th>
+                            <th style="width: 25px !important; padding: 0px !important;">PH</th>
+                            <th style="width: 25px !important; padding: 0px !important;">PS</th>
+                            <th style="width: 25px !important; padding: 0px !important;">EX</th>
+                            <th style="width: 25px !important; padding: 0px !important;">LD</th>
+                            <th style="width: 25px !important; padding: 0px !important;">PO</th>
+                            <th style="width: 25px !important; padding: 0px !important;">MO</th>
+                            <th style="width: 25px !important; padding: 0px !important;">OV</th>
+                            <th style="width: 30px !important; padding: 0px !important;">Age</th>
+                            <th style="width: 15px !important; padding: 0px !important;">Years</th>
+                            <th style="width: 35px !important; padding: 0px !important;">Salary</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        // Récupération du roster des gardiens avec tous les ratings
+                        $Query = "SELECT * FROM GoalerInfo WHERE Team = " . $Team . " ORDER BY Overall DESC";
+                        $GoalieRoster = $db->query($Query);
+                        
+                        if ($GoalieRoster) {
+                            while ($Goalie = $GoalieRoster->fetchArray()) {
+                                $strTemp = (string)$Goalie['Name'];
+                                $playerClasses = "";
+                                
+                                if ($Goalie['Rookie'] == "True") { 
+                                    $strTemp = $strTemp . " (R)"; 
+                                    $playerClasses .= " rookie";
+                                }
+                                
+                                echo "<tr>";
+                                echo "<td class='player-name" . $playerClasses . "'><a href='GoalieReport.php?Goalie=" . $Goalie['Number'] . "'>" . $strTemp . "</a></td>";
+                                
+                                // Condition avec gestion des suspensions
+                                $conditionClass = "condition-cell";
+                                if ($Goalie['Suspension'] == 99) {
+                                    echo "<td class='" . $conditionClass . " holdout'>HO</td>";
+                                } elseif ($Goalie['Suspension'] > 0) {
+                                    echo "<td class='" . $conditionClass . " suspended'>S" . $Goalie['Suspension'] . "</td>";
+                                } else {
+                                    echo "<td class='" . $conditionClass . "'>" . number_format(str_replace(",", ".", $Goalie['ConditionDecimal']), 2) . "</td>";
+                                }
+                                
+                                // Tous les ratings des gardiens
+                                echo "<td>" . $Goalie['SK'] . "</td>";
+                                echo "<td>" . $Goalie['DU'] . "</td>";
+                                echo "<td>" . $Goalie['EN'] . "</td>";
+                                echo "<td>" . $Goalie['SZ'] . "</td>";
+                                echo "<td>" . $Goalie['AG'] . "</td>";
+                                echo "<td>" . $Goalie['RB'] . "</td>";
+                                echo "<td>" . $Goalie['SC'] . "</td>";
+                                echo "<td>" . $Goalie['HS'] . "</td>";
+                                echo "<td>" . $Goalie['RT'] . "</td>";
+                                echo "<td>" . $Goalie['PH'] . "</td>";
+                                echo "<td>" . $Goalie['PS'] . "</td>";
+                                echo "<td>" . $Goalie['EX'] . "</td>";
+                                echo "<td>" . $Goalie['LD'] . "</td>";
+                                echo "<td>" . $Goalie['PO'] . "</td>";
+                                echo "<td>" . $Goalie['MO'] . "</td>";
+                                echo "<td class='overall-cell'>" . $Goalie['Overall'] . "</td>";
+                                
+                                // Informations supplémentaires
+                                echo "<td>" . ($Goalie['Age'] ?? '-') . "</td>";
+                                echo "<td>" . ($Goalie['Contract'] ?? '-') . "</td>";
+                                echo "<td class='salary-cell'>$" . number_format($Goalie['Salary1'] ?? 0, 0) . "</td>";
+                                echo "</tr>";
                             }
-                            
-                            echo "<tr>";
-                            echo "<td>" . ($Goalie['Jersey'] ?? '-') . "</td>";
-                            echo "<td><a href='GoalieReport.php?Goalie=" . $Goalie['Number'] . "' class='player-link'>" . $Goalie['Name'] . "</a></td>";
-                            echo "<td>" . getCountryFlag($Goalie['Country'] ?? '') . "</td>";
-                            echo "<td>" . ($Age ?: '-') . "</td>";
-                            echo "<td>" . ($Goalie['Height'] ?? '-') . "</td>";
-                            echo "<td>" . ($Goalie['Weight'] ?? '-') . "</td>";
-                            echo "</tr>";
                         }
-                    }
-                    ?>
-                </tbody>
-            </table>
+                        ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <!-- Onglet Prospects -->
@@ -677,7 +923,6 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
             <table class="STHSPHPPlayerStat_Table">
                 <thead>
                     <tr>
-                        <th>#</th>
                         <th>Prospect</th>
                         <th>POS</th>
                         <th>Age</th>
@@ -701,7 +946,6 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                             if ($Prospect['PosD'] == "True") $Position .= ($Position ? "/" : "") . "D";
                             
                             echo "<tr>";
-                            echo "<td>" . ($Prospect['Jersey'] ?? '-') . "</td>";
                             echo "<td><a href='Prospects.php?Prospect=" . $Prospect['Number'] . "' class='player-link'>" . $Prospect['Name'] . "</a></td>";
                             echo "<td>" . $Position . "</td>";
                             echo "<td>" . ($Prospect['Age'] ?? '-') . "</td>";
@@ -745,7 +989,6 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
             <table class="STHSPHPPlayerStat_Table">
                 <thead>
                     <tr>
-                        <th>#</th>
                         <th>Player</th>
                         <th>POS</th>
                         <th>Status</th>
@@ -771,7 +1014,6 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                             }
                             
                             echo "<tr>";
-                            echo "<td>" . ($Injury['Jersey'] ?? '-') . "</td>";
                             echo "<td><a href='PlayerReport.php?Player=" . $Injury['Number'] . "' class='player-link'>" . $Injury['Name'] . "</a></td>";
                             echo "<td>" . $Position . "</td>";
                             echo "<td>" . $Status . "</td>";
