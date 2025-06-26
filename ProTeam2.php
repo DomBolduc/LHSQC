@@ -58,22 +58,20 @@ try {
             $Query = "SELECT * FROM TeamProFinance WHERE Number = " . $Team;
             $TeamFinance = $db->querySingle($Query, true);
             
-            // Récupération des leaders de l'équipe (Points)
-            $Query = "SELECT PlayerProStat.*, PlayerInfo.Name, PlayerInfo.Team, PlayerInfo.PosC, PlayerInfo.PosLW, PlayerInfo.PosRW, PlayerInfo.PosD, ROUND((CAST(PlayerProStat.G AS REAL) / (PlayerProStat.Shots))*100,2) AS ShotsPCT, ROUND((CAST(PlayerProStat.SecondPlay AS REAL) / 60 / (PlayerProStat.GP)),2) AS AMG, ROUND((CAST(PlayerProStat.FaceOffWon AS REAL) / (PlayerProStat.FaceOffTotal))*100,2) as FaceoffPCT, ROUND((CAST(PlayerProStat.P AS REAL) / (PlayerProStat.SecondPlay) * 60 * 20),2) AS P20 FROM PlayerInfo INNER JOIN PlayerProStat ON PlayerInfo.Number = PlayerProStat.Number WHERE ((PlayerInfo.Team=" . $Team . ") AND (PlayerInfo.Status1 >= 2) AND (PlayerProStat.GP>0)) ORDER BY PlayerProStat.P DESC, PlayerProStat.GP ASC LIMIT 1";
+            $Query = "SELECT PlayerProStat.*, PlayerInfo.Name, PlayerInfo.NHLID, PlayerInfo.Team, PlayerInfo.PosC, PlayerInfo.PosLW, PlayerInfo.PosRW, PlayerInfo.PosD, ROUND((CAST(PlayerProStat.G AS REAL) / (PlayerProStat.Shots))*100,2) AS ShotsPCT, ROUND((CAST(PlayerProStat.SecondPlay AS REAL) / 60 / (PlayerProStat.GP)),2) AS AMG, ROUND((CAST(PlayerProStat.FaceOffWon AS REAL) / (PlayerProStat.FaceOffTotal))*100,2) as FaceoffPCT, ROUND((CAST(PlayerProStat.P AS REAL) / (PlayerProStat.SecondPlay) * 60 * 20),2) AS P20 FROM PlayerInfo INNER JOIN PlayerProStat ON PlayerInfo.Number = PlayerProStat.Number WHERE ((PlayerInfo.Team=" . $Team . ") AND (PlayerInfo.Status1 >= 2) AND (PlayerProStat.GP>0)) ORDER BY PlayerProStat.P DESC, PlayerProStat.GP ASC LIMIT 1";
             $TeamLeaderP = $db->querySingle($Query, true);
             
-            // Récupération du leader en buts
-            $Query = "SELECT PlayerProStat.*, PlayerInfo.Name, PlayerInfo.Team, PlayerInfo.PosC, PlayerInfo.PosLW, PlayerInfo.PosRW, PlayerInfo.PosD, ROUND((CAST(PlayerProStat.G AS REAL) / (PlayerProStat.Shots))*100,2) AS ShotsPCT, ROUND((CAST(PlayerProStat.SecondPlay AS REAL) / 60 / (PlayerProStat.GP)),2) AS AMG, ROUND((CAST(PlayerProStat.FaceOffWon AS REAL) / (PlayerProStat.FaceOffTotal))*100,2) as FaceoffPCT, ROUND((CAST(PlayerProStat.P AS REAL) / (PlayerProStat.SecondPlay) * 60 * 20),2) AS P20 FROM PlayerInfo INNER JOIN PlayerProStat ON PlayerInfo.Number = PlayerProStat.Number WHERE ((PlayerInfo.Team=" . $Team . ") AND (PlayerInfo.Status1 >= 2) AND (PlayerProStat.GP>0)) ORDER BY PlayerProStat.G DESC, PlayerProStat.GP ASC, PlayerProStat.P DESC LIMIT 1";
+            // Récupération du leader en buts - AVEC NHLID
+            $Query = "SELECT PlayerProStat.*, PlayerInfo.Name, PlayerInfo.NHLID, PlayerInfo.Team, PlayerInfo.PosC, PlayerInfo.PosLW, PlayerInfo.PosRW, PlayerInfo.PosD, ROUND((CAST(PlayerProStat.G AS REAL) / (PlayerProStat.Shots))*100,2) AS ShotsPCT, ROUND((CAST(PlayerProStat.SecondPlay AS REAL) / 60 / (PlayerProStat.GP)),2) AS AMG, ROUND((CAST(PlayerProStat.FaceOffWon AS REAL) / (PlayerProStat.FaceOffTotal))*100,2) as FaceoffPCT, ROUND((CAST(PlayerProStat.P AS REAL) / (PlayerProStat.SecondPlay) * 60 * 20),2) AS P20 FROM PlayerInfo INNER JOIN PlayerProStat ON PlayerInfo.Number = PlayerProStat.Number WHERE ((PlayerInfo.Team=" . $Team . ") AND (PlayerInfo.Status1 >= 2) AND (PlayerProStat.GP>0)) ORDER BY PlayerProStat.G DESC, PlayerProStat.GP ASC, PlayerProStat.P DESC LIMIT 1";
             $TeamLeaderG = $db->querySingle($Query, true);
             
-            // Récupération du leader en passes
-            $Query = "SELECT PlayerProStat.*, PlayerInfo.Name, PlayerInfo.Team, PlayerInfo.PosC, PlayerInfo.PosLW, PlayerInfo.PosRW, PlayerInfo.PosD, ROUND((CAST(PlayerProStat.G AS REAL) / (PlayerProStat.Shots))*100,2) AS ShotsPCT, ROUND((CAST(PlayerProStat.SecondPlay AS REAL) / 60 / (PlayerProStat.GP)),2) AS AMG, ROUND((CAST(PlayerProStat.FaceOffWon AS REAL) / (PlayerProStat.FaceOffTotal))*100,2) as FaceoffPCT, ROUND((CAST(PlayerProStat.P AS REAL) / (PlayerProStat.SecondPlay) * 60 * 20),2) AS P20 FROM PlayerInfo INNER JOIN PlayerProStat ON PlayerInfo.Number = PlayerProStat.Number WHERE ((PlayerInfo.Team=" . $Team . ") AND (PlayerInfo.Status1 >= 2) AND (PlayerProStat.GP>0)) ORDER BY PlayerProStat.A DESC, PlayerProStat.P DESC, PlayerProStat.GP ASC LIMIT 1";
+            // Récupération du leader en passes - AVEC NHLID
+            $Query = "SELECT PlayerProStat.*, PlayerInfo.Name, PlayerInfo.NHLID, PlayerInfo.Team, PlayerInfo.PosC, PlayerInfo.PosLW, PlayerInfo.PosRW, PlayerInfo.PosD, ROUND((CAST(PlayerProStat.G AS REAL) / (PlayerProStat.Shots))*100,2) AS ShotsPCT, ROUND((CAST(PlayerProStat.SecondPlay AS REAL) / 60 / (PlayerProStat.GP)),2) AS AMG, ROUND((CAST(PlayerProStat.FaceOffWon AS REAL) / (PlayerProStat.FaceOffTotal))*100,2) as FaceoffPCT, ROUND((CAST(PlayerProStat.P AS REAL) / (PlayerProStat.SecondPlay) * 60 * 20),2) AS P20 FROM PlayerInfo INNER JOIN PlayerProStat ON PlayerInfo.Number = PlayerProStat.Number WHERE ((PlayerInfo.Team=" . $Team . ") AND (PlayerInfo.Status1 >= 2) AND (PlayerProStat.GP>0)) ORDER BY PlayerProStat.A DESC, PlayerProStat.P DESC, PlayerProStat.GP ASC LIMIT 1";
             $TeamLeaderA = $db->querySingle($Query, true);
             
-            // Récupération du leader en victoires (gardiens)
+            // La requête pour les gardiens est déjà correcte car GoalerInfo.NHLID est déjà inclus
             $Query = "SELECT GoalerProStat.*, GoalerInfo.Name, GoalerInfo.Team, GoalerInfo.Jersey, GoalerInfo.NHLID, ROUND((CAST(GoalerProStat.GA AS REAL) / (GoalerProStat.SecondPlay / 60))*60,3) AS GAA, ROUND((CAST(GoalerProStat.SA - GoalerProStat.GA AS REAL) / (GoalerProStat.SA)),3) AS PCT, ROUND((CAST(GoalerProStat.PenalityShotsShots - GoalerProStat.PenalityShotsGoals AS REAL) / (GoalerProStat.PenalityShotsShots)),3) AS PenalityShotsPCT FROM GoalerInfo INNER JOIN GoalerProStat ON GoalerInfo.Number = GoalerProStat.Number WHERE ((GoalerInfo.Team)=" . $Team . ") AND ((GoalerProStat.GP)>0) ORDER BY W DESC, GoalerProStat.GP DESC LIMIT 1";
             $TeamLeaderW = $db->querySingle($Query, true);
-            
             // Récupération du roster complet des joueurs
             $Query = "SELECT PlayerProStat.*, PlayerInfo.Name, PlayerInfo.Team, PlayerInfo.PosC, PlayerInfo.PosLW, PlayerInfo.PosRW, PlayerInfo.PosD, PlayerInfo.Jersey, PlayerInfo.Age, PlayerInfo.Height, PlayerInfo.Weight, ROUND((CAST(PlayerProStat.G AS REAL) / (PlayerProStat.Shots))*100,2) AS ShotsPCT, ROUND((CAST(PlayerProStat.SecondPlay AS REAL) / 60 / (PlayerProStat.GP)),2) AS AMG, ROUND((CAST(PlayerProStat.FaceOffWon AS REAL) / (PlayerProStat.FaceOffTotal))*100,2) as FaceoffPCT, ROUND((CAST(PlayerProStat.P AS REAL) / (PlayerProStat.SecondPlay) * 60 * 20),2) AS P20 FROM PlayerInfo INNER JOIN PlayerProStat ON PlayerInfo.Number = PlayerProStat.Number WHERE ((PlayerInfo.Team=" . $Team . ") AND (PlayerInfo.Status1 >= 2) AND (PlayerProStat.GP>0)) ORDER BY PlayerProStat.P DESC, PlayerProStat.GP ASC";
             $PlayerRoster = $db->query($Query);
@@ -94,13 +92,12 @@ try {
             $Query = "SELECT ProspectInfo.*, ProspectStat.* FROM ProspectInfo INNER JOIN ProspectStat ON ProspectInfo.Number = ProspectStat.Number WHERE ProspectInfo.Team = " . $Team . " ORDER BY ProspectStat.P DESC LIMIT 10";
             $Prospects = $db->query($Query);
             
-            // Récupération des derniers matchs
-            $Query = "SELECT * FROM Schedule WHERE (HomeNumber = " . $Team . " OR AwayNumber = " . $Team . ") AND Played = 1 ORDER BY Date DESC LIMIT 5";
-            $LastGames = $db->query($Query);
+            // Requêtes corrigées pour SchedulePro
+            $Query = "SELECT * FROM SchedulePro WHERE Play = 'True' AND (VisitorTeam = " . $Team . " OR HomeTeam = " . $Team . ") ORDER BY GameNumber DESC LIMIT 3";
+            $Last3Days = $db->query($Query);
             
-            // Récupération des prochains matchs
-            $Query = "SELECT * FROM Schedule WHERE (HomeNumber = " . $Team . " OR AwayNumber = " . $Team . ") AND Played = 0 ORDER BY Date ASC LIMIT 5";
-            $NextGames = $db->query($Query);
+            $Query = "SELECT * FROM SchedulePro WHERE Play = 'False' AND (VisitorTeam = " . $Team . " OR HomeTeam = " . $Team . ") ORDER BY GameNumber ASC LIMIT 4";
+            $Next4Days = $db->query($Query);
             
             // Récupération des transactions récentes
             $Query = "SELECT * FROM Transaction WHERE (Team1 = " . $Team . " OR Team2 = " . $Team . ") ORDER BY Date DESC LIMIT 10";
@@ -197,132 +194,294 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
     </ul>
 
     <div class="cardbook">
-        <div class="tabmain active" id="tabmain0">
+    <div class="tabmain active" id="tabmain0">
             
-            <!-- Weekly Schedule -->
-            <div class="weekly-schedule">
-                <h3>Weekly Schedule</h3>
-                <div class="schedule-container">
-                    <div class="schedule-section">
-                        <h4>Last 3 Days</h4>
-                        <div class="schedule-days">
-                            <?php
-                            // Récupération des 3 derniers jours de matchs
-                            $Query = "SELECT * FROM Schedule WHERE (HomeNumber = " . $Team . " OR AwayNumber = " . $Team . ") AND Played = 1 ORDER BY Date DESC LIMIT 3";
-                            $Last3Days = $db->query($Query);
-                            
-                            if ($Last3Days) {
-                                while ($Game = $Last3Days->fetchArray()) {
-                                    $HomeTeam = $Game['HomeNumber'];
-                                    $AwayTeam = $Game['AwayNumber'];
-                                    $HomeScore = $Game['HomeScore'];
-                                    $AwayScore = $Game['AwayScore'];
-                                    $GameDate = $Game['Date'];
-                                    
-                                    // Récupérer les noms d'équipes
-                                    $Query = "SELECT Name FROM TeamProInfo WHERE Number = " . $HomeTeam;
-                                    $HomeTeamName = $db->querySingle($Query);
-                                    $Query = "SELECT Name FROM TeamProInfo WHERE Number = " . $AwayTeam;
-                                    $AwayTeamName = $db->querySingle($Query);
-                                    
-                                    $isHome = ($HomeTeam == $Team);
-                                    $isWin = ($isHome && $HomeScore > $AwayScore) || (!$isHome && $AwayScore > $HomeScore);
-                                    
-                                    echo "<div class='schedule-day'>";
-                                    echo "<div class='game-date'>" . date('M j', strtotime($GameDate)) . "</div>";
-                                    echo "<div class='game-matchup " . ($isWin ? 'win' : 'loss') . "'>";
-                                    echo "<div class='team-info'>";
-                                    if (file_exists("images/" . $HomeTeam . ".png")) {
-                                        echo "<img src='images/" . $HomeTeam . ".png' alt='" . $HomeTeamName . "' class='team-logo-mini'>";
-                                    }
-                                    echo "<span class='team-name'>" . $HomeTeamName . "</span>";
-                                    echo "<span class=" . ($isHome ? "team-score win" : "team-score loss") . "'>" . $HomeScore . "</span>";
-                                    echo "</div>";
-                                    echo "<div class='team-info'>";
-                                    if (file_exists("images/" . $AwayTeam . ".png")) {
-                                        echo "<img src='images/" . $AwayTeam . ".png' alt='" . $AwayTeamName . "' class='team-logo-mini'>";
-                                    }
-                                    echo "<span class='team-name'>" . $AwayTeamName . "</span>";
-                                    echo "<span class=" . ($isHome ? "team-score loss" : "team-score win") . "'>" . $AwayScore . "</span>";
-                                    echo "</div>";
-                                    echo "</div>";
-                                    echo "</div>";
-                                }
-                            } else {
-                                echo "<div class='no-games'>No recent games</div>";
-                            }
-                            ?>
-                        </div>
-                    </div>
-                    
-                    <div class="schedule-section">
-                        <h4>Next 4 Days</h4>
-                        <div class="schedule-days">
-                            <?php
-                            // Récupération des 4 prochains jours de matchs
-                            $Query = "SELECT * FROM Schedule WHERE (HomeNumber = " . $Team . " OR AwayNumber = " . $Team . ") AND Played = 0 ORDER BY Date ASC LIMIT 4";
-                            $Next4Days = $db->query($Query);
-                            
-                            if ($Next4Days) {
-                                while ($Game = $Next4Days->fetchArray()) {
-                                    $HomeTeam = $Game['HomeNumber'];
-                                    $AwayTeam = $Game['AwayNumber'];
-                                    $GameDate = $Game['Date'];
-                                    
-                                    // Récupérer les noms d'équipes
-                                    $Query = "SELECT Name FROM TeamProInfo WHERE Number = " . $HomeTeam;
-                                    $HomeTeamName = $db->querySingle($Query);
-                                    $Query = "SELECT Name FROM TeamProInfo WHERE Number = " . $AwayTeam;
-                                    $AwayTeamName = $db->querySingle($Query);
-                                    
-                                    $isHome = ($HomeTeam == $Team);
-                                    
-                                    echo "<div class='schedule-day'>";
-                                    echo "<div class='game-date'>" . date('M j', strtotime($GameDate)) . "</div>";
-                                    echo "<div class='game-matchup upcoming'>";
-                                    echo "<div class='team-info'>";
-                                    if (file_exists("images/" . $HomeTeam . ".png")) {
-                                        echo "<img src='images/" . $HomeTeam . ".png' alt='" . $HomeTeamName . "' class='team-logo-mini'>";
-                                    }
-                                    echo "<span class='team-name'>" . $HomeTeamName . "</span>";
-                                    echo "</div>";
-                                    echo "<div class='team-info'>";
-                                    if (file_exists("images/" . $AwayTeam . ".png")) {
-                                        echo "<img src='images/" . $AwayTeam . ".png' alt='" . $AwayTeamName . "' class='team-logo-mini'>";
-                                    }
-                                    echo "<span class='team-name'>" . $AwayTeamName . "</span>";
-                                    echo "</div>";
-                                    echo "</div>";
-                                    echo "</div>";
-                                }
-                            } else {
-                                echo "<div class='no-games'>No upcoming games</div>";
-                            }
-                            ?>
-                        </div>
-                    </div>
-                </div>
+<!-- Weekly Schedule avec les bonnes colonnes -->
+<div class="weekly-schedule">
+    <h3>Weekly Schedule</h3>
+    
+    <!-- Informations de débogage -->
+    <div style="background-color: #f8f9fa; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 5px;">
+        <p><strong>Débogage:</strong> Équipe sélectionnée: <?php echo $Team; ?></p>
+        
+        <?php
+        // Vérifier si la table SchedulePro existe
+        $tableCheck = $db->query("SELECT name FROM sqlite_master WHERE type='table' AND name='SchedulePro'");
+        $tableExists = $tableCheck->fetchArray();
+        if (!$tableExists) {
+            echo "<p style='color: red;'>La table SchedulePro n'existe pas dans la base de données.</p>";
+        } else {
+            echo "<p style='color: green;'>La table SchedulePro existe dans la base de données.</p>";
+            
+            // Compter les matchs joués et à venir
+            $playedQuery = $db->query("SELECT COUNT(*) as count FROM SchedulePro WHERE (HomeTeam = $Team OR VisitorTeam = $Team) AND Play = 1");
+            $playedCount = $playedQuery->fetchArray();
+            echo "<p>Matchs joués pour l'équipe $Team: " . $playedCount['count'] . "</p>";
+            
+            $upcomingQuery = $db->query("SELECT COUNT(*) as count FROM SchedulePro WHERE (HomeTeam = $Team OR VisitorTeam = $Team) AND Play = 0");
+            $upcomingCount = $upcomingQuery->fetchArray();
+            echo "<p>Matchs à venir pour l'équipe $Team: " . $upcomingCount['count'] . "</p>";
+            
+            // Vérifier si le dossier images existe
+            if (!is_dir("images")) {
+                echo "<p style='color: red;'>Le dossier 'images' n'existe pas.</p>";
+            } else {
+                echo "<p style='color: green;'>Le dossier 'images' existe.</p>";
+            }
+        }
+        ?>
+    </div>
+    
+    <div class="schedule-container">
+    <div class="weekly-schedule">
+    <h3>Weekly Schedule</h3>
+    <div class="schedule-container">
+        <div class="schedule-section">
+            <h4>Last 3 Games</h4>
+            <div class="schedule-days">
+                <?php
+                if ($Last3Days) {
+                    while ($Game = $Last3Days->fetchArray()) {
+                        $HomeTeam = $Game['HomeTeam'];
+                        $VisitorTeam = $Game['VisitorTeam'];
+                        $HomeScore = $Game['HomeScore'];
+                        $VisitorScore = $Game['VisitorScore'];
+                        $GameNumber = $Game['GameNumber'];
+                        $IsOvertime = ($Game['Overtime'] ?? '') == 'True';
+                        $IsShootout = ($Game['Shootout'] ?? '') == 'True';
+                        
+                        // Récupérer les noms d'équipes depuis TeamProInfo
+                        $Query = "SELECT Name, TeamThemeID FROM TeamProInfo WHERE Number = " . $HomeTeam;
+                        $HomeTeamInfo = $db->querySingle($Query, true);
+                        $Query = "SELECT Name, TeamThemeID FROM TeamProInfo WHERE Number = " . $VisitorTeam;
+                        $VisitorTeamInfo = $db->querySingle($Query, true);
+                        
+                        $HomeTeamName = $HomeTeamInfo['Name'] ?? 'Team ' . $HomeTeam;
+                        $VisitorTeamName = $VisitorTeamInfo['Name'] ?? 'Team ' . $VisitorTeam;
+                        $HomeTeamThemeID = $HomeTeamInfo['TeamThemeID'] ?? null;
+                        $VisitorTeamThemeID = $VisitorTeamInfo['TeamThemeID'] ?? null;
+                        
+                        $isHome = ($HomeTeam == $Team);
+                        $isWin = ($isHome && $HomeScore > $VisitorScore) || (!$isHome && $VisitorScore > $HomeScore);
+                        
+                        echo "<div class='schedule-day'>";
+                        echo "<div class='game-date'>Game " . $GameNumber . "</div>";
+                        echo "<div class='game-matchup " . ($isWin ? 'win' : 'loss') . "'>";
+                        
+                        // Équipe visiteuse
+                        echo "<div class='team-info'>";
+                        if ($VisitorTeamThemeID && file_exists("images/" . $VisitorTeamThemeID . ".png")) {
+                            echo "<img src='images/" . $VisitorTeamThemeID . ".png' alt='" . $VisitorTeamName . "' class='team-logo-mini'>";
+                        }
+                        echo "<span class='team-name'>" . $VisitorTeamName . "</span>";
+                        echo "<span class='score'>" . $VisitorScore . "</span>";
+                        echo "</div>";
+                        
+                        // Équipe locale
+                        echo "<div class='team-info'>";
+                        if ($HomeTeamThemeID && file_exists("images/" . $HomeTeamThemeID . ".png")) {
+                            echo "<img src='images/" . $HomeTeamThemeID . ".png' alt='" . $HomeTeamName . "' class='team-logo-mini'>";
+                        }
+                        echo "<span class='team-name'>" . $HomeTeamName . "</span>";
+                        echo "<span class='score'>" . $HomeScore . "</span>";
+                        echo "</div>";
+                        
+                        // Indicateurs OT/SO si disponibles
+                        if ($IsShootout) {
+                            echo "<div class='game-type'>SO</div>";
+                        } elseif ($IsOvertime) {
+                            echo "<div class='game-type'>OT</div>";
+                        }
+                        
+                        echo "</div>";
+                        echo "</div>";
+                    }
+                } else {
+                    echo "<div class='no-games'>No recent games</div>";
+                }
+                ?>
             </div>
+        </div>
+        
+        <div class="schedule-section">
+            <h4>Next 4 Games</h4>
+            <div class="schedule-days">
+                <?php
+                if ($Next4Days) {
+                    while ($Game = $Next4Days->fetchArray()) {
+                        $HomeTeam = $Game['HomeTeam'];
+                        $VisitorTeam = $Game['VisitorTeam'];
+                        $GameNumber = $Game['GameNumber'];
+                        
+                        // Récupérer les noms d'équipes depuis TeamProInfo
+                        $Query = "SELECT Name, TeamThemeID FROM TeamProInfo WHERE Number = " . $HomeTeam;
+                        $HomeTeamInfo = $db->querySingle($Query, true);
+                        $Query = "SELECT Name, TeamThemeID FROM TeamProInfo WHERE Number = " . $VisitorTeam;
+                        $VisitorTeamInfo = $db->querySingle($Query, true);
+                        
+                        $HomeTeamName = $HomeTeamInfo['Name'] ?? 'Team ' . $HomeTeam;
+                        $VisitorTeamName = $VisitorTeamInfo['Name'] ?? 'Team ' . $VisitorTeam;
+                        $HomeTeamThemeID = $HomeTeamInfo['TeamThemeID'] ?? null;
+                        $VisitorTeamThemeID = $VisitorTeamInfo['TeamThemeID'] ?? null;
+                        
+                        $isHome = ($HomeTeam == $Team);
+                        
+                        echo "<div class='schedule-day'>";
+                        echo "<div class='game-date'>Game " . $GameNumber . "</div>";
+                        echo "<div class='game-matchup upcoming'>";
+                        
+                        // Équipe visiteuse
+                        echo "<div class='team-info'>";
+                        if ($VisitorTeamThemeID && file_exists("images/" . $VisitorTeamThemeID . ".png")) {
+                            echo "<img src='images/" . $VisitorTeamThemeID . ".png' alt='" . $VisitorTeamName . "' class='team-logo-mini'>";
+                        }
+                        echo "<span class='team-name'>" . $VisitorTeamName . "</span>";
+                        echo "</div>";
+                        
+                        // Équipe locale
+                        echo "<div class='team-info'>";
+                        if ($HomeTeamThemeID && file_exists("images/" . $HomeTeamThemeID . ".png")) {
+                            echo "<img src='images/" . $HomeTeamThemeID . ".png' alt='" . $HomeTeamName . "' class='team-logo-mini'>";
+                        }
+                        echo "<span class='team-name'>" . $HomeTeamName . "</span>";
+                        echo "</div>";
+                        
+                        echo "</div>";
+                        echo "</div>";
+                    }
+                } else {
+                    echo "<div class='no-games'>No upcoming games</div>";
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
             
-            <!-- Cartes de statistiques modernes -->
+            <!-- Grille de statistiques -->
             <div class="stats-grid">
-                <div class="stat-card span-2">
+                <!-- Section Team Leaders style Sportsnet -->
+                <div class="stat-card team-leaders">
                     <h3>Team Leaders</h3>
-                    <div class="stat-item">
-                        <span class="stat-label">Points Leader</span>
-                        <span class="stat-value"><?php echo $TeamLeaderP['Name'] ?? 'N/A'; ?> (<?php echo $TeamLeaderP['P'] ?? 0; ?>)</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">Goals Leader</span>
-                        <span class="stat-value"><?php echo $TeamLeaderG['Name'] ?? 'N/A'; ?> (<?php echo $TeamLeaderG['G'] ?? 0; ?>)</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">Assists Leader</span>
-                        <span class="stat-value"><?php echo $TeamLeaderA['Name'] ?? 'N/A'; ?> (<?php echo $TeamLeaderA['A'] ?? 0; ?>)</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">Wins Leader</span>
-                        <span class="stat-value"><?php echo $TeamLeaderW['Name'] ?? 'N/A'; ?> (<?php echo $TeamLeaderW['W'] ?? 0; ?>)</span>
+                    <div class="leaders-grid">
+                        
+                        <!-- Points Leader -->
+                        <div class="leader-card">
+                            <?php if ($TeamLeaderP && !empty($TeamLeaderP['NHLID'])): ?>
+                                <img src="https://assets.nhle.com/mugs/nhl/latest/<?php echo $TeamLeaderP['NHLID']; ?>.png" 
+                                     alt="<?php echo $TeamLeaderP['Name']; ?>" 
+                                     class="leader-image"
+                                     onerror="this.src='/images/default.png'">
+                            <?php else: ?>
+                                <img src="/images/default.png" 
+                                     alt="<?php echo $TeamLeaderP['Name'] ?? 'N/A'; ?>" 
+                                     class="leader-image">
+                            <?php endif; ?>
+                            
+                            <div class="leader-content">
+                                <div class="leader-stat-label">Points Leader</div>
+                                <div class="leader-player-name"><?php echo $TeamLeaderP['Name'] ?? 'N/A'; ?></div>
+                                <div class="leader-position">
+                                    <?php 
+                                    if ($TeamLeaderP) {
+                                        $position = "";
+                                        if ($TeamLeaderP['PosC'] == "True") $position .= "C";
+                                        if ($TeamLeaderP['PosLW'] == "True") $position .= ($position ? "/" : "") . "LW";
+                                        if ($TeamLeaderP['PosRW'] == "True") $position .= ($position ? "/" : "") . "RW";
+                                        if ($TeamLeaderP['PosD'] == "True") $position .= ($position ? "/" : "") . "D";
+                                        echo $position;
+                                    }
+                                    ?>
+                                </div>
+                                <div class="leader-stat-number"><?php echo $TeamLeaderP['P'] ?? 0; ?></div>
+                            </div>
+                        </div>
+
+                        <!-- Goals Leader -->
+                        <div class="leader-card">
+                            <?php if ($TeamLeaderG && !empty($TeamLeaderG['NHLID'])): ?>
+                                <img src="https://assets.nhle.com/mugs/nhl/latest/<?php echo $TeamLeaderG['NHLID']; ?>.png" 
+                                     alt="<?php echo $TeamLeaderG['Name']; ?>" 
+                                     class="leader-image"
+                                     onerror="this.src='/images/default.png'">
+                            <?php else: ?>
+                                <img src="/images/default.png" 
+                                     alt="<?php echo $TeamLeaderG['Name'] ?? 'N/A'; ?>" 
+                                     class="leader-image">
+                            <?php endif; ?>
+                            
+                            <div class="leader-content">
+                                <div class="leader-stat-label">Goals Leader</div>
+                                <div class="leader-player-name"><?php echo $TeamLeaderG['Name'] ?? 'N/A'; ?></div>
+                                <div class="leader-position">
+                                    <?php 
+                                    if ($TeamLeaderG) {
+                                        $position = "";
+                                        if ($TeamLeaderG['PosC'] == "True") $position .= "C";
+                                        if ($TeamLeaderG['PosLW'] == "True") $position .= ($position ? "/" : "") . "LW";
+                                        if ($TeamLeaderG['PosRW'] == "True") $position .= ($position ? "/" : "") . "RW";
+                                        if ($TeamLeaderG['PosD'] == "True") $position .= ($position ? "/" : "") . "D";
+                                        echo $position;
+                                    }
+                                    ?>
+                                </div>
+                                <div class="leader-stat-number"><?php echo $TeamLeaderG['G'] ?? 0; ?></div>
+                            </div>
+                        </div>
+
+                        <!-- Assists Leader -->
+                        <div class="leader-card">
+                            <?php if ($TeamLeaderA && !empty($TeamLeaderA['NHLID'])): ?>
+                                <img src="https://assets.nhle.com/mugs/nhl/latest/<?php echo $TeamLeaderA['NHLID']; ?>.png" 
+                                     alt="<?php echo $TeamLeaderA['Name']; ?>" 
+                                     class="leader-image"
+                                     onerror="this.src='/images/default.png'">
+                            <?php else: ?>
+                                <img src="/images/default.png" 
+                                     alt="<?php echo $TeamLeaderA['Name'] ?? 'N/A'; ?>" 
+                                     class="leader-image">
+                            <?php endif; ?>
+                            
+                            <div class="leader-content">
+                                <div class="leader-stat-label">Assists Leader</div>
+                                <div class="leader-player-name"><?php echo $TeamLeaderA['Name'] ?? 'N/A'; ?></div>
+                                <div class="leader-position">
+                                    <?php 
+                                    if ($TeamLeaderA) {
+                                        $position = "";
+                                        if ($TeamLeaderA['PosC'] == "True") $position .= "C";
+                                        if ($TeamLeaderA['PosLW'] == "True") $position .= ($position ? "/" : "") . "LW";
+                                        if ($TeamLeaderA['PosRW'] == "True") $position .= ($position ? "/" : "") . "RW";
+                                        if ($TeamLeaderA['PosD'] == "True") $position .= ($position ? "/" : "") . "D";
+                                        echo $position;
+                                    }
+                                    ?>
+                                </div>
+                                <div class="leader-stat-number"><?php echo $TeamLeaderA['A'] ?? 0; ?></div>
+                            </div>
+                        </div>
+
+                        <!-- Wins Leader (Goalie) -->
+                        <div class="leader-card">
+                            <?php if ($TeamLeaderW && !empty($TeamLeaderW['NHLID'])): ?>
+                                <img src="https://assets.nhle.com/mugs/nhl/latest/<?php echo $TeamLeaderW['NHLID']; ?>.png" 
+                                     alt="<?php echo $TeamLeaderW['Name']; ?>" 
+                                     class="leader-image"
+                                     onerror="this.src='/images/default.png'">
+                            <?php else: ?>
+                                <img src="/images/default.png" 
+                                     alt="<?php echo $TeamLeaderW['Name'] ?? 'N/A'; ?>" 
+                                     class="leader-image">
+                            <?php endif; ?>
+                            
+                            <div class="leader-content">
+                                <div class="leader-stat-label">Wins Leader</div>
+                                <div class="leader-player-name"><?php echo $TeamLeaderW['Name'] ?? 'N/A'; ?></div>
+                                <div class="leader-position">G</div>
+                                <div class="leader-stat-number"><?php echo $TeamLeaderW['W'] ?? 0; ?></div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
@@ -635,4 +794,4 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
 
 </div>
 
-<?php include "Footer.php"; ?> 
+<?php include "Footer.php"; ?>
