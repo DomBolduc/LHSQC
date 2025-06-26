@@ -67,11 +67,9 @@ if($CountNews > 0 && !empty($NewsItems)){
     <div class="carousel-inner">
         <?php foreach($NewsItems as $index => $newsItem): ?>
         <div class="carousel-item <?php echo ($index == 0) ? 'active' : ''; ?>">
-            div class="d-block w-100 p-4 bg-light rounded"
-     style="width:800px; height:600px; max-width:100%; max-height:100%; margin:auto; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-                    <h5 class="mb-3"><?php echo htmlspecialchars($newsItem['title']); ?></h5>
-                    <p class="mb-0"><?php echo $newsItem['message']; ?></p>
-                </div>
+            <div class="d-block w-100 p-4 bg-light rounded"
+                 style="width:800px; height:400px; max-width:100%; max-height:100%; margin:auto; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+                <h5 class="mb-3"><?php echo htmlspecialchars($newsItem['title']); ?></h5>
             </div>
         </div>
         <?php endforeach; ?>

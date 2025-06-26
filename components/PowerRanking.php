@@ -39,6 +39,7 @@ if (!empty($PowerRankingTeams)) {
     height: 400px;
     display: flex;
     flex-direction: column;
+    margin-top: 60px;
 }
 
 .power-ranking-title {

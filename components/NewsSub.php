@@ -48,6 +48,7 @@ if($CountNews > 0 && !empty($NewsItems)){
 <style>
 #news-carousel-container {
     width: 800px;
+    height: 350px;
     max-width: 100%;
     margin: 0 auto;
     background-color: white !important;
@@ -56,19 +57,19 @@ if($CountNews > 0 && !empty($NewsItems)){
 }
 #newsCarousel {
     width: 800px !important;
-    height: 600px !important;
+    height: 350px !important;
     max-width: 100% !important;
     margin: 0 auto;
 }
 .carousel-inner {
     width: 800px !important;
-    height: 600px !important;
+    height: 350px !important;
     max-width: 100% !important;
     margin: 0 auto;
 }
 .carousel-item {
     width: 800px !important;
-    height: 600px !important;
+    height: 350px !important;
     max-width: 100% !important;
     margin: 0 auto;
     display: flex !important;
@@ -78,7 +79,7 @@ if($CountNews > 0 && !empty($NewsItems)){
 }
 .news-carousel-slide {
     width: 800px;
-    height: 600px;
+    height: 350px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -190,14 +191,7 @@ if($CountNews > 0 && !empty($NewsItems)){
 </style>
 <div id="news-carousel-container">
     <div id="newsCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="4000">
-        <!-- Indicators -->
-        <div class="carousel-indicators">
-            <?php for($i = 0; $i < count($NewsItems); $i++): ?>
-            <button type="button" data-bs-target="#newsCarousel" data-bs-slide-to="<?php echo $i; ?>" 
-                    <?php echo ($i == 0) ? 'class="active" aria-current="true"' : ''; ?> 
-                    aria-label="Slide <?php echo ($i + 1); ?>"></button>
-            <?php endfor; ?>
-        </div>
+        
         <!-- Carousel Inner -->
         <div class="carousel-inner">
             <?php foreach($NewsItems as $index => $newsItem): ?>
@@ -238,13 +232,8 @@ if($CountNews > 0 && !empty($NewsItems)){
                             </button>
                         </div>
                     </a>
-                    <div class="news-carousel-message">
-                        <?php echo $previewMessage; ?>
-                    </div>
-                    <div class="article-meta">
-                        <span class="article-author"><?php echo htmlspecialchars($newsItem['author']); ?></span>
-                        <span class="article-date"><?php echo htmlspecialchars($newsItem['time']); ?></span>
-                    </div>
+                   
+                    
                 </div>
             </div>
             <?php endforeach; ?>
