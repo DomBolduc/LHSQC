@@ -282,21 +282,21 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
     </ul>
 
     <div class="cardbook">
-    <div class="tabmain active" id="tabmain0">
+        <div class="tabmain active" id="tabmain0">
             
             <!-- Grille de statistiques -->
             <div class="stats-grid">
                 <!-- Weekly Schedule dans la grille -->
                 <div class="stat-card weekly-schedule-in-grid">
-                    <h3>Weekly Schedule</h3>
+                <h3>Weekly Schedule</h3>
                     <div class="schedule-days-compact">
-                        <?php
+                            <?php
                         // Afficher d'abord les 3 derniers matchs joués
-                        if ($Last3Days) {
-                            while ($Game = $Last3Days->fetchArray()) {
+                            if ($Last3Days) {
+                                while ($Game = $Last3Days->fetchArray()) {
                                 $HomeTeam = $Game['HomeTeam'];
                                 $VisitorTeam = $Game['VisitorTeam'];
-                                $HomeScore = $Game['HomeScore'];
+                                    $HomeScore = $Game['HomeScore'];
                                 $VisitorScore = $Game['VisitorScore'];
                                 $GameNumber = $Game['GameNumber'];
                                 $IsOvertime = ($Game['Overtime'] ?? '') == 'True';
@@ -312,8 +312,8 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                                 $VisitorTeamName = $VisitorTeamInfo['Name'] ?? 'Team ' . $VisitorTeam;
                                 $HomeTeamThemeID = $HomeTeamInfo['TeamThemeID'] ?? null;
                                 $VisitorTeamThemeID = $VisitorTeamInfo['TeamThemeID'] ?? null;
-                                
-                                $isHome = ($HomeTeam == $Team);
+                                    
+                                    $isHome = ($HomeTeam == $Team);
                                 $isWin = ($isHome && $HomeScore > $VisitorScore) || (!$isHome && $VisitorScore > $HomeScore);
                                 
                                 echo "<div class='schedule-day-compact'>";
@@ -327,7 +327,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                                 }
                                 echo "<span class='team-name-compact'>" . $VisitorTeamName . "</span>";
                                 echo "<span class=" . ($isWin ? "'score-compact win'" : "'score-compact loss'") . ">" . $VisitorScore . "</span>";
-                                echo "</div>";
+                                    echo "</div>";
                                 
                                 // Équipe locale
                                 echo "<div class='team-info-compact'>";
@@ -336,7 +336,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                                 }
                                 echo "<span class='team-name-compact'>" . $HomeTeamName . "</span>";
                                 echo "<span class=" . ($isWin ? "'score-compact win'" : "'score-compact loss'") . ">" . $HomeScore . "</span>";
-                                echo "</div>";
+                                    echo "</div>";
                                 
                                 // Indicateurs OT/SO si disponibles
                                 if ($IsShootout) {
@@ -345,14 +345,14 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                                     echo "<div class='game-type-compact'>OT</div>";
                                 }
                                 
-                                echo "</div>";
-                                echo "</div>";
-                            }
+                                    echo "</div>";
+                                    echo "</div>";
+                                }
                         }
                         
                         // Puis afficher les 4 prochains matchs
-                        if ($Next4Days) {
-                            while ($Game = $Next4Days->fetchArray()) {
+                            if ($Next4Days) {
+                                while ($Game = $Next4Days->fetchArray()) {
                                 $HomeTeam = $Game['HomeTeam'];
                                 $VisitorTeam = $Game['VisitorTeam'];
                                 $GameNumber = $Game['GameNumber'];
@@ -367,9 +367,9 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                                 $VisitorTeamName = $VisitorTeamInfo['Name'] ?? 'Team ' . $VisitorTeam;
                                 $HomeTeamThemeID = $HomeTeamInfo['TeamThemeID'] ?? null;
                                 $VisitorTeamThemeID = $VisitorTeamInfo['TeamThemeID'] ?? null;
-                                
-                                $isHome = ($HomeTeam == $Team);
-                                
+                                    
+                                    $isHome = ($HomeTeam == $Team);
+                                    
                                 echo "<div class='schedule-day-compact'>";
                                 echo "<div class='game-date-compact'>Game " . $GameNumber . "</div>";
                                 echo "<div class='game-matchup-compact upcoming'>";
@@ -380,7 +380,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                                     echo "<img src='images/" . $VisitorTeamThemeID . ".png' alt='" . $VisitorTeamName . "' class='team-logo-mini-compact'>";
                                 }
                                 echo "<span class='team-name-compact'>" . $VisitorTeamName . "</span>";
-                                echo "</div>";
+                                    echo "</div>";
                                 
                                 // Équipe locale
                                 echo "<div class='team-info-compact'>";
@@ -388,20 +388,20 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                                     echo "<img src='images/" . $HomeTeamThemeID . ".png' alt='" . $HomeTeamName . "' class='team-logo-mini-compact'>";
                                 }
                                 echo "<span class='team-name-compact'>" . $HomeTeamName . "</span>";
-                                echo "</div>";
+                                    echo "</div>";
                                 
-                                echo "</div>";
-                                echo "</div>";
-                            }
+                                    echo "</div>";
+                                    echo "</div>";
+                                }
                         }
                         
                         // Si aucun match trouvé
                         if (!$Last3Days && !$Next4Days) {
                             echo "<div class='no-games-compact'>No games found</div>";
-                        }
-                        ?>
+                            }
+                            ?>
+                        </div>
                     </div>
-                </div>
                 
                 <!-- Section Team Leaders style Sportsnet -->
                 <div class="stat-card team-leaders">
@@ -437,9 +437,9 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                                     ?>
                                 </div>
                                 <div class="leader-stat-number"><?php echo $TeamLeaderP['P'] ?? 0; ?></div>
-                            </div>
-                        </div>
-
+                </div>
+            </div>
+            
                         <!-- Goals Leader -->
                         <div class="leader-card">
                             <?php if ($TeamLeaderG && !empty($TeamLeaderG['NHLID'])): ?>
@@ -615,7 +615,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                         <span class="stat-value"><?php echo ($TeamFinance['Budget'] ?? 0) > 0 ? number_format((($TeamFinance['Budget'] ?? 0) - ($TeamFinance['TotalPlayersSalaries'] ?? 0)) / ($TeamFinance['Budget'] ?? 1) * 100, 1) : "0.0"; ?>%</span>
                     </div>
                 </div>
-                
+
                 <!-- Nouvelle div avec la même largeur que Weekly Schedule -->
                 <div class="stat-card new-section">
                     <h3>Team vs League Average</h3>
@@ -626,22 +626,22 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                                 <div class="graph-bar-container">
                                     <div class="graph-bar team-bar" style="width: <?php echo min(85, ($TeamGraphStats['GFPerGame'] / max($LeagueMax['MaxGFPerGame'], 1)) * 100); ?>%">
                                         <span class="bar-value"><?php echo $TeamGraphStats['GFPerGame']; ?></span>
-                                    </div>
+                    </div>
                                     <div class="graph-bar league-avg" style="left: <?php echo min(85, ($LeagueAverages['AvgGFPerGame'] / max($LeagueMax['MaxGFPerGame'], 1)) * 100); ?>%"></div>
                                     <div class="best-team-label"><?php echo htmlspecialchars($BestGFTeam['TeamName'] ?? 'N/A'); ?>: <?php echo round($LeagueMax['MaxGFPerGame'], 2); ?></div>
-                                </div>
-                            </div>
+                    </div>
+                    </div>
                             
                             <div class="graph-row">
                                 <div class="graph-label">Goals Against/Game</div>
                                 <div class="graph-bar-container">
                                     <div class="graph-bar team-bar" style="width: <?php echo min(85, ($TeamGraphStats['GAPerGame'] / max($LeagueMax['MaxGAPerGame'], 1)) * 100); ?>%">
                                         <span class="bar-value"><?php echo $TeamGraphStats['GAPerGame']; ?></span>
-                                    </div>
+                    </div>
                                     <div class="graph-bar league-avg" style="left: <?php echo min(85, ($LeagueAverages['AvgGAPerGame'] / max($LeagueMax['MaxGAPerGame'], 1)) * 100); ?>%"></div>
                                     <div class="best-team-label"><?php echo htmlspecialchars($BestGATeam['TeamName'] ?? 'N/A'); ?>: <?php echo round($LeagueMax['MaxGAPerGame'], 2); ?></div>
-                                </div>
-                            </div>
+                    </div>
+                    </div>
                             
                             <div class="graph-row">
                                 <div class="graph-label">Shots For/Game</div>
@@ -712,43 +712,43 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
             
             <!-- Table des joueurs avec ratings -->
             <div class="roster-container">
-                <table class="roster-table" style="width: 100%; font-size: 10px; border-collapse: collapse;">
-                    <thead>
-                        <tr>
-                            <th style="width: 112px !important; padding: 0px !important;">Player</th>
-                            <th style="width: 20px !important; padding: 0px !important;">POS</th>
-                            <th style="width: 40px !important; padding: 0px !important;">CON</th>
-                            <th style="width: 30px !important; padding: 0px !important;">CK</th>
-                            <th style="width: 30px !important; padding: 0px !important;">FG</th>
-                            <th style="width: 30px !important; padding: 0px !important;">DI</th>
-                            <th style="width: 30px !important; padding: 0px !important;">SK</th>
-                            <th style="width: 30px !important; padding: 0px !important;">ST</th>
-                            <th style="width: 30px !important; padding: 0px !important;">EN</th>
-                            <th style="width: 30px !important; padding: 0px !important;">DU</th>
-                            <th style="width: 30px !important; padding: 0px !important;">PH</th>
-                            <th style="width: 30px !important; padding: 0px !important;">FO</th>
-                            <th style="width: 30px !important; padding: 0px !important;">PA</th>
-                            <th style="width: 30px !important; padding: 0px !important;">SC</th>
-                            <th style="width: 30px !important; padding: 0px !important;">DF</th>
-                            <th style="width: 30px !important; padding: 0px !important;">PS</th>
-                            <th style="width: 30px !important; padding: 0px !important;">EX</th>
-                            <th style="width: 30px !important; padding: 0px !important;">LD</th>
-                            <th style="width: 30px !important; padding: 0px !important;">PO</th>
-                            <th style="width: 30px !important; padding: 0px !important;">MO</th>
-                            <th style="width: 35px !important; padding: 0px !important;">OV</th>
-                            <th style="width: 35px !important; padding: 0px !important;">Age</th>
-                            <th style="width: 20px !important; padding: 0px !important;">Years</th>
-                            <th style="width: 45px !important; padding: 0px !important;">Salary</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
+                <table class="roster-table" style="width: 100%; font-size: 10px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
+                <thead>
+                        <tr style="background: #f5f5f5; border-bottom: 2px solid #ddd;">
+                            <th style="width: 112px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: left; font-weight: bold;">Player</th>
+                            <th style="width: 20px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">POS</th>
+                            <th style="width: 40px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">CON</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">CK</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">FG</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">DI</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">SK</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">ST</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">EN</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">DU</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">PH</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">FO</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">PA</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">SC</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">DF</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">PS</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">EX</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">LD</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">PO</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">MO</th>
+                            <th style="width: 35px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold; background: #e8f4f8;">OV</th>
+                            <th style="width: 35px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Age</th>
+                            <th style="width: 20px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Years</th>
+                            <th style="width: 45px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Salary</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
                         // Récupération du roster complet des joueurs avec tous les ratings
                         $Query = "SELECT PlayerInfo.*, PlayerProStat.GP, PlayerProStat.G, PlayerProStat.A, PlayerProStat.P, PlayerProStat.PlusMinus FROM PlayerInfo LEFT JOIN PlayerProStat ON PlayerInfo.Number = PlayerProStat.Number WHERE PlayerInfo.Team = " . $Team . " AND PlayerInfo.Status1 >= 2 ORDER BY PlayerInfo.PosD, PlayerInfo.Overall DESC";
-                        $PlayerRoster = $db->query($Query);
-                        
-                        if ($PlayerRoster) {
-                            while ($Player = $PlayerRoster->fetchArray()) {
+                    $PlayerRoster = $db->query($Query);
+                    
+                    if ($PlayerRoster) {
+                        while ($Player = $PlayerRoster->fetchArray()) {
                                 $strTemp = (string)$Player['Name'];
                                 $playerClasses = "";
                                 
@@ -767,9 +767,9 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                                 if ($TeamLeader['Assistant2'] == $Player['Number']) { 
                                     $strTemp = $strTemp . " (A)"; 
                                     $playerClasses .= " assistant";
-                                }
-                                
-                                echo "<tr>";
+                            }
+                            
+                            echo "<tr>";
                                 echo "<td class='player-name" . $playerClasses . "'><a href='PlayerReport.php?Player=" . $Player['Number'] . "'>" . $strTemp . "</a></td>";
                                 
                                 // Détermination de la position principale
@@ -821,59 +821,59 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                                 echo "<td>" . ($Player['Age'] ?? '-') . "</td>";
                                 echo "<td>" . ($Player['Contract'] ?? '-') . "</td>";
                                 echo "<td class='salary-cell'>$" . number_format($Player['Salary1'] ?? 0, 0) . "</td>";
-                                echo "</tr>";
-                            }
+                            echo "</tr>";
                         }
-                        ?>
-                    </tbody>
-                </table>
+                    }
+                    ?>
+                </tbody>
+            </table>
             </div>
 
             <h3>Goaltenders</h3>
             <div class="roster-container">
-                <table class="roster-table" style="width: 100%; font-size: 10px; border-collapse: collapse;">
-                    <thead>
-                        <tr>
-                            <th style="width: 90px !important; padding: 0px !important;">Goaltender</th>
-                            <th style="width: 35px !important; padding: 0px !important;">CON</th>
-                            <th style="width: 25px !important; padding: 0px !important;">SK</th>
-                            <th style="width: 25px !important; padding: 0px !important;">DU</th>
-                            <th style="width: 25px !important; padding: 0px !important;">EN</th>
-                            <th style="width: 25px !important; padding: 0px !important;">SZ</th>
-                            <th style="width: 25px !important; padding: 0px !important;">AG</th>
-                            <th style="width: 25px !important; padding: 0px !important;">RB</th>
-                            <th style="width: 25px !important; padding: 0px !important;">SC</th>
-                            <th style="width: 25px !important; padding: 0px !important;">HS</th>
-                            <th style="width: 25px !important; padding: 0px !important;">RT</th>
-                            <th style="width: 25px !important; padding: 0px !important;">PH</th>
-                            <th style="width: 25px !important; padding: 0px !important;">PS</th>
-                            <th style="width: 25px !important; padding: 0px !important;">EX</th>
-                            <th style="width: 25px !important; padding: 0px !important;">LD</th>
-                            <th style="width: 25px !important; padding: 0px !important;">PO</th>
-                            <th style="width: 25px !important; padding: 0px !important;">MO</th>
-                            <th style="width: 25px !important; padding: 0px !important;">OV</th>
-                            <th style="width: 30px !important; padding: 0px !important;">Age</th>
-                            <th style="width: 15px !important; padding: 0px !important;">Years</th>
-                            <th style="width: 35px !important; padding: 0px !important;">Salary</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
+                <table class="roster-table" style="width: 100%; font-size: 10px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
+                <thead>
+                        <tr style="background: #f5f5f5; border-bottom: 2px solid #ddd;">
+                            <th style="width: 90px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: left; font-weight: bold;">Goaltender</th>
+                            <th style="width: 35px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">CON</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">SK</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">DU</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">EN</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">SZ</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">AG</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">RB</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">SC</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">HS</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">RT</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">PH</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">PS</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">EX</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">LD</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">PO</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">MO</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold; background: #e8f4f8;">OV</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Age</th>
+                            <th style="width: 15px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Years</th>
+                            <th style="width: 35px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Salary</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
                         // Récupération du roster des gardiens avec tous les ratings
                         $Query = "SELECT * FROM GoalerInfo WHERE Team = " . $Team . " ORDER BY Overall DESC";
-                        $GoalieRoster = $db->query($Query);
-                        
-                        if ($GoalieRoster) {
-                            while ($Goalie = $GoalieRoster->fetchArray()) {
+                    $GoalieRoster = $db->query($Query);
+                    
+                    if ($GoalieRoster) {
+                        while ($Goalie = $GoalieRoster->fetchArray()) {
                                 $strTemp = (string)$Goalie['Name'];
                                 $playerClasses = "";
                                 
                                 if ($Goalie['Rookie'] == "True") { 
                                     $strTemp = $strTemp . " (R)"; 
                                     $playerClasses .= " rookie";
-                                }
-                                
-                                echo "<tr>";
+                            }
+                            
+                            echo "<tr>";
                                 echo "<td class='player-name" . $playerClasses . "'><a href='GoalieReport.php?Goalie=" . $Goalie['Number'] . "'>" . $strTemp . "</a></td>";
                                 
                                 // Condition avec gestion des suspensions
@@ -908,8 +908,76 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                                 echo "<td>" . ($Goalie['Age'] ?? '-') . "</td>";
                                 echo "<td>" . ($Goalie['Contract'] ?? '-') . "</td>";
                                 echo "<td class='salary-cell'>$" . number_format($Goalie['Salary1'] ?? 0, 0) . "</td>";
+                            echo "</tr>";
+                        }
+                    }
+                    ?>
+                </tbody>
+            </table>
+            </div>
+        </div>
+
+        <!-- Onglet Stats -->
+        <div class="tabmain" id="tabmain2" style="padding: 0px !important;">
+            <h3>Players Statistics</h3>
+            
+            <!-- Tableau des statistiques des joueurs -->
+            <div class="stats-container">
+                <table class="stats-table" style="width: 100%; font-size: 10px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
+                    <thead>
+                        <tr style="background: #f5f5f5; border-bottom: 2px solid #ddd;">
+                            <th style="width: 150px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: left; font-weight: bold;">Name</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">GP</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">G</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">A</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">P</th>
+                            <th style="width: 35px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">+/-</th>
+                            <th style="width: 35px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">PIM</th>
+                            <th style="width: 35px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Shots</th>
+                            <th style="width: 35px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Hits</th>
+                            <th style="width: 35px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">PPG</th>
+                            <th style="width: 40px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">GiveAway</th>
+                            <th style="width: 40px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">TakeAway</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        // Récupération des statistiques des joueurs
+                        $Query = "SELECT PlayerInfo.Name, PlayerInfo.Number, PlayerProStat.GP, PlayerProStat.G, PlayerProStat.A, PlayerProStat.P, PlayerProStat.PlusMinus, PlayerProStat.PIM, PlayerProStat.Shots, PlayerProStat.Hits, PlayerProStat.PPG, PlayerProStat.GiveAway, PlayerProStat.TakeAway FROM PlayerInfo LEFT JOIN PlayerProStat ON PlayerInfo.Number = PlayerProStat.Number WHERE PlayerInfo.Team = " . $Team . " AND PlayerInfo.Status1 >= 2 ORDER BY PlayerProStat.P DESC, PlayerProStat.G DESC";
+                        $PlayerStats = $db->query($Query);
+                        
+                        if ($PlayerStats) {
+                            while ($Player = $PlayerStats->fetchArray()) {
+                                $strTemp = (string)$Player['Name'];
+                                $playerClasses = "";
+                                
+                                if ($Player['Rookie'] == "True") { 
+                                    $strTemp = $strTemp . " (R)"; 
+                                    $playerClasses .= " rookie";
+                                }
+                                
+                                echo "<tr>";
+                                echo "<td class='player-name" . $playerClasses . "'><a href='PlayerReport.php?Player=" . $Player['Number'] . "'>" . $strTemp . "</a></td>";
+                                echo "<td style='text-align: center; border: 1px solid #ddd; padding: 4px 2px;'>" . ($Player['GP'] ?? 0) . "</td>";
+                                echo "<td style='text-align: center; border: 1px solid #ddd; padding: 4px 2px;'>" . ($Player['G'] ?? 0) . "</td>";
+                                echo "<td style='text-align: center; border: 1px solid #ddd; padding: 4px 2px;'>" . ($Player['A'] ?? 0) . "</td>";
+                                echo "<td style='text-align: center; border: 1px solid #ddd; padding: 4px 2px; font-weight: bold;'>" . ($Player['P'] ?? 0) . "</td>";
+                                
+                                // Plus/Minus avec couleur
+                                $plusMinus = $Player['PlusMinus'] ?? 0;
+                                $plusMinusClass = $plusMinus > 0 ? "positive" : ($plusMinus < 0 ? "negative" : "");
+                                echo "<td style='text-align: center; border: 1px solid #ddd; padding: 4px 2px; " . ($plusMinusClass ? "color: " . ($plusMinusClass == "positive" ? "green" : "red") . ";" : "") . "'>" . ($plusMinus >= 0 ? "+" : "") . $plusMinus . "</td>";
+                                
+                                echo "<td style='text-align: center; border: 1px solid #ddd; padding: 4px 2px;'>" . ($Player['PIM'] ?? 0) . "</td>";
+                                echo "<td style='text-align: center; border: 1px solid #ddd; padding: 4px 2px;'>" . ($Player['Shots'] ?? 0) . "</td>";
+                                echo "<td style='text-align: center; border: 1px solid #ddd; padding: 4px 2px;'>" . ($Player['Hits'] ?? 0) . "</td>";
+                                echo "<td style='text-align: center; border: 1px solid #ddd; padding: 4px 2px;'>" . ($Player['PPG'] ?? 0) . "</td>";
+                                echo "<td style='text-align: center; border: 1px solid #ddd; padding: 4px 2px;'>" . ($Player['GiveAway'] ?? 0) . "</td>";
+                                echo "<td style='text-align: center; border: 1px solid #ddd; padding: 4px 2px;'>" . ($Player['TakeAway'] ?? 0) . "</td>";
                                 echo "</tr>";
                             }
+                        } else {
+                            echo "<tr><td colspan='12' style='text-align: center; border: 1px solid #ddd; padding: 10px;'>Aucune donnée disponible</td></tr>";
                         }
                         ?>
                     </tbody>
@@ -1036,4 +1104,4 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
 
 </div>
 
-<?php include "Footer.php"; ?>
+<?php include "Footer.php"; ?> 
