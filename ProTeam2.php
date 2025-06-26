@@ -302,7 +302,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                                 $IsOvertime = ($Game['Overtime'] ?? '') == 'True';
                                 $IsShootout = ($Game['Shootout'] ?? '') == 'True';
                                 
-                                // Récupérer les noms d'équipes depuis TeamProInfo
+                                // Récupérer les noms d'équipes6s depuis TeamProInfo
                                 $Query = "SELECT Name, TeamThemeID FROM TeamProInfo WHERE Number = " . $HomeTeam;
                                 $HomeTeamInfo = $db->querySingle($Query, true);
                                 $Query = "SELECT Name, TeamThemeID FROM TeamProInfo WHERE Number = " . $VisitorTeam;

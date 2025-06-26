@@ -1981,5 +1981,61 @@ h3 {
     font-weight: bold;
 }
 
+/* Styles pour ajuster la taille du GamesScroller dans ProTeam2.php */
+.gamesScroller {
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.gamesScroller .GameDayTable {
+    min-width: 120px !important;
+    width: 120px !important;
+    max-width: 120px !important;
+}
+
+.gamesScroller .scroll-container {
+    max-width: 100%;
+    overflow: hidden !important;
+    scrollbar-width: none !important; /* Firefox */
+    -ms-overflow-style: none !important; /* Internet Explorer 10+ */
+}
+
+.gamesScroller .scroll-container::-webkit-scrollbar {
+    display: none !important; /* Chrome, Safari, Opera */
+}
+
+.gamesScroller .scroll-container table {
+    width: auto;
+    min-width: 100%;
+}
+
+/* Ajustement pour les boutons de défilement */
+.gamesScroller .scrollButtons {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+.gamesScroller .scrollDivTop,
+.gamesScroller .scrollDivBot {
+    height: 35px;
+    width: 35px;
+}
+
+/* Ajustement pour le contenu des matchs */
+.gamesScroller .GameDayTable table {
+    font-size: 10px;
+}
+
+.gamesScroller .GameDayTable img {
+    width: 20px !important;
+    height: auto;
+}
+
+.gamesScroller .GameDayTable td {
+    padding: 2px 4px;
+}
+
 
 
