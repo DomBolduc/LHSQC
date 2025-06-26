@@ -985,6 +985,261 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
             </div>
         </div>
 
+        <!-- Onglet Schedule -->
+        <div class="tabmain" id="tabmain3" style="padding: 0px !important;">
+            <h3>Team Schedule</h3>
+            
+            <!-- Filtres pour le calendrier -->
+            <div class="schedule-filters" style="margin-bottom: 20px; padding: 10px; background: #f8f9fa; border-radius: 5px;">
+                <label style="margin-right: 15px;">
+                    <input type="radio" name="schedule-filter" value="all" checked style="margin-right: 5px;"> Tous les matchs
+                </label>
+                <label style="margin-right: 15px;">
+                    <input type="radio" name="schedule-filter" value="home" style="margin-right: 5px;"> Matchs à domicile
+                </label>
+                <label style="margin-right: 15px;">
+                    <input type="radio" name="schedule-filter" value="away" style="margin-right: 5px;"> Matchs à l'extérieur
+                </label>
+                <label style="margin-right: 15px;">
+                    <input type="radio" name="schedule-filter" value="played" style="margin-right: 5px;"> Matchs joués
+                </label>
+                <label>
+                    <input type="radio" name="schedule-filter" value="upcoming" style="margin-right: 5px;"> Prochains matchs
+                </label>
+            </div>
+            
+            <!-- Tableau du calendrier -->
+            <div class="schedule-container">
+                <table class="schedule-table" style="width: 100%; font-size: 12px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
+                    <thead>
+                        <tr style="background: #f5f5f5; border-bottom: 2px solid #ddd;">
+                            <th style="width: 80px !important; padding: 8px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Date</th>
+                            <th style="width: 60px !important; padding: 8px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Game #</th>
+                            <th style="width: 120px !important; padding: 8px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Visiteur</th>
+                            <th style="width: 30px !important; padding: 8px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">@</th>
+                            <th style="width: 120px !important; padding: 8px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Local</th>
+                            <th style="width: 80px !important; padding: 8px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Score</th>
+                            <th style="width: 60px !important; padding: 8px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Résultat</th>
+                            <th style="width: 80px !important; padding: 8px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        // Récupération de tous les matchs de l'équipe (passés et futurs)
+                        $Query = "SELECT * FROM SchedulePro WHERE (VisitorTeam = " . $Team . " OR HomeTeam = " . $Team . ") ORDER BY GameNumber ASC";
+                        $AllGames = $db->query($Query);
+                        
+                        if ($AllGames) {
+                            while ($Game = $AllGames->fetchArray()) {
+                                $HomeTeam = $Game['HomeTeam'];
+                                $VisitorTeam = $Game['VisitorTeam'];
+                                $HomeScore = $Game['HomeScore'];
+                                $VisitorScore = $Game['VisitorScore'];
+                                $GameNumber = $Game['GameNumber'];
+                                $GameDate = $Game['Date'];
+                                $IsOvertime = ($Game['Overtime'] ?? '') == 'True';
+                                $IsShootout = ($Game['Shootout'] ?? '') == 'True';
+                                $IsPlayed = ($Game['Play'] ?? '') == 'True';
+                                
+                                // Récupérer les noms d'équipes depuis TeamProInfo
+                                $Query = "SELECT Name, TeamThemeID FROM TeamProInfo WHERE Number = " . $HomeTeam;
+                                $HomeTeamInfo = $db->querySingle($Query, true);
+                                $Query = "SELECT Name, TeamThemeID FROM TeamProInfo WHERE Number = " . $VisitorTeam;
+                                $VisitorTeamInfo = $db->querySingle($Query, true);
+                                
+                                $HomeTeamName = $HomeTeamInfo['Name'] ?? 'Team ' . $HomeTeam;
+                                $VisitorTeamName = $VisitorTeamInfo['Name'] ?? 'Team ' . $VisitorTeam;
+                                $HomeTeamThemeID = $HomeTeamInfo['TeamThemeID'] ?? null;
+                                $VisitorTeamThemeID = $VisitorTeamInfo['TeamThemeID'] ?? null;
+                                
+                                $isHome = ($HomeTeam == $Team);
+                                $isWin = false;
+                                $resultClass = "";
+                                $resultText = "";
+                                
+                                if ($IsPlayed) {
+                                    $isWin = ($isHome && $HomeScore > $VisitorScore) || (!$isHome && $VisitorScore > $HomeScore);
+                                    $resultClass = $isWin ? "win" : "loss";
+                                    $resultText = $isWin ? "W" : "L";
+                                }
+                                
+                                // Déterminer le type de match
+                                $gameType = "Reg";
+                                if ($IsShootout) {
+                                    $gameType = "SO";
+                                } elseif ($IsOvertime) {
+                                    $gameType = "OT";
+                                }
+                                
+                                // Classe CSS pour le filtre
+                                $rowClass = "";
+                                if ($isHome) $rowClass .= " home-game";
+                                else $rowClass .= " away-game";
+                                if ($IsPlayed) $rowClass .= " played-game";
+                                else $rowClass .= " upcoming-game";
+                                
+                                echo "<tr class='" . $rowClass . "' style='border-bottom: 1px solid #eee;'>";
+                                
+                                // Date
+                                echo "<td style='text-align: center; border: 1px solid #ddd; padding: 6px 4px;'>";
+                                if ($GameDate) {
+                                    echo date('M j', strtotime($GameDate));
+                                } else {
+                                    echo "TBD";
+                                }
+                                echo "</td>";
+                                
+                                // Numéro de match
+                                echo "<td style='text-align: center; border: 1px solid #ddd; padding: 6px 4px;'>" . $GameNumber . "</td>";
+                                
+                                // Équipe visiteuse
+                                echo "<td style='text-align: center; border: 1px solid #ddd; padding: 6px 4px;'>";
+                                if ($VisitorTeamThemeID && file_exists("images/" . $VisitorTeamThemeID . ".png")) {
+                                    echo "<img src='images/" . $VisitorTeamThemeID . ".png' alt='" . $VisitorTeamName . "' style='width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;'>";
+                                }
+                                echo $VisitorTeamName;
+                                echo "</td>";
+                                
+                                // Séparateur @
+                                echo "<td style='text-align: center; border: 1px solid #ddd; padding: 6px 4px;'>@</td>";
+                                
+                                // Équipe locale
+                                echo "<td style='text-align: center; border: 1px solid #ddd; padding: 6px 4px;'>";
+                                if ($HomeTeamThemeID && file_exists("images/" . $HomeTeamThemeID . ".png")) {
+                                    echo "<img src='images/" . $HomeTeamThemeID . ".png' alt='" . $HomeTeamName . "' style='width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;'>";
+                                }
+                                echo $HomeTeamName;
+                                echo "</td>";
+                                
+                                // Score
+                                echo "<td style='text-align: center; border: 1px solid #ddd; padding: 6px 4px;'>";
+                                if ($IsPlayed) {
+                                    echo $VisitorScore . " - " . $HomeScore;
+                                } else {
+                                    echo "TBD";
+                                }
+                                echo "</td>";
+                                
+                                // Résultat
+                                echo "<td style='text-align: center; border: 1px solid #ddd; padding: 6px 4px;'>";
+                                if ($IsPlayed) {
+                                    echo "<span class='" . $resultClass . "' style='font-weight: bold; color: " . ($isWin ? "green" : "red") . ";'>" . $resultText . "</span>";
+                                } else {
+                                    echo "-";
+                                }
+                                echo "</td>";
+                                
+                                // Type de match
+                                echo "<td style='text-align: center; border: 1px solid #ddd; padding: 6px 4px;'>" . $gameType . "</td>";
+                                
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='8' style='text-align: center; border: 1px solid #ddd; padding: 20px;'>Aucun match trouvé</td></tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Statistiques du calendrier -->
+            <div class="schedule-stats" style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 5px;">
+                <h4 style="margin-bottom: 15px;">Statistiques du calendrier</h4>
+                <div style="display: flex; justify-content: space-around; text-align: center;">
+                    <?php
+                    // Calcul des statistiques du calendrier
+                    $totalGames = 0;
+                    $homeGames = 0;
+                    $awayGames = 0;
+                    $wins = 0;
+                    $losses = 0;
+                    $overtimeWins = 0;
+                    $overtimeLosses = 0;
+                    $shootoutWins = 0;
+                    $shootoutLosses = 0;
+                    
+                    if ($AllGames) {
+                        $AllGames->reset();
+                        while ($Game = $AllGames->fetchArray()) {
+                            $totalGames++;
+                            $isHome = ($Game['HomeTeam'] == $Team);
+                            $IsPlayed = ($Game['Play'] ?? '') == 'True';
+                            $IsOvertime = ($Game['Overtime'] ?? '') == 'True';
+                            $IsShootout = ($Game['Shootout'] ?? '') == 'True';
+                            
+                            if ($isHome) {
+                                $homeGames++;
+                            } else {
+                                $awayGames++;
+                            }
+                            
+                            if ($IsPlayed) {
+                                $HomeScore = $Game['HomeScore'];
+                                $VisitorScore = $Game['VisitorScore'];
+                                $isWin = ($isHome && $HomeScore > $VisitorScore) || (!$isHome && $VisitorScore > $HomeScore);
+                                
+                                if ($IsShootout) {
+                                    if ($isWin) $shootoutWins++;
+                                    else $shootoutLosses++;
+                                } elseif ($IsOvertime) {
+                                    if ($isWin) $overtimeWins++;
+                                    else $overtimeLosses++;
+                                } else {
+                                    if ($isWin) $wins++;
+                                    else $losses++;
+                                }
+                            }
+                        }
+                    }
+                    
+                    $playedGames = $wins + $losses + $overtimeWins + $overtimeLosses + $shootoutWins + $shootoutLosses;
+                    $totalPoints = ($wins * 2) + ($overtimeWins * 2) + ($shootoutWins * 2) + ($overtimeLosses * 1) + ($shootoutLosses * 1);
+                    $winPercentage = $playedGames > 0 ? round((($wins + $overtimeWins + $shootoutWins) / $playedGames) * 100, 1) : 0;
+                    ?>
+                    
+                    <div>
+                        <div style="font-size: 24px; font-weight: bold; color: #333;"><?php echo $totalGames; ?></div>
+                        <div style="font-size: 12px; color: #666;">Total Games</div>
+                    </div>
+                    
+                    <div>
+                        <div style="font-size: 24px; font-weight: bold; color: #333;"><?php echo $playedGames; ?></div>
+                        <div style="font-size: 12px; color: #666;">Played</div>
+                    </div>
+                    
+                    <div>
+                        <div style="font-size: 24px; font-weight: bold; color: #333;"><?php echo $wins + $overtimeWins + $shootoutWins; ?></div>
+                        <div style="font-size: 12px; color: #666;">Wins</div>
+                    </div>
+                    
+                    <div>
+                        <div style="font-size: 24px; font-weight: bold; color: #333;"><?php echo $losses + $overtimeLosses + $shootoutLosses; ?></div>
+                        <div style="font-size: 12px; color: #666;">Losses</div>
+                    </div>
+                    
+                    <div>
+                        <div style="font-size: 24px; font-weight: bold; color: #333;"><?php echo $totalPoints; ?></div>
+                        <div style="font-size: 12px; color: #666;">Points</div>
+                    </div>
+                    
+                    <div>
+                        <div style="font-size: 24px; font-weight: bold; color: #333;"><?php echo $winPercentage; ?>%</div>
+                        <div style="font-size: 12px; color: #666;">Win %</div>
+                    </div>
+                    
+                    <div>
+                        <div style="font-size: 24px; font-weight: bold; color: #333;"><?php echo $homeGames; ?></div>
+                        <div style="font-size: 12px; color: #666;">Home</div>
+                    </div>
+                    
+                    <div>
+                        <div style="font-size: 24px; font-weight: bold; color: #333;"><?php echo $awayGames; ?></div>
+                        <div style="font-size: 12px; color: #666;">Away</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Onglet Prospects -->
         <div class="tabmain" id="tabmain9">
             <h3>Top Prospects</h3>
@@ -1105,3 +1360,101 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
 </div>
 
 <?php include "Footer.php"; ?> 
+
+<script>
+// JavaScript pour les filtres du calendrier
+document.addEventListener('DOMContentLoaded', function() {
+    const scheduleFilters = document.querySelectorAll('input[name="schedule-filter"]');
+    const scheduleTable = document.querySelector('#tabmain3 .schedule-table tbody');
+    
+    if (scheduleFilters.length > 0 && scheduleTable) {
+        scheduleFilters.forEach(filter => {
+            filter.addEventListener('change', function() {
+                const filterValue = this.value;
+                const rows = scheduleTable.querySelectorAll('tr');
+                
+                rows.forEach(row => {
+                    let showRow = true;
+                    
+                    switch(filterValue) {
+                        case 'home':
+                            showRow = row.classList.contains('home-game');
+                            break;
+                        case 'away':
+                            showRow = row.classList.contains('away-game');
+                            break;
+                        case 'played':
+                            showRow = row.classList.contains('played-game');
+                            break;
+                        case 'upcoming':
+                            showRow = row.classList.contains('upcoming-game');
+                            break;
+                        case 'all':
+                        default:
+                            showRow = true;
+                            break;
+                    }
+                    
+                    if (showRow) {
+                        row.style.display = '';
+                        row.style.opacity = '1';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+                
+                // Mettre à jour le compteur de matchs visibles
+                updateVisibleGamesCount();
+            });
+        });
+    }
+    
+    // Fonction pour mettre à jour le compteur de matchs visibles
+    function updateVisibleGamesCount() {
+        const visibleRows = scheduleTable.querySelectorAll('tr:not([style*="display: none"])');
+        const totalGamesElement = document.querySelector('#tabmain3 .schedule-stats .total-games');
+        
+        if (totalGamesElement) {
+            totalGamesElement.textContent = visibleRows.length;
+        }
+    }
+    
+    // Initialiser le compteur
+    updateVisibleGamesCount();
+});
+
+// JavaScript pour la navigation des onglets (si pas déjà présent)
+document.addEventListener('DOMContentLoaded', function() {
+    const tabLinks = document.querySelectorAll('.tabmain-links a');
+    const tabContents = document.querySelectorAll('.tabmain');
+    
+    tabLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href').substring(1);
+            
+            // Retirer la classe active de tous les onglets
+            tabContents.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Retirer la classe active de tous les liens
+            tabLinks.forEach(tabLink => {
+                tabLink.parentElement.classList.remove('activemain');
+            });
+            
+            // Ajouter la classe active à l'onglet cible
+            const targetTab = document.getElementById(targetId);
+            if (targetTab) {
+                targetTab.classList.add('active');
+            }
+            
+            // Ajouter la classe active au lien cliqué
+            this.parentElement.classList.add('activemain');
+        });
+    });
+});
+</script>
+
+</body>

@@ -50,13 +50,13 @@ body {
 
 /* Container et layout */
 .container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 0 1rem;
 }
 
 .container-flex {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 0 1rem;
 }
@@ -205,6 +205,161 @@ body {
 
 .tabmain.active {
     display: block;
+}
+
+/* Styles spécifiques pour l'onglet Schedule */
+#tabmain3 {
+    padding: 1rem !important;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+#tabmain3 .schedule-filters {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+#tabmain3 .schedule-container {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+#tabmain3 .schedule-table {
+    width: 100%;
+    min-width: 900px;
+    max-width: 1200px;
+    font-size: 13px;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 0 auto;
+}
+
+#tabmain3 .schedule-table th {
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    padding: 12px 8px;
+    text-align: center;
+    font-weight: 600;
+    color: #495057;
+    white-space: nowrap;
+}
+
+#tabmain3 .schedule-table td {
+    border: 1px solid #ddd;
+    padding: 10px 6px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#tabmain3 .schedule-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+#tabmain3 .schedule-table .home-game {
+    background-color: #f0f8ff;
+}
+
+#tabmain3 .schedule-table .away-game {
+    background-color: #fff8f0;
+}
+
+#tabmain3 .schedule-table .played-game {
+    opacity: 1;
+}
+
+#tabmain3 .schedule-table .upcoming-game {
+    opacity: 0.8;
+}
+
+#tabmain3 .schedule-stats {
+    margin-top: 20px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+#tabmain3 .schedule-stats h4 {
+    margin-bottom: 15px;
+    color: #495057;
+    font-weight: 600;
+}
+
+#tabmain3 .schedule-stats > div {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+#tabmain3 .schedule-stats > div > div {
+    flex: 1;
+    min-width: 100px;
+}
+
+/* Responsive pour l'onglet Schedule */
+@media (max-width: 1200px) {
+    #tabmain3 .schedule-table {
+        min-width: 800px;
+        font-size: 12px;
+    }
+    
+    #tabmain3 .schedule-table th,
+    #tabmain3 .schedule-table td {
+        padding: 8px 4px;
+    }
+}
+
+@media (max-width: 768px) {
+    #tabmain3 {
+        padding: 0.5rem !important;
+    }
+    
+    #tabmain3 .schedule-filters {
+        padding: 10px;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    #tabmain3 .schedule-filters label {
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+    
+    #tabmain3 .schedule-table {
+        min-width: 700px;
+        font-size: 11px;
+    }
+    
+    #tabmain3 .schedule-stats > div {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    #tabmain3 .schedule-stats > div > div {
+        min-width: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    #tabmain3 .schedule-table {
+        min-width: 600px;
+        font-size: 10px;
+    }
+    
+    #tabmain3 .schedule-table th,
+    #tabmain3 .schedule-table td {
+        padding: 6px 2px;
+    }
 }
 
 /* Weekly Schedule */
