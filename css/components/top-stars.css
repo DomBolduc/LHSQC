@@ -1,0 +1,363 @@
+/* ========================================
+   TOP STARS - DESIGN MODERNE
+   ========================================
+   
+   Composant moderne pour afficher les meilleurs joueurs
+   Design inspiré des sites sportifs modernes
+   ======================================== */
+
+/* ========================================
+   VARIABLES CSS
+   ======================================== */
+:root {
+  --topstars-bg: #ffffff;
+  --topstars-header-bg: linear-gradient(135deg, #1e40af, #3b82f6);
+  --topstars-border: #e5e7eb;
+  --topstars-hover: #f8fafc;
+  --topstars-text-primary: #1f2937;
+  --topstars-text-secondary: #6b7280;
+  --topstars-text-muted: #9ca3af;
+  --topstars-accent: #f59e0b;
+  --topstars-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --topstars-shadow-hover: 0 8px 25px -5px rgba(0, 0, 0, 0.15);
+  --topstars-radius: 12px;
+  --topstars-transition: all 0.3s ease;
+}
+
+/* ========================================
+   CONTAINER PRINCIPAL
+   ======================================== */
+.topstars-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.topstars-card {
+  background: var(--topstars-bg);
+  border-radius: var(--topstars-radius);
+  box-shadow: var(--topstars-shadow);
+  overflow: hidden;
+  transition: var(--topstars-transition);
+  border: 1px solid var(--topstars-border);
+}
+
+.topstars-card:hover {
+  box-shadow: var(--topstars-shadow-hover);
+  transform: translateY(-4px);
+}
+
+/* ========================================
+   EN-TÊTE DE CARTE
+   ======================================== */
+.topstars-header {
+  background: var(--topstars-header-bg);
+  color: white;
+  padding: 1rem 1.5rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-align: center;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  position: relative;
+}
+
+.topstars-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+}
+
+/* ========================================
+   CONTENU DE LA CARTE
+   ======================================== */
+.topstars-content {
+  padding: 1.5rem;
+  display: flex;
+  gap: 1.5rem;
+}
+
+/* ========================================
+   SECTION JOUEUR PRINCIPAL
+   ======================================== */
+.featured-player {
+  flex: 0 0 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.player-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--topstars-border);
+  margin-bottom: 0.75rem;
+  transition: var(--topstars-transition);
+}
+
+.player-photo:hover {
+  border-color: var(--topstars-accent);
+  transform: scale(1.05);
+}
+
+.player-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.team-logo {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.player-name {
+  font-weight: 600;
+  color: var(--topstars-text-primary);
+  font-size: 0.875rem;
+  line-height: 1.2;
+}
+
+/* ========================================
+   SECTION CLASSEMENT
+   ======================================== */
+.leaderboard-section {
+  flex: 1;
+  min-width: 0;
+}
+
+.leaderboard-header {
+  display: flex;
+  padding: 0.5rem 0;
+  border-bottom: 2px solid var(--topstars-border);
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+  color: var(--topstars-text-secondary);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.leaderboard-header .col-player {
+  flex: 1;
+  text-align: left;
+}
+
+.leaderboard-header .col-stat {
+  flex: 0 0 60px;
+  text-align: center;
+}
+
+.leaderboard-header .col-stat2 {
+  flex: 0 0 60px;
+  text-align: center;
+}
+
+/* ========================================
+   LIGNES DU CLASSEMENT
+   ======================================== */
+.leaderboard-row {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f1f5f9;
+  transition: var(--topstars-transition);
+  border-radius: 6px;
+  margin-bottom: 0.25rem;
+}
+
+.leaderboard-row:hover {
+  background: var(--topstars-hover);
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.leaderboard-row:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.leaderboard-row .col-player {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.leaderboard-row .col-stat {
+  flex: 0 0 60px;
+  text-align: center;
+  font-weight: 700;
+  color: var(--topstars-text-primary);
+}
+
+.leaderboard-row .col-stat2 {
+  flex: 0 0 60px;
+  text-align: center;
+  font-weight: 600;
+  color: var(--topstars-text-secondary);
+}
+
+.player-rank {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: white;
+  margin-right: 0.5rem;
+  flex-shrink: 0;
+}
+
+.player-rank.rank-1 {
+  background: #ffd700;
+  color: #1f2937;
+}
+
+.player-rank.rank-2 {
+  background: #c0c0c0;
+  color: #1f2937;
+}
+
+.player-rank.rank-3 {
+  background: #cd7f32;
+  color: white;
+}
+
+.player-rank.rank-other {
+  background: var(--topstars-text-muted);
+}
+
+.player-name-row {
+  font-weight: 500;
+  color: var(--topstars-text-primary);
+  font-size: 0.875rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 768px) {
+  .topstars-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .topstars-content {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+  }
+  
+  .featured-player {
+    flex: none;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .player-photo {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 0;
+  }
+  
+  .player-info {
+    align-items: flex-start;
+    text-align: left;
+  }
+  
+  .leaderboard-header .col-stat,
+  .leaderboard-header .col-stat2,
+  .leaderboard-row .col-stat,
+  .leaderboard-row .col-stat2 {
+    flex: 0 0 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .topstars-header {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+  }
+  
+  .featured-player {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .player-photo {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .team-logo {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .leaderboard-row {
+    padding: 0.375rem 0;
+  }
+  
+  .player-name-row {
+    font-size: 0.8rem;
+  }
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.topstars-card {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.topstars-card:nth-child(2) { animation-delay: 0.1s; }
+.topstars-card:nth-child(3) { animation-delay: 0.2s; }
+
+/* ========================================
+   THÈME SOMBRE (OPTIONNEL)
+   ======================================== */
+[data-theme="dark"] .topstars-card {
+  --topstars-bg: #1f2937;
+  --topstars-border: #374151;
+  --topstars-hover: #374151;
+  --topstars-text-primary: #f9fafb;
+  --topstars-text-secondary: #d1d5db;
+  --topstars-text-muted: #9ca3af;
+}
+
+[data-theme="dark"] .player-photo {
+  border-color: #4b5563;
+}

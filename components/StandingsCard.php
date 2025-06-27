@@ -1,5 +1,7 @@
 <?php
 
+// Inclusion du CSS moderne
+echo '<link rel="stylesheet" href="css/components/standings-card.css">';
 
 include_once 'StandingsCardTools.php';
 
@@ -62,10 +64,10 @@ echo "-->";
 
 ?>
 
-<div class="card shadow-0 px-0 mx-0 mb-3 frontpage-card top5Card">
-    <div class="card-header"><?= $cardName ?></div>
-    <div class="card-body mt-0 pt-1 px-0 mx-0 text-primary">
-        <table class="table StandingsCard">
+<div class="standings-card">
+    <div class="standings-header"><?= $cardName ?></div>
+    <div class="standings-content">
+        <table class="standings-table">
             <thead>
                 <tr>
                     <th>PO</th>
@@ -82,8 +84,8 @@ echo "-->";
                 if ($side == 0) {
                     // Conférence 1 : Division 1 et 2
                     for ($i = 0; $i <= 1; $i++) {
-                        echo '<tr class="static"><td class="staticTD" colspan="' . $ColumnPerTable . '">' . $Division[$i] . '</td></tr>';
-                        $Query = "SELECT Team{$TypeTextTeam}Stat.*, Team{$TypeText}Info.Name
+                        echo '<tr><td class="division-header" colspan="' . $ColumnPerTable . '">' . $Division[$i] . '</td></tr>';
+                        $Query = "SELECT Team{$TypeTextTeam}Stat.*, Team{$TypeText}Info.Name, Team{$TypeText}Info.TeamThemeID
                             FROM Team{$TypeTextTeam}Stat
                             INNER JOIN Team{$TypeText}Info ON Team{$TypeTextTeam}Stat.Number = Team{$TypeText}Info.Number
                             WHERE Team{$TypeText}Info.DivisionNumber = {$DivisionNumbers[$i]}
@@ -93,15 +95,15 @@ echo "-->";
                         $LoopCount = 0;
                         while ($row = $Standing->fetchArray()) {
                             $LoopCount++;
-                            PrintStandingTableRow($row, $TypeText, true, $LeagueGeneral, $LoopCount, $DatabaseFile, $ImagesCDNPath);
+                            PrintModernStandingTableRow($row, $TypeText, true, $LeagueGeneral, $LoopCount, $DatabaseFile, $ImagesCDNPath);
                         }
                         if ($LoopCount == 0) printEmptyStandings($db, $DivisionNumbers[$i], $Conference[0], $ColumnPerTable, $TypeTextTeam);
                     }
                 } else {
                     // Conférence 2 : Division 4 et 5
                     for ($i = 2; $i <= 3; $i++) {
-                        echo '<tr class="static"><td class="staticTD" colspan="' . $ColumnPerTable . '">' . $Division[$i] . '</td></tr>';
-                        $Query = "SELECT Team{$TypeTextTeam}Stat.*, Team{$TypeText}Info.Name
+                        echo '<tr><td class="division-header" colspan="' . $ColumnPerTable . '">' . $Division[$i] . '</td></tr>';
+                        $Query = "SELECT Team{$TypeTextTeam}Stat.*, Team{$TypeText}Info.Name, Team{$TypeText}Info.TeamThemeID
                             FROM Team{$TypeTextTeam}Stat
                             INNER JOIN Team{$TypeText}Info ON Team{$TypeTextTeam}Stat.Number = Team{$TypeText}Info.Number
                             WHERE Team{$TypeText}Info.DivisionNumber = {$DivisionNumbers[$i]}
@@ -112,7 +114,7 @@ echo "-->";
                         echo "<!-- Requête SQL : $Query -->";
                         while ($row = $Standing->fetchArray()) {
                             $LoopCount++;
-                            PrintStandingTableRow($row, $TypeText, true, $LeagueGeneral, $LoopCount, $DatabaseFile, $ImagesCDNPath);
+                            PrintModernStandingTableRow($row, $TypeText, true, $LeagueGeneral, $LoopCount, $DatabaseFile, $ImagesCDNPath);
                             echo "<!-- Équipe trouvée : " . $row['Name'] . " -->";
                         }
                         if ($LoopCount == 0) printEmptyStandings($db, $DivisionNumbers[$i], $Conference[1], $ColumnPerTable, $TypeTextTeam);
