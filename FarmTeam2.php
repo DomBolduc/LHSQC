@@ -24,36 +24,36 @@ If ($lang == "fr"){include 'LanguageFR-Stat.php';}else{include 'LanguageEN-Stat.
 
 try {
     if (file_exists($DatabaseFile) == false){
-        $Team = 0;
-        $TeamName = $DatabaseNotFound;
+	$Team = 0;
+	$TeamName = $DatabaseNotFound;
     } else {
-        $db = new SQLite3($DatabaseFile);
-        
+	$db = new SQLite3($DatabaseFile);
+
         // Récupération des informations générales de la ligue
-        $Query = "Select Name FROM LeagueGeneral";
+	$Query = "Select Name FROM LeagueGeneral";
         $LeagueGeneral = $db->querySingle($Query, true);		
-        $LeagueName = $LeagueGeneral['Name'];
-        
+	$LeagueName = $LeagueGeneral['Name'];	
+
         // Vérification de l'équipe
         if($Team == 0 AND $CookieTeamNumber > 0 AND $CookieTeamNumber <= 100){$Team = $CookieTeamNumber;}
         if ($Team == 0 OR $Team > 100){
             throw new Exception("Équipe invalide");
         }
-        
-        $Query = "SELECT count(*) AS count FROM TeamFarmInfo WHERE Number = " . $Team;
+
+	$Query = "SELECT count(*) AS count FROM TeamFarmInfo WHERE Number = " . $Team;
         $Result = $db->querySingle($Query, true);
         
         if ($Result['count'] == 1){
             // Récupération des informations de l'équipe farm
-            $Query = "SELECT * FROM TeamFarmInfo WHERE Number = " . $Team;
+		$Query = "SELECT * FROM TeamFarmInfo WHERE Number = " . $Team;
             $TeamInfo = $db->querySingle($Query, true);
-            
+
             // Récupération des statistiques de l'équipe farm
             $Query = "SELECT * FROM TeamFarmStat WHERE Number = " . $Team;
             $TeamStat = $db->querySingle($Query, true);
-            
+
             // Récupération des informations financières farm
-            $Query = "SELECT * FROM TeamFarmFinance WHERE Number = " . $Team;
+		$Query = "SELECT * FROM TeamFarmFinance WHERE Number = " . $Team;
             $TeamFinance = $db->querySingle($Query, true);
             
             // Récupération des leaders farm (Status1 <= 1 pour les joueurs farm)
@@ -74,18 +74,18 @@ try {
             
             // Récupération du roster complet des joueurs farm (Status1 <= 1)
             $Query = "SELECT PlayerFarmStat.*, PlayerInfo.Name, PlayerInfo.Team, PlayerInfo.PosC, PlayerInfo.PosLW, PlayerInfo.PosRW, PlayerInfo.PosD, PlayerInfo.Jersey, PlayerInfo.Age, PlayerInfo.Height, PlayerInfo.Weight, ROUND((CAST(PlayerFarmStat.G AS REAL) / (PlayerFarmStat.Shots))*100,2) AS ShotsPCT, ROUND((CAST(PlayerFarmStat.SecondPlay AS REAL) / 60 / (PlayerFarmStat.GP)),2) AS AMG, ROUND((CAST(PlayerFarmStat.FaceOffWon AS REAL) / (PlayerFarmStat.FaceOffTotal))*100,2) as FaceoffPCT, ROUND((CAST(PlayerFarmStat.P AS REAL) / (PlayerFarmStat.SecondPlay) * 60 * 20),2) AS P20 FROM PlayerInfo INNER JOIN PlayerFarmStat ON PlayerInfo.Number = PlayerFarmStat.Number WHERE ((PlayerInfo.Team=" . $Team . ") AND (PlayerInfo.Status1 <= 1) AND (PlayerFarmStat.GP>0)) ORDER BY PlayerFarmStat.P DESC, PlayerFarmStat.GP ASC";
-            $PlayerRoster = $db->query($Query);
-            
+		$PlayerRoster = $db->query($Query);
+
             // Récupération du roster des gardiens farm
             $Query = "SELECT GoalerFarmStat.*, GoalerInfo.Name, GoalerInfo.Team, GoalerInfo.Jersey, GoalerInfo.NHLID, GoalerInfo.Age, GoalerInfo.Height, GoalerInfo.Weight, ROUND((CAST(GoalerFarmStat.GA AS REAL) / (GoalerFarmStat.SecondPlay / 60))*60,3) AS GAA, ROUND((CAST(GoalerFarmStat.SA - GoalerFarmStat.GA AS REAL) / (GoalerFarmStat.SA)),3) AS PCT, ROUND((CAST(GoalerFarmStat.PenalityShotsShots - GoalerFarmStat.PenalityShotsGoals AS REAL) / (GoalerFarmStat.PenalityShotsShots)),3) AS PenalityShotsPCT FROM GoalerInfo INNER JOIN GoalerFarmStat ON GoalerInfo.Number = GoalerFarmStat.Number WHERE ((GoalerInfo.Team)=" . $Team . ") AND ((GoalerFarmStat.GP)>0) ORDER BY W DESC, GoalerFarmStat.GP DESC";
-            $GoalieRoster = $db->query($Query);
-            
+		$GoalieRoster = $db->query($Query);
+
             // Récupération des informations du coach farm
-            $Query = "SELECT CoachInfo.* FROM CoachInfo INNER JOIN TeamFarmInfo ON CoachInfo.Number = TeamFarmInfo.CoachID WHERE (CoachInfo.Team)=" . $Team;
+		$Query = "SELECT CoachInfo.* FROM CoachInfo INNER JOIN TeamFarmInfo ON CoachInfo.Number = TeamFarmInfo.CoachID WHERE (CoachInfo.Team)=" . $Team;
             $CoachInfo = $db->querySingle($Query, true);
             
             // Récupération des capitaines farm
-            $Query = "SELECT TeamFarmInfo.Name as TeamName, PlayerInfo_1.Name As Captain, PlayerInfo_2.Name as Assistant1, PlayerInfo_3.Name as Assistant2 FROM ((TeamFarmInfo LEFT JOIN PlayerInfo AS PlayerInfo_1 ON TeamFarmInfo.Captain = PlayerInfo_1.Number) LEFT JOIN PlayerInfo AS PlayerInfo_2 ON TeamFarmInfo.Assistant1 = PlayerInfo_2.Number) LEFT JOIN PlayerInfo AS PlayerInfo_3 ON TeamFarmInfo.Assistant2 = PlayerInfo_3.Number WHERE TeamFarmInfo.Number = " . $Team;
+		$Query = "SELECT TeamFarmInfo.Name as TeamName, PlayerInfo_1.Name As Captain, PlayerInfo_2.Name as Assistant1, PlayerInfo_3.Name as Assistant2 FROM ((TeamFarmInfo LEFT JOIN PlayerInfo AS PlayerInfo_1 ON TeamFarmInfo.Captain = PlayerInfo_1.Number) LEFT JOIN PlayerInfo AS PlayerInfo_2 ON TeamFarmInfo.Assistant1 = PlayerInfo_2.Number) LEFT JOIN PlayerInfo AS PlayerInfo_3 ON TeamFarmInfo.Assistant2 = PlayerInfo_3.Number WHERE TeamFarmInfo.Number = " . $Team;
             $TeamLeader = $db->querySingle($Query, true);
             
             // Récupération des prospects (même que ProTeam2.php)
@@ -132,14 +132,14 @@ try {
             // Récupération des blessures farm
             $Query = "SELECT PlayerInfo.Name, PlayerInfo.Jersey, PlayerInfo.PosC, PlayerInfo.PosLW, PlayerInfo.PosRW, PlayerInfo.PosD, PlayerInfo.InjuryStatus, PlayerInfo.InjuryLength FROM PlayerInfo WHERE PlayerInfo.Team = " . $Team . " AND PlayerInfo.Status1 <= 1 AND PlayerInfo.InjuryStatus > 0 ORDER BY PlayerInfo.InjuryLength DESC";
             $Injuries = $db->query($Query);
-            
-            $TeamName = $TeamInfo['Name'];
+
+		$TeamName = $TeamInfo['Name'];	
         } else {
             throw new Exception("Équipe farm non trouvée");
         }
     }
 } catch (Exception $e) {
-    $Team = 0;
+	$Team = 0;
     $TeamName = "Équipe farm non trouvée";
     $TeamInfo = null;
     $TeamStat = null;
@@ -167,7 +167,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
 <header>
 <?php include "components/GamesScroller.php"; ?>	 
 <?php include "Menu.php"; ?>	
-<div class="container p-2">  
+    <div class="container p-2">  
 
 <!-- Header moderne de l'équipe farm avec logo -->
 <div id="STHSPHPTeamStat_SubHeader">
@@ -231,7 +231,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                 <div class="stat-card weekly-schedule-in-grid">
                 <h3>Weekly Schedule</h3>
                     <div class="schedule-days-compact">
-                            <?php
+<?php 
                         // Afficher d'abord les 3 derniers matchs joués
                             if ($Last3Days) {
                                 while ($Game = $Last3Days->fetchArray()) {
@@ -353,7 +353,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                             <div class="leader-label">Points Leader</div>
                             <div class="leader-name"><?php echo $TeamLeaderP['Name']; ?></div>
                             <div class="leader-stat"><?php echo $TeamLeaderP['P']; ?> PTS</div>
-                        </div>
+</div>
                         <?php endif; ?>
                         
                         <?php if ($TeamLeaderG): ?>
@@ -443,7 +443,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
+<?php
                         // Récupération du roster complet des joueurs farm avec tous les ratings
                         $Query = "SELECT PlayerInfo.*, PlayerFarmStat.GP, PlayerFarmStat.G, PlayerFarmStat.A, PlayerFarmStat.P, PlayerFarmStat.PlusMinus FROM PlayerInfo LEFT JOIN PlayerFarmStat ON PlayerInfo.Number = PlayerFarmStat.Number WHERE PlayerInfo.Team = " . $Team . " AND PlayerInfo.Status1 <= 1 ORDER BY PlayerInfo.PosD, PlayerInfo.Overall DESC";
                     $PlayerRoster = $db->query($Query);
@@ -559,7 +559,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
+<?php
                         // Récupération du roster des gardiens farm avec tous les ratings
                         $Query = "SELECT * FROM GoalerInfo WHERE Team = " . $Team . " AND Status1 <= 1 ORDER BY Overall DESC";
                     $GoalieRoster = $db->query($Query);
@@ -731,10 +731,10 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                             <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">TOI/G</th>
                             <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">FO%</th>
                             <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">P/20</th>
-                    </tr>
+</tr>
                 </thead>
                 <tbody>
-                    <?php
+<?php
                         // Récupération des statistiques des joueurs farm
                         $Query = "SELECT PlayerInfo.*, PlayerFarmStat.*, ROUND((CAST(PlayerFarmStat.G AS REAL) / (PlayerFarmStat.Shots))*100,2) AS ShotsPCT, ROUND((CAST(PlayerFarmStat.SecondPlay AS REAL) / 60 / (PlayerFarmStat.GP)),2) AS AMG, ROUND((CAST(PlayerFarmStat.FaceOffWon AS REAL) / (PlayerFarmStat.FaceOffTotal))*100,2) as FaceoffPCT, ROUND((CAST(PlayerFarmStat.P AS REAL) / (PlayerFarmStat.SecondPlay) * 60 * 20),2) AS P20 FROM PlayerInfo INNER JOIN PlayerFarmStat ON PlayerInfo.Number = PlayerFarmStat.Number WHERE PlayerInfo.Team = " . $Team . " AND PlayerInfo.Status1 <= 1 AND PlayerFarmStat.GP > 0 ORDER BY PlayerFarmStat.P DESC, PlayerFarmStat.GP ASC";
                     $PlayerStats = $db->query($Query);
@@ -824,10 +824,10 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                             <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">TOI</th>
                             <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">TOI/G</th>
                             <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">PS%</th>
-                    </tr>
+</tr>
                 </thead>
                 <tbody>
-                    <?php
+<?php
                         // Récupération des statistiques des gardiens farm
                         $Query = "SELECT GoalerInfo.*, GoalerFarmStat.*, ROUND((CAST(GoalerFarmStat.GA AS REAL) / (GoalerFarmStat.SecondPlay / 60))*60,3) AS GAA, ROUND((CAST(GoalerFarmStat.SA - GoalerFarmStat.GA AS REAL) / (GoalerFarmStat.SA)),3) AS PCT, ROUND((CAST(GoalerFarmStat.PenalityShotsShots - GoalerFarmStat.PenalityShotsGoals AS REAL) / (GoalerFarmStat.PenalityShotsShots)),3) AS PenalityShotsPCT FROM GoalerInfo INNER JOIN GoalerFarmStat ON GoalerInfo.Number = GoalerFarmStat.Number WHERE GoalerInfo.Team = " . $Team . " AND GoalerInfo.Status1 <= 1 AND GoalerFarmStat.GP > 0 ORDER BY GoalerFarmStat.W DESC, GoalerFarmStat.GP DESC";
                     $GoalieStats = $db->query($Query);
@@ -865,7 +865,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                     }
                     ?>
                 </tbody>
-            </table>
+</table>
             </div>
 
             <style>
@@ -934,7 +934,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                 background: #e8f4f8;
             }
             </style>
-        </div>
+</div>
 
         <!-- Onglet Schedule -->
         <div class="tabmain" id="tabmain3">
@@ -960,7 +960,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
+<?php
                         if ($Schedule) {
                             while ($Game = $Schedule->fetchArray()) {
                                 $HomeTeam = $Game['HomeTeam'];
@@ -1042,15 +1042,15 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                         }
                         ?>
                     </tbody>
-                </table>
+</table>
             </div>
-        </div>
+</div>
 
         <!-- Onglet Lines -->
         <div class="tabmain" id="tabmain4">
             <h3>Farm Team Lines</h3>
-            
-            <?php
+
+<?php
             // Récupération des lignes de l'équipe farm
             $Query = "SELECT * FROM TeamFarmLines WHERE TeamNumber = " . $Team . " AND Day = 1";
             $TeamLines = $db->querySingle($Query, true);
@@ -1108,7 +1108,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                         <div class="player-slot">
                             <span class="position-label">LW:</span>
                             <span class="player-name">
-                                <?php 
+<?php
                                 if ($TeamLines && !empty($TeamLines['Line15vs5ForwardLeftWing'])) {
                                     echo getPlayerNameFromLine($TeamLines['Line15vs5ForwardLeftWing'], $PlayersArray);
                                 } else {
@@ -1116,11 +1116,11 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                                 }
                                 ?>
                             </span>
-                        </div>
+</div>
                         <div class="player-slot">
                             <span class="position-label">C:</span>
                             <span class="player-name">
-                                <?php 
+<?php 
                                 if ($TeamLines && !empty($TeamLines['Line15vs5ForwardCenter'])) {
                                     echo getPlayerNameFromLine($TeamLines['Line15vs5ForwardCenter'], $PlayersArray);
                                 } else {
@@ -1128,11 +1128,11 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                                 }
                                 ?>
                             </span>
-                        </div>
+</div>
                         <div class="player-slot">
                             <span class="position-label">RW:</span>
                             <span class="player-name">
-                                <?php 
+<?php 
                                 if ($TeamLines && !empty($TeamLines['Line15vs5ForwardRightWing'])) {
                                     echo getPlayerNameFromLine($TeamLines['Line15vs5ForwardRightWing'], $PlayersArray);
                                 } else {
@@ -1142,7 +1142,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                             </span>
                         </div>
                     </div>
-                </div>
+</div>
 
                 <!-- Ligne 2 -->
                 <div class="line-section">
@@ -1151,7 +1151,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                         <div class="player-slot">
                             <span class="position-label">LW:</span>
                             <span class="player-name">
-                                <?php 
+<?php 
                                 if ($TeamLines && !empty($TeamLines['Line25vs5ForwardLeftWing'])) {
                                     echo getPlayerNameFromLine($TeamLines['Line25vs5ForwardLeftWing'], $PlayersArray);
                                 } else {
@@ -1163,7 +1163,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                         <div class="player-slot">
                             <span class="position-label">C:</span>
                             <span class="player-name">
-                                <?php 
+<?php
                                 if ($TeamLines && !empty($TeamLines['Line25vs5ForwardCenter'])) {
                                     echo getPlayerNameFromLine($TeamLines['Line25vs5ForwardCenter'], $PlayersArray);
                                 } else {
@@ -1171,7 +1171,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                                 }
                                 ?>
                             </span>
-                        </div>
+</div>
                         <div class="player-slot">
                             <span class="position-label">RW:</span>
                             <span class="player-name">
@@ -1185,7 +1185,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                             </span>
                         </div>
                     </div>
-                </div>
+</div>
 
                 <!-- Ligne 3 -->
                 <div class="line-section">
@@ -1194,7 +1194,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                         <div class="player-slot">
                             <span class="position-label">LW:</span>
                             <span class="player-name">
-                                <?php 
+<?php 
                                 if ($TeamLines && !empty($TeamLines['Line35vs5ForwardLeftWing'])) {
                                     echo getPlayerNameFromLine($TeamLines['Line35vs5ForwardLeftWing'], $PlayersArray);
                                 } else {
@@ -1206,7 +1206,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                         <div class="player-slot">
                             <span class="position-label">C:</span>
                             <span class="player-name">
-                                <?php 
+<?php 
                                 if ($TeamLines && !empty($TeamLines['Line35vs5ForwardCenter'])) {
                                     echo getPlayerNameFromLine($TeamLines['Line35vs5ForwardCenter'], $PlayersArray);
                                 } else {
@@ -1218,7 +1218,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                         <div class="player-slot">
                             <span class="position-label">RW:</span>
                             <span class="player-name">
-                                <?php 
+<?php 
                                 if ($TeamLines && !empty($TeamLines['Line35vs5ForwardRightWing'])) {
                                     echo getPlayerNameFromLine($TeamLines['Line35vs5ForwardRightWing'], $PlayersArray);
                                 } else {
@@ -1237,7 +1237,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                         <div class="player-slot">
                             <span class="position-label">LW:</span>
                             <span class="player-name">
-                                <?php 
+<?php 
                                 if ($TeamLines && !empty($TeamLines['Line45vs5ForwardLeftWing'])) {
                                     echo getPlayerNameFromLine($TeamLines['Line45vs5ForwardLeftWing'], $PlayersArray);
                                 } else {
@@ -1249,7 +1249,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                         <div class="player-slot">
                             <span class="position-label">C:</span>
                             <span class="player-name">
-                                <?php 
+<?php 
                                 if ($TeamLines && !empty($TeamLines['Line45vs5ForwardCenter'])) {
                                     echo getPlayerNameFromLine($TeamLines['Line45vs5ForwardCenter'], $PlayersArray);
                                 } else {
@@ -1257,7 +1257,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                                 }
                                 ?>
                             </span>
-                        </div>
+</div>
                         <div class="player-slot">
                             <span class="position-label">RW:</span>
                             <span class="player-name">
@@ -1269,9 +1269,9 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                                 }
                                 ?>
                             </span>
-                        </div>
+</div>
                     </div>
-                </div>
+</div>
 
                 <!-- Défenseurs -->
                 <div class="defense-section">
@@ -1282,7 +1282,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                         <div class="player-slot">
                             <span class="position-label">D1:</span>
                             <span class="player-name">
-                                <?php 
+<?php
                                 if ($TeamLines && !empty($TeamLines['Line15vs5DefenseDefense1'])) {
                                     echo getPlayerNameFromLine($TeamLines['Line15vs5DefenseDefense1'], $PlayersArray);
                                 } else {
@@ -1290,11 +1290,11 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                                 }
                                 ?>
                             </span>
-                        </div>
+</div>
                         <div class="player-slot">
                             <span class="position-label">D2:</span>
                             <span class="player-name">
-                                <?php 
+<?php
                                 if ($TeamLines && !empty($TeamLines['Line15vs5DefenseDefense2'])) {
                                     echo getPlayerNameFromLine($TeamLines['Line15vs5DefenseDefense2'], $PlayersArray);
                                 } else {
@@ -1392,7 +1392,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                         </div>
                     </div>
                 </div>
-            </div>
+</div>
 
             <style>
             .lines-container {
@@ -1463,7 +1463,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                 text-decoration: underline;
             }
             </style>
-        </div>
+</div>
 
         <!-- Onglet Capology -->
         <div class="tabmain" id="tabmain5" style="padding: 0px !important;">
@@ -1501,18 +1501,18 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                     <div style="text-align: center;">
                         <div style="font-size: 24px; font-weight: bold; color: #333;">$<?php echo number_format($SalaryCap); ?></div>
                         <div style="font-size: 12px; color: #666;">League Salary Cap</div>
-                    </div>
+</div>
                     <div style="text-align: center;">
                         <div style="font-size: 24px; font-weight: bold; color: #333;">$<?php echo number_format($TeamFinance['CurrentBankAccount'] ?? 0); ?></div>
                         <div style="font-size: 12px; color: #666;">Current Bank Account</div>
-                    </div>
+</div>
                     <div style="text-align: center;">
                         <div style="font-size: 24px; font-weight: bold; color: #333;"><?php echo $LeagueYear; ?></div>
                         <div style="font-size: 12px; color: #666;">Current League Year</div>
-                    </div>
+</div>
                 </div>
-            </div>
-            
+</div>
+
             <!-- Tableau des contrats Farm -->
             <div class="cap-table-container" style="overflow-x: auto;">
                 <table class="cap-table" style="width: 100%; font-size: 11px; border-collapse: collapse; border: 1px solid #ddd; background: white;">

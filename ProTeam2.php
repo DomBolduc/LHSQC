@@ -2661,7 +2661,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                             echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format($AverageTotalCap4Farm, 0) . "$</td>";
                             echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format($AverageTotalCap5Farm, 0) . "$</td>";
                             echo "</tr>";
-                        }
+                    }
                     ?>
                 </tbody>
             </table>
