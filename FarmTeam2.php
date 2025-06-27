@@ -705,9 +705,235 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
         </div>
 
         <!-- Onglet Stats -->
-        <div class="tabmain" id="tabmain2">
+        <div class="tabmain" id="tabmain2" style="padding: 0px !important;">
             <h3>Farm Team Statistics</h3>
-            <p>Statistiques détaillées de l'équipe farm...</p>
+            
+            <!-- Table des statistiques des joueurs -->
+            <div class="stats-container">
+                <table class="stats-table" style="width: 100%; font-size: 10px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
+                <thead>
+                        <tr style="background: #f5f5f5; border-bottom: 2px solid #ddd;">
+                            <th style="width: 120px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: left; font-weight: bold;">Player</th>
+                            <th style="width: 20px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">POS</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">GP</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">G</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">A</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">P</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">+/-</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">PIM</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Hits</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Shots</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Sh%</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">PPG</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">SHG</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">GWG</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">TOI</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">TOI/G</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">FO%</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">P/20</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        // Récupération des statistiques des joueurs farm
+                        $Query = "SELECT PlayerInfo.*, PlayerFarmStat.*, ROUND((CAST(PlayerFarmStat.G AS REAL) / (PlayerFarmStat.Shots))*100,2) AS ShotsPCT, ROUND((CAST(PlayerFarmStat.SecondPlay AS REAL) / 60 / (PlayerFarmStat.GP)),2) AS AMG, ROUND((CAST(PlayerFarmStat.FaceOffWon AS REAL) / (PlayerFarmStat.FaceOffTotal))*100,2) as FaceoffPCT, ROUND((CAST(PlayerFarmStat.P AS REAL) / (PlayerFarmStat.SecondPlay) * 60 * 20),2) AS P20 FROM PlayerInfo INNER JOIN PlayerFarmStat ON PlayerInfo.Number = PlayerFarmStat.Number WHERE PlayerInfo.Team = " . $Team . " AND PlayerInfo.Status1 <= 1 AND PlayerFarmStat.GP > 0 ORDER BY PlayerFarmStat.P DESC, PlayerFarmStat.GP ASC";
+                    $PlayerStats = $db->query($Query);
+                    
+                    if ($PlayerStats) {
+                        while ($Player = $PlayerStats->fetchArray()) {
+                                $strTemp = (string)$Player['Name'];
+                                $playerClasses = "";
+                                
+                                if ($Player['Rookie'] == "True") { 
+                                    $strTemp = $strTemp . " (R)"; 
+                                    $playerClasses .= " rookie";
+                                }
+                                if ($TeamLeader['Captain'] == $Player['Number']) { 
+                                    $strTemp = $strTemp . " (C)"; 
+                                    $playerClasses .= " captain";
+                                }
+                                if ($TeamLeader['Assistant1'] == $Player['Number']) { 
+                                    $strTemp = $strTemp . " (A)"; 
+                                    $playerClasses .= " assistant";
+                                }
+                                if ($TeamLeader['Assistant2'] == $Player['Number']) { 
+                                    $strTemp = $strTemp . " (A)"; 
+                                    $playerClasses .= " assistant";
+                            }
+                            
+                            echo "<tr>";
+                                echo "<td class='player-name" . $playerClasses . "'><a href='PlayerReport.php?Player=" . $Player['Number'] . "'>" . $strTemp . "</a></td>";
+                                
+                                // Détermination de la position principale
+                                $mainPosition = "";
+                                if ($Player['PosD'] == "True") {
+                                    $mainPosition = "D";
+                                } elseif ($Player['PosC'] == "True") {
+                                    $mainPosition = "C";
+                                } elseif ($Player['PosLW'] == "True") {
+                                    $mainPosition = "LW";
+                                } elseif ($Player['PosRW'] == "True") {
+                                    $mainPosition = "RW";
+                                } else {
+                                    $mainPosition = "-";
+                                }
+                                echo "<td class='position-cell'>" . $mainPosition . "</td>";
+                                
+                                // Statistiques de base
+                                echo "<td>" . $Player['GP'] . "</td>";
+                                echo "<td>" . $Player['G'] . "</td>";
+                                echo "<td>" . $Player['A'] . "</td>";
+                                echo "<td class='points-cell'>" . $Player['P'] . "</td>";
+                                echo "<td>" . $Player['PlusMinus'] . "</td>";
+                                echo "<td>" . $Player['Pim'] . "</td>";
+                                echo "<td>" . $Player['Hits'] . "</td>";
+                                echo "<td>" . $Player['Shots'] . "</td>";
+                                echo "<td>" . ($Player['ShotsPCT'] ?? '0.00') . "%</td>";
+                                echo "<td>" . $Player['PPGoal'] . "</td>";
+                                echo "<td>" . $Player['SHGoal'] . "</td>";
+                                echo "<td>" . $Player['GWGoal'] . "</td>";
+                                echo "<td>" . round($Player['SecondPlay'] / 60, 1) . "</td>";
+                                echo "<td>" . ($Player['AMG'] ?? '0.00') . "</td>";
+                                echo "<td>" . ($Player['FaceoffPCT'] ?? '0.00') . "%</td>";
+                                echo "<td>" . ($Player['P20'] ?? '0.00') . "</td>";
+                            echo "</tr>";
+                        }
+                    }
+                    ?>
+                </tbody>
+            </table>
+            </div>
+
+            <h3>Goaltenders Statistics</h3>
+            <div class="stats-container">
+                <table class="stats-table" style="width: 100%; font-size: 10px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
+                <thead>
+                        <tr style="background: #f5f5f5; border-bottom: 2px solid #ddd;">
+                            <th style="width: 120px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: left; font-weight: bold;">Player</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">GP</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">W</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">L</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">OTL</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">SOW</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">SOL</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">GAA</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">SV%</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">SA</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">GA</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">SO</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">TOI</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">TOI/G</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">PS%</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        // Récupération des statistiques des gardiens farm
+                        $Query = "SELECT GoalerInfo.*, GoalerFarmStat.*, ROUND((CAST(GoalerFarmStat.GA AS REAL) / (GoalerFarmStat.SecondPlay / 60))*60,3) AS GAA, ROUND((CAST(GoalerFarmStat.SA - GoalerFarmStat.GA AS REAL) / (GoalerFarmStat.SA)),3) AS PCT, ROUND((CAST(GoalerFarmStat.PenalityShotsShots - GoalerFarmStat.PenalityShotsGoals AS REAL) / (GoalerFarmStat.PenalityShotsShots)),3) AS PenalityShotsPCT FROM GoalerInfo INNER JOIN GoalerFarmStat ON GoalerInfo.Number = GoalerFarmStat.Number WHERE GoalerInfo.Team = " . $Team . " AND GoalerInfo.Status1 <= 1 AND GoalerFarmStat.GP > 0 ORDER BY GoalerFarmStat.W DESC, GoalerFarmStat.GP DESC";
+                    $GoalieStats = $db->query($Query);
+                    
+                    if ($GoalieStats) {
+                        while ($Goalie = $GoalieStats->fetchArray()) {
+                                $strTemp = (string)$Goalie['Name'];
+                                $playerClasses = "";
+                                
+                                if ($Goalie['Rookie'] == "True") { 
+                                    $strTemp = $strTemp . " (R)"; 
+                                    $playerClasses .= " rookie";
+                            }
+                            
+                            echo "<tr>";
+                                echo "<td class='player-name" . $playerClasses . "'><a href='GoalieReport.php?Goalie=" . $Goalie['Number'] . "'>" . $strTemp . "</a></td>";
+                                
+                                // Statistiques de base
+                                echo "<td>" . $Goalie['GP'] . "</td>";
+                                echo "<td>" . $Goalie['W'] . "</td>";
+                                echo "<td>" . $Goalie['L'] . "</td>";
+                                echo "<td>" . $Goalie['OTL'] . "</td>";
+                                echo "<td>" . $Goalie['SOW'] . "</td>";
+                                echo "<td>" . $Goalie['SOL'] . "</td>";
+                                echo "<td>" . ($Goalie['GAA'] ?? '0.000') . "</td>";
+                                echo "<td>" . (($Goalie['PCT'] ?? 0) * 100) . "%</td>";
+                                echo "<td>" . $Goalie['SA'] . "</td>";
+                                echo "<td>" . $Goalie['GA'] . "</td>";
+                                echo "<td>" . $Goalie['Shutouts'] . "</td>";
+                                echo "<td>" . round($Goalie['SecondPlay'] / 60, 1) . "</td>";
+                                echo "<td>" . round(($Goalie['SecondPlay'] / 60) / $Goalie['GP'], 1) . "</td>";
+                                echo "<td>" . (($Goalie['PenalityShotsPCT'] ?? 0) * 100) . "%</td>";
+                            echo "</tr>";
+                        }
+                    }
+                    ?>
+                </tbody>
+            </table>
+            </div>
+
+            <style>
+            .stats-container {
+                margin-bottom: 30px;
+                overflow-x: auto;
+            }
+            
+            .stats-table {
+                min-width: 100%;
+            }
+            
+            .stats-table th,
+            .stats-table td {
+                padding: 4px 2px !important;
+                border: 1px solid #ddd;
+                text-align: center;
+                font-size: 10px;
+            }
+            
+            .stats-table th {
+                background: #f5f5f5;
+                font-weight: bold;
+                border-bottom: 2px solid #ddd;
+            }
+            
+            .player-name {
+                text-align: left !important;
+                font-weight: bold;
+            }
+            
+            .player-name a {
+                color: #007bff;
+                text-decoration: none;
+            }
+            
+            .player-name a:hover {
+                text-decoration: underline;
+            }
+            
+            .player-name.rookie a::after {
+                content: " (R)";
+                color: #28a745;
+                font-weight: bold;
+            }
+            
+            .player-name.captain a::after {
+                content: " (C)";
+                color: #dc3545;
+                font-weight: bold;
+            }
+            
+            .player-name.assistant a::after {
+                content: " (A)";
+                color: #ffc107;
+                font-weight: bold;
+            }
+            
+            .position-cell {
+                font-weight: bold;
+                background: #f8f9fa;
+            }
+            
+            .points-cell {
+                font-weight: bold;
+                background: #e8f4f8;
+            }
+            </style>
         </div>
 
         <!-- Onglet Schedule -->
