@@ -1,5 +1,8 @@
 <?php include "Header.php";
 
+// Inclusion du CSS moderne pour la page Schedule
+echo '<link rel="stylesheet" href="css/schedule-modern.css">';
+
 If ($lang == "fr"){include 'LanguageFR-League.php';}else{include 'LanguageEN-League.php';}
 
 $Title = (string)"";
@@ -167,34 +170,22 @@ $(function() {
 
 <div style="width:99%;margin:auto;">
 
-<?php echo "<h1>" . $Title . "</h1>"; 
-If($HistoryOutput == True){echo "<div id=\"ReQueryDiv\" style=\"display:none;\">";include "SearchHistorySub.php";include "SearchHistorySchedule.php";echo "</div>";}?>
-<div class="tablesorter_ColumnSelectorWrapper">
-	<?php If($HistoryOutput == False){
-		echo "<a href=\"#Last_Simulate_Day\" style=\"background: #99bfe6;  border: #888 1px solid;  color: #111;  border-radius: 5px;  padding: 5px; text-decoration: none\">" . $ScheduleLang['LastPlayedGames'] . "</a>";
-	}else{
-		echo "<button class=\"tablesorter_Output\" id=\"ReQuery\">" . $SearchLang['ChangeSearch'] . "</button>";
-	}?>
-    <input id="tablesorter_colSelect1" type="checkbox" class="hidden">
-    <label class="tablesorter_ColumnSelectorButton" for="tablesorter_colSelect1"><?php echo $TableSorterLang['ShoworHideColumn'];?></label>
-	<button class="tablesorter_Output download" type="button">Output</button>
-    <div id="tablesorter_ColumnSelector" class="tablesorter_ColumnSelector"></div>
-	<?php include "FilterTip.php";?>
-	</div>
+<div class="schedule-page-container">
+    <div class="schedule-page-header">
+        <?php echo "<h1>" . $Title . "</h1>"; ?>
 
+        <?php If($HistoryOutput == True){echo "<div id=\"ReQueryDiv\" style=\"display:none;\">";include "SearchHistorySub.php";include "SearchHistorySchedule.php";echo "</div>";} ?>
+    </div>
 
+    <div class="schedule-table-container">
+        <div class="schedule-table-wrapper">
+            <table class="tablesorter STHSPHPSchedule_ScheduleTable table"><thead><tr>
 
+            <?php include "ScheduleSub.php";?>
 
-<table class="tablesorter STHSPHPSchedule_ScheduleTable table"><thead><tr>
-
-<?php include "ScheduleSub.php";?>
-
-</tbody></table>
-
-
-
-<br />
-
+            </tbody></table>
+        </div>
+    </div>
 </div>
 
 
