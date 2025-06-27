@@ -98,7 +98,7 @@ STHSErrorIndex:
         <?php include "Menu.php"; ?>	
         <div class="clearfix header-content" style="display:inline-block;">
 		
-		<div class="STHSIndex_TheNews"><?php echo $LeagueName . $IndexLang['News'];?></div>
+		<div class="STHSIndex_TheNews" style="font-size: 2.5rem; font-weight: 700; text-align: center; margin: 1rem 0; color: #1f2937;">Ligue de Hockey Simulée du Québec</div>
 
 		
 		<div class="row mt-2 mx-2 align-items-stretch">

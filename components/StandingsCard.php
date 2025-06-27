@@ -18,7 +18,7 @@ $TypeText = "Pro";
 $TitleType = $DynamicTitleLang['Pro'];
 $TypeTextTeam = "Pro";
 $LeagueName = "";
-$ColumnPerTable = 7; // PO, Team, GP, W, L, OTL, P
+$ColumnPerTable = 8; // PO, Logo, Team, GP, W, L, OTL, P
 
 if (isset($_GET['Farm'])) {
     $TypeText = "Farm";
@@ -71,6 +71,7 @@ echo "-->";
             <thead>
                 <tr>
                     <th>PO</th>
+                    <th style="width: 40px; text-align: center;">Logo</th>
                     <th><?= $TeamLang['TeamName'] ?></th>
                     <th>GP</th>
                     <th>W</th>

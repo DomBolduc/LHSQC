@@ -54,14 +54,16 @@ function PrintModernStandingTableRow($row, $TypeText, $showPO, $LeagueGeneral, $
     echo "<span class='position-indicator {$positionClass}'>{$LoopCount}</span>";
     echo "</td>";
 
-    // Nom d'équipe avec logo
-    echo "<td>";
-    echo "<div class='team-info'>";
+    // Logo d'équipe centré
+    echo "<td style='text-align: center;'>";
     if (isset($row['TeamThemeID']) && $row['TeamThemeID'] > 0) {
         echo "<img src='{$ImagesCDNPath}/images/{$row['TeamThemeID']}.png' alt='{$row['Name']}' class='team-logo'>";
     }
+    echo "</td>";
+
+    // Nom d'équipe
+    echo "<td>";
     echo "<span class='team-name'>{$row['Name']}</span>";
-    echo "</div>";
     echo "</td>";
 
     // Statistiques
