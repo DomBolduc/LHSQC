@@ -408,96 +408,300 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
         </div>
 
         <!-- Onglet Roster -->
-        <div class="tabmain" id="tabmain1">
+        <div class="tabmain" id="tabmain1" style="padding: 0px !important;">
             <h3>Farm Team Roster</h3>
             
-            <!-- Roster des joueurs -->
-            <h4>Forwards & Defensemen</h4>
-            <table class="STHSPHPPlayerStat_Table">
+            <!-- Table des joueurs avec ratings -->
+            <div class="roster-container">
+                <table class="roster-table" style="width: 100%; font-size: 10px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
                 <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Pos</th>
-                        <th>Age</th>
-                        <th>Height</th>
-                        <th>Weight</th>
-                        <th>GP</th>
-                        <th>G</th>
-                        <th>A</th>
-                        <th>P</th>
-                        <th>+/-</th>
-                        <th>PIM</th>
+                        <tr style="background: #f5f5f5; border-bottom: 2px solid #ddd;">
+                            <th style="width: 112px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: left; font-weight: bold;">Player</th>
+                            <th style="width: 20px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">POS</th>
+                            <th style="width: 40px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">CON</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">CK</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">FG</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">DI</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">SK</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">ST</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">EN</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">DU</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">PH</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">FO</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">PA</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">SC</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">DF</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">PS</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">EX</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">LD</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">PO</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">MO</th>
+                            <th style="width: 35px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold; background: #e8f4f8;">OV</th>
+                            <th style="width: 35px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Age</th>
+                            <th style="width: 20px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Years</th>
+                            <th style="width: 45px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Salary</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
+                        // Récupération du roster complet des joueurs farm avec tous les ratings
+                        $Query = "SELECT PlayerInfo.*, PlayerFarmStat.GP, PlayerFarmStat.G, PlayerFarmStat.A, PlayerFarmStat.P, PlayerFarmStat.PlusMinus FROM PlayerInfo LEFT JOIN PlayerFarmStat ON PlayerInfo.Number = PlayerFarmStat.Number WHERE PlayerInfo.Team = " . $Team . " AND PlayerInfo.Status1 <= 1 ORDER BY PlayerInfo.PosD, PlayerInfo.Overall DESC";
+                    $PlayerRoster = $db->query($Query);
+                    
                     if ($PlayerRoster) {
                         while ($Player = $PlayerRoster->fetchArray()) {
+                                $strTemp = (string)$Player['Name'];
+                                $playerClasses = "";
+                                
+                                if ($Player['Rookie'] == "True") { 
+                                    $strTemp = $strTemp . " (R)"; 
+                                    $playerClasses .= " rookie";
+                                }
+                                if ($TeamLeader['Captain'] == $Player['Number']) { 
+                                    $strTemp = $strTemp . " (C)"; 
+                                    $playerClasses .= " captain";
+                                }
+                                if ($TeamLeader['Assistant1'] == $Player['Number']) { 
+                                    $strTemp = $strTemp . " (A)"; 
+                                    $playerClasses .= " assistant";
+                                }
+                                if ($TeamLeader['Assistant2'] == $Player['Number']) { 
+                                    $strTemp = $strTemp . " (A)"; 
+                                    $playerClasses .= " assistant";
+                            }
+                            
                             echo "<tr>";
-                            echo "<td><a href='PlayerReport.php?Player=" . $Player['Number'] . "'>" . $Player['Name'] . "</a></td>";
-                            
-                            // Position
-                            $Position = "";
-                            if ($Player['PosC'] == "True") $Position .= "C";
-                            if ($Player['PosLW'] == "True") $Position .= ($Position ? "/" : "") . "LW";
-                            if ($Player['PosRW'] == "True") $Position .= ($Position ? "/" : "") . "RW";
-                            if ($Player['PosD'] == "True") $Position .= ($Position ? "/" : "") . "D";
-                            echo "<td>" . $Position . "</td>";
-                            
-                            echo "<td>" . $Player['Age'] . "</td>";
-                            echo "<td>" . $Player['Height'] . "</td>";
-                            echo "<td>" . $Player['Weight'] . "</td>";
-                            echo "<td>" . $Player['GP'] . "</td>";
-                            echo "<td>" . $Player['G'] . "</td>";
-                            echo "<td>" . $Player['A'] . "</td>";
-                            echo "<td>" . $Player['P'] . "</td>";
-                            echo "<td>" . $Player['PlusMinus'] . "</td>";
-                            echo "<td>" . $Player['Pim'] . "</td>";
+                                echo "<td class='player-name" . $playerClasses . "'><a href='PlayerReport.php?Player=" . $Player['Number'] . "'>" . $strTemp . "</a></td>";
+                                
+                                // Détermination de la position principale
+                                $mainPosition = "";
+                                if ($Player['PosD'] == "True") {
+                                    $mainPosition = "D";
+                                } elseif ($Player['PosC'] == "True") {
+                                    $mainPosition = "C";
+                                } elseif ($Player['PosLW'] == "True") {
+                                    $mainPosition = "LW";
+                                } elseif ($Player['PosRW'] == "True") {
+                                    $mainPosition = "RW";
+                                } else {
+                                    $mainPosition = "-";
+                                }
+                                echo "<td class='position-cell'>" . $mainPosition . "</td>";
+                                
+                                // Condition avec gestion des suspensions
+                                $conditionClass = "condition-cell";
+                                if ($Player['Suspension'] == 99) {
+                                    echo "<td class='" . $conditionClass . " holdout'>HO</td>";
+                                } elseif ($Player['Suspension'] > 0) {
+                                    echo "<td class='" . $conditionClass . " suspended'>S" . $Player['Suspension'] . "</td>";
+                                } else {
+                                    echo "<td class='" . $conditionClass . "'>" . number_format(str_replace(",", ".", $Player['ConditionDecimal']), 2) . "</td>";
+                                }
+                                
+                                // Tous les ratings
+                                echo "<td>" . $Player['CK'] . "</td>";
+                                echo "<td>" . $Player['FG'] . "</td>";
+                                echo "<td>" . $Player['DI'] . "</td>";
+                                echo "<td>" . $Player['SK'] . "</td>";
+                                echo "<td>" . $Player['ST'] . "</td>";
+                                echo "<td>" . $Player['EN'] . "</td>";
+                                echo "<td>" . $Player['DU'] . "</td>";
+                                echo "<td>" . $Player['PH'] . "</td>";
+                                echo "<td>" . $Player['FO'] . "</td>";
+                                echo "<td>" . $Player['PA'] . "</td>";
+                                echo "<td>" . $Player['SC'] . "</td>";
+                                echo "<td>" . $Player['DF'] . "</td>";
+                                echo "<td>" . $Player['PS'] . "</td>";
+                                echo "<td>" . $Player['EX'] . "</td>";
+                                echo "<td>" . $Player['LD'] . "</td>";
+                                echo "<td>" . $Player['PO'] . "</td>";
+                                echo "<td>" . $Player['MO'] . "</td>";
+                                echo "<td class='overall-cell'>" . $Player['Overall'] . "</td>";
+                                
+                                // Informations supplémentaires
+                                echo "<td>" . ($Player['Age'] ?? '-') . "</td>";
+                                echo "<td>" . ($Player['Contract'] ?? '-') . "</td>";
+                                echo "<td class='salary-cell'>$" . number_format($Player['Salary1'] ?? 0, 0) . "</td>";
                             echo "</tr>";
                         }
                     }
                     ?>
                 </tbody>
             </table>
-            
-            <!-- Roster des gardiens -->
-            <h4>Goalies</h4>
-            <table class="STHSPHPPlayerStat_Table">
+            </div>
+
+            <h3>Goaltenders</h3>
+            <div class="roster-container">
+                <table class="roster-table" style="width: 100%; font-size: 10px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
                 <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Age</th>
-                        <th>Height</th>
-                        <th>Weight</th>
-                        <th>GP</th>
-                        <th>W</th>
-                        <th>L</th>
-                        <th>OTL</th>
-                        <th>GAA</th>
-                        <th>SV%</th>
+                        <tr style="background: #f5f5f5; border-bottom: 2px solid #ddd;">
+                            <th style="width: 90px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: left; font-weight: bold;">Player</th>
+                            <th style="width: 35px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">CON</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">SK</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">DU</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">EN</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">SZ</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">AG</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">RB</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">SC</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">HS</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">RT</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">PH</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">PS</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">EX</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">LD</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">PO</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">MO</th>
+                            <th style="width: 25px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold; background: #e8f4f8;">OV</th>
+                            <th style="width: 30px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Age</th>
+                            <th style="width: 15px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Years</th>
+                            <th style="width: 35px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Salary</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
+                        // Récupération du roster des gardiens farm avec tous les ratings
+                        $Query = "SELECT * FROM GoalerInfo WHERE Team = " . $Team . " AND Status1 <= 1 ORDER BY Overall DESC";
+                    $GoalieRoster = $db->query($Query);
+                    
                     if ($GoalieRoster) {
                         while ($Goalie = $GoalieRoster->fetchArray()) {
+                                $strTemp = (string)$Goalie['Name'];
+                                $playerClasses = "";
+                                
+                                if ($Goalie['Rookie'] == "True") { 
+                                    $strTemp = $strTemp . " (R)"; 
+                                    $playerClasses .= " rookie";
+                            }
+                            
                             echo "<tr>";
-                            echo "<td><a href='GoalieReport.php?Goalie=" . $Goalie['Number'] . "'>" . $Goalie['Name'] . "</a></td>";
-                            echo "<td>" . $Goalie['Age'] . "</td>";
-                            echo "<td>" . $Goalie['Height'] . "</td>";
-                            echo "<td>" . $Goalie['Weight'] . "</td>";
-                            echo "<td>" . $Goalie['GP'] . "</td>";
-                            echo "<td>" . $Goalie['W'] . "</td>";
-                            echo "<td>" . $Goalie['L'] . "</td>";
-                            echo "<td>" . $Goalie['OTL'] . "</td>";
-                            echo "<td>" . number_format($Goalie['GAA'], 2) . "</td>";
-                            echo "<td>" . number_format($Goalie['PCT'] * 100, 1) . "%</td>";
+                                echo "<td class='player-name" . $playerClasses . "'><a href='GoalieReport.php?Goalie=" . $Goalie['Number'] . "'>" . $strTemp . "</a></td>";
+                                
+                                // Condition avec gestion des suspensions
+                                $conditionClass = "condition-cell";
+                                if ($Goalie['Suspension'] == 99) {
+                                    echo "<td class='" . $conditionClass . " holdout'>HO</td>";
+                                } elseif ($Goalie['Suspension'] > 0) {
+                                    echo "<td class='" . $conditionClass . " suspended'>S" . $Goalie['Suspension'] . "</td>";
+                                } else {
+                                    echo "<td class='" . $conditionClass . "'>" . number_format(str_replace(",", ".", $Goalie['ConditionDecimal']), 2) . "</td>";
+                                }
+                                
+                                // Tous les ratings des gardiens
+                                echo "<td>" . $Goalie['SK'] . "</td>";
+                                echo "<td>" . $Goalie['DU'] . "</td>";
+                                echo "<td>" . $Goalie['EN'] . "</td>";
+                                echo "<td>" . $Goalie['SZ'] . "</td>";
+                                echo "<td>" . $Goalie['AG'] . "</td>";
+                                echo "<td>" . $Goalie['RB'] . "</td>";
+                                echo "<td>" . $Goalie['SC'] . "</td>";
+                                echo "<td>" . $Goalie['HS'] . "</td>";
+                                echo "<td>" . $Goalie['RT'] . "</td>";
+                                echo "<td>" . $Goalie['PH'] . "</td>";
+                                echo "<td>" . $Goalie['PS'] . "</td>";
+                                echo "<td>" . $Goalie['EX'] . "</td>";
+                                echo "<td>" . $Goalie['LD'] . "</td>";
+                                echo "<td>" . $Goalie['PO'] . "</td>";
+                                echo "<td>" . $Goalie['MO'] . "</td>";
+                                echo "<td class='overall-cell'>" . $Goalie['Overall'] . "</td>";
+                                
+                                // Informations supplémentaires
+                                echo "<td>" . ($Goalie['Age'] ?? '-') . "</td>";
+                                echo "<td>" . ($Goalie['Contract'] ?? '-') . "</td>";
+                                echo "<td class='salary-cell'>$" . number_format($Goalie['Salary1'] ?? 0, 0) . "</td>";
                             echo "</tr>";
                         }
                     }
                     ?>
                 </tbody>
             </table>
+            </div>
+
+            <style>
+            .roster-container {
+                margin-bottom: 30px;
+                overflow-x: auto;
+            }
+            
+            .roster-table {
+                min-width: 100%;
+            }
+            
+            .roster-table th,
+            .roster-table td {
+                padding: 4px 2px !important;
+                border: 1px solid #ddd;
+                text-align: center;
+                font-size: 10px;
+            }
+            
+            .roster-table th {
+                background: #f5f5f5;
+                font-weight: bold;
+                border-bottom: 2px solid #ddd;
+            }
+            
+            .player-name {
+                text-align: left !important;
+                font-weight: bold;
+            }
+            
+            .player-name a {
+                color: #007bff;
+                text-decoration: none;
+            }
+            
+            .player-name a:hover {
+                text-decoration: underline;
+            }
+            
+            .player-name.rookie a::after {
+                content: " (R)";
+                color: #28a745;
+                font-weight: bold;
+            }
+            
+            .player-name.captain a::after {
+                content: " (C)";
+                color: #dc3545;
+                font-weight: bold;
+            }
+            
+            .player-name.assistant a::after {
+                content: " (A)";
+                color: #ffc107;
+                font-weight: bold;
+            }
+            
+            .position-cell {
+                font-weight: bold;
+                background: #f8f9fa;
+            }
+            
+            .condition-cell {
+                font-weight: bold;
+            }
+            
+            .condition-cell.holdout {
+                background: #fff3cd;
+                color: #856404;
+            }
+            
+            .condition-cell.suspended {
+                background: #f8d7da;
+                color: #721c24;
+            }
+            
+            .overall-cell {
+                background: #e8f4f8;
+                font-weight: bold;
+            }
+            
+            .salary-cell {
+                font-weight: bold;
+                color: #28a745;
+            }
+            </style>
         </div>
 
         <!-- Onglet Stats -->
