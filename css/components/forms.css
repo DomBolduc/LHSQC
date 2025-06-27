@@ -1,0 +1,603 @@
+/* ========================================
+   COMPOSANT FORMS - MOBILE-FIRST
+   ========================================
+   
+   Système de formulaires moderne et responsive
+   Optimisé pour les formulaires du site de hockey
+   ======================================== */
+
+/* ========================================
+   FORMULAIRE DE BASE
+   ======================================== */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.form__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.form__row {
+  display: flex;
+  gap: var(--spacing-4);
+  align-items: flex-end;
+}
+
+.form__col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+/* ========================================
+   LABELS
+   ======================================== */
+.form__label {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.form__label--required::after {
+  content: ' *';
+  color: var(--color-danger);
+}
+
+.form__label--optional {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-normal);
+}
+
+/* ========================================
+   INPUTS
+   ======================================== */
+.form__input {
+  padding: var(--spacing-3) var(--spacing-4);
+  border: 2px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-base);
+  font-family: inherit;
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  transition: all var(--transition-fast);
+  min-height: 44px; /* Accessibilité mobile */
+}
+
+.form__input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+  background: var(--color-bg-primary);
+}
+
+.form__input:disabled {
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-tertiary);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form__input--error {
+  border-color: var(--color-danger);
+  box-shadow: 0 0 0 3px var(--color-danger-light);
+}
+
+.form__input--success {
+  border-color: var(--color-success);
+  box-shadow: 0 0 0 3px var(--color-success-light);
+}
+
+.form__input--warning {
+  border-color: var(--color-warning);
+  box-shadow: 0 0 0 3px var(--color-warning-light);
+}
+
+/* ========================================
+   TEXTAREA
+   ======================================== */
+.form__textarea {
+  min-height: 120px;
+  resize: vertical;
+  line-height: 1.5;
+  font-family: inherit;
+}
+
+.form__textarea--small {
+  min-height: 80px;
+}
+
+.form__textarea--large {
+  min-height: 200px;
+}
+
+/* ========================================
+   SELECT
+   ======================================== */
+.form__select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right var(--spacing-3) center;
+  background-repeat: no-repeat;
+  background-size: 16px 12px;
+  padding-right: var(--spacing-10);
+}
+
+.form__select:focus {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%231e40af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+}
+
+/* ========================================
+   CHECKBOX ET RADIO
+   ======================================== */
+.form__checkbox,
+.form__radio {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  cursor: pointer;
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  user-select: none;
+}
+
+.form__checkbox input,
+.form__radio input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  cursor: pointer;
+  accent-color: var(--color-primary);
+}
+
+.form__checkbox--disabled,
+.form__radio--disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.form__checkbox--disabled input,
+.form__radio--disabled input {
+  cursor: not-allowed;
+}
+
+/* ========================================
+   SWITCH
+   ======================================== */
+.form__switch {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  cursor: pointer;
+  user-select: none;
+}
+
+.form__switch__input {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  background: var(--color-bg-tertiary);
+  border-radius: var(--border-radius-full);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.form__switch__input::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background: var(--color-white);
+  border-radius: 50%;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+.form__switch input:checked + .form__switch__input {
+  background: var(--color-primary);
+}
+
+.form__switch input:checked + .form__switch__input::before {
+  transform: translateX(20px);
+}
+
+.form__switch input:focus + .form__switch__input {
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+/* ========================================
+   FILE UPLOAD
+   ======================================== */
+.form__file {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.form__file__input {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.form__file__label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-4) var(--spacing-6);
+  border: 2px dashed var(--color-border);
+  border-radius: var(--border-radius-md);
+  background: var(--color-bg-secondary);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+  transition: all var(--transition-fast);
+  min-height: 120px;
+  flex-direction: column;
+}
+
+.form__file__label:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+.form__file__input:focus + .form__file__label {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+.form__file__icon {
+  font-size: var(--font-size-xl);
+  color: var(--color-text-tertiary);
+}
+
+.form__file__text {
+  text-align: center;
+}
+
+.form__file__text--primary {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.form__file__text--secondary {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* ========================================
+   MESSAGES D'ERREUR ET SUCCÈS
+   ======================================== */
+.form__message {
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-1);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.form__message--error {
+  color: var(--color-danger);
+}
+
+.form__message--success {
+  color: var(--color-success);
+}
+
+.form__message--warning {
+  color: var(--color-warning);
+}
+
+.form__message--info {
+  color: var(--color-info);
+}
+
+.form__message__icon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+}
+
+/* ========================================
+   FORMULAIRES SPÉCIALISÉS HOCKEY
+   ======================================== */
+.form--player-edit {
+  max-width: 600px;
+}
+
+.form--player-edit .form__row {
+  flex-wrap: wrap;
+}
+
+.form--player-edit .form__col--stats {
+  flex: 0 0 150px;
+}
+
+.form--player-edit .form__col--info {
+  flex: 1;
+  min-width: 200px;
+}
+
+.form--trade {
+  max-width: 800px;
+}
+
+.form--trade .form__section {
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-4);
+  margin-bottom: var(--spacing-4);
+  background: var(--color-bg-secondary);
+}
+
+.form--trade .form__section__title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-4);
+  padding-bottom: var(--spacing-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.form--lineup {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-4);
+}
+
+.form--lineup .form__group {
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-3);
+  background: var(--color-bg-secondary);
+}
+
+.form--lineup .form__group__title {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: var(--font-size-sm);
+}
+
+/* ========================================
+   FORMULAIRES AVEC VALIDATION
+   ======================================== */
+.form--validation .form__input:invalid {
+  border-color: var(--color-danger);
+}
+
+.form--validation .form__input:valid {
+  border-color: var(--color-success);
+}
+
+.form--validation .form__input:placeholder-shown {
+  border-color: var(--color-border);
+}
+
+/* ========================================
+   FORMULAIRES COMPACTS
+   ======================================== */
+.form--compact {
+  gap: var(--spacing-2);
+}
+
+.form--compact .form__group {
+  gap: var(--spacing-1);
+}
+
+.form--compact .form__input {
+  padding: var(--spacing-2) var(--spacing-3);
+  font-size: var(--font-size-sm);
+  min-height: 36px;
+}
+
+.form--compact .form__label {
+  font-size: var(--font-size-xs);
+}
+
+/* ========================================
+   FORMULAIRES HORIZONTAUX
+   ======================================== */
+.form--horizontal .form__group {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+
+.form--horizontal .form__label {
+  flex: 0 0 120px;
+  text-align: right;
+  margin-bottom: 0;
+}
+
+.form--horizontal .form__input,
+.form--horizontal .form__select,
+.form--horizontal .form__textarea {
+  flex: 1;
+}
+
+/* ========================================
+   FORMULAIRES AVEC ICÔNES
+   ======================================== */
+.form__input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.form__input-group .form__input {
+  padding-left: var(--spacing-10);
+}
+
+.form__input-group .form__icon {
+  position: absolute;
+  left: var(--spacing-3);
+  color: var(--color-text-secondary);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.form__input-group .form__input:focus + .form__icon {
+  color: var(--color-primary);
+}
+
+.form__input-group--right .form__input {
+  padding-left: var(--spacing-4);
+  padding-right: var(--spacing-10);
+}
+
+.form__input-group--right .form__icon {
+  left: auto;
+  right: var(--spacing-3);
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+@media (max-width: 768px) {
+  .form__row {
+    flex-direction: column;
+    gap: var(--spacing-3);
+  }
+  
+  .form__col {
+    width: 100%;
+  }
+  
+  .form--horizontal .form__group {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--spacing-2);
+  }
+  
+  .form--horizontal .form__label {
+    flex: none;
+    text-align: left;
+  }
+  
+  .form--lineup {
+    grid-template-columns: 1fr;
+  }
+  
+  .form--player-edit .form__col--stats {
+    flex: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .form__input {
+    padding: var(--spacing-2) var(--spacing-3);
+    font-size: var(--font-size-sm);
+    min-height: 40px;
+  }
+  
+  .form__textarea {
+    min-height: 100px;
+  }
+  
+  .form__file__label {
+    padding: var(--spacing-3) var(--spacing-4);
+    min-height: 100px;
+  }
+  
+  .form__switch {
+    gap: var(--spacing-2);
+  }
+  
+  .form__switch__input {
+    width: 40px;
+    height: 22px;
+  }
+  
+  .form__switch__input::before {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .form__switch input:checked + .form__switch__input::before {
+    transform: translateX(18px);
+  }
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+.form__input:focus {
+  transform: translateY(-1px);
+}
+
+.form__message {
+  animation: form-message-slide-in 0.3s ease-out;
+}
+
+@keyframes form-message-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form__file__label {
+  transition: all var(--transition-medium);
+}
+
+.form__file__label:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ========================================
+   UTILITAIRES
+   ======================================== */
+.form__help {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-1);
+}
+
+.form__required {
+  color: var(--color-danger);
+  font-weight: var(--font-weight-bold);
+}
+
+.form__optional {
+  color: var(--color-text-tertiary);
+  font-size: var(--font-size-xs);
+}
+
+.form__divider {
+  height: 1px;
+  background: var(--color-border);
+  margin: var(--spacing-4) 0;
+}
+
+.form__section {
+  margin-bottom: var(--spacing-6);
+}
+
+.form__section__title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-4);
+  padding-bottom: var(--spacing-2);
+  border-bottom: 2px solid var(--color-primary);
+} 

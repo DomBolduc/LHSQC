@@ -6,7 +6,7 @@ require_once("helperTool.php");
 
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
 
@@ -32,6 +32,26 @@ require_once("helperTool.php");
     <link href="css/base/reset.css" rel="stylesheet" type="text/css" />
     <link href="css/base/typography.css" rel="stylesheet" type="text/css" />
     <link href="css/base/layout.css" rel="stylesheet" type="text/css" />
+    
+    <!-- 3. Composants CSS -->
+    <link href="css/components/tables.css" rel="stylesheet" type="text/css" />
+    <link href="css/components/buttons.css" rel="stylesheet" type="text/css" />
+    <link href="css/components/navigation.css" rel="stylesheet" type="text/css" />
+    <link href="css/components/cards.css" rel="stylesheet" type="text/css" />
+    
+    <!-- 4. Composants avancés CSS -->
+    <link href="css/components/modals.css" rel="stylesheet" type="text/css" />
+    <link href="css/components/forms.css" rel="stylesheet" type="text/css" />
+    <link href="css/components/alerts.css" rel="stylesheet" type="text/css" />
+    
+    <!-- ========================================
+         THÈMES CSS - PHASE 5
+         ======================================== -->
+    <!-- 5. Thème clair (par défaut) -->
+    <link href="css/themes/theme-light.css" rel="stylesheet" type="text/css" />
+    
+    <!-- 6. Thème sombre -->
+    <link href="css/themes/theme-dark.css" rel="stylesheet" type="text/css" />
     
     <!-- ========================================
          CSS EXISTANTS (COMPATIBILITÉ)
@@ -63,3 +83,131 @@ require_once("helperTool.php");
 
     <script src="js/db2json.js"    type="text/javascript"></script>
     <script src="js/lhsqc_new.js"    type="text/javascript"></script>
+
+    <!-- ========================================
+         SCRIPT DE BASCULE DE THÈME
+         ======================================== -->
+    <script>
+        // Fonction pour basculer entre les thèmes
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            // Changer l'attribut data-theme
+            html.setAttribute('data-theme', newTheme);
+            
+            // Sauvegarder la préférence
+            localStorage.setItem('theme', newTheme);
+            
+            // Mettre à jour l'icône du bouton
+            updateThemeIcon(newTheme);
+            
+            // Ajouter une classe pour l'animation de transition
+            document.body.classList.add('theme-transition');
+            setTimeout(() => {
+                document.body.classList.remove('theme-transition');
+            }, 300);
+        }
+        
+        // Fonction pour mettre à jour l'icône
+        function updateThemeIcon(theme) {
+            const themeToggle = document.getElementById('theme-toggle');
+            if (themeToggle) {
+                const icon = themeToggle.querySelector('i');
+                if (icon) {
+                    icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+                }
+                themeToggle.setAttribute('title', theme === 'dark' ? 'Passer au thème clair' : 'Passer au thème sombre');
+            }
+        }
+        
+        // Fonction pour initialiser le thème
+        function initTheme() {
+            // Récupérer la préférence sauvegardée ou utiliser la préférence système
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            let theme = 'light'; // Par défaut
+            
+            if (savedTheme) {
+                theme = savedTheme;
+            } else if (prefersDark) {
+                theme = 'dark';
+            }
+            
+            // Appliquer le thème
+            document.documentElement.setAttribute('data-theme', theme);
+            updateThemeIcon(theme);
+        }
+        
+        // Initialiser le thème au chargement
+        document.addEventListener('DOMContentLoaded', initTheme);
+        
+        // Écouter les changements de préférence système
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) {
+                const newTheme = e.matches ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                updateThemeIcon(newTheme);
+            }
+        });
+    </script>
+
+    <style>
+        /* Styles pour le bouton de bascule de thème */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--color-primary);
+            color: var(--color-white);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            transition: all var(--transition-fast);
+            display: none; /* DÉSACTIVÉ TEMPORAIREMENT */
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .theme-toggle:focus {
+            outline: none;
+            box-shadow: var(--focus-ring);
+        }
+        
+        /* Animation de transition de thème */
+        .theme-transition {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        /* Responsive pour le bouton */
+        @media (max-width: 768px) {
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ========================================
+         BOUTON DE BASCULE DE THÈME
+         ======================================== -->
+    <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()" title="Passer au thème sombre">
+        <i class="fas fa-moon"></i>
+    </button>
+</body>
+</html>

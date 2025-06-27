@@ -1,0 +1,550 @@
+/* ========================================
+   COMPOSANT CARDS - MOBILE-FIRST
+   ========================================
+   
+   Système de cartes moderne et responsive
+   Optimisé pour les joueurs et équipes de hockey
+   ======================================== */
+
+/* ========================================
+   CARTE DE BASE
+   ======================================== */
+.card {
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: all var(--transition-fast);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.card__header {
+  padding: var(--spacing-4);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg-secondary);
+}
+
+.card__title {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  line-height: 1.3;
+}
+
+.card__subtitle {
+  margin: var(--spacing-1) 0 0 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-normal);
+}
+
+.card__body {
+  padding: var(--spacing-4);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card__content {
+  flex: 1;
+}
+
+.card__footer {
+  padding: var(--spacing-4);
+  border-top: 1px solid var(--color-border);
+  background: var(--color-bg-secondary);
+  margin-top: auto;
+}
+
+/* ========================================
+   CARTES SPÉCIALISÉES HOCKEY
+   ======================================== */
+.card--player {
+  position: relative;
+  overflow: hidden;
+}
+
+.card--player::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-primary-dark));
+}
+
+.card--player .card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  padding: var(--spacing-4);
+}
+
+.card--player .card__avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--color-primary);
+  flex-shrink: 0;
+}
+
+.card--player .card__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.card--player .card__name {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.card--player .card__position {
+  font-size: var(--font-size-sm);
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: var(--spacing-1) 0 0 0;
+}
+
+.card--player .card__team {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin: var(--spacing-1) 0 0 0;
+}
+
+.card--team {
+  text-align: center;
+}
+
+.card--team .card__header {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  color: var(--color-white);
+  padding: var(--spacing-6);
+}
+
+.card--team .card__logo {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto var(--spacing-4);
+  border-radius: 50%;
+  background: var(--color-white);
+  padding: var(--spacing-2);
+  box-shadow: var(--shadow-md);
+}
+
+.card--team .card__title {
+  color: var(--color-white);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  margin: 0;
+}
+
+.card--team .card__subtitle {
+  color: rgba(255, 255, 255, 0.8);
+  margin: var(--spacing-2) 0 0 0;
+}
+
+.card--stats {
+  background: linear-gradient(135deg, var(--color-bg-primary), var(--color-bg-secondary));
+}
+
+.card--stats .card__header {
+  background: var(--color-info);
+  color: var(--color-white);
+  text-align: center;
+}
+
+.card--stats .card__title {
+  color: var(--color-white);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+}
+
+.card--stats .card__value {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-info);
+  text-align: center;
+  margin: var(--spacing-4) 0;
+}
+
+.card--stats .card__label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ========================================
+   CARTES AVEC IMAGES
+   ======================================== */
+.card--image {
+  position: relative;
+  overflow: hidden;
+}
+
+.card--image .card__image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: transform var(--transition-medium);
+}
+
+.card--image:hover .card__image {
+  transform: scale(1.05);
+}
+
+.card--image .card__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+  display: flex;
+  align-items: flex-end;
+  padding: var(--spacing-4);
+}
+
+.card--image .card__overlay-content {
+  color: var(--color-white);
+}
+
+.card--image .card__overlay-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.card--image .card__overlay-subtitle {
+  font-size: var(--font-size-sm);
+  margin: var(--spacing-1) 0 0 0;
+  opacity: 0.9;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* ========================================
+   CARTES AVEC BADGES
+   ======================================== */
+.card__badge {
+  position: absolute;
+  top: var(--spacing-3);
+  right: var(--spacing-3);
+  padding: var(--spacing-1) var(--spacing-2);
+  background: var(--color-primary);
+  color: var(--color-white);
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  z-index: 10;
+}
+
+.card__badge--success {
+  background: var(--color-success);
+}
+
+.card__badge--warning {
+  background: var(--color-warning);
+}
+
+.card__badge--danger {
+  background: var(--color-danger);
+}
+
+.card__badge--info {
+  background: var(--color-info);
+}
+
+/* ========================================
+   CARTES AVEC ACTIONS
+   ======================================== */
+.card__actions {
+  display: flex;
+  gap: var(--spacing-2);
+  margin-top: var(--spacing-4);
+}
+
+.card__action {
+  flex: 1;
+  padding: var(--spacing-2) var(--spacing-3);
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  text-decoration: none;
+  text-align: center;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  transition: all var(--transition-fast);
+}
+
+.card__action:hover {
+  background: var(--color-primary);
+  color: var(--color-white);
+  border-color: var(--color-primary);
+  text-decoration: none;
+}
+
+.card__action--primary {
+  background: var(--color-primary);
+  color: var(--color-white);
+  border-color: var(--color-primary);
+}
+
+.card__action--primary:hover {
+  background: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+}
+
+/* ========================================
+   CARTES AVEC LISTES
+   ======================================== */
+.card__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.card__list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-2) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.card__list-item:last-child {
+  border-bottom: none;
+}
+
+.card__list-label {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+}
+
+.card__list-value {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+}
+
+.card__list-value--highlight {
+  color: var(--color-primary);
+}
+
+/* ========================================
+   CARTES AVEC PROGRESS
+   ======================================== */
+.card__progress {
+  margin: var(--spacing-3) 0;
+}
+
+.card__progress-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--color-bg-tertiary);
+  border-radius: var(--border-radius-full);
+  overflow: hidden;
+}
+
+.card__progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-primary-dark));
+  border-radius: var(--border-radius-full);
+  transition: width var(--transition-medium);
+}
+
+.card__progress-fill--success {
+  background: linear-gradient(90deg, var(--color-success), var(--color-success-dark));
+}
+
+.card__progress-fill--warning {
+  background: linear-gradient(90deg, var(--color-warning), var(--color-warning-dark));
+}
+
+.card__progress-fill--danger {
+  background: linear-gradient(90deg, var(--color-danger), var(--color-danger-dark));
+}
+
+.card__progress-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-2);
+  font-size: var(--font-size-sm);
+}
+
+.card__progress-text {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+}
+
+.card__progress-percentage {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+}
+
+/* ========================================
+   CARTES COMPACTES
+   ======================================== */
+.card--compact {
+  font-size: var(--font-size-sm);
+}
+
+.card--compact .card__header,
+.card--compact .card__body,
+.card--compact .card__footer {
+  padding: var(--spacing-3);
+}
+
+.card--compact .card__title {
+  font-size: var(--font-size-base);
+}
+
+/* ======================================== 
+   CARTES HORIZONTALES
+   ======================================== */
+.card--horizontal {
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.card--horizontal .card__image {
+  width: 120px;
+  height: auto;
+  flex-shrink: 0;
+  border-radius: 0;
+}
+
+.card--horizontal .card__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+@media (max-width: 768px) {
+  .card {
+    margin-bottom: var(--spacing-4);
+  }
+  
+  .card__header,
+  .card__body,
+  .card__footer {
+    padding: var(--spacing-3);
+  }
+  
+  .card--player .card__avatar {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .card--team .card__logo {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .card--horizontal {
+    flex-direction: column;
+  }
+  
+  .card--horizontal .card__image {
+    width: 100%;
+    height: 150px;
+  }
+  
+  .card__actions {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .card__header,
+  .card__body,
+  .card__footer {
+    padding: var(--spacing-2);
+  }
+  
+  .card--player .card__header {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--spacing-2);
+  }
+  
+  .card--player .card__avatar {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .card__title {
+    font-size: var(--font-size-base);
+  }
+  
+  .card--stats .card__value {
+    font-size: var(--font-size-xl);
+  }
+}
+
+/* ========================================
+   CARTES AVEC ANIMATIONS
+   ======================================== */
+.card--animated {
+  animation: card-fade-in 0.5s ease-out;
+}
+
+@keyframes card-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card--loading {
+  position: relative;
+  overflow: hidden;
+}
+
+.card--loading::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: card-shimmer 1.5s infinite;
+}
+
+@keyframes card-shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+} 

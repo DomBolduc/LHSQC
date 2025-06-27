@@ -1,0 +1,490 @@
+/* ========================================
+   THÈME SOMBRE - LHSQC
+   ========================================
+   
+   Thème sombre pour le site de hockey
+   Couleurs modernes et reposantes pour les yeux
+   ======================================== */
+
+/* ========================================
+   COULEURS DE BASE
+   ======================================== */
+[data-theme="dark"],
+.theme-dark {
+  /* Couleurs primaires */
+  --color-primary: #3b82f6;
+  --color-primary-light: #1e3a8a;
+  --color-primary-dark: #1d4ed8;
+  
+  /* Couleurs de fond */
+  --color-bg-primary: #0f172a;
+  --color-bg-secondary: #1e293b;
+  --color-bg-tertiary: #334155;
+  --color-bg-overlay: rgba(0, 0, 0, 0.7);
+  
+  /* Couleurs de texte */
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #cbd5e1;
+  --color-text-tertiary: #94a3b8;
+  --color-text-inverse: #0f172a;
+  
+  /* Couleurs de bordure */
+  --color-border: #334155;
+  --color-border-light: #475569;
+  --color-border-dark: #1e293b;
+  
+  /* Couleurs d'état */
+  --color-success: #10b981;
+  --color-success-light: #065f46;
+  --color-success-dark: #34d399;
+  
+  --color-warning: #f59e0b;
+  --color-warning-light: #92400e;
+  --color-warning-dark: #fbbf24;
+  
+  --color-danger: #ef4444;
+  --color-danger-light: #991b1b;
+  --color-danger-dark: #f87171;
+  
+  --color-info: #3b82f6;
+  --color-info-light: #1e40af;
+  --color-info-dark: #60a5fa;
+  
+  /* Couleurs neutres */
+  --color-white: #0f172a;
+  --color-black: #ffffff;
+  --color-gray-50: #0f172a;
+  --color-gray-100: #1e293b;
+  --color-gray-200: #334155;
+  --color-gray-300: #475569;
+  --color-gray-400: #64748b;
+  --color-gray-500: #94a3b8;
+  --color-gray-600: #cbd5e1;
+  --color-gray-700: #e2e8f0;
+  --color-gray-800: #f1f5f9;
+  --color-gray-900: #f8fafc;
+}
+
+/* ========================================
+   OMBRES
+   ======================================== */
+[data-theme="dark"],
+.theme-dark {
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* ========================================
+   EFFETS SPÉCIAUX
+   ======================================== */
+[data-theme="dark"],
+.theme-dark {
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  --gradient-success: linear-gradient(135deg, var(--color-success), var(--color-success-dark));
+  --gradient-warning: linear-gradient(135deg, var(--color-warning), var(--color-warning-dark));
+  --gradient-danger: linear-gradient(135deg, var(--color-danger), var(--color-danger-dark));
+  --gradient-info: linear-gradient(135deg, var(--color-info), var(--color-info-dark));
+  
+  /* Effets de glassmorphism */
+  --glass-bg: rgba(30, 41, 59, 0.8);
+  --glass-border: rgba(51, 65, 85, 0.5);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+  
+  /* Effets de focus */
+  --focus-ring: 0 0 0 3px var(--color-primary-light);
+  --focus-ring-success: 0 0 0 3px var(--color-success-light);
+  --focus-ring-warning: 0 0 0 3px var(--color-warning-light);
+  --focus-ring-danger: 0 0 0 3px var(--color-danger-light);
+  --focus-ring-info: 0 0 0 3px var(--color-info-light);
+}
+
+/* ========================================
+   COULEURS SPÉCIALISÉES HOCKEY
+   ======================================== */
+[data-theme="dark"],
+.theme-dark {
+  /* Couleurs des divisions */
+  --color-division-atlantic: #3b82f6;
+  --color-division-metropolitan: #ef4444;
+  --color-division-central: #10b981;
+  --color-division-pacific: #a855f7;
+  
+  /* Couleurs des positions */
+  --color-position-center: #60a5fa;
+  --color-position-wing: #34d399;
+  --color-position-defense: #fbbf24;
+  --color-position-goalie: #c084fc;
+  
+  /* Couleurs des statuts */
+  --color-status-active: #10b981;
+  --color-status-inactive: #64748b;
+  --color-status-injured: #ef4444;
+  --color-status-suspended: #f59e0b;
+  --color-status-traded: #a855f7;
+  
+  /* Couleurs des événements */
+  --color-event-goal: #10b981;
+  --color-event-assist: #3b82f6;
+  --color-event-penalty: #ef4444;
+  --color-event-powerplay: #f59e0b;
+  --color-event-shorthanded: #a855f7;
+}
+
+/* ========================================
+   VARIABLES DE THÈME
+   ======================================== */
+[data-theme="dark"],
+.theme-dark {
+  /* Nom du thème */
+  --theme-name: "dark";
+  --theme-version: "1.0.0";
+  
+  /* Mode de thème */
+  --theme-mode: "dark";
+  
+  /* Support du thème clair */
+  --theme-supports-light: true;
+  
+  /* Couleur d'accent personnalisable */
+  --theme-accent: var(--color-primary);
+  --theme-accent-light: var(--color-primary-light);
+  --theme-accent-dark: var(--color-primary-dark);
+}
+
+/* ========================================
+   UTILITAIRES DE THÈME
+   ======================================== */
+.theme-dark {
+  /* Classe utilitaire pour forcer le thème sombre */
+  color-scheme: dark;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+}
+
+.theme-dark * {
+  /* S'assurer que tous les éléments utilisent le thème sombre */
+  border-color: var(--color-border);
+}
+
+/* ========================================
+   TRANSITIONS DE THÈME
+   ======================================== */
+.theme-dark * {
+  transition: background-color var(--transition-fast), 
+              border-color var(--transition-fast), 
+              color var(--transition-fast);
+}
+
+/* ========================================
+   OVERRIDES SPÉCIFICS
+   ======================================== */
+.theme-dark .card {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.theme-dark .card:hover {
+  box-shadow: var(--shadow-md);
+  background: var(--color-bg-tertiary);
+}
+
+.theme-dark .table {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+}
+
+.theme-dark .table th {
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.theme-dark .table tbody tr {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.theme-dark .table tbody tr:nth-child(even) {
+  background: var(--color-bg-tertiary);
+}
+
+.theme-dark .table tbody tr:hover {
+  background: var(--color-bg-primary);
+}
+
+.theme-dark .modal__content {
+  background: var(--color-bg-secondary);
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--color-border);
+}
+
+.theme-dark .modal__header {
+  background: var(--color-bg-tertiary);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.theme-dark .modal__footer {
+  background: var(--color-bg-tertiary);
+  border-top: 1px solid var(--color-border);
+}
+
+.theme-dark .form__input {
+  background: var(--color-bg-tertiary);
+  border: 2px solid var(--color-border);
+  color: var(--color-text-primary);
+}
+
+.theme-dark .form__input:focus {
+  border-color: var(--color-primary);
+  box-shadow: var(--focus-ring);
+  background: var(--color-bg-secondary);
+}
+
+.theme-dark .form__input::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.theme-dark .form__select {
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+}
+
+.theme-dark .alert {
+  border: 1px solid transparent;
+}
+
+.theme-dark .alert--success {
+  background: var(--color-success-light);
+  border-color: var(--color-success);
+  color: var(--color-success-dark);
+}
+
+.theme-dark .alert--error {
+  background: var(--color-danger-light);
+  border-color: var(--color-danger);
+  color: var(--color-danger-dark);
+}
+
+.theme-dark .alert--warning {
+  background: var(--color-warning-light);
+  border-color: var(--color-warning);
+  color: var(--color-warning-dark);
+}
+
+.theme-dark .alert--info {
+  background: var(--color-info-light);
+  border-color: var(--color-info);
+  color: var(--color-info-dark);
+}
+
+/* ========================================
+   EFFETS SPÉCIAUX THÈME SOMBRE
+   ======================================== */
+.theme-dark .glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+.theme-dark .frosted {
+  background: rgba(30, 41, 59, 0.8);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(51, 65, 85, 0.3);
+}
+
+.theme-dark .elevated {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.theme-dark .elevated:hover {
+  box-shadow: var(--shadow-xl);
+  transform: translateY(-4px);
+}
+
+.theme-dark .glow {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+.theme-dark .glow:hover {
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+}
+
+/* ========================================
+   COULEURS D'ÉQUIPES (EXEMPLE)
+   ======================================== */
+.theme-dark .team-montreal {
+  --team-primary: #ef4444;
+  --team-secondary: #3b82f6;
+  --team-accent: #f8fafc;
+}
+
+.theme-dark .team-toronto {
+  --team-primary: #3b82f6;
+  --team-secondary: #f8fafc;
+  --team-accent: #ef4444;
+}
+
+.theme-dark .team-boston {
+  --team-primary: #fbbf24;
+  --team-secondary: #0f172a;
+  --team-accent: #f8fafc;
+}
+
+/* ========================================
+   RESPONSIVE THÈME
+   ======================================== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Utiliser les préférences système si disponibles */
+    color-scheme: dark;
+  }
+}
+
+@media (max-width: 768px) {
+  .theme-dark .glass {
+    backdrop-filter: blur(5px);
+  }
+  
+  .theme-dark .frosted {
+    backdrop-filter: blur(10px);
+  }
+}
+
+/* ========================================
+   ACCESSIBILITÉ
+   ======================================== */
+.theme-dark {
+  /* Améliorer la lisibilité */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.theme-dark .high-contrast {
+  /* Mode contraste élevé */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #e2e8f0;
+  --color-bg-primary: #000000;
+  --color-bg-secondary: #1a1a1a;
+  --color-border: #ffffff;
+}
+
+/* ========================================
+   ANIMATIONS THÈME
+   ======================================== */
+.theme-dark .theme-transition {
+  transition: all var(--transition-medium);
+}
+
+.theme-dark .theme-fade-in {
+  animation: theme-fade-in-dark 0.5s ease-out;
+}
+
+@keyframes theme-fade-in-dark {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+    background: var(--color-bg-primary);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    background: var(--color-bg-secondary);
+  }
+}
+
+/* ========================================
+   EFFETS DE LUMIÈRE
+   ======================================== */
+.theme-dark .neon {
+  text-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor;
+}
+
+.theme-dark .neon--primary {
+  color: var(--color-primary);
+  text-shadow: 0 0 5px var(--color-primary), 0 0 10px var(--color-primary), 0 0 15px var(--color-primary);
+}
+
+.theme-dark .neon--success {
+  color: var(--color-success);
+  text-shadow: 0 0 5px var(--color-success), 0 0 10px var(--color-success), 0 0 15px var(--color-success);
+}
+
+.theme-dark .neon--warning {
+  color: var(--color-warning);
+  text-shadow: 0 0 5px var(--color-warning), 0 0 10px var(--color-warning), 0 0 15px var(--color-warning);
+}
+
+.theme-dark .neon--danger {
+  color: var(--color-danger);
+  text-shadow: 0 0 5px var(--color-danger), 0 0 10px var(--color-danger), 0 0 15px var(--color-danger);
+}
+
+/* ========================================
+   EFFETS DE PARTICULES
+   ======================================== */
+.theme-dark .particles {
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-dark .particles::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(245, 158, 11, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ========================================
+   EFFETS DE SCROLL
+   ======================================== */
+.theme-dark .scroll-glow {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) var(--color-bg-tertiary);
+}
+
+.theme-dark .scroll-glow::-webkit-scrollbar {
+  width: 8px;
+}
+
+.theme-dark .scroll-glow::-webkit-scrollbar-track {
+  background: var(--color-bg-tertiary);
+  border-radius: var(--border-radius-full);
+}
+
+.theme-dark .scroll-glow::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: var(--border-radius-full);
+}
+
+.theme-dark .scroll-glow::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-dark);
+}
+
+/* ========================================
+   EFFETS DE FOCUS AMÉLIORÉS
+   ======================================== */
+.theme-dark .focus-glow:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--color-primary), 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+.theme-dark .focus-glow:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+} 

@@ -138,6 +138,18 @@ STHSErrorIndex:
     </header>
 </div> <!-- container-fluid -->
 
+<!-- Bouton moderne -->
+<button class="btn btn--team">Voir l'équipe</button>
+
+<!-- Tableau de classement -->
+<table class="table table--standings">
+  <!-- ... -->
+</table>
+
+<!-- Carte joueur -->
+<div class="card card--player">
+  <!-- ... -->
+</div>
 
 </body>
 
