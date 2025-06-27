@@ -2339,6 +2339,344 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                     <strong>Note:</strong> Salary Cap Overview based on league salary cap of <strong>$<?php echo number_format($SalaryCap); ?></strong>.
                 </div>
             </div>
+            
+            <!-- Tableau des contrats Farm -->
+            <h3 style="margin-top: 40px; margin-bottom: 20px; color: var(--primary-color);">Farm Team Salary Cap Overview</h3>
+            
+            <?php
+            // Récupération des joueurs farm avec leurs contrats
+            $Query = "SELECT MainTable.* FROM (SELECT PlayerInfo.Number, PlayerInfo.Name, PlayerInfo.Team, PlayerInfo.TeamName, PlayerInfo.ProTeamName, PlayerInfo.Age, PlayerInfo.AgeDate, PlayerInfo.Contract, PlayerInfo.Rookie, PlayerInfo.NoTrade, PlayerInfo.CanPlayPro, PlayerInfo.CanPlayFarm, PlayerInfo.ForceWaiver, PlayerInfo.WaiverPossible, PlayerInfo.ExcludeSalaryCap, PlayerInfo.ProSalaryinFarm, PlayerInfo.SalaryAverage, PlayerInfo.Salary1, PlayerInfo.Salary2, PlayerInfo.Salary3, PlayerInfo.Salary4, PlayerInfo.Salary5, PlayerInfo.Salary6, PlayerInfo.Salary7, PlayerInfo.Salary8, PlayerInfo.Salary9, PlayerInfo.Salary10, PlayerInfo.SalaryRemaining, PlayerInfo.SalaryAverageRemaining, PlayerInfo.SalaryCap, PlayerInfo.SalaryCapRemaining, PlayerInfo.Condition, PlayerInfo.Status1, PlayerInfo.URLLink, PlayerInfo.NHLID, PlayerInfo.PProtected, PlayerInfo.PosC, PlayerInfo.PosLW, PlayerInfo.PosRW, PlayerInfo.PosD, 'False' AS PosG, PlayerInfo.Retire as Retire FROM PlayerInfo WHERE Team = " . $Team . " AND Retire = 'False' AND Status1 = 1 UNION ALL SELECT GoalerInfo.Number + 10000, GoalerInfo.Name, GoalerInfo.Team, GoalerInfo.TeamName, GoalerInfo.ProTeamName, GoalerInfo.Age, GoalerInfo.AgeDate, GoalerInfo.Contract, GoalerInfo.Rookie, GoalerInfo.NoTrade, GoalerInfo.CanPlayPro, GoalerInfo.CanPlayFarm, GoalerInfo.ForceWaiver, GoalerInfo.WaiverPossible, GoalerInfo.ExcludeSalaryCap, GoalerInfo.ProSalaryinFarm, GoalerInfo.SalaryAverage, GoalerInfo.Salary1, GoalerInfo.Salary2, GoalerInfo.Salary3, GoalerInfo.Salary4, GoalerInfo.Salary5, GoalerInfo.Salary6, GoalerInfo.Salary7, GoalerInfo.Salary8, GoalerInfo.Salary9, GoalerInfo.Salary10, GoalerInfo.SalaryRemaining, GoalerInfo.SalaryAverageRemaining, GoalerInfo.SalaryCap, GoalerInfo.SalaryCapRemaining, GoalerInfo.Condition, GoalerInfo.Status1, GoalerInfo.URLLink, GoalerInfo.NHLID, GoalerInfo.PProtected, 'False' AS PosC, 'False' AS PosLW, 'False' AS PosRW, 'False' AS PosD, 'True' AS PosG, GoalerInfo.Retire as Retire FROM GoalerInfo WHERE Team = " . $Team . " AND Retire = 'False' AND Status1 = 1) AS MainTable ORDER BY PosG ASC, PosD ASC, Name ASC";
+            $FarmPlayerSalaryCap = $db->query($Query);
+            ?>
+            
+            <!-- Tableau des contrats Farm -->
+            <div class="cap-table-container" style="overflow-x: auto;">
+                <table class="cap-table" style="width: 100%; font-size: 11px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
+                    <thead>
+                        <tr style="background: #f5f5f5; border-bottom: 2px solid #ddd;">
+                            <th style="width: 140px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: left; font-weight: bold;">Player Name</th>
+                            <th style="width: 45px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">POS</th>
+                            <th style="width: 25px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Age</th>
+                            <th style="width: 45px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Birthday</th>
+                            <th style="width: 35px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Terms</th>
+                            <th style="width: 25px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Contract</th>
+                            <th style="width: 25px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Cap %</th>
+                            <?php
+                            echo "<th style=\"width: 75px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;\">Year " . $LeagueYear . "</th>";
+                            echo "<th style=\"width: 75px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;\">Year " . ($LeagueYear + 1) . "</th>";
+                            echo "<th style=\"width: 75px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;\">Year " . ($LeagueYear + 2) . "</th>";
+                            echo "<th style=\"width: 75px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;\">Year " . ($LeagueYear + 3) . "</th>";
+                            echo "<th style=\"width: 75px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;\">Year " . ($LeagueYear + 4) . "</th>";
+                            ?>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        // Section des attaquants farm
+                        echo "<tr style=\"background: #e3f2fd; font-weight: bold;\"><td colspan=\"12\" style=\"padding: 8px 4px; border: 1px solid #ddd;\">Farm Forwards</td></tr>";
+                        
+                        $FoundDFarm = false;
+                        $FoundGFarm = false;
+                        $AverageAgeFarm = 0;
+                        $AverageCap1Farm = 0;
+                        $AverageCap2Farm = 0;
+                        $AverageCap3Farm = 0;
+                        $AverageCap4Farm = 0;
+                        $AverageCap5Farm = 0;
+                        $AverageCountFarm = 0;
+                        $AverageTotalCap1Farm = 0;
+                        $AverageTotalCap2Farm = 0;
+                        $AverageTotalCap3Farm = 0;
+                        $AverageTotalCap4Farm = 0;
+                        $AverageTotalCap5Farm = 0;
+                        $AverageTotalCountFarm = 0;
+                        
+                        if ($FarmPlayerSalaryCap) {
+                            while ($Row = $FarmPlayerSalaryCap->fetchArray()) {
+                                // Séparateur pour les défenseurs farm
+                                if ($Row['PosD'] == "True" && $FoundDFarm == false) {
+                                    if ($AverageCountFarm > 0) {
+                                        echo "<tr style=\"background: #f8f9fa; font-weight: bold;\">";
+                                        echo "<td colspan=\"2\">Average (" . $AverageCountFarm . ")</td>";
+                                        echo "<td style=\"text-align: center;\">" . number_format($AverageAgeFarm / $AverageCountFarm, 2) . "</td>";
+                                        echo "<td colspan=\"3\"></td>";
+                                        if ($SalaryCap > 0) {
+                                            echo "<td style=\"text-align: center;\">" . number_format(($AverageCap1Farm / $SalaryCap) * 100, 2) . "%</td>";
+                                        } else {
+                                            echo "<td style=\"text-align: center;\">N/A</td>";
+                                        }
+                                        echo "<td style=\"text-align: center;\">" . number_format($AverageCap1Farm, 0) . "$</td>";
+                                        echo "<td style=\"text-align: center;\">" . number_format($AverageCap2Farm, 0) . "$</td>";
+                                        echo "<td style=\"text-align: center;\">" . number_format($AverageCap3Farm, 0) . "$</td>";
+                                        echo "<td style=\"text-align: center;\">" . number_format($AverageCap4Farm, 0) . "$</td>";
+                                        echo "<td style=\"text-align: center;\">" . number_format($AverageCap5Farm, 0) . "$</td>";
+                                        echo "</tr>";
+                                    }
+                                    echo "<tr style=\"background: #e3f2fd; font-weight: bold;\"><td colspan=\"12\" style=\"padding: 8px 4px; border: 1px solid #ddd;\">Farm Defensemen</td></tr>";
+                                    $AverageTotalCap1Farm = $AverageTotalCap1Farm + $AverageCap1Farm;
+                                    $AverageTotalCap2Farm = $AverageTotalCap2Farm + $AverageCap2Farm;
+                                    $AverageTotalCap3Farm = $AverageTotalCap3Farm + $AverageCap3Farm;
+                                    $AverageTotalCap4Farm = $AverageTotalCap4Farm + $AverageCap4Farm;
+                                    $AverageTotalCap5Farm = $AverageTotalCap5Farm + $AverageCap5Farm;
+                                    $AverageTotalCountFarm = $AverageTotalCountFarm + $AverageCountFarm;
+                                    $AverageAgeFarm = 0;
+                                    $AverageCap1Farm = 0;
+                                    $AverageCap2Farm = 0;
+                                    $AverageCap3Farm = 0;
+                                    $AverageCap4Farm = 0;
+                                    $AverageCap5Farm = 0;
+                                    $AverageCountFarm = 0;
+                                    $FoundDFarm = true;
+                                }
+                                
+                                // Séparateur pour les gardiens farm
+                                if ($Row['PosG'] == "True" && $FoundGFarm == false) {
+                                    if ($AverageCountFarm > 0) {
+                                        echo "<tr style=\"background: #f8f9fa; font-weight: bold;\">";
+                                        echo "<td colspan=\"2\">Average (" . $AverageCountFarm . ")</td>";
+                                        echo "<td style=\"text-align: center;\">" . number_format($AverageAgeFarm / $AverageCountFarm, 2) . "</td>";
+                                        echo "<td colspan=\"3\"></td>";
+                                        if ($SalaryCap > 0) {
+                                            echo "<td style=\"text-align: center;\">" . number_format(($AverageCap1Farm / $SalaryCap) * 100, 2) . "%</td>";
+                                        } else {
+                                            echo "<td style=\"text-align: center;\">N/A</td>";
+                                        }
+                                        echo "<td style=\"text-align: center;\">" . number_format($AverageCap1Farm, 0) . "$</td>";
+                                        echo "<td style=\"text-align: center;\">" . number_format($AverageCap2Farm, 0) . "$</td>";
+                                        echo "<td style=\"text-align: center;\">" . number_format($AverageCap3Farm, 0) . "$</td>";
+                                        echo "<td style=\"text-align: center;\">" . number_format($AverageCap4Farm, 0) . "$</td>";
+                                        echo "<td style=\"text-align: center;\">" . number_format($AverageCap5Farm, 0) . "$</td>";
+                                        echo "</tr>";
+                                    }
+                                    echo "<tr style=\"background: #e3f2fd; font-weight: bold;\"><td colspan=\"12\" style=\"padding: 8px 4px; border: 1px solid #ddd;\">Farm Goalies</td></tr>";
+                                    $AverageTotalCap1Farm = $AverageTotalCap1Farm + $AverageCap1Farm;
+                                    $AverageTotalCap2Farm = $AverageTotalCap2Farm + $AverageCap2Farm;
+                                    $AverageTotalCap3Farm = $AverageTotalCap3Farm + $AverageCap3Farm;
+                                    $AverageTotalCap4Farm = $AverageTotalCap4Farm + $AverageCap4Farm;
+                                    $AverageTotalCap5Farm = $AverageTotalCap5Farm + $AverageCap5Farm;
+                                    $AverageTotalCountFarm = $AverageTotalCountFarm + $AverageCountFarm;
+                                    $AverageAgeFarm = 0;
+                                    $AverageCap1Farm = 0;
+                                    $AverageCap2Farm = 0;
+                                    $AverageCap3Farm = 0;
+                                    $AverageCap4Farm = 0;
+                                    $AverageCap5Farm = 0;
+                                    $AverageCountFarm = 0;
+                                    $FoundGFarm = true;
+                                }
+                                
+                                $AverageCountFarm = $AverageCountFarm + 1;
+                                
+                                echo "<tr>";
+                                // Nom du joueur avec lien
+                                echo "<td style=\"padding: 6px 4px; border: 1px solid #ddd;\">";
+                                if ($Row['PosG'] == "True") {
+                                    echo "<a href=\"GoalieReport.php?Goalie=" . ($Row['Number'] - 10000) . "\">";
+                                } else {
+                                    echo "<a href=\"PlayerReport.php?Player=" . $Row['Number'] . "\">";
+                                }
+                                echo $Row['Name'] . "</a></td>";
+                                
+                                // Position
+                                $Position = "";
+                                if ($Row['PosC'] == "True") {
+                                    if ($Position == "") {
+                                        $Position = "C";
+                                    } else {
+                                        $Position = $Position . "/C";
+                                    }
+                                }
+                                if ($Row['PosLW'] == "True") {
+                                    if ($Position == "") {
+                                        $Position = "LW";
+                                    } else {
+                                        $Position = $Position . "/LW";
+                                    }
+                                }
+                                if ($Row['PosRW'] == "True") {
+                                    if ($Position == "") {
+                                        $Position = "RW";
+                                    } else {
+                                        $Position = $Position . "/RW";
+                                    }
+                                }
+                                if ($Row['PosD'] == "True") {
+                                    if ($Position == "") {
+                                        $Position = "D";
+                                    } else {
+                                        $Position = $Position . "/D";
+                                    }
+                                }
+                                if ($Row['PosG'] == "True") {
+                                    if ($Position == "") {
+                                        $Position = "G";
+                                    }
+                                }
+                                echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . $Position . "</td>";
+                                
+                                // Âge
+                                echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . $Row['Age'] . "</td>";
+                                $AverageAgeFarm = $AverageAgeFarm + $Row['Age'];
+                                
+                                // Date de naissance
+                                echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . $Row['AgeDate'] . "</td>";
+                                
+                                // Termes spéciaux
+                                echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">";
+                                if ($Row['ForceWaiver'] == "True") {
+                                    echo "FV ";
+                                }
+                                if ($Row['NoTrade'] == "True") {
+                                    echo "NT ";
+                                }
+                                if ($Row['Condition'] < '95') {
+                                    echo "IN ";
+                                }
+                                if ($Row['CanPlayPro'] == "True" && $Row['CanPlayFarm'] == "True") {
+                                    echo "TW ";
+                                }
+                                echo "</td>";
+                                
+                                // Durée du contrat
+                                echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . $Row['Contract'] . "</td>";
+                                
+                                // Pourcentage du salary cap
+                                if ($SalaryCap > 0) {
+                                    echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format(($Row['SalaryCap'] / $SalaryCap) * 100, 2) . "%</td>";
+                                } else {
+                                    echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">N/A</td>";
+                                }
+                                
+                                // Salaires par année
+                                for ($i = 1; $i <= 5; $i = $i + 1) {
+                                    if ($Row['Contract'] >= $i) {
+                                        if ($i == 1) {
+                                            echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format($Row['SalaryCap'], 0) . "$</td>";
+                                            $AverageCap1Farm = $AverageCap1Farm + $Row['SalaryCap'];
+                                        } else {
+                                            if ($LeagueFinance['SalaryCapOption'] >= 1 && $LeagueFinance['SalaryCapOption'] <= 3) {
+                                                if ($i == 2) {
+                                                    echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format($Row['Salary2'], 0) . "$</td>";
+                                                    $AverageCap2Farm = $AverageCap2Farm + $Row['Salary2'];
+                                                }
+                                                if ($i == 3) {
+                                                    echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format($Row['Salary3'], 0) . "$</td>";
+                                                    $AverageCap3Farm = $AverageCap3Farm + $Row['Salary3'];
+                                                }
+                                                if ($i == 4) {
+                                                    echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format($Row['Salary4'], 0) . "$</td>";
+                                                    $AverageCap4Farm = $AverageCap4Farm + $Row['Salary4'];
+                                                }
+                                                if ($i == 5) {
+                                                    echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format($Row['Salary5'], 0) . "$</td>";
+                                                    $AverageCap5Farm = $AverageCap5Farm + $Row['Salary5'];
+                                                }
+                                            } elseif ($LeagueFinance['SalaryCapOption'] >= 4 && $LeagueFinance['SalaryCapOption'] <= 6) {
+                                                echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format($Row['SalaryCap'], 0) . "$</td>";
+                                                if ($i == 2) {
+                                                    $AverageCap2Farm = $AverageCap2Farm + $Row['SalaryAverage'];
+                                                }
+                                                if ($i == 3) {
+                                                    $AverageCap3Farm = $AverageCap3Farm + $Row['SalaryAverage'];
+                                                }
+                                                if ($i == 4) {
+                                                    $AverageCap4Farm = $AverageCap4Farm + $Row['SalaryAverage'];
+                                                }
+                                                if ($i == 5) {
+                                                    $AverageCap5Farm = $AverageCap5Farm + $Row['SalaryAverage'];
+                                                }
+                                            } else {
+                                                echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\"></td>";
+                                            }
+                                        }
+                                    } elseif ($Row['Contract'] + 1 == $i) {
+                                        if ($LeagueOutputOption['FreeAgentUseDateInsteadofDay'] == "True") {
+                                            $age = date_diff(date_create($Row['AgeDate']), date_create($LeagueOutputOption['FreeAgentRealDate']))->y;
+                                        } else {
+                                            $age = $Row['Age'];
+                                        }
+                                        if ($age + $i > $LeagueGeneral['UFAAge']) {
+                                            echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd; background-color: #ffebee; color: #c62828;\">UFA [Age: " . ($age + $i - 1) . "]</td>";
+                                        } elseif ($age + $i > $LeagueGeneral['RFAAge']) {
+                                            echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd; background-color: #fff3e0; color: #ef6c00;\">RFA [Age: " . ($age + $i - 1) . "]</td>";
+                                        }
+                                    } else {
+                                        echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\"></td>";
+                                    }
+                                }
+                                echo "</tr>";
+                            }
+                        }
+                        
+                        // Moyenne de la dernière section farm
+                        if ($AverageCountFarm > 0) {
+                            echo "<tr style=\"background: #f8f9fa; font-weight: bold;\">";
+                            echo "<td colspan=\"2\">Average (" . $AverageCountFarm . ")</td>";
+                            echo "<td style=\"text-align: center;\">" . number_format($AverageAgeFarm / $AverageCountFarm, 2) . "</td>";
+                            echo "<td colspan=\"3\"></td>";
+                            if ($SalaryCap > 0) {
+                                echo "<td style=\"text-align: center;\">" . number_format(($AverageCap1Farm / $SalaryCap) * 100, 2) . "%</td>";
+                            } else {
+                                echo "<td style=\"text-align: center;\">N/A</td>";
+                            }
+                            echo "<td style=\"text-align: center;\">" . number_format($AverageCap1Farm, 0) . "$</td>";
+                            echo "<td style=\"text-align: center;\">" . number_format($AverageCap2Farm, 0) . "$</td>";
+                            echo "<td style=\"text-align: center;\">" . number_format($AverageCap3Farm, 0) . "$</td>";
+                            echo "<td style=\"text-align: center;\">" . number_format($AverageCap4Farm, 0) . "$</td>";
+                            echo "<td style=\"text-align: center;\">" . number_format($AverageCap5Farm, 0) . "$</td>";
+                            echo "</tr>";
+                            $AverageTotalCap1Farm = $AverageTotalCap1Farm + $AverageCap1Farm;
+                            $AverageTotalCap2Farm = $AverageTotalCap2Farm + $AverageCap2Farm;
+                            $AverageTotalCap3Farm = $AverageTotalCap3Farm + $AverageCap3Farm;
+                            $AverageTotalCap4Farm = $AverageTotalCap4Farm + $AverageCap4Farm;
+                            $AverageTotalCap5Farm = $AverageTotalCap5Farm + $AverageCap5Farm;
+                            $AverageTotalCountFarm = $AverageTotalCountFarm + $AverageCountFarm;
+                        }
+                        
+                        // Total farm
+                        if ($AverageTotalCountFarm > 0) {
+                            echo "<tr style=\"background: #f0f8ff; font-weight: bold;\">";
+                            echo "<td colspan=\"6\" style=\"padding: 6px 4px; border: 1px solid #ddd;\">Farm Total (" . $AverageTotalCountFarm . ")</td>";
+                            if ($SalaryCap > 0) {
+                                if ($AverageTotalCap1Farm / $SalaryCap > 1) {
+                                    echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd; background-color: #f44336; color: #fff;\">" . number_format(($AverageTotalCap1Farm / $SalaryCap) * 100, 2) . "%</td>";
+                                } elseif ($AverageTotalCap1Farm / $SalaryCap > 0.95) {
+                                    echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd; background-color: #FFA500;\">" . number_format(($AverageTotalCap1Farm / $SalaryCap) * 100, 2) . "%</td>";
+                                } elseif ($AverageTotalCap1Farm / $SalaryCap > 0.90) {
+                                    echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd; background-color: #FFFF00;\">" . number_format(($AverageTotalCap1Farm / $SalaryCap) * 100, 2) . "%</td>";
+                                } else {
+                                    echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd; background-color: #00ff00;\">" . number_format(($AverageTotalCap1Farm / $SalaryCap) * 100, 2) . "%</td>";
+                                }
+                            } else {
+                                echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">N/A</td>";
+                            }
+                            echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format($AverageTotalCap1Farm, 0) . "$</td>";
+                            echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format($AverageTotalCap2Farm, 0) . "$</td>";
+                            echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format($AverageTotalCap3Farm, 0) . "$</td>";
+                            echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format($AverageTotalCap4Farm, 0) . "$</td>";
+                            echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format($AverageTotalCap5Farm, 0) . "$</td>";
+                            echo "</tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Légende -->
+            <div class="cap-legend" style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px; border: 1px solid #e9ecef;">
+                <h4 style="margin-bottom: 15px; color: var(--primary-color);">Terms Legend</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-size: 12px;">
+                    <div><strong>FV:</strong> Force Waiver</div>
+                    <div><strong>NT:</strong> No Trade Clause</div>
+                    <div><strong>IN:</strong> Injured</div>
+                    <div><strong>TW:</strong> Two-Way Contract</div>
+                    <div><strong>RFA:</strong> Restricted Free Agent</div>
+                    <div><strong>UFA:</strong> Unrestricted Free Agent</div>
+                </div>
+                <div style="margin-top: 15px; font-size: 12px; color: #666;">
+                    <strong>Note:</strong> Salary Cap Overview based on league salary cap of <strong>$<?php echo number_format($SalaryCap); ?></strong>.
+                </div>
+            </div>
         </div>
 
         <!-- Onglet Prospects -->
