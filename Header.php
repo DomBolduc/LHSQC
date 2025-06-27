@@ -22,6 +22,20 @@ require_once("helperTool.php");
     <meta http-equiv="expires" content="0" />
     <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
 
+    <!-- ========================================
+         NOUVEAUX CSS - PHASE 2 MIGRATION
+         ======================================== -->
+    <!-- 1. Variables CSS (TOUJOURS EN PREMIER) -->
+    <link href="css/variables.css" rel="stylesheet" type="text/css" />
+    
+    <!-- 2. Base CSS -->
+    <link href="css/base/reset.css" rel="stylesheet" type="text/css" />
+    <link href="css/base/typography.css" rel="stylesheet" type="text/css" />
+    <link href="css/base/layout.css" rel="stylesheet" type="text/css" />
+    
+    <!-- ========================================
+         CSS EXISTANTS (COMPATIBILITÉ)
+         ======================================== -->
     <link href="STHSMain.css" rel="stylesheet" type="text/css" />
 
     <!-- Font Awesome -->

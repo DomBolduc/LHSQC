@@ -89,7 +89,7 @@ STHSErrorIndex:
 </head>
 <body>
 
-<div class="container-fluid p-0 m-0">   
+<div class="container-fluid p-0 m-0">
     <header>
         <?php include "components/GamesScroller.php"; 
         
