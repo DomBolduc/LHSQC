@@ -182,23 +182,7 @@ foreach ($PlayerPositions as $position => $value) {
 
 
 <div class="container">
-<div class="container playerReportActionShots">
-
-<?php if ($PlayerInfo['NHLID']): ?>
-    <img src="https://assets.nhle.com/mugs/actionshots/1296x729/<?php echo $PlayerInfo['NHLID']; ?>.jpg" 
-         alt="<?php echo $PlayerName; ?>" 
-         class="actionShots"
-         >
-
-    <p>No action shots available.</p>
-<?php endif; ?>
-
-</div>
-
-
-    <div class=" position-relative playerInfoOverlay">
-    <!-- Player Name Dropdown -->
-    <div class="container  playerReportMainContainer p-0 ">
+    <div class="container playerReportMainContainer p-0">
     <!-- Player Name Dropdown -->
     <div class="row m-0">
         <div class="col-12 text-center">
@@ -988,39 +972,6 @@ foreach ($PlayerPositions as $position => $value) {
 <?php include "Footer.php";?>
 
 <style>
-.actionShots {
-    margin-right: 0;
-}
-
-  /* Action Shots Container */
-.playerReportActionShots {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    color: white;
-    padding: 0;
-    border-radius: 10px;
-    width: 100%;
-    height: 100%;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Player Info Overlay */
-.playerInfoOverlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.9);
-    padding-top: 50px;
-    border-radius: 10px;
-    color: white;
-    z-index: 10;
-    width: 100%;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.7);
-}
-
 .table thead th {
     text-align: center;
 }
