@@ -125,8 +125,8 @@
    CARTES DE JEU
    ======================================== */
 .GameDayTable {
-  min-width: 160px;
-  max-width: 160px;
+  min-width: 150px;
+  max-width: 150px;
   background: var(--color-white);
   border-radius: var(--border-radius-md);
   box-shadow: var(--shadow-sm);
@@ -164,35 +164,40 @@
 
 .pastGame tr:nth-child(2) td,
 .pastGame tr:nth-child(3) td {
-  padding: 0.25rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  padding: 0.15rem 0.25rem !important;
   border-bottom: 1px solid var(--color-border-light);
 }
 
-.pastGame tr:nth-child(2) td:first-child,
-.pastGame tr:nth-child(3) td:first-child {
-  flex: 1;
+/* Support pour le nouveau layout compact avec flexbox inline */
+.pastGame tr:nth-child(2) td > div,
+.pastGame tr:nth-child(3) td > div {
+  display: flex;
+  align-items: center;
+}
+
+.pastGame tr:nth-child(2) td img,
+.pastGame tr:nth-child(3) td img {
+  width: 20px !important;
+  height: 20px !important;
+  object-fit: contain;
+  margin-right: 0.375rem;
+  flex-shrink: 0;
+}
+
+.pastGame tr:nth-child(2) td span,
+.pastGame tr:nth-child(3) td span {
   font-weight: 600;
   color: var(--color-text-primary);
   font-size: 0.75rem;
 }
 
-.pastGame tr:nth-child(2) td:last-child,
-.pastGame tr:nth-child(3) td:last-child {
+/* Styles pour les scores dans le layout compact */
+.pastGame tr:nth-child(2) td > span:last-child,
+.pastGame tr:nth-child(3) td > span:last-child {
   font-size: 1rem;
   font-weight: 700;
   color: var(--color-primary);
-  min-width: 25px;
-  text-align: center;
-}
-
-.pastGame img {
-  width: 16px;
-  height: 16px;
-  object-fit: contain;
-  margin-right: 0.25rem;
+  margin-left: auto;
 }
 
 /* ========================================
@@ -223,57 +228,72 @@
    JEUX À VENIR
    ======================================== */
 .upcomingGame {
-  background: var(--color-white);
-  padding: 0.4rem;
+  background: linear-gradient(135deg, #fffbf0, #fff8e1);
 }
 
-.upcomingGame .row:first-child {
-  background: var(--color-info);
+.upcomingGame table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.upcomingGame tr:first-child td {
+  background: #f57c00;
   color: var(--color-white);
   font-size: 0.65rem;
   font-weight: 600;
   text-align: center;
   padding: 0.2rem;
-  margin: -0.4rem -0.4rem 0.25rem -0.4rem;
   letter-spacing: 0.3px;
 }
 
-.upcomingGame .row:nth-child(2),
-.upcomingGame .row:nth-child(3) {
+.upcomingGame tr:nth-child(2) td,
+.upcomingGame tr:nth-child(3) td {
+  padding: 0.15rem 0.25rem !important;
+  border-bottom: 1px solid #ffcc80;
+}
+
+/* Support pour le layout compact des matchs à venir */
+.upcomingGame tr:nth-child(2) td > div,
+.upcomingGame tr:nth-child(3) td > div {
   display: flex;
   align-items: center;
-  margin-bottom: 0.2rem;
-  padding: 0.2rem 0;
-  border-bottom: 1px solid var(--color-border-light);
 }
 
-.upcomingGame .row:nth-child(2):last-child,
-.upcomingGame .row:nth-child(3):last-child {
-  border-bottom: none;
-}
-
-.upcomingGame .col:first-child {
-  flex: 0 0 auto;
-  margin-right: 0.25rem;
-}
-
-.upcomingGame .col:nth-child(2) {
-  flex: 1;
-  font-weight: 600;
-  color: var(--color-text-primary);
-  font-size: 0.75rem;
-}
-
-.upcomingGame .col:last-child {
-  flex: 0 0 auto;
-  color: var(--color-text-tertiary);
-  font-size: 0.75rem;
-}
-
-.upcomingGame img {
-  width: 16px;
-  height: 16px;
+.upcomingGame tr:nth-child(2) td img,
+.upcomingGame tr:nth-child(3) td img {
+  width: 20px !important;
+  height: 20px !important;
   object-fit: contain;
+  margin-right: 0.375rem;
+  flex-shrink: 0;
+}
+
+.upcomingGame tr:nth-child(2) td span,
+.upcomingGame tr:nth-child(3) td span {
+  font-weight: 600;
+  color: #e65100;
+  font-size: 0.75rem;
+}
+
+/* Styles pour les indicateurs vs/@ dans les matchs à venir */
+.upcomingGame tr:nth-child(2) td > span:last-child,
+.upcomingGame tr:nth-child(3) td > span:last-child {
+  font-weight: normal;
+  color: #ff8f00;
+  margin-left: auto;
+}
+
+/* Styles pour le lien "To Be Played" des matchs à venir */
+.upcomingBoxScore {
+  padding: 0.25rem !important;
+  text-align: center;
+  background: #fff3e0;
+  color: #e65100;
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border-top: 1px solid #ffcc80;
 }
 
 /* ========================================
@@ -303,8 +323,8 @@
   }
   
   .GameDayTable {
-    min-width: 160px;
-    max-width: 160px;
+    min-width: 150px;
+    max-width: 150px;
   }
   
   .scrollBtn {
@@ -327,31 +347,25 @@
     font-size: var(--font-size-base);
   }
   
-  .upcomingGame {
-    padding: 0.45rem;
-  }
-  
-  .upcomingGame .row:first-child {
-    margin: -0.45rem -0.45rem 0.3rem -0.45rem;
-    padding: 0.225rem;
-  }
+  /* Styles responsive pour les matchs à venir - maintenant cohérents avec les matchs passés */
 }
 
 @media (max-width: 480px) {
   .GameDayTable {
-    min-width: 140px;
-    max-width: 140px;
+    min-width: 130px;
+    max-width: 130px;
   }
-  
+
   .pastGame img,
   .upcomingGame img {
-    width: 18px;
-    height: 18px;
+    width: 18px !important;
+    height: 18px !important;
   }
   
-  .pastGame tr:nth-child(2) td:first-child,
-  .pastGame tr:nth-child(3) td:first-child,
-  .upcomingGame .col:nth-child(2) {
+  .pastGame tr:nth-child(2) td span,
+  .pastGame tr:nth-child(3) td span,
+  .upcomingGame tr:nth-child(2) td span,
+  .upcomingGame tr:nth-child(3) td span {
     font-size: var(--font-size-xs);
   }
 }

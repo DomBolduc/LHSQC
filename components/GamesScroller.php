@@ -43,23 +43,29 @@ if (isset($db) && $db) {
                           
                                 <td class="GameDayTable pastGame">
                                     <table class="" style="margin-left:4px;">
-                                        <tr style="font-size:10px;color:#383732;font-weight:bold;line-height:15px; padding:5px;"> <td><?php echo "Day" . $row['Day'] . " - #" . $row['GameNumber']; ?></td></tr>
-                                        <tr style="line-height:20px;color:#2a2a2a;font-weight:bold;margin:0px;font-size:14px;">
-                                            <td>
-                                                <span><img src= <?php echo "images/" . $row['VisitorTeamThemeID'] . ".png"; ?> alt="" style="width:24px;vertical-align:middle;padding-right:4px;padding-bottom:0px;"></span>
-                                                <?php echo $row['VisitorTeamAbbre']; ?> 
-                                            </td>
-                                            <td style="font-size:20px;text-align:center;font-weight:bold;"><?php echo $row['VisitorScore']; ?></td>
+                                        <tr style="font-size:10px;color:#383732;font-weight:bold;line-height:15px; padding:5px;">
+                                            <td colspan="2"><?php echo "Day" . $row['Day'] . " - #" . $row['GameNumber']; ?></td>
                                         </tr>
-                                        <tr style="line-height:20px;color:#2a2a2a;font-weight:bold;margin:0px;font-size:14px;">
-                                            <td>
-                                                <span><img src= <?php echo "images/" . $row['HomeTeamThemeID']    . ".png"; ?> alt="" style="width:24px;vertical-align:middle;padding-right:4px;"></span>
-                                                <?php echo $row['HomeTeamAbbre']; ?>
+                                        <tr style="line-height:18px;color:#2a2a2a;font-weight:bold;margin:0px;font-size:12px;">
+                                            <td style="display:flex;align-items:center;justify-content:space-between;padding:2px 4px;">
+                                                <div style="display:flex;align-items:center;">
+                                                    <img src="<?php echo "images/" . $row['VisitorTeamThemeID'] . ".png"; ?>" alt="" style="width:20px;height:20px;margin-right:6px;">
+                                                    <span><?php echo $row['VisitorTeamAbbre']; ?></span>
+                                                </div>
+                                                <span style="font-size:16px;font-weight:bold;color:#2a2a2a;"><?php echo $row['VisitorScore']; ?></span>
                                             </td>
-                                            <td style="font-size:20px;text-align:center;font-weight:bold;"> <?php echo $row['HomeScore']; ?></td>
+                                        </tr>
+                                        <tr style="line-height:18px;color:#2a2a2a;font-weight:bold;margin:0px;font-size:12px;">
+                                            <td style="display:flex;align-items:center;justify-content:space-between;padding:2px 4px;">
+                                                <div style="display:flex;align-items:center;">
+                                                    <img src="<?php echo "images/" . $row['HomeTeamThemeID'] . ".png"; ?>" alt="" style="width:20px;height:20px;margin-right:6px;">
+                                                    <span><?php echo $row['HomeTeamAbbre']; ?></span>
+                                                </div>
+                                                <span style="font-size:16px;font-weight:bold;color:#2a2a2a;"><?php echo $row['HomeScore']; ?></span>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td  class="scrollerBoxScore">
+                                            <td class="scrollerBoxScore">
                                                 <?php echo "<a href=\"" . $row['Link'] ."\">" . $IndexLang['BoxScore'] .  "</a>"; ?>
                                             </td>
                                         </tr>
@@ -82,29 +88,35 @@ if (isset($db) && $db) {
                             //console.log(JSON.stringify(phpVar, null, 2)); 
                             </script>
 
-                                <td class=" GameDayTable upcomingGame">
-                                    
-                                    <div class="" style="margin-left:4px;" style="line-height:20px;color:#2a2a2a;font-weight:bold;font-size:14px;">
-
-                                        <div class="row" style="font-size:10px;color:#383732;font-weight:bold;line-height:15px; padding-left:20px;"> <?php echo "Day" . $row['Day'] . " - #" . $row['GameNumber']; ?> </div>
-                                        
-                                        <div class="row" >
-                                            <div class="col">
-                                            <img src= <?php echo $ImagesCDNPath . "/images/" . $row['VisitorTeamThemeID'] . ".png"; ?> alt="" style="width:24px;"> </div>
-                                            <div class="col"> <?php echo $row['VisitorTeamAbbre'];  ?> </div>
-                                            <div class="col"> - </div>
-                                        </div>
-                                        
-                                        <div class="row"> 
-                                            <div class="col"> <img src= <?php echo $ImagesCDNPath . "/images/" . $row['HomeTeamThemeID'] . ".png"; ?> alt="" style="width:24px;"> </div>
-                                            <div class="col"> <?php echo $row['HomeTeamAbbre']; ?> </div>
-                                            <div class="col"> - </div>
-                                        </div>
-
-                                    </div>
-
-
-                                    
+                                <td class="GameDayTable upcomingGame">
+                                    <table class="" style="margin-left:4px;">
+                                        <tr style="font-size:10px;color:#383732;font-weight:bold;line-height:15px; padding:5px;">
+                                            <td colspan="2"><?php echo "Day" . $row['Day'] . " - #" . $row['GameNumber']; ?></td>
+                                        </tr>
+                                        <tr style="line-height:18px;color:#2a2a2a;font-weight:bold;margin:0px;font-size:12px;">
+                                            <td style="display:flex;align-items:center;justify-content:space-between;padding:2px 4px;">
+                                                <div style="display:flex;align-items:center;">
+                                                    <img src="<?php echo $ImagesCDNPath . "/images/" . $row['VisitorTeamThemeID'] . ".png"; ?>" alt="" style="width:20px;height:20px;margin-right:6px;">
+                                                    <span><?php echo $row['VisitorTeamAbbre']; ?></span>
+                                                </div>
+                                                <span style="font-size:14px;font-weight:normal;color:#666;">vs</span>
+                                            </td>
+                                        </tr>
+                                        <tr style="line-height:18px;color:#2a2a2a;font-weight:bold;margin:0px;font-size:12px;">
+                                            <td style="display:flex;align-items:center;justify-content:space-between;padding:2px 4px;">
+                                                <div style="display:flex;align-items:center;">
+                                                    <img src="<?php echo $ImagesCDNPath . "/images/" . $row['HomeTeamThemeID'] . ".png"; ?>" alt="" style="width:20px;height:20px;margin-right:6px;">
+                                                    <span><?php echo $row['HomeTeamAbbre']; ?></span>
+                                                </div>
+                                                <span style="font-size:12px;font-weight:normal;color:#888;">@</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="scrollerBoxScore upcomingBoxScore">
+                                                To Be Played
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </td>
                                 <?php  
                                 $i = $i+1;
