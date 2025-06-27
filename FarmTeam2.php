@@ -219,8 +219,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
         <li><a href="#tabmain2">Stats</a></li>
         <li><a href="#tabmain3">Schedule</a></li>
         <li><a href="#tabmain4">Lines</a></li>
-        <li><a href="#tabmain5">Depth</a></li>
-        <li><a href="#tabmain6">Capology</a></li>
+        <li><a href="#tabmain5">Capology</a></li>
     </ul>
 
     <div class="cardbook">
@@ -1036,14 +1035,8 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
             </style>
         </div>
 
-        <!-- Onglet Depth -->
-        <div class="tabmain" id="tabmain5">
-            <h3>Farm Team Depth Chart</h3>
-            <p>Organigramme de profondeur de l'équipe farm...</p>
-        </div>
-
         <!-- Onglet Capology -->
-        <div class="tabmain" id="tabmain6">
+        <div class="tabmain" id="tabmain5">
             <h3>Farm Team Salary Cap Overview</h3>
             <p>Informations sur le salary cap de l'équipe farm...</p>
         </div>
