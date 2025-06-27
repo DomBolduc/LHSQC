@@ -2337,9 +2337,9 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                 </div>
                 <div style="margin-top: 15px; font-size: 12px; color: #666;">
                     <strong>Note:</strong> Salary Cap Overview based on league salary cap of <strong>$<?php echo number_format($SalaryCap); ?></strong>.
-                </div>
             </div>
-            
+        </div>
+
             <!-- Tableau des contrats Farm -->
             <h3 style="margin-top: 40px; margin-bottom: 20px; color: var(--primary-color);">Farm Team Salary Cap Overview</h3>
             
@@ -2352,7 +2352,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
             <!-- Tableau des contrats Farm -->
             <div class="cap-table-container" style="overflow-x: auto;">
                 <table class="cap-table" style="width: 100%; font-size: 11px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
-                    <thead>
+                <thead>
                         <tr style="background: #f5f5f5; border-bottom: 2px solid #ddd;">
                             <th style="width: 140px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: left; font-weight: bold;">Player Name</th>
                             <th style="width: 45px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">POS</th>
@@ -2368,10 +2368,10 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                             echo "<th style=\"width: 75px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;\">Year " . ($LeagueYear + 3) . "</th>";
                             echo "<th style=\"width: 75px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;\">Year " . ($LeagueYear + 4) . "</th>";
                             ?>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
                         // Section des attaquants farm
                         echo "<tr style=\"background: #e3f2fd; font-weight: bold;\"><td colspan=\"12\" style=\"padding: 8px 4px; border: 1px solid #ddd;\">Farm Forwards</td></tr>";
                         
@@ -2466,8 +2466,8 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                                 }
                                 
                                 $AverageCountFarm = $AverageCountFarm + 1;
-                                
-                                echo "<tr>";
+                            
+                            echo "<tr>";
                                 // Nom du joueur avec lien
                                 echo "<td style=\"padding: 6px 4px; border: 1px solid #ddd;\">";
                                 if ($Row['PosG'] == "True") {
@@ -2604,9 +2604,9 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                                         echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\"></td>";
                                     }
                                 }
-                                echo "</tr>";
-                            }
+                            echo "</tr>";
                         }
+                    }
                         
                         // Moyenne de la dernière section farm
                         if ($AverageCountFarm > 0) {
@@ -2657,9 +2657,9 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                             echo "<td style=\"text-align: center; padding: 6px 4px; border: 1px solid #ddd;\">" . number_format($AverageTotalCap5Farm, 0) . "$</td>";
                             echo "</tr>";
                         }
-                        ?>
-                    </tbody>
-                </table>
+                    ?>
+                </tbody>
+            </table>
             </div>
             
             <!-- Légende -->
@@ -2691,9 +2691,9 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
             $ProspectsCount = $db->querySingle($Query, true);
             ?>
             
-            <table class="tablesorter STHSPHPTeam_ProspectsTable">
+            <table class="tablesorter STHSPHPTeam_ProspectsTable" style="width: 100%; font-size: 11px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
                 <thead>
-                    <tr>
+                    <tr style="background: #f5f5f5; border-bottom: 2px solid #ddd;">
                         <?php include "ProspectsSub.php"; ?>
                     </tr>
                 </thead>
