@@ -278,7 +278,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
         <li><a href="#tabmain4">Lines</a></li>
         <li><a href="#tabmain5">Depth</a></li>
         <li><a href="#tabmain6">Capology</a></li>
-        
+        <li><a href="#tabmain7">Prospects</a></li>
     </ul>
 
     <div class="cardbook">
@@ -2680,50 +2680,35 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
         </div>
 
         <!-- Onglet Prospects -->
-        <div class="tabmain" id="tabmain9">
-            <h3>Top Prospects</h3>
-            <table class="STHSPHPPlayerStat_Table">
+        <div class="tabmain" id="tabmain7">
+            <h3>Team Prospects</h3>
+            
+            <?php
+            // Récupération des prospects de l'équipe (même workflow que ProTeam.php)
+            $Query = "SELECT Prospects.*, TeamProInfo.Name As TeamName, TeamProInfo.TeamThemeID FROM Prospects LEFT JOIN TeamProInfo ON Prospects.TeamNumber = TeamProInfo.Number WHERE TeamNumber = " . $Team . " ORDER By Name";
+            $Prospects = $db->query($Query);
+            $Query = "SELECT Count(Prospects.Name) As CountOfName FROM Prospects WHERE TeamNumber = " . $Team;
+            $ProspectsCount = $db->querySingle($Query, true);
+            ?>
+            
+            <div class="tablesorter_ColumnSelectorWrapper">
+                <input id="tablesorter_colSelect8P" type="checkbox" class="hidden">
+                <label class="tablesorter_ColumnSelectorButton" for="tablesorter_colSelect8P">Show or Hide Column</label>
+                <div id="tablesorter_ColumnSelector8P" class="tablesorter_ColumnSelector"></div>
+                <?php include "FilterTip.php"; ?>
+            </div>
+
+            <table class="tablesorter STHSPHPTeam_ProspectsTable">
                 <thead>
                     <tr>
-                        <th>Prospect</th>
-                        <th>POS</th>
-                        <th>Age</th>
-                        <th>Height</th>
-                        <th>Weight</th>
-                        <th>GP</th>
-                        <th>G</th>
-                        <th>A</th>
-                        <th>P</th>
-                        <th>+/-</th>
+                        <?php include "ProspectsSub.php"; ?>
                     </tr>
                 </thead>
-                <tbody>
-                    <?php
-                    if ($Prospects) {
-                        while ($Prospect = $Prospects->fetchArray()) {
-                            $Position = "";
-                            if ($Prospect['PosC'] == "True") $Position .= "C";
-                            if ($Prospect['PosLW'] == "True") $Position .= ($Position ? "/" : "") . "LW";
-                            if ($Prospect['PosRW'] == "True") $Position .= ($Position ? "/" : "") . "RW";
-                            if ($Prospect['PosD'] == "True") $Position .= ($Position ? "/" : "") . "D";
-                            
-                            echo "<tr>";
-                            echo "<td><a href='Prospects.php?Prospect=" . $Prospect['Number'] . "' class='player-link'>" . $Prospect['Name'] . "</a></td>";
-                            echo "<td>" . $Position . "</td>";
-                            echo "<td>" . ($Prospect['Age'] ?? '-') . "</td>";
-                            echo "<td>" . ($Prospect['Height'] ?? '-') . "</td>";
-                            echo "<td>" . ($Prospect['Weight'] ?? '-') . "</td>";
-                            echo "<td>" . $Prospect['GP'] . "</td>";
-                            echo "<td>" . $Prospect['G'] . "</td>";
-                            echo "<td>" . $Prospect['A'] . "</td>";
-                            echo "<td>" . $Prospect['P'] . "</td>";
-                            echo "<td>" . ($Prospect['PlusMinus'] >= 0 ? "+" : "") . $Prospect['PlusMinus'] . "</td>";
-                            echo "</tr>";
-                        }
-                    }
-                    ?>
-                </tbody>
             </table>
+            
+            <div style="margin-top: 15px; font-size: 12px; color: #666;">
+                <strong>Total Prospects:</strong> <?php echo $ProspectsCount['CountOfName']; ?>
+            </div>
         </div>
 
         <!-- Onglet Transactions -->
