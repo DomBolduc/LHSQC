@@ -109,128 +109,134 @@ echo "<title>" . $Title . "</title>";
 <?php
 
 Function PrintGames($Row, $ScheduleLang, $LeagueOutputOption, $ImagesCDNPath) {
+    echo "<div class=\"game-card\">";
 
-    echo "<div class=\"STHSTodayGame_GameOverall\"><table class=\"table mb-2 STHSTodayGame_GameTitle\"><tr><td class=\"p-1 STHSTodayGame_GameNumber\"><h4>";
+    // En-tête de la carte
+    echo "<div class=\"game-header\">";
+    echo "<div class=\"game-status\">" . $ScheduleLang['Games'];
 
-    // Affichage simplifié sans GameNumber
-    echo $ScheduleLang['Games'];
-
-    // Ajout des notes (si présentes)
-    If ($Row['Note'] != "") {
+    // Afficher la note seulement si elle ne contient pas d'informations sur la prolongation
+    if ($Row['Note'] != "" &&
+        !stripos($Row['Note'], 'overtime') &&
+        !stripos($Row['Note'], 'shootout') &&
+        !stripos($Row['Note'], 'OT') &&
+        !stripos($Row['Note'], 'SO')) {
         echo " - " . $Row['Note'];
     }
+    echo "</div>";
 
-    // Gestion du lien Box Score
-    If ($LeagueOutputOption['OutputGameHTMLToSQLiteDatabase'] == "True") {
-        echo "</h4></td><td class=\"p-1STHSTodayGame_Boxscore\"><h4>";
-        If (substr($Row['GameNumber'], 0, 3) == "Pro") {
-            echo "<a href=\"Boxscore.php?Game=" . substr($Row['GameNumber'], 3) . "\">" . $ScheduleLang['BoxScore'] . "</a>";
-        } elseif (substr($Row['GameNumber'], 0, 4) == "Farm") {
-            echo "<a href=\"Boxscore.php?Game=" . substr($Row['GameNumber'], 4) . "&Farm\">" . $ScheduleLang['BoxScore'] . "</a>";
-        }
-        echo "</h4></td>";
-    } else {
-        echo "</h></td><td class=\"p-1 STHSTodayGame_Boxscore\"><h4><a href=\"" . $Row['Link'] . "\">" . $ScheduleLang['BoxScore'] . "</a></h4></td>";
+    // Déterminer le statut du match (Final, Final (OT), Final (SO))
+    $gameStatus = "Final";
+    if (isset($Row['Shootout']) && $Row['Shootout'] == 'True') {
+        $gameStatus .= " (SO)";
+    } elseif (isset($Row['Overtime']) && $Row['Overtime'] == 'True') {
+        $gameStatus .= " (OT)";
     }
 
-    echo "</tr></table>";
+    echo "<div class=\"game-time\">" . $gameStatus . "</div>";
+    echo "</div>";
 
-    // Affichage des équipes et scores
-    echo "<table class=\"table-borderless mb-2 STHSTodayGame_GameData\"><tr>";
+    // Contenu principal
+    echo "<div class=\"game-content\">";
+    echo "<div class=\"teams-container\">";
 
     // Équipe visiteuse
-    echo "<td class=\"p-1 STHSTodayGame_TeamName\"><h4>";
-    If ($Row['VisitorTeamThemeID'] > 0) {
-        echo "<img src=\"" . $ImagesCDNPath . "/images/" . $Row['VisitorTeamThemeID'] . ".png\" alt=\"\" class=\"STHSPHPTodayGameTeamImage\" />";
+    echo "<div class=\"team-row\">";
+    echo "<div class=\"team-info\">";
+    if ($Row['VisitorTeamThemeID'] > 0) {
+        echo "<img src=\"" . $ImagesCDNPath . "/images/" . $Row['VisitorTeamThemeID'] . ".png\" alt=\"\" class=\"team-logo\" />";
     }
-    echo $Row['VisitorTeam'] . "</h4></td>";
+    echo "<div>";
+    echo "<div class=\"team-name\">" . $Row['VisitorTeam'] . "</div>";
+    echo "</div>";
+    echo "</div>";
 
-    echo "<td class=\" p-1 STHSTodayGame_TeamScore\"><h4>";
-    If ($Row['VisitorTeamScore'] > $Row['HomeTeamScore']) {
-        echo "<span style=\"color:red;font-weight:bold;\">" . $Row['VisitorTeamScore'] . "</span>";
-    } else {
-        echo $Row['VisitorTeamScore'];
-    }
-    // echo "</h3></td></tr><tr>";
-
-    // echo "<td colspan=\"2\" class=\"STHSTodayGame_TeamNote\">" . $Row['VisitorTeamGoal'] . "<br /><br />" . $Row['VisitorTeamGoaler'] . "<br /></td>";
-
-     echo "</tr><tr>";
+    $visitorScoreClass = ($Row['VisitorTeamScore'] > $Row['HomeTeamScore']) ? "team-score winner" : "team-score";
+    echo "<div class=\"$visitorScoreClass\">" . $Row['VisitorTeamScore'] . "</div>";
+    echo "</div>";
 
     // Équipe à domicile
-    echo "<td class=\"p-1 STHSTodayGame_TeamName\"><h4>";
-    If ($Row['HomeTeamThemeID'] > 0) {
-        echo "<img src=\"" . $ImagesCDNPath . "/images/" . $Row['HomeTeamThemeID'] . ".png\" alt=\"\" class=\"STHSPHPTodayGameTeamImage\" />";
+    echo "<div class=\"team-row\">";
+    echo "<div class=\"team-info\">";
+    if ($Row['HomeTeamThemeID'] > 0) {
+        echo "<img src=\"" . $ImagesCDNPath . "/images/" . $Row['HomeTeamThemeID'] . ".png\" alt=\"\" class=\"team-logo\" />";
     }
-    echo $Row['HomeTeam'] . "</h4></td>";
+    echo "<div>";
+    echo "<div class=\"team-name\">" . $Row['HomeTeam'] . "</div>";
+    echo "</div>";
+    echo "</div>";
 
-    echo "<td class=\" p-1 STHSTodayGame_TeamScore\"><h4>";
-    If ($Row['HomeTeamScore'] > $Row['VisitorTeamScore']) {
-        echo "<span style=\"color:red;font-weight:bold;\">" . $Row['HomeTeamScore'] . "</span>";
+    $homeScoreClass = ($Row['HomeTeamScore'] > $Row['VisitorTeamScore']) ? "team-score winner" : "team-score";
+    echo "<div class=\"$homeScoreClass\">" . $Row['HomeTeamScore'] . "</div>";
+    echo "</div>";
+
+    echo "</div>"; // fin teams-container
+
+    // Section 3 étoiles
+    if (!empty($Row['Star1']) || !empty($Row['Star2']) || !empty($Row['Star3'])) {
+        echo "<div class=\"stars-section\">";
+        echo "<div class=\"stars-title\">3 Stars</div>";
+
+        if (!empty($Row['Star1'])) {
+            echo "<div class=\"star-item\">";
+            echo "<div class=\"star-icons\">";
+            echo "<img src=\"" . $ImagesCDNPath . "/images/Star.png\" alt=\"Star\" class=\"star-icon\" />";
+            echo "</div>";
+            echo "<div class=\"star-player\">" . $Row['Star1'] . "</div>";
+            echo "</div>";
+        }
+
+        if (!empty($Row['Star2'])) {
+            echo "<div class=\"star-item\">";
+            echo "<div class=\"star-icons\">";
+            echo "<img src=\"" . $ImagesCDNPath . "/images/Star.png\" alt=\"Star\" class=\"star-icon\" />";
+            echo "<img src=\"" . $ImagesCDNPath . "/images/Star.png\" alt=\"Star\" class=\"star-icon\" />";
+            echo "</div>";
+            echo "<div class=\"star-player\">" . $Row['Star2'] . "</div>";
+            echo "</div>";
+        }
+
+        if (!empty($Row['Star3'])) {
+            echo "<div class=\"star-item\">";
+            echo "<div class=\"star-icons\">";
+            echo "<img src=\"" . $ImagesCDNPath . "/images/Star.png\" alt=\"Star\" class=\"star-icon\" />";
+            echo "<img src=\"" . $ImagesCDNPath . "/images/Star.png\" alt=\"Star\" class=\"star-icon\" />";
+            echo "<img src=\"" . $ImagesCDNPath . "/images/Star.png\" alt=\"Star\" class=\"star-icon\" />";
+            echo "</div>";
+            echo "<div class=\"star-player\">" . $Row['Star3'] . "</div>";
+            echo "</div>";
+        }
+
+        echo "</div>";
+    }
+
+    echo "</div>"; // fin game-content
+
+    // Actions de la carte (lien BoxScore)
+    echo "<div class=\"game-actions\">";
+    if ($LeagueOutputOption['OutputGameHTMLToSQLiteDatabase'] == "True") {
+        if (substr($Row['GameNumber'], 0, 3) == "Pro") {
+            echo "<a href=\"Boxscore.php?Game=" . substr($Row['GameNumber'], 3) . "\" class=\"boxscore-link\">" . $ScheduleLang['BoxScore'] . "</a>";
+        } elseif (substr($Row['GameNumber'], 0, 4) == "Farm") {
+            echo "<a href=\"Boxscore.php?Game=" . substr($Row['GameNumber'], 4) . "&Farm\" class=\"boxscore-link\">" . $ScheduleLang['BoxScore'] . "</a>";
+        }
     } else {
-        echo $Row['HomeTeamScore'];
+        echo "<a href=\"" . $Row['Link'] . "\" class=\"boxscore-link\">" . $ScheduleLang['BoxScore'] . "</a>";
     }
-    // echo "</h3></td></tr><tr>";
+    echo "</div>";
 
-    // echo "<td colspan=\"2\" class=\"STHSTodayGame_TeamNote\">" . $Row['HomeTeamGoal'] . "<br /><br />" . $Row['HomeTeamGoaler'] . "<br /></td>";
-
-    echo "</tr><tr>";
-
-    // Affichage des 3 étoiles
-	echo "<td colspan=\"2\" class=\"p-1 STHSTodayGame_3Star\"><br /><table class=\"table-borderless p-1\" style=\"width:300px;\">";
-
-	// Pour la première étoile
-	echo "<tr><td style=\"text-align:right;width:100px;\">
-		<img src=\"" . $ImagesCDNPath . "/images/Star.png\" alt=\"Star1\" style=\"width:20px;vertical-align:middle;\" />
-	  </td><td style=\"text-align:left;\">" . $Row['Star1'] . "</td></tr>";
-	
-	// Pour la deuxième étoile, deux images
-	echo "<tr><td style=\"text-align:right;width:100px;\">
-		<img src=\"" . $ImagesCDNPath . "/images/Star.png\" alt=\"Star2\" style=\"width:20px;vertical-align:middle;\" />
-		<img src=\"" . $ImagesCDNPath . "/images/Star.png\" alt=\"Star2\" style=\"width:20px;vertical-align:middle;\" />
-	  </td><td style=\"text-align:left;\">" . $Row['Star2'] . "</td></tr>";
-	
-	// Pour la troisième étoile, trois images
-	echo "<tr><td style=\"text-align:right;width:100px;\">
-		<img src=\"" . $ImagesCDNPath . "/images/Star.png\" alt=\"Star3\" style=\"width:20px;vertical-align:middle;\" />
-		<img src=\"" . $ImagesCDNPath . "/images/Star.png\" alt=\"Star3\" style=\"width:20px;vertical-align:middle;\" />
-		<img src=\"" . $ImagesCDNPath . "/images/Star.png\" alt=\"Star3\" style=\"width:20px;vertical-align:middle;\" />
-	  </td><td style=\"text-align:left;\">" . $Row['Star3'] . "</td></tr>";
-	
-	echo "</td></tr></table></div>\n";
-	echo "</td></tr></table></div>\n";
-}	
+    echo "</div>"; // fin game-card
+}
 
 
 ?>
 
 </div>
-<style>
 
-.TodayGameDiv {
 
-	-webkit-column-count: 3;
-
-	-moz-column-count: 3;
-
-	 column-count: 3;
-
-	-webkit-column-width: 400px;
-
-	-moz-column-width: 400px;
-
-	column-width: 400px;
-
-	width:100%;
-
-	margin:auto;
-		
-
- } 
-
-</style>
-
-</head><body>
+</head>
+<body>
+<link rel="stylesheet" href="css/components/today-games.css">
 <?php include "components/GamesScroller.php"; ?>
 <?php include "Menu.php";?>
 
@@ -242,62 +248,54 @@ Function PrintGames($Row, $ScheduleLang, $LeagueOutputOption, $ImagesCDNPath) {
 
 
 
-<div class="container";>
+<div class="today-games-container">
 
-<table class="table p-0 m-0 STHSTableFullW">
-    <tr>
-        <td>
-            <h1><?php echo "SCORES"; ?></h1>
-        </td>
-        <td class=" p-1 STHSHeaderDate">
-            <?php 
+    <div class="today-games-header">
+        <h1 class="today-games-title">SCORES</h1>
+        <div class="today-games-subtitle">
+            <?php
             if (isset($LeagueGeneralMenu)) {
                 echo $ScheduleLang['LastUpdate'] . $LeagueGeneralMenu['DatabaseCreationDate'];
             }
             ?>
-        </td>
-    </tr>
-</table>
+        </div>
+    </div>
 
-<div class="TodayGameDiv">
+    <div class="games-grid">
+        <?php
+        $LoopCount = (integer)0;
+        $BooFound = (boolean)False;
 
-<?php
+        if (empty($TodayGame) == false) {
+            while ($Row = $TodayGame->fetchArray()) {
+                $LoopCount += 1;
 
-$LoopCount = (integer)0;
+                If ($Row['Type'] == "Far" AND $BooFound == False) {
+                    echo "</div>";
+                    echo "<div class=\"section-divider\">";
+                    echo "<h2 class=\"section-title\">Farm Games</h2>";
+                    echo "</div>";
+                    echo "<div class=\"games-grid\">";
+                    $BooFound = True;
+                }
 
-$BooFound = (boolean)False;
+                PrintGames($Row, $ScheduleLang, $LeagueOutputOption, $ImagesCDNPath);
+            }
+        }
 
-if (empty($TodayGame) == false){while ($Row = $TodayGame ->fetchArray()) {
+        if ($LoopCount == 0) {
+            echo "<div class=\"no-games-message\">";
+            echo "<h3>" . $ScheduleLang['NoGameToday'] . "</h3>";
+            echo "</div>";
+        }
+        ?>
+    </div>
 
-	$LoopCount +=1;
+    <div class="upcoming-games-section">
+        <h2 class="section-title"><?php echo $ScheduleLang['NextGames'];?></h2>
 
-	If ($Row['Type'] == "Far" AND $BooFound == False){
-
-		echo "</div><br /><hr /><br /><div class=\"TodayGameDiv\">";
-
-		$BooFound = True;
-
-	}
-
-	PrintGames($Row, $ScheduleLang,$LeagueOutputOption,$ImagesCDNPath);
-
-}}
-
-If ($LoopCount == 0){echo "<h3 class=\"STHSCenter\">" . $ScheduleLang['NoGameToday'] . "</h3>";}
-
-?>
-
-</div>
-
-<br />
-
-
-
-<h1><?php echo $ScheduleLang['NextGames'];?></h1>
-
-
-
-<table class="table  tablesorter STHSPHPSchedule_ScheduleTable"><thead><tr>
+        <div class="upcoming-games-table">
+            <table class="table table-modern"><thead><tr>
 
 <th title="Day" class="STHSW45"><?php echo $ScheduleLang['Day'];?></th>
 
@@ -366,9 +364,9 @@ if (empty($Schedule) == false){while ($row = $Schedule ->fetchArray()) {
 }}
 
 ?>
-
-</tbody></table>
-
+            </tbody></table>
+        </div>
+    </div>
 </div>
 
 
