@@ -33,6 +33,9 @@ require_once("helperTool.php");
     <link href="css/base/typography.css" rel="stylesheet" type="text/css" />
     <link href="css/base/layout.css" rel="stylesheet" type="text/css" />
     
+    <!-- 2.5. Uniformisation typographique -->
+    <link href="css/base/typography-unified.css" rel="stylesheet" type="text/css" />
+    
     <!-- 3. Composants CSS -->
     <link href="css/components/tables.css" rel="stylesheet" type="text/css" />
     <link href="css/components/buttons.css" rel="stylesheet" type="text/css" />
@@ -43,6 +46,10 @@ require_once("helperTool.php");
     <link href="css/components/modals.css" rel="stylesheet" type="text/css" />
     <link href="css/components/forms.css" rel="stylesheet" type="text/css" />
     <link href="css/components/alerts.css" rel="stylesheet" type="text/css" />
+    
+    <!-- 5. Utilitaires CSS -->
+    <link href="css/utilities/utilities.css" rel="stylesheet" type="text/css" />
+    <link href="css/utilities/hockey-utilities.css" rel="stylesheet" type="text/css" />
     
     <!-- ========================================
          THÈMES CSS - PHASE 5
