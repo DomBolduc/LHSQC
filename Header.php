@@ -47,6 +47,9 @@ require_once("helperTool.php");
     <link href="css/components/forms.css" rel="stylesheet" type="text/css" />
     <link href="css/components/alerts.css" rel="stylesheet" type="text/css" />
     
+    <!-- 4.5. Composants spécialisés -->
+    <link href="css/components/games-scroller.css" rel="stylesheet" type="text/css" />
+    
     <!-- 5. Utilitaires CSS -->
     <link href="css/utilities/utilities.css" rel="stylesheet" type="text/css" />
     <link href="css/utilities/hockey-utilities.css" rel="stylesheet" type="text/css" />

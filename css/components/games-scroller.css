@@ -1,0 +1,448 @@
+/* ========================================
+   GAMES SCROLLER - LHSQC
+   ========================================
+   
+   Design moderne inspiré du site MLB
+   Scroller horizontal élégant pour les matchs
+   ======================================== */
+
+/* ========================================
+   CONTAINER PRINCIPAL
+   ======================================== */
+.gamesScroller {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  background: var(--color-bg-primary);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  margin: 0.5rem 0;
+}
+
+/* ========================================
+   BOUTONS DE SCROLL
+   ======================================== */
+.scrollButtons {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0.25rem;
+}
+
+.scrollDivTop,
+.scrollDivBot {
+  pointer-events: auto;
+}
+
+.scrollBtn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  opacity: 0.8;
+}
+
+.scrollBtn:hover {
+  background: var(--color-white);
+  box-shadow: var(--shadow-lg);
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.scrollBtn:active {
+  transform: scale(0.95);
+}
+
+.scrollBtn img {
+  width: 14px;
+  height: 14px;
+  filter: brightness(0) saturate(100%) invert(0.3);
+}
+
+.scrollBtnLeft img {
+  transform: rotate(180deg);
+}
+
+/* ========================================
+   CONTAINER DE SCROLL
+   ======================================== */
+.scroll-container {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+  padding: 0.25rem 0;
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none; /* Chrome/Safari/Opera */
+}
+
+.scroll-container.active {
+  cursor: grabbing;
+  cursor: -webkit-grabbing;
+}
+
+/* ========================================
+   TABLEAU PRINCIPAL
+   ======================================== */
+.gamesScroller .table {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0 0.75rem;
+  margin: 0;
+  border: none;
+  background: transparent;
+}
+
+.gamesScroller .table td {
+  border: none;
+  padding: 0;
+  background: transparent;
+  flex-shrink: 0;
+}
+
+/* ========================================
+   CARTES DE JEU
+   ======================================== */
+.GameDayTable {
+  min-width: 160px;
+  max-width: 160px;
+  background: var(--color-white);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+  transition: all var(--transition-fast);
+  overflow: hidden;
+}
+
+.GameDayTable:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+/* ========================================
+   JEUX PASSÉS (AVEC SCORES)
+   ======================================== */
+.pastGame {
+  background: linear-gradient(135deg, var(--color-bg-primary), var(--color-bg-secondary));
+}
+
+.pastGame table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.pastGame tr:first-child td {
+  background: var(--color-primary);
+  color: var(--color-white);
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 0.2rem;
+  letter-spacing: 0.3px;
+}
+
+.pastGame tr:nth-child(2) td,
+.pastGame tr:nth-child(3) td {
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.pastGame tr:nth-child(2) td:first-child,
+.pastGame tr:nth-child(3) td:first-child {
+  flex: 1;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  font-size: 0.75rem;
+}
+
+.pastGame tr:nth-child(2) td:last-child,
+.pastGame tr:nth-child(3) td:last-child {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  min-width: 25px;
+  text-align: center;
+}
+
+.pastGame img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  margin-right: 0.25rem;
+}
+
+/* ========================================
+   LIEN BOXSCORE
+   ======================================== */
+.scrollerBoxScore {
+  padding: 0.25rem !important;
+  text-align: center;
+  background: var(--color-bg-tertiary);
+}
+
+.scrollerBoxScore a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  transition: color var(--transition-fast);
+}
+
+.scrollerBoxScore a:hover {
+  color: var(--color-primary-dark);
+  text-decoration: underline;
+}
+
+/* ========================================
+   JEUX À VENIR
+   ======================================== */
+.upcomingGame {
+  background: var(--color-white);
+  padding: 0.4rem;
+}
+
+.upcomingGame .row:first-child {
+  background: var(--color-info);
+  color: var(--color-white);
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 0.2rem;
+  margin: -0.4rem -0.4rem 0.25rem -0.4rem;
+  letter-spacing: 0.3px;
+}
+
+.upcomingGame .row:nth-child(2),
+.upcomingGame .row:nth-child(3) {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.2rem;
+  padding: 0.2rem 0;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.upcomingGame .row:nth-child(2):last-child,
+.upcomingGame .row:nth-child(3):last-child {
+  border-bottom: none;
+}
+
+.upcomingGame .col:first-child {
+  flex: 0 0 auto;
+  margin-right: 0.25rem;
+}
+
+.upcomingGame .col:nth-child(2) {
+  flex: 1;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  font-size: 0.75rem;
+}
+
+.upcomingGame .col:last-child {
+  flex: 0 0 auto;
+  color: var(--color-text-tertiary);
+  font-size: 0.75rem;
+}
+
+.upcomingGame img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+/* ========================================
+   ÉTAT VACANT
+   ======================================== */
+.STHSTodayGame_GameOverall {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.noscore {
+  text-align: center;
+  font-size: 0.75rem;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 768px) {
+  .gamesScroller {
+    margin: 0.5rem 0;
+  }
+  
+  .GameDayTable {
+    min-width: 160px;
+    max-width: 160px;
+  }
+  
+  .scrollBtn {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .scrollBtn img {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .pastGame tr:nth-child(2) td,
+  .pastGame tr:nth-child(3) td {
+    padding: 0.3rem;
+  }
+  
+  .pastGame tr:nth-child(2) td:last-child,
+  .pastGame tr:nth-child(3) td:last-child {
+    font-size: var(--font-size-base);
+  }
+  
+  .upcomingGame {
+    padding: 0.45rem;
+  }
+  
+  .upcomingGame .row:first-child {
+    margin: -0.45rem -0.45rem 0.3rem -0.45rem;
+    padding: 0.225rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .GameDayTable {
+    min-width: 140px;
+    max-width: 140px;
+  }
+  
+  .pastGame img,
+  .upcomingGame img {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .pastGame tr:nth-child(2) td:first-child,
+  .pastGame tr:nth-child(3) td:first-child,
+  .upcomingGame .col:nth-child(2) {
+    font-size: var(--font-size-xs);
+  }
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.GameDayTable {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* ========================================
+   EFFETS SPÉCIAUX
+   ======================================== */
+.gamesScroller::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-border), transparent);
+}
+
+.gamesScroller::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-border), transparent);
+}
+
+/* ========================================
+   ACCESSIBILITÉ
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-container {
+    scroll-behavior: auto;
+  }
+  
+  .GameDayTable {
+    animation: none;
+  }
+  
+  .GameDayTable:hover {
+    transform: none;
+  }
+  
+  .scrollBtn:hover {
+    transform: none;
+  }
+}
+
+/* ========================================
+   MODE SOMBRE
+   ======================================== */
+[data-theme="dark"] .GameDayTable {
+  background: var(--color-bg-secondary);
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .pastGame {
+  background: linear-gradient(135deg, var(--color-bg-secondary), var(--color-bg-tertiary));
+}
+
+[data-theme="dark"] .scrollBtn {
+  background: rgba(30, 41, 59, 0.95);
+  color: var(--color-text-primary);
+}
+
+[data-theme="dark"] .scrollBtn img {
+  filter: brightness(0) saturate(100%) invert(0.8);
+}
+
+[data-theme="dark"] .scrollerBoxScore {
+  background: var(--color-bg-tertiary);
+}
+
+[data-theme="dark"] .STHSTodayGame_GameOverall {
+  background: var(--color-bg-tertiary);
+} 

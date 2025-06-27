@@ -134,28 +134,75 @@ if (isset($db) && $db) {
 
    
 <script>
-    const SCROLL_SPD = 2  // Adjust the multiplier for faster/slower scrolling
-
+    const SCROLL_SPD = 2;  // Vitesse de scroll
+    const SCROLL_AMOUNT = 220; // Distance de scroll par clic
 
     var boxscore = document.getElementById('boxscore');
     var startX, scrollLeft, isDown = false;
 
-    // Button click functionality
+    // Fonction pour afficher/masquer les boutons selon la position
+    function updateScrollButtons() {
+        const leftBtn = document.getElementById('left-button');
+        const rightBtn = document.getElementById('right-button');
+        
+        if (boxscore.scrollLeft <= 0) {
+            leftBtn.style.opacity = '0.3';
+            leftBtn.style.pointerEvents = 'none';
+        } else {
+            leftBtn.style.opacity = '0.8';
+            leftBtn.style.pointerEvents = 'auto';
+        }
+        
+        if (boxscore.scrollLeft >= boxscore.scrollWidth - boxscore.clientWidth - 10) {
+            rightBtn.style.opacity = '0.3';
+            rightBtn.style.pointerEvents = 'none';
+        } else {
+            rightBtn.style.opacity = '0.8';
+            rightBtn.style.pointerEvents = 'auto';
+        }
+    }
+
+    // Button click functionality avec animation fluide
     $('#right-button').click(function(event) {
         event.preventDefault();
-        $('#boxscore').animate({ scrollLeft: '+=145px' }, 'fast');
+        const currentScroll = boxscore.scrollLeft;
+        const targetScroll = currentScroll + SCROLL_AMOUNT;
+        
+        $('html, body').animate({ scrollLeft: targetScroll }, {
+            duration: 300,
+            easing: 'easeOutCubic',
+            step: function() {
+                boxscore.scrollLeft = targetScroll;
+            },
+            complete: function() {
+                updateScrollButtons();
+            }
+        });
     });
 
     $('#left-button').click(function(event) {
         event.preventDefault();
-        $('#boxscore').animate({ scrollLeft: '-=145px' }, 'fast');
+        const currentScroll = boxscore.scrollLeft;
+        const targetScroll = Math.max(0, currentScroll - SCROLL_AMOUNT);
+        
+        $('html, body').animate({ scrollLeft: targetScroll }, {
+            duration: 300,
+            easing: 'easeOutCubic',
+            step: function() {
+                boxscore.scrollLeft = targetScroll;
+            },
+            complete: function() {
+                updateScrollButtons();
+            }
+        });
     });
 
-    // Touch event functionality
+    // Touch event functionality améliorée
     boxscore.addEventListener('touchstart', function(e) {
         startX = e.touches[0].pageX - boxscore.offsetLeft;
         scrollLeft = boxscore.scrollLeft;
-       
+        isDown = true;
+        boxscore.classList.add('active');
     });
 
     boxscore.addEventListener('touchmove', function(e) {
@@ -167,25 +214,32 @@ if (isset($db) && $db) {
     });
 
     boxscore.addEventListener('touchend', function() {
-       
+        isDown = false;
+        boxscore.classList.remove('active');
+        updateScrollButtons();
     });
 
-    // Mouse grab functionality
+    // Mouse grab functionality améliorée
     boxscore.addEventListener('mousedown', function(e) {
         isDown = true;
         startX = e.pageX - boxscore.offsetLeft;
         scrollLeft = boxscore.scrollLeft;
         boxscore.classList.add('active');
+        boxscore.style.cursor = 'grabbing';
     });
 
     boxscore.addEventListener('mouseleave', function() {
         isDown = false;
         boxscore.classList.remove('active');
+        boxscore.style.cursor = 'grab';
+        updateScrollButtons();
     });
 
     boxscore.addEventListener('mouseup', function() {
         isDown = false;
         boxscore.classList.remove('active');
+        boxscore.style.cursor = 'grab';
+        updateScrollButtons();
     });
 
     boxscore.addEventListener('mousemove', function(e) {
@@ -195,5 +249,57 @@ if (isset($db) && $db) {
         var walk = (x - startX) * SCROLL_SPD; 
         boxscore.scrollLeft = scrollLeft - walk;
     });
-   
+
+    // Écouter les changements de scroll pour mettre à jour les boutons
+    boxscore.addEventListener('scroll', function() {
+        updateScrollButtons();
+    });
+
+    // Initialiser l'état des boutons au chargement
+    document.addEventListener('DOMContentLoaded', function() {
+        updateScrollButtons();
+        
+        // Ajouter un effet de hover sur les cartes
+        const gameCards = document.querySelectorAll('.GameDayTable');
+        gameCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-4px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    });
+
+    // Support du clavier pour l'accessibilité
+    document.addEventListener('keydown', function(e) {
+        if (e.target.closest('#boxscore')) {
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                $('#left-button').click();
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                $('#right-button').click();
+            }
+        }
+    });
+
+    // Fonction pour scroll automatique vers un jeu spécifique
+    function scrollToGame(gameIndex) {
+        const gameCard = document.querySelectorAll('.GameDayTable')[gameIndex];
+        if (gameCard) {
+            const containerRect = boxscore.getBoundingClientRect();
+            const cardRect = gameCard.getBoundingClientRect();
+            const scrollLeft = gameCard.offsetLeft - (containerRect.width / 2) + (cardRect.width / 2);
+            
+            boxscore.scrollTo({
+                left: scrollLeft,
+                behavior: 'smooth'
+            });
+        }
+    }
+
+    // Exposer la fonction globalement pour utilisation externe
+    window.scrollToGame = scrollToGame;
 </script>
