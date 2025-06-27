@@ -2691,13 +2691,6 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
             $ProspectsCount = $db->querySingle($Query, true);
             ?>
             
-            <div class="tablesorter_ColumnSelectorWrapper">
-                <input id="tablesorter_colSelect8P" type="checkbox" class="hidden">
-                <label class="tablesorter_ColumnSelectorButton" for="tablesorter_colSelect8P">Show or Hide Column</label>
-                <div id="tablesorter_ColumnSelector8P" class="tablesorter_ColumnSelector"></div>
-                <?php include "FilterTip.php"; ?>
-            </div>
-
             <table class="tablesorter STHSPHPTeam_ProspectsTable">
                 <thead>
                     <tr>
