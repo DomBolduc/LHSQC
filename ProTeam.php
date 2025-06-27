@@ -49,6 +49,10 @@ try {
             // Récupération des informations de l'équipe
             $Query = "SELECT * FROM TeamProInfo WHERE Number = " . $Team;
             $TeamInfo = $db->querySingle($Query, true);
+
+            // Récupération des informations de l'équipe farm correspondante
+            $Query = "SELECT Name, TeamThemeID FROM TeamFarmInfo WHERE Number = " . $Team;
+            $FarmTeamInfo = $db->querySingle($Query, true);
             
             // Récupération des statistiques de l'équipe
             $Query = "SELECT * FROM TeamProStat WHERE Number = " . $Team;
@@ -261,10 +265,23 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                 OTL: <?php echo ($TeamStat['OTL'] ?? 0) + ($TeamStat['SOL'] ?? 0); ?> | 
                 P: <?php echo $TeamStat['Points'] ?? 0; ?>
                 
-                <!-- Bouton Farm Team -->
-                <a href="FarmTeam.php?Team=<?php echo $Team; ?>" class="farm-team-btn" style="display: inline-block; margin-left: 15px; padding: 6px 12px; background: #28a745; color: white; text-decoration: none; border-radius: 4px; font-size: 12px; font-weight: bold; transition: background-color 0.3s;">
-                    <i class="fa fa-users" style="margin-right: 5px;"></i>Farm Team
-                </a>
+                <!-- Logo Farm Team cliquable -->
+                <?php if ($FarmTeamInfo && $FarmTeamInfo['TeamThemeID'] > 0): ?>
+                    <a href="FarmTeam.php?Team=<?php echo $Team; ?>" class="farm-team-logo-btn"
+                       style="display: inline-block; margin-left: 15px; padding: 4px; background: #f8f9fa; border: 2px solid #28a745; border-radius: 50%; transition: all 0.3s ease; text-decoration: none; vertical-align: middle;"
+                       title="<?php echo htmlspecialchars($FarmTeamInfo['Name']); ?> - Farm Team"
+                       onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 4px 8px rgba(40, 167, 69, 0.3)';"
+                       onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+                        <img src="<?php echo $ImagesCDNPath; ?>/images/<?php echo $FarmTeamInfo['TeamThemeID']; ?>.png"
+                             alt="<?php echo htmlspecialchars($FarmTeamInfo['Name']); ?>"
+                             style="width: 32px; height: 32px; object-fit: contain; display: block; vertical-align: middle;">
+                    </a>
+                <?php else: ?>
+                    <!-- Fallback si pas de logo farm -->
+                    <a href="FarmTeam.php?Team=<?php echo $Team; ?>" class="farm-team-btn" style="display: inline-block; margin-left: 15px; padding: 6px 12px; background: #28a745; color: white; text-decoration: none; border-radius: 4px; font-size: 12px; font-weight: bold; transition: background-color 0.3s; vertical-align: middle;">
+                        <i class="fa fa-users" style="margin-right: 5px;"></i>Farm Team
+                    </a>
+                <?php endif; ?>
             </td>
         </tr>
     </table>

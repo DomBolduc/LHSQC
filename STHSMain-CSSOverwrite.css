@@ -130,7 +130,7 @@ body {
 .nav-mobile ul li {
 	display: block;
 	background: #2C2F36;
-	line-height: 50px;
+	line-height: 44px;
 	border-top: 1px solid #E7BF3A;
 }
 
@@ -267,9 +267,9 @@ nav {
 
 	width: 100%;
 
-	padding: 10px 0 0 0;
+	padding: 6px 0 0 0;
 
-	background-color: rgb(0, 0, 0);  /*background-color: black;*/
+	background-color: rgb(0, 0, 0);  /* Noir original */
 
 	display: flex;
 
@@ -279,7 +279,7 @@ nav {
 
 	z-index: 9999;
 
-	border-bottom: 5px solid rgba(0,0,0,0.1);
+	border-bottom: 3px solid rgba(0,0,0,0.1);
 
 }
 
@@ -296,19 +296,19 @@ nav ul {
 
 nav ul li {
 
-	display: inline;    
+	display: inline;
 
-	padding: 25px 0; 
+	padding: 18px 0;
 
-	margin-left: 40px;
+	margin-left: 30px;
 
-	line-height: 30px;
+	line-height: 24px;
 
     vertical-align: middle;
 
 	color: #ffffff;
 
-	
+
 
 }
 
@@ -322,17 +322,17 @@ nav ul>li {
 
 
 
-nav ul>li>ul { 
+nav ul>li>ul {
 
-	width: 220px; 
+	width: 220px;
 
-	position: absolute; 
+	position: absolute;
 
 	left: -9999px;
 
-	z-index: 9999; 
+	z-index: 9999;
 
-	top: 45px; 
+	top: 36px;
 
 }
 
@@ -354,19 +354,19 @@ nav ul li:hover ul {
 
 
 
-nav ul li ul li { 
+nav ul li ul li {
 
-	padding: 5px 20px; 
+	padding: 4px 16px;
 
 	margin-left: 0px;
 
-	display: block; 
+	display: block;
 
-	background-color: rgba(0,0,0,0.8); 
+	background-color: rgba(0,0,0,0.8);
 
-	text-align: left;  
+	text-align: left;
 
-	border-bottom: 2px solid rgba(0,0,0,0.1);
+	border-bottom: 1px solid rgba(0,0,0,0.1);
 
     color: #ffffff;
 
@@ -374,9 +374,10 @@ nav ul li ul li {
 
 
 
-nav ul li ul li:hover { 
+nav ul li ul li:hover {
 
 	border-bottom: 2px solid #F8C630;
+	background-color: rgba(0,0,0,0.9);
 
 }
 
