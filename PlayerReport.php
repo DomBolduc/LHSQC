@@ -232,7 +232,9 @@ foreach ($PlayerPositions as $position => $value) {
                      alt="<?php echo $PlayerName; ?>" 
                      class="playerReportHeadshot">
             <?php else: ?>
-                <p>No mugshot available.</p>
+                <img src="images/default.png" 
+                     alt="<?php echo $PlayerName; ?>" 
+                     class="playerReportHeadshot">
             <?php endif; ?>
         </div>
 
