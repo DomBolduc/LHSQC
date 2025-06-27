@@ -620,7 +620,420 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
         <!-- Onglet Lines -->
         <div class="tabmain" id="tabmain4">
             <h3>Farm Team Lines</h3>
-            <p>Compositions de l'équipe farm...</p>
+            
+            <?php
+            // Récupération des lignes de l'équipe farm
+            $Query = "SELECT * FROM TeamFarmLines WHERE TeamNumber = " . $Team . " AND Day = 1";
+            $TeamLines = $db->querySingle($Query, true);
+            
+            // Récupération des informations des joueurs pour les lignes
+            $Query = "SELECT Number, Name, PosC, PosLW, PosRW, PosD, PosG FROM PlayerInfo WHERE Team = " . $Team . " AND Status1 <= 1 ORDER BY Name";
+            $FarmPlayers = $db->query($Query);
+            
+            // Créer un tableau associatif pour accéder rapidement aux joueurs
+            $PlayersArray = array();
+            if ($FarmPlayers) {
+                while ($Player = $FarmPlayers->fetchArray()) {
+                    $PlayersArray[$Player['Number']] = $Player;
+                }
+            }
+            
+            // Récupération des gardiens
+            $Query = "SELECT Number, Name FROM GoalerInfo WHERE Team = " . $Team . " AND Status1 <= 1 ORDER BY Name";
+            $FarmGoalies = $db->query($Query);
+            
+            // Créer un tableau associatif pour les gardiens
+            $GoaliesArray = array();
+            if ($FarmGoalies) {
+                while ($Goalie = $FarmGoalies->fetchArray()) {
+                    $GoaliesArray[$Goalie['Number']] = $Goalie;
+                }
+            }
+            
+            // Fonction pour obtenir le nom du joueur par son nom dans les lignes
+            function getPlayerNameFromLine($playerName, $PlayersArray) {
+                foreach ($PlayersArray as $player) {
+                    if ($player['Name'] === $playerName) {
+                        return "<a href='PlayerReport.php?Player=" . $player['Number'] . "'>" . $playerName . "</a>";
+                    }
+                }
+                return $playerName;
+            }
+            
+            // Fonction pour obtenir le nom du gardien par son nom dans les lignes
+            function getGoalieNameFromLine($goalieName, $GoaliesArray) {
+                foreach ($GoaliesArray as $goalie) {
+                    if ($goalie['Name'] === $goalieName) {
+                        return "<a href='GoalieReport.php?Goalie=" . $goalie['Number'] . "'>" . $goalieName . "</a>";
+                    }
+                }
+                return $goalieName;
+            }
+            ?>
+            
+            <div class="lines-container">
+                <!-- Ligne 1 -->
+                <div class="line-section">
+                    <h4>Line 1</h4>
+                    <div class="line-players">
+                        <div class="player-slot">
+                            <span class="position-label">LW:</span>
+                            <span class="player-name">
+                                <?php 
+                                if ($TeamLines && !empty($TeamLines['Line15vs5ForwardLeftWing'])) {
+                                    echo getPlayerNameFromLine($TeamLines['Line15vs5ForwardLeftWing'], $PlayersArray);
+                                } else {
+                                    echo "Empty";
+                                }
+                                ?>
+                            </span>
+                        </div>
+                        <div class="player-slot">
+                            <span class="position-label">C:</span>
+                            <span class="player-name">
+                                <?php 
+                                if ($TeamLines && !empty($TeamLines['Line15vs5ForwardCenter'])) {
+                                    echo getPlayerNameFromLine($TeamLines['Line15vs5ForwardCenter'], $PlayersArray);
+                                } else {
+                                    echo "Empty";
+                                }
+                                ?>
+                            </span>
+                        </div>
+                        <div class="player-slot">
+                            <span class="position-label">RW:</span>
+                            <span class="player-name">
+                                <?php 
+                                if ($TeamLines && !empty($TeamLines['Line15vs5ForwardRightWing'])) {
+                                    echo getPlayerNameFromLine($TeamLines['Line15vs5ForwardRightWing'], $PlayersArray);
+                                } else {
+                                    echo "Empty";
+                                }
+                                ?>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ligne 2 -->
+                <div class="line-section">
+                    <h4>Line 2</h4>
+                    <div class="line-players">
+                        <div class="player-slot">
+                            <span class="position-label">LW:</span>
+                            <span class="player-name">
+                                <?php 
+                                if ($TeamLines && !empty($TeamLines['Line25vs5ForwardLeftWing'])) {
+                                    echo getPlayerNameFromLine($TeamLines['Line25vs5ForwardLeftWing'], $PlayersArray);
+                                } else {
+                                    echo "Empty";
+                                }
+                                ?>
+                            </span>
+                        </div>
+                        <div class="player-slot">
+                            <span class="position-label">C:</span>
+                            <span class="player-name">
+                                <?php 
+                                if ($TeamLines && !empty($TeamLines['Line25vs5ForwardCenter'])) {
+                                    echo getPlayerNameFromLine($TeamLines['Line25vs5ForwardCenter'], $PlayersArray);
+                                } else {
+                                    echo "Empty";
+                                }
+                                ?>
+                            </span>
+                        </div>
+                        <div class="player-slot">
+                            <span class="position-label">RW:</span>
+                            <span class="player-name">
+                                <?php 
+                                if ($TeamLines && !empty($TeamLines['Line25vs5ForwardRightWing'])) {
+                                    echo getPlayerNameFromLine($TeamLines['Line25vs5ForwardRightWing'], $PlayersArray);
+                                } else {
+                                    echo "Empty";
+                                }
+                                ?>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ligne 3 -->
+                <div class="line-section">
+                    <h4>Line 3</h4>
+                    <div class="line-players">
+                        <div class="player-slot">
+                            <span class="position-label">LW:</span>
+                            <span class="player-name">
+                                <?php 
+                                if ($TeamLines && !empty($TeamLines['Line35vs5ForwardLeftWing'])) {
+                                    echo getPlayerNameFromLine($TeamLines['Line35vs5ForwardLeftWing'], $PlayersArray);
+                                } else {
+                                    echo "Empty";
+                                }
+                                ?>
+                            </span>
+                        </div>
+                        <div class="player-slot">
+                            <span class="position-label">C:</span>
+                            <span class="player-name">
+                                <?php 
+                                if ($TeamLines && !empty($TeamLines['Line35vs5ForwardCenter'])) {
+                                    echo getPlayerNameFromLine($TeamLines['Line35vs5ForwardCenter'], $PlayersArray);
+                                } else {
+                                    echo "Empty";
+                                }
+                                ?>
+                            </span>
+                        </div>
+                        <div class="player-slot">
+                            <span class="position-label">RW:</span>
+                            <span class="player-name">
+                                <?php 
+                                if ($TeamLines && !empty($TeamLines['Line35vs5ForwardRightWing'])) {
+                                    echo getPlayerNameFromLine($TeamLines['Line35vs5ForwardRightWing'], $PlayersArray);
+                                } else {
+                                    echo "Empty";
+                                }
+                                ?>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ligne 4 -->
+                <div class="line-section">
+                    <h4>Line 4</h4>
+                    <div class="line-players">
+                        <div class="player-slot">
+                            <span class="position-label">LW:</span>
+                            <span class="player-name">
+                                <?php 
+                                if ($TeamLines && !empty($TeamLines['Line45vs5ForwardLeftWing'])) {
+                                    echo getPlayerNameFromLine($TeamLines['Line45vs5ForwardLeftWing'], $PlayersArray);
+                                } else {
+                                    echo "Empty";
+                                }
+                                ?>
+                            </span>
+                        </div>
+                        <div class="player-slot">
+                            <span class="position-label">C:</span>
+                            <span class="player-name">
+                                <?php 
+                                if ($TeamLines && !empty($TeamLines['Line45vs5ForwardCenter'])) {
+                                    echo getPlayerNameFromLine($TeamLines['Line45vs5ForwardCenter'], $PlayersArray);
+                                } else {
+                                    echo "Empty";
+                                }
+                                ?>
+                            </span>
+                        </div>
+                        <div class="player-slot">
+                            <span class="position-label">RW:</span>
+                            <span class="player-name">
+                                <?php 
+                                if ($TeamLines && !empty($TeamLines['Line45vs5ForwardRightWing'])) {
+                                    echo getPlayerNameFromLine($TeamLines['Line45vs5ForwardRightWing'], $PlayersArray);
+                                } else {
+                                    echo "Empty";
+                                }
+                                ?>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Défenseurs -->
+                <div class="defense-section">
+                    <h4>Defense Pairs</h4>
+                    
+                    <!-- Paire 1 -->
+                    <div class="defense-pair">
+                        <div class="player-slot">
+                            <span class="position-label">D1:</span>
+                            <span class="player-name">
+                                <?php 
+                                if ($TeamLines && !empty($TeamLines['Line15vs5DefenseDefense1'])) {
+                                    echo getPlayerNameFromLine($TeamLines['Line15vs5DefenseDefense1'], $PlayersArray);
+                                } else {
+                                    echo "Empty";
+                                }
+                                ?>
+                            </span>
+                        </div>
+                        <div class="player-slot">
+                            <span class="position-label">D2:</span>
+                            <span class="player-name">
+                                <?php 
+                                if ($TeamLines && !empty($TeamLines['Line15vs5DefenseDefense2'])) {
+                                    echo getPlayerNameFromLine($TeamLines['Line15vs5DefenseDefense2'], $PlayersArray);
+                                } else {
+                                    echo "Empty";
+                                }
+                                ?>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Paire 2 -->
+                    <div class="defense-pair">
+                        <div class="player-slot">
+                            <span class="position-label">D3:</span>
+                            <span class="player-name">
+                                <?php 
+                                if ($TeamLines && !empty($TeamLines['Line25vs5DefenseDefense1'])) {
+                                    echo getPlayerNameFromLine($TeamLines['Line25vs5DefenseDefense1'], $PlayersArray);
+                                } else {
+                                    echo "Empty";
+                                }
+                                ?>
+                            </span>
+                        </div>
+                        <div class="player-slot">
+                            <span class="position-label">D4:</span>
+                            <span class="player-name">
+                                <?php 
+                                if ($TeamLines && !empty($TeamLines['Line25vs5DefenseDefense2'])) {
+                                    echo getPlayerNameFromLine($TeamLines['Line25vs5DefenseDefense2'], $PlayersArray);
+                                } else {
+                                    echo "Empty";
+                                }
+                                ?>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Paire 3 -->
+                    <div class="defense-pair">
+                        <div class="player-slot">
+                            <span class="position-label">D5:</span>
+                            <span class="player-name">
+                                <?php 
+                                if ($TeamLines && !empty($TeamLines['Line35vs5DefenseDefense1'])) {
+                                    echo getPlayerNameFromLine($TeamLines['Line35vs5DefenseDefense1'], $PlayersArray);
+                                } else {
+                                    echo "Empty";
+                                }
+                                ?>
+                            </span>
+                        </div>
+                        <div class="player-slot">
+                            <span class="position-label">D6:</span>
+                            <span class="player-name">
+                                <?php 
+                                if ($TeamLines && !empty($TeamLines['Line35vs5DefenseDefense2'])) {
+                                    echo getPlayerNameFromLine($TeamLines['Line35vs5DefenseDefense2'], $PlayersArray);
+                                } else {
+                                    echo "Empty";
+                                }
+                                ?>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gardiens -->
+                <div class="goalie-section">
+                    <h4>Goalies</h4>
+                    <div class="goalie-slots">
+                        <div class="player-slot">
+                            <span class="position-label">Starter:</span>
+                            <span class="player-name">
+                                <?php 
+                                if ($TeamLines && !empty($TeamLines['Goaler1'])) {
+                                    echo getGoalieNameFromLine($TeamLines['Goaler1'], $GoaliesArray);
+                                } else {
+                                    echo "Empty";
+                                }
+                                ?>
+                            </span>
+                        </div>
+                        <div class="player-slot">
+                            <span class="position-label">Backup:</span>
+                            <span class="player-name">
+                                <?php 
+                                if ($TeamLines && !empty($TeamLines['Goaler2'])) {
+                                    echo getGoalieNameFromLine($TeamLines['Goaler2'], $GoaliesArray);
+                                } else {
+                                    echo "Empty";
+                                }
+                                ?>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <style>
+            .lines-container {
+                display: grid;
+                gap: 20px;
+                margin-top: 20px;
+            }
+            
+            .line-section, .defense-section, .goalie-section {
+                background: #f8f9fa;
+                border: 1px solid #e9ecef;
+                border-radius: 8px;
+                padding: 15px;
+            }
+            
+            .line-section h4, .defense-section h4, .goalie-section h4 {
+                margin-bottom: 15px;
+                color: var(--primary-color);
+                font-size: 16px;
+                font-weight: bold;
+            }
+            
+            .line-players {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+            }
+            
+            .defense-pair {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                margin-bottom: 10px;
+            }
+            
+            .goalie-slots {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
+            .player-slot {
+                display: flex;
+                align-items: center;
+                padding: 8px;
+                background: white;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+            }
+            
+            .position-label {
+                font-weight: bold;
+                color: #666;
+                margin-right: 8px;
+                min-width: 30px;
+            }
+            
+            .player-name {
+                flex: 1;
+            }
+            
+            .player-name a {
+                color: #007bff;
+                text-decoration: none;
+            }
+            
+            .player-name a:hover {
+                text-decoration: underline;
+            }
+            </style>
         </div>
 
         <!-- Onglet Depth -->
