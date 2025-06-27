@@ -185,7 +185,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                 <?php endif; ?>
             </td>
             <td class="STHSPHPTeamHeader_TeamName"> 
-                <?php echo $TeamName; ?> (Farm)
+                <?php echo $TeamName; ?>
                 <?php if (!empty($TeamInfo['City'])): ?>
                     <?php echo htmlspecialchars($TeamInfo['City']); ?>
                 <?php endif; ?>
@@ -221,7 +221,6 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
         <li><a href="#tabmain4">Lines</a></li>
         <li><a href="#tabmain5">Depth</a></li>
         <li><a href="#tabmain6">Capology</a></li>
-        <li><a href="#tabmain7">Prospects</a></li>
     </ul>
 
     <div class="cardbook">
@@ -511,7 +510,111 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
         <!-- Onglet Schedule -->
         <div class="tabmain" id="tabmain3">
             <h3>Farm Team Schedule</h3>
-            <p>Calendrier de l'équipe farm...</p>
+            
+            <?php
+            // Récupération du calendrier complet de l'équipe farm
+            $Query = "SELECT * FROM ScheduleFarm WHERE (VisitorTeam = " . $Team . " OR HomeTeam = " . $Team . ") ORDER BY GameNumber";
+            $Schedule = $db->query($Query);
+            ?>
+            
+            <div class="schedule-container">
+                <table class="STHSPHPPlayerStat_Table" style="width: 100%; font-size: 11px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
+                    <thead>
+                        <tr style="background: #f5f5f5; border-bottom: 2px solid #ddd;">
+                            <th style="padding: 6px 4px; border: 1px solid #ddd; text-align: center; font-weight: bold;">Game #</th>
+                            <th style="padding: 6px 4px; border: 1px solid #ddd; text-align: center; font-weight: bold;">Date</th>
+                            <th style="padding: 6px 4px; border: 1px solid #ddd; text-align: center; font-weight: bold;">Visitor</th>
+                            <th style="padding: 6px 4px; border: 1px solid #ddd; text-align: center; font-weight: bold;">Home</th>
+                            <th style="padding: 6px 4px; border: 1px solid #ddd; text-align: center; font-weight: bold;">Visitor Score</th>
+                            <th style="padding: 6px 4px; border: 1px solid #ddd; text-align: center; font-weight: bold;">Home Score</th>
+                            <th style="padding: 6px 4px; border: 1px solid #ddd; text-align: center; font-weight: bold;">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        if ($Schedule) {
+                            while ($Game = $Schedule->fetchArray()) {
+                                $HomeTeam = $Game['HomeTeam'];
+                                $VisitorTeam = $Game['VisitorTeam'];
+                                $HomeScore = $Game['HomeScore'];
+                                $VisitorScore = $Game['VisitorScore'];
+                                $GameNumber = $Game['GameNumber'];
+                                $Play = $Game['Play'];
+                                $IsOvertime = ($Game['Overtime'] ?? '') == 'True';
+                                $IsShootout = ($Game['Shootout'] ?? '') == 'True';
+                                
+                                // Récupérer les noms d'équipes depuis TeamFarmInfo
+                                $Query = "SELECT Name, TeamThemeID FROM TeamFarmInfo WHERE Number = " . $HomeTeam;
+                                $HomeTeamInfo = $db->querySingle($Query, true);
+                                $Query = "SELECT Name, TeamThemeID FROM TeamFarmInfo WHERE Number = " . $VisitorTeam;
+                                $VisitorTeamInfo = $db->querySingle($Query, true);
+                                
+                                $HomeTeamName = $HomeTeamInfo['Name'] ?? 'Team ' . $HomeTeam;
+                                $VisitorTeamName = $VisitorTeamInfo['Name'] ?? 'Team ' . $VisitorTeam;
+                                $HomeTeamThemeID = $HomeTeamInfo['TeamThemeID'] ?? null;
+                                $VisitorTeamThemeID = $VisitorTeamInfo['TeamThemeID'] ?? null;
+                                
+                                $isHome = ($HomeTeam == $Team);
+                                $isWin = false;
+                                $gameStatus = "Scheduled";
+                                
+                                if ($Play == 'True') {
+                                    $gameStatus = "Final";
+                                    $isWin = ($isHome && $HomeScore > $VisitorScore) || (!$isHome && $VisitorScore > $HomeScore);
+                                    if ($IsShootout) {
+                                        $gameStatus .= " (SO)";
+                                    } elseif ($IsOvertime) {
+                                        $gameStatus .= " (OT)";
+                                    }
+                                }
+                                
+                                echo "<tr>";
+                                echo "<td style=\"padding: 6px 4px; border: 1px solid #ddd; text-align: center;\">" . $GameNumber . "</td>";
+                                echo "<td style=\"padding: 6px 4px; border: 1px solid #ddd; text-align: center;\">" . $Game['Date'] . "</td>";
+                                
+                                // Équipe visiteuse
+                                echo "<td style=\"padding: 6px 4px; border: 1px solid #ddd; text-align: center;\">";
+                                if ($VisitorTeamThemeID && file_exists("images/" . $VisitorTeamThemeID . ".png")) {
+                                    echo "<img src='images/" . $VisitorTeamThemeID . ".png' alt='" . $VisitorTeamName . "' style='width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;'>";
+                                }
+                                echo $VisitorTeamName . "</td>";
+                                
+                                // Équipe locale
+                                echo "<td style=\"padding: 6px 4px; border: 1px solid #ddd; text-align: center;\">";
+                                if ($HomeTeamThemeID && file_exists("images/" . $HomeTeamThemeID . ".png")) {
+                                    echo "<img src='images/" . $HomeTeamThemeID . ".png' alt='" . $HomeTeamName . "' style='width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;'>";
+                                }
+                                echo $HomeTeamName . "</td>";
+                                
+                                // Scores
+                                if ($Play == 'True') {
+                                    echo "<td style=\"padding: 6px 4px; border: 1px solid #ddd; text-align: center; font-weight: bold;\">" . $VisitorScore . "</td>";
+                                    echo "<td style=\"padding: 6px 4px; border: 1px solid #ddd; text-align: center; font-weight: bold;\">" . $HomeScore . "</td>";
+                                } else {
+                                    echo "<td style=\"padding: 6px 4px; border: 1px solid #ddd; text-align: center;\">-</td>";
+                                    echo "<td style=\"padding: 6px 4px; border: 1px solid #ddd; text-align: center;\">-</td>";
+                                }
+                                
+                                // Status avec couleur
+                                $statusColor = "#666";
+                                if ($Play == 'True') {
+                                    if ($isWin) {
+                                        $statusColor = "#28a745";
+                                    } else {
+                                        $statusColor = "#dc3545";
+                                    }
+                                }
+                                echo "<td style=\"padding: 6px 4px; border: 1px solid #ddd; text-align: center; color: " . $statusColor . ";\">" . $gameStatus . "</td>";
+                                
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='7' style='padding: 6px 4px; border: 1px solid #ddd; text-align: center;'>Aucun match programmé</td></tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <!-- Onglet Lines -->
@@ -530,12 +633,6 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
         <div class="tabmain" id="tabmain6">
             <h3>Farm Team Salary Cap Overview</h3>
             <p>Informations sur le salary cap de l'équipe farm...</p>
-        </div>
-
-        <!-- Onglet Prospects -->
-        <div class="tabmain" id="tabmain7">
-            <h3>Farm Team Prospects</h3>
-            <p>Prospects de l'équipe farm...</p>
         </div>
     </div>
 </div>

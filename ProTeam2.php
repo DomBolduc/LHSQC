@@ -262,7 +262,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                 P: <?php echo $TeamStat['Points'] ?? 0; ?>
                 
                 <!-- Bouton Farm Team -->
-                <a href="FarmTeam.php?Team=<?php echo $Team; ?>" class="farm-team-btn" style="display: inline-block; margin-left: 15px; padding: 6px 12px; background: #28a745; color: white; text-decoration: none; border-radius: 4px; font-size: 12px; font-weight: bold; transition: background-color 0.3s;">
+                <a href="FarmTeam2.php?Team=<?php echo $Team; ?>" class="farm-team-btn" style="display: inline-block; margin-left: 15px; padding: 6px 12px; background: #28a745; color: white; text-decoration: none; border-radius: 4px; font-size: 12px; font-weight: bold; transition: background-color 0.3s;">
                     <i class="fa fa-users" style="margin-right: 5px;"></i>Farm Team
                 </a>
             </td>
