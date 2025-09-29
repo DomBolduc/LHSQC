@@ -156,7 +156,7 @@ try {
             $BestPPTeam = $db->querySingle($Query, true);
             
             $Query = "SELECT TeamProInfo.Name as TeamName, 
-                CASE WHEN TeamProStat.PKAttemp > 0 THEN (CAST(PKAttemp AS REAL) - CAST(PKGoalGA AS REAL)) / CAST(PKAttemp AS REAL) * 100 ELSE 0 END as PKPercentage
+                CASE WHEN TeamProStat.PKAttemp > 0 THEN (CAST(TeamProStat.PKAttemp AS REAL) - CAST(TeamProStat.PKGoalGA AS REAL)) / CAST(TeamProStat.PKAttemp AS REAL) * 100 ELSE 0 END as PKPercentage
                 FROM TeamProStat 
                 INNER JOIN TeamProInfo ON TeamProStat.Number = TeamProInfo.Number 
                 WHERE TeamProStat.GP > 0 
@@ -164,7 +164,7 @@ try {
             $BestPKTeam = $db->querySingle($Query, true);
             
             $Query = "SELECT TeamProInfo.Name as TeamName, 
-                CAST(TeamProStat.Hits AS REAL) / CAST(GP AS REAL) as HitsPerGame
+                CAST(TeamProStat.Hits AS REAL) / CAST(TeamProStat.GP AS REAL) as HitsPerGame
                 FROM TeamProStat 
                 INNER JOIN TeamProInfo ON TeamProStat.Number = TeamProInfo.Number 
                 WHERE TeamProStat.GP > 0 
@@ -734,7 +734,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
             
             <!-- Table des joueurs avec ratings -->
             <div class="roster-container">
-                <table class="roster-table tablesorter STHSPHPProTeamPlayerRoster_Table" style="width: 100%; font-size: 10px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
+                <table class="roster-table tablesorter STHSProTeamPlayerRoster_Table" style="width: 100%; font-size: 10px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
                 <thead>
                         <tr style="background: #f5f5f5; border-bottom: 2px solid #ddd;">
                             <th style="width: 112px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: left; font-weight: bold;">Player</th>
@@ -853,7 +853,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
 
             <h3>Goaltenders</h3>
             <div class="roster-container">
-                <table class="roster-table tablesorter STHSPHPProTeamGoalieRoster_Table" style="width: 100%; font-size: 10px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
+                <table class="roster-table tablesorter STHSProTeamGoalieRoster_Table" style="width: 100%; font-size: 10px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
                 <thead>
                         <tr style="background: #f5f5f5; border-bottom: 2px solid #ddd;">
                             <th style="width: 90px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: left; font-weight: bold;">Player</th>
@@ -945,7 +945,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
             
             <!-- Tableau des statistiques des joueurs -->
             <div class="stats-container">
-                <table class="tablesorter STHSPHPProTeamPlayerStats_Table" style="width: 100%; font-size: 10px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
+                <table class="stats-table tablesorter STHSProTeamPlayerStats_Table" style="width: 100%; font-size: 10px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
                     <thead>
                         <tr style="background: #f5f5f5; border-bottom: 2px solid #ddd;">
                             <th style="width: 150px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Player</th>
@@ -2896,18 +2896,21 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 $(function() {
-	$(".STHSPHPProTeamPlayerStats_Table").tablesorter({
-		sortList: [[4,1]],
-		widgets: ['staticRow']
-	});
-	$(".STHSPHPProTeamPlayerRoster_Table").tablesorter({
-		sortList: [[20,1]],
-		widgets: ['staticRow']
-	});
-	$(".STHSPHPProTeamGoalieRoster_Table").tablesorter({
-		sortList: [[17,1]],
-		widgets: ['staticRow']
-	});
+    $(".STHSProTeamPlayerRoster_Table").tablesorter({
+        sortList: [[20,1]],
+        widgets: ['staticRow']
+    });
+    $(".STHSProTeamGoalieRoster_Table").tablesorter({
+        sortList: [[17,1]],
+        widgets: ['staticRow']
+    });
+    $(".STHSProTeamPlayerStats_Table").tablesorter({
+        sortList: [[4,1]],
+        widgets: ['staticRow']
+    });
+    $(".STHSPHPTeam_ProspectsTable").tablesorter({
+        widgets: ['staticRow']
+    });
 });
 </script>
 
