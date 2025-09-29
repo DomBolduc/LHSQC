@@ -945,7 +945,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
             
             <!-- Tableau des statistiques des joueurs -->
             <div class="stats-container">
-                <table class="stats-table" style="width: 100%; font-size: 10px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
+                <table class="tablesorter STHSPHPProTeamPlayerStats_Table" style="width: 100%; font-size: 10px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
                     <thead>
                         <tr style="background: #f5f5f5; border-bottom: 2px solid #ddd;">
                             <th style="width: 150px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Player</th>
@@ -2893,6 +2893,13 @@ document.addEventListener('DOMContentLoaded', function() {
             this.parentElement.classList.add('activemain');
         });
     });
+});
+
+$(function() {
+	$(".STHSPHPProTeamPlayerStats_Table").tablesorter({
+		sortList: [[4,1]],
+		widgets: ['staticRow']
+	});
 });
 </script>
 
