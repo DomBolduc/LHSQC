@@ -1005,6 +1005,60 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                     </tbody>
                 </table>
             </div>
+
+            <h3>Goaltenders Statistics</h3>
+            <div class="stats-container">
+                <table class="stats-table tablesorter STHSProTeamGoalieStats_Table" style="width: 100%; font-size: 10px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
+                    <thead>
+                        <tr style="background: black; color: white;">
+                            <th style="padding: 6px 4px; border: 1px solid #ddd; text-align: center; font-weight: bold;">Player</th>
+                            <th style="padding: 6px 4px; border: 1px solid #ddd; text-align: center; font-weight: bold;">GP</th>
+                            <th style="padding: 6px 4px; border: 1px solid #ddd; text-align: center; font-weight: bold;">W</th>
+                            <th style="padding: 6px 4px; border: 1px solid #ddd; text-align: center; font-weight: bold;">L</th>
+                            <th style="padding: 6px 4px; border: 1px solid #ddd; text-align: center; font-weight: bold;">OTL</th>
+                            <th style="padding: 6px 4px; border: 1px solid #ddd; text-align: center; font-weight: bold;">GAA</th>
+                            <th style="padding: 6px 4px; border: 1px solid #ddd; text-align: center; font-weight: bold;">SV%</th>
+                            <th style="padding: 6px 4px; border: 1px solid #ddd; text-align: center; font-weight: bold;">Mins</th>
+                            <th style="padding: 6px 4px; border: 1px solid #ddd; text-align: center; font-weight: bold;">GA</th>
+                            <th style="padding: 6px 4px; border: 1px solid #ddd; text-align: center; font-weight: bold;">SA</th>
+                            <th style="padding: 6px 4px; border: 1px solid #ddd; text-align: center; font-weight: bold;">SO</th>
+                            <th style="padding: 6px 4px; border: 1px solid #ddd; text-align: center; font-weight: bold;">PS%</th>
+                            <th style="padding: 6px 4px; border: 1px solid #ddd; text-align: center; font-weight: bold;">A</th>
+                            <th style="padding: 6px 4px; border: 1px solid #ddd; text-align: center; font-weight: bold;">PIM</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                        // Récupération des statistiques des gardiens
+                        $Query = "SELECT GoalerInfo.*, GoalerProStat.*, ROUND((CAST(GoalerProStat.GA AS REAL) / (GoalerProStat.SecondPlay / 60))*60,3) AS GAA, ROUND((CAST(GoalerProStat.SA - GoalerProStat.GA AS REAL) / (GoalerProStat.SA)),3) AS PCT, ROUND((CAST(GoalerProStat.PenalityShotsShots - GoalerProStat.PenalityShotsGoals AS REAL) / (GoalerProStat.PenalityShotsShots)),3) AS PenalityShotsPCT FROM GoalerInfo INNER JOIN GoalerProStat ON GoalerInfo.Number = GoalerProStat.Number WHERE GoalerInfo.Team = " . $Team . " AND GoalerInfo.Status1 >= 2 AND GoalerProStat.GP > 0 ORDER BY GoalerProStat.W DESC, GoalerProStat.GP DESC";
+                        $GoalieStats = $db->query($Query);
+                        
+                        if ($GoalieStats) {
+                            while ($Goalie = $GoalieStats->fetchArray()) {
+                                echo "<tr>";
+                                echo "<td style=\"padding: 6px 4px; border: 1px solid #ddd; text-align: left;\">" . $Goalie['Name'] . "</td>";
+                                echo "<td style=\"padding: 6px 4px; border: 1px solid #ddd; text-align: center;\">" . $Goalie['GP'] . "</td>";
+                                echo "<td style=\"padding: 6px 4px; border: 1px solid #ddd; text-align: center;\">" . $Goalie['W'] . "</td>";
+                                echo "<td style=\"padding: 6px 4px; border: 1px solid #ddd; text-align: center;\">" . $Goalie['L'] . "</td>";
+                                echo "<td style=\"padding: 6px 4px; border: 1px solid #ddd; text-align: center;\">" . ($Goalie['OTL'] + $Goalie['SOL']) . "</td>";
+                                echo "<td style=\"padding: 6px 4px; border: 1px solid #ddd; text-align: center;\">" . number_format($Goalie['GAA'], 2) . "</td>";
+                                echo "<td style=\"padding: 6px 4px; border: 1px solid #ddd; text-align: center;\">" . number_format($Goalie['PCT'], 3) . "</td>";
+                                echo "<td style=\"padding: 6px 4px; border: 1px solid #ddd; text-align: center;\">" . floor($Goalie['SecondPlay'] / 60) . "</td>";
+                                echo "<td style=\"padding: 6px 4px; border: 1px solid #ddd; text-align: center;\">" . $Goalie['GA'] . "</td>";
+                                echo "<td style=\"padding: 6px 4px; border: 1px solid #ddd; text-align: center;\">" . $Goalie['SA'] . "</td>";
+                                echo "<td style=\"padding: 6px 4px; border: 1px solid #ddd; text-align: center;\">" . $Goalie['Shootout'] . "</td>";
+                                echo "<td style=\"padding: 6px 4px; border: 1px solid #ddd; text-align: center;\">" . number_format($Goalie['PenalityShotsPCT'] * 100, 1) . "%</td>";
+                                echo "<td style=\"padding: 6px 4px; border: 1px solid #ddd; text-align: center;\">" . $Goalie['A'] . "</td>";
+                                echo "<td style=\"padding: 6px 4px; border: 1px solid #ddd; text-align: center;\">" . $Goalie['Pim'] . "</td>";
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='14' style='text-align: center; padding: 10px;'>Aucune donnée disponible</td></tr>";
+                        }
+                    ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <!-- Onglet Schedule -->
@@ -1043,6 +1097,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                             <th style="width: 80px !important; padding: 8px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Score</th>
                             <th style="width: 60px !important; padding: 8px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Résultat</th>
                             <th style="width: 80px !important; padding: 8px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Type</th>
+                            <th style="width: 80px !important; padding: 8px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Boxscore</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1098,6 +1153,12 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                                 if ($isHome) $rowClass .= " home-game";
                                 else $rowClass .= " away-game";
                                 if ($IsPlayed) $rowClass .= " played-game";
+                                
+                                // Préparer le lien du boxscore
+                                $boxscoreLink = "";
+                                if ($IsPlayed) {
+                                    $boxscoreLink = "<a href='LHSQC-PRE-" . $GameNumber . ".php'>Boxscore</a>";
+                                }
                                 else $rowClass .= " upcoming-game";
                                 
                                 echo "<tr class='" . $rowClass . "' style='border-bottom: 1px solid #eee;'>";
@@ -1153,6 +1214,9 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                                 
                                 // Type de match
                                 echo "<td style='text-align: center; border: 1px solid #ddd; padding: 6px 4px;'>" . $gameType . "</td>";
+                                
+                                // Boxscore
+                                echo "<td style='text-align: center; border: 1px solid #ddd; padding: 6px 4px;'>" . $boxscoreLink . "</td>";
                                 
                                 echo "</tr>";
                             }

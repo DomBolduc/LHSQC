@@ -82,45 +82,8 @@ echo "-->";
             </thead>
             <tbody>
                 <?php
-                if ($side == 0) {
-                    // Conférence 1 : Division 1 et 2
-                    for ($i = 0; $i <= 1; $i++) {
-                        echo '<tr><td class="division-header" colspan="' . $ColumnPerTable . '">' . $Division[$i] . '</td></tr>';
-                        $Query = "SELECT Team{$TypeTextTeam}Stat.*, Team{$TypeText}Info.Name, Team{$TypeText}Info.TeamThemeID
-                            FROM Team{$TypeTextTeam}Stat
-                            INNER JOIN Team{$TypeText}Info ON Team{$TypeTextTeam}Stat.Number = Team{$TypeText}Info.Number
-                            WHERE Team{$TypeText}Info.DivisionNumber = {$DivisionNumbers[$i]}
-                            AND Team{$TypeText}Info.Conference = '{$Conference[0]}'
-                            ORDER BY Team{$TypeTextTeam}Stat.Points DESC";
-                        $Standing = $db->query($Query);
-                        $LoopCount = 0;
-                        while ($row = $Standing->fetchArray()) {
-                            $LoopCount++;
-                            PrintModernStandingTableRow($row, $TypeText, true, $LeagueGeneral, $LoopCount, $DatabaseFile, $ImagesCDNPath);
-                        }
-                        if ($LoopCount == 0) printEmptyStandings($db, $DivisionNumbers[$i], $Conference[0], $ColumnPerTable, $TypeTextTeam);
-                    }
-                } else {
-                    // Conférence 2 : Division 4 et 5
-                    for ($i = 2; $i <= 3; $i++) {
-                        echo '<tr><td class="division-header" colspan="' . $ColumnPerTable . '">' . $Division[$i] . '</td></tr>';
-                        $Query = "SELECT Team{$TypeTextTeam}Stat.*, Team{$TypeText}Info.Name, Team{$TypeText}Info.TeamThemeID
-                            FROM Team{$TypeTextTeam}Stat
-                            INNER JOIN Team{$TypeText}Info ON Team{$TypeTextTeam}Stat.Number = Team{$TypeText}Info.Number
-                            WHERE Team{$TypeText}Info.DivisionNumber = {$DivisionNumbers[$i]}
-                            AND Team{$TypeText}Info.Conference = '{$Conference[1]}'
-                            ORDER BY Team{$TypeTextTeam}Stat.Points DESC";
-                        $Standing = $db->query($Query);
-                        $LoopCount = 0;
-                        echo "<!-- Requête SQL : $Query -->";
-                        while ($row = $Standing->fetchArray()) {
-                            $LoopCount++;
-                            PrintModernStandingTableRow($row, $TypeText, true, $LeagueGeneral, $LoopCount, $DatabaseFile, $ImagesCDNPath);
-                            echo "<!-- Équipe trouvée : " . $row['Name'] . " -->";
-                        }
-                        if ($LoopCount == 0) printEmptyStandings($db, $DivisionNumbers[$i], $Conference[1], $ColumnPerTable, $TypeTextTeam);
-                    }
-                }
+                // Appeler la fonction pour afficher les standings en format Wild Card
+                displayWildCardStandings($db, $side, $Conference, $Division, $DivisionNumbers, $TypeText, $TypeTextTeam, $LeagueGeneral, $ColumnPerTable, $DatabaseFile, $ImagesCDNPath);
                 ?>
             </tbody>
         </table>

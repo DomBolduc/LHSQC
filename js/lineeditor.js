@@ -132,34 +132,39 @@ function valChange(field,type,sid,updown,BlockPlayerFromPlayingLines12,BlockPlay
 		
 		if(!flag && updown == 'up' && curvalue <= maxmin){document.getElementById(field).value = curvalue;}
 		if(!flag && updown == 'down' && curvalue >= maxmin){document.getElementById(field).value = curvalue;}
-	}else{
+	}else if(type == 'Time'){
 		if(sid == 'Line15vs5Forward' || sid == 'Line25vs5Forward' || sid == 'Line35vs5Forward' || sid == 'Line45vs5Forward'){
+			console.log('🎯 Forward Time - sid:', sid, 'field:', field, 'curvalue:', curvalue);
 			for(x=1;x<=4;x++){
-				val = (sid == 'Line'+ x +'5vs5Forward') ? curvalue : parseInt(document.getElementById('Line'+ x +'5vs5ForwardTime').value);
-				if(val > vallast || val == 100 ){flag = true;break;}
+				var expectedSid = 'Line'+ x +'5vs5Forward';
+				var timeFieldId = 'Line'+ x +'5vs5ForwardTime';
+				var isCurrentField = (sid == expectedSid);
+				val = isCurrentField ? curvalue : parseInt(document.getElementById(timeFieldId).value);
+				console.log('  x=' + x + ', expectedSid=' + expectedSid + ', isCurrentField=' + isCurrentField + ', val=' + val);
+				// Vérifier seulement si la valeur est valide (pas de contrainte d'ordre)
+				if(val < 1 || val > 100){flag = true;break;}
 				curtotal += val;
-				vallast = val;
 			}
 		}else if(sid == 'Line15vs5Defense' || sid == 'Line25vs5Defense' || sid == 'Line35vs5Defense' || sid == 'Line45vs5Defense'){
+			console.log('🎯 Defense Time - sid:', sid, 'field:', field, 'curvalue:', curvalue);
 			for(x=1;x<=4;x++){
 				val = (sid == 'Line'+ x +'5vs5Defense') ? curvalue : parseInt(document.getElementById('Line'+ x +'5vs5DefenseTime').value);
-				if(val > vallast || val == 100 ){flag = true;break;}
+				console.log('  Defense x=' + x + ', val=' + val);
+				// Vérifier seulement si la valeur est valide (pas de contrainte d'ordre)
+				if(val < 1 || val > 100){flag = true;break;}
 				curtotal += val;
-				vallast = val;
 			}
 		}else if(sid == 'Line1PPForward' || sid == 'Line2PPForward'){
 			for(x=1;x<=2;x++){
 				val = (sid == 'Line'+ x +'PPForward') ? curvalue : parseInt(document.getElementById('Line'+ x +'PPForwardTime').value);
-				if(val > vallast || val == 100 ){flag = true;break;}
+				if(val < 1 || val > 100){flag = true;break;}
 				curtotal += val;
-				vallast = val;
 			}
 		}else if(sid == 'Line1PPDefense' || sid == 'Line2PPDefense'){
 			for(x=1;x<=2;x++){
 				val = (sid == 'Line'+ x +'PPDefense') ? curvalue : parseInt(document.getElementById('Line'+ x +'PPDefenseTime').value);
-				if(val > vallast || val == 100 ){flag = true;break;}
+				if(val < 1 || val > 100){flag = true;break;}
 				curtotal += val;
-				vallast = val;
 			}
 		}if(sid == 'Line14VS4Forward' || sid == 'Line24VS4Forward'){
 			for(x=1;x<=2;x++){
@@ -207,8 +212,18 @@ function valChange(field,type,sid,updown,BlockPlayerFromPlayingLines12,BlockPlay
 		}
 
 		maxmin = (updown == 'up') ? 100 : 1;
-		if(!flag && updown == 'up' && curtotal <= maxmin && fieldvalue <= maxmin){document.getElementById(field).value = curvalue;}
-		if(!flag && updown == 'down' && curtotal >= maxmin && fieldvalue >= maxmin){document.getElementById(field).value = curvalue;}
+		console.log('🎯 Final check - flag:', flag, 'updown:', updown, 'curtotal:', curtotal, 'maxmin:', maxmin, 'fieldvalue:', fieldvalue, 'curvalue:', curvalue);
+		if(!flag && updown == 'up' && curtotal <= maxmin && fieldvalue <= maxmin){
+			console.log('✅ Setting value UP:', curvalue);
+			document.getElementById(field).value = curvalue;
+		}
+		if(!flag && updown == 'down' && curtotal >= maxmin && fieldvalue >= maxmin){
+			console.log('✅ Setting value DOWN:', curvalue);
+			document.getElementById(field).value = curvalue;
+		}
+	}else{
+		// Autres types non gérés - comportement par défaut
+		console.log('Type non géré:', type, 'pour le champ:', field);
 	}
 	line_validator(BlockPlayerFromPlayingLines12,BlockPlayerFromPlayingLines123,BlockPlayerFromPlayingLines12inPPPK,
 						ProForceGameStrategiesTo,ProForceGameStrategiesAt5,FarmForceGameStrategiesTo,FarmForceGameStrategiesAt5,

@@ -944,6 +944,9 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
             // Récupération du calendrier complet de l'équipe farm
             $Query = "SELECT * FROM ScheduleFarm WHERE (VisitorTeam = " . $Team . " OR HomeTeam = " . $Team . ") ORDER BY GameNumber";
             $Schedule = $db->query($Query);
+
+            // Préparer la variable pour stocker le lien du boxscore
+            $boxscoreLink = "";
             ?>
             
             <div class="schedule-container">
@@ -957,6 +960,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                             <th style="padding: 6px 4px; border: 1px solid #ddd; text-align: center; font-weight: bold;">Visitor Score</th>
                             <th style="padding: 6px 4px; border: 1px solid #ddd; text-align: center; font-weight: bold;">Home Score</th>
                             <th style="padding: 6px 4px; border: 1px solid #ddd; text-align: center; font-weight: bold;">Status</th>
+                            <th style="padding: 6px 4px; border: 1px solid #ddd; text-align: center; font-weight: bold;">Boxscore</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -995,6 +999,11 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                                     } elseif ($IsOvertime) {
                                         $gameStatus .= " (OT)";
                                     }
+                                    
+                                    // Préparer le lien du boxscore
+                                    $boxscoreLink = "<a href='LHSQC-PRE-Farm-" . $GameNumber . ".php'>Boxscore</a>";
+                                } else {
+                                    $boxscoreLink = "";
                                 }
                                 
                                 echo "<tr>";
@@ -1035,10 +1044,13 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
                                 }
                                 echo "<td style=\"padding: 6px 4px; border: 1px solid #ddd; text-align: center; color: " . $statusColor . ";\">" . $gameStatus . "</td>";
                                 
+                                // Boxscore
+                                echo "<td style=\"padding: 6px 4px; border: 1px solid #ddd; text-align: center;\">" . $boxscoreLink . "</td>";
+                                
                                 echo "</tr>";
                             }
                         } else {
-                            echo "<tr><td colspan='7' style='padding: 6px 4px; border: 1px solid #ddd; text-align: center;'>Aucun match programmé</td></tr>";
+                            echo "<tr><td colspan='8' style='padding: 6px 4px; border: 1px solid #ddd; text-align: center;'>Aucun match programmé</td></tr>";
                         }
                         ?>
                     </tbody>

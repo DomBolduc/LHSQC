@@ -102,25 +102,25 @@ STHSErrorIndex:
 
 		
 		<div class="row mt-2 mx-2 align-items-stretch">
-    <div class="col-lg-4 col-12 mb-3 mb-lg-0">
+    <div class="col-lg-4 col-12 mb-4 mb-lg-0">
         <?php $side = 0; include "components/StandingsCard.php"; ?>
     </div>
-    <div class="col-lg-4 col-12 mb-3 mb-lg-0 d-flex flex-column align-items-start justify-content-start">
-        
+    <div class="col-lg-4 col-12 mb-4 mb-lg-0 d-flex flex-column align-items-start justify-content-start">
+
         <div id="news-carousel-container">
     <?php
     $side = 3;
     include "components/NewsSub.php";
     ?>
 </div>
-        
+
         <!-- Composant Power Ranking -->
-        <div id="power-ranking-container" style="width:525px; margin:0 auto;">
+        <div id="power-ranking-container" class="power-ranking-wrapper">
             <?php include "components/PowerRanking.php"; ?>
         </div>
-        
+
     </div>
-    <div class="col-lg-4 col-12 mb-3 mb-lg-0">
+    <div class="col-lg-4 col-12 mb-4 mb-lg-0">
         <?php $side = 1; include "components/StandingsCard.php"; ?>
     </div>
 </div>
@@ -138,18 +138,7 @@ STHSErrorIndex:
     </header>
 </div> <!-- container-fluid -->
 
-<!-- Bouton moderne -->
-<button class="btn btn--team">Voir l'équipe</button>
 
-<!-- Tableau de classement -->
-<table class="table table--standings">
-  <!-- ... -->
-</table>
-
-<!-- Carte joueur -->
-<div class="card card--player">
-  <!-- ... -->
-</div>
 
 </body>
 

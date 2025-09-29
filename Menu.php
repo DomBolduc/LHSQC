@@ -36,6 +36,41 @@ If (file_exists($DatabaseFile) == false){
 		$TeamMenuCookie =  $dbMenu->querySingle($Query,true);
 		$MenuTeamTeamID = $TeamMenuCookie['TeamThemeID'];
 	}
+
+	// Vérifier s'il y a des messages non lus pour l'utilisateur connecté
+	$hasUnreadMessages = false;
+	$unreadMessagesCount = 0;
+	$MessagesDBFile = "LHSQC-Messages.db";
+
+	if ($CookieTeamNumber > 0 && $CookieTeamNumber <= 102 && file_exists($MessagesDBFile)) {
+		try {
+			$messagesDB = new SQLite3($MessagesDBFile);
+
+			// Compter les messages non lus pour cet utilisateur
+			$unreadQuery = "
+			SELECT COUNT(*) as unread_count
+			FROM PrivateMessages
+			WHERE RecipientTeamID = ?
+			AND IsRead = 0
+			AND IsDeleted = 0
+			";
+
+			$stmt = $messagesDB->prepare($unreadQuery);
+			$stmt->bindValue(1, $CookieTeamNumber, SQLITE3_INTEGER);
+			$result = $stmt->execute();
+			$row = $result->fetchArray(SQLITE3_ASSOC);
+
+			$hasUnreadMessages = ($row['unread_count'] > 0);
+			$unreadMessagesCount = $row['unread_count'];
+
+			$messagesDB->close();
+		} catch (Exception $e) {
+			// En cas d'erreur, on considère qu'il n'y a pas de messages non lus
+			$hasUnreadMessages = false;
+			$unreadMessagesCount = 0;
+		}
+	}
+
 	$MenuQueryOK = True;
 } catch (Exception $e) {
 STHSErrorMenu:
@@ -88,44 +123,44 @@ if ($MenuQueryOK == True) {
 
     //Teams
     $menuTeamsItems .= "<li><a href=\"#\">Atlantic</a><ul>";
-    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=3\"><img src=\"/images/11.png\">Boston</a></li>";
-    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=4\"><img src=\"/images/14.png\">Buffalo</a></li>";
-    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=11\"><img src=\"/images/17.png\">Detroit</a></li>";
-    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=13\"><img src=\"/images/10.png\">Florida</a></li>";
-    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=16\"><img src=\"/images/13.png\">Montreal</a></li>";
-    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=21\"><img src=\"/images/12.png\">Ottawa</a></li>";
-    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=27\"><img src=\"/images/7.png\">Tampa Bay</a></li>";
-    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=28\"><img src=\"/images/15.png\">Toronto</a></li>";
+    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=3\"><img src=\"images/11.png\">Boston</a></li>";
+    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=4\"><img src=\"images/14.png\">Buffalo</a></li>";
+    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=11\"><img src=\"images/17.png\">Detroit</a></li>";
+    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=13\"><img src=\"images/10.png\">Florida</a></li>";
+    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=16\"><img src=\"images/13.png\">Montreal</a></li>";
+    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=21\"><img src=\"images/12.png\">Ottawa</a></li>";
+    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=27\"><img src=\"images/7.png\">Tampa Bay</a></li>";
+    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=28\"><img src=\"images/15.png\">Toronto</a></li>";
     $menuTeamsItems .= "</ul></li>";
     $menuTeamsItems .= "<li><a href=\"#\">Metropolitan</a><ul>";
-    $menuTeamsItems .="<li><a href=\"ProTeam.php?Team=6\"><img src=\"/images/6.png\">Carolina</a></li>";
-    $menuTeamsItems .="<li><a href=\"ProTeam.php?Team=9\"><img src=\"/images/19.png\">Columbus</a></li>";
-    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=18\"><img src=\"/images/4.png\">New Jersey</a></li>";
-    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=20\"><img src=\"/images/3.png\">New York</a></li>";
-    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=19\"><img src=\"/images/2.png\">New York</a></li>";
-    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=22\"><img src=\"/images/5.png\">Philadelphia</a></li>";
-    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=24\"><img src=\"/images/1.png\">Pittsburgh</a></li>";
-    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=30\"><img src=\"/images/9.png\">Washington</a></li>";
+    $menuTeamsItems .="<li><a href=\"ProTeam.php?Team=6\"><img src=\"images/6.png\">Carolina</a></li>";
+    $menuTeamsItems .="<li><a href=\"ProTeam.php?Team=9\"><img src=\"images/19.png\">Columbus</a></li>";
+    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=18\"><img src=\"images/4.png\">New Jersey</a></li>";
+    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=20\"><img src=\"images/3.png\">New York</a></li>";
+    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=19\"><img src=\"images/2.png\">New York</a></li>";
+    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=22\"><img src=\"images/5.png\">Philadelphia</a></li>";
+    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=24\"><img src=\"images/1.png\">Pittsburgh</a></li>";
+    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=30\"><img src=\"images/9.png\">Washington</a></li>";
     $menuTeamsItems .= "</ul></li>";
     $menuTeamsItems .= "<li><a href=\"#\">Central</a><ul>";
-    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=7\"><img src=\"/images/18.png\">Chicago</a></li>";
-    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=8\"><img src=\"/images/25.png\">Colorado</a></li>";
-    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=10\"><img src=\"/images/28.png\">Dallas</a></li>";
-    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=15\"><img src=\"/images/21.png\">Minnesota</a></li>";
-    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=17\"><img src=\"/images/20.png\">Nashville</a></li>";
-    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=25\"><img src=\"/images/16.png\">St. Louis</a></li>";
-    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=23\"><img src=\"/images/27.png\">Utah</a></li>";
-    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=2\"><img src=\"/images/8.png\">Winnipeg</a></li>";
+    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=7\"><img src=\"images/18.png\">Chicago</a></li>";
+    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=8\"><img src=\"images/25.png\">Colorado</a></li>";
+    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=10\"><img src=\"images/28.png\">Dallas</a></li>";
+    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=15\"><img src=\"images/21.png\">Minnesota</a></li>";
+    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=17\"><img src=\"images/20.png\">Nashville</a></li>";
+    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=25\"><img src=\"images/16.png\">St. Louis</a></li>";
+    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=23\"><img src=\"images/27.png\">Utah</a></li>";
+    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=2\"><img src=\"images/8.png\">Winnipeg</a></li>";
     $menuTeamsItems .= "</ul></li>";
     $menuTeamsItems .= "<li><a href=\"#\">Pacific</a><ul>";
-    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=1\"><img src=\"/images/29.png\">Anaheim</a></li>";
-    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=5\"><img src=\"/images/23.png\">Calgary</a></li>";
-    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=12\"><img src=\"/images/22.png\">Edmonton</a></li>";
-    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=14\"><img src=\"/images/26.png\">Los Angeles</a></li>";
-    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=26\"><img src=\"/images/30.png\">San Jose</a></li>";
-    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=32\"><img src=\"/images/33.png\">Seattle</a></li>";
-    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=29\"><img src=\"/images/24.png\">Vancouver</a></li>";
-    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=31\"><img src=\"/images/32.png\">Vegas</a></li>";
+    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=1\"><img src=\"images/29.png\">Anaheim</a></li>";
+    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=5\"><img src=\"images/23.png\">Calgary</a></li>";
+    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=12\"><img src=\"images/22.png\">Edmonton</a></li>";
+    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=14\"><img src=\"images/26.png\">Los Angeles</a></li>";
+    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=26\"><img src=\"images/30.png\">San Jose</a></li>";
+    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=32\"><img src=\"images/33.png\">Seattle</a></li>";
+    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=29\"><img src=\"images/24.png\">Vancouver</a></li>";
+    $menuTeamsItems .= "<li><a href=\"ProTeam.php?Team=31\"><img src=\"images/32.png\">Vegas</a></li>";
     $menuTeamsItems .= "</ul></li>";
 
 
@@ -133,50 +168,50 @@ if ($MenuQueryOK == True) {
     $menuMobileTeamsItems .= "<div class=\"row px-0\">";
         $menuMobileTeamsItems .= "<div class=\"col px-0 mx-0\">";
             $menuMobileTeamsItems .= "<div class=\"bg-warning subMenuHighlight\"> Atlantic </div>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=3\"><img src=\"/images/11.png\">BOS</a>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=4\"><img src=\"/images/14.png\">BUF</a>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=11\"><img src=\"/images/17.png\">DET</a>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=13\"><img src=\"/images/10.png\">FLA</a>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=16\"><img src=\"/images/13.png\">MTL</a>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=21\"><img src=\"/images/12.png\">OTT</a>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=27\"><img src=\"/images/7.png\">TB</a>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=28\"><img src=\"/images/15.png\">TOR</a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=3\"><img src=\"images/11.png\">BOS</a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=4\"><img src=\"images/14.png\">BUF</a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=11\"><img src=\"images/17.png\">DET</a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=13\"><img src=\"images/10.png\">FLA</a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=16\"><img src=\"images/13.png\">MTL</a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=21\"><img src=\"images/12.png\">OTT</a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=27\"><img src=\"images/7.png\">TB</a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=28\"><img src=\"images/15.png\">TOR</a>";
         $menuMobileTeamsItems .= "</div>";
 
         $menuMobileTeamsItems .= "<div class=\"col  px-0 mx-0\">";
             $menuMobileTeamsItems .= "<div class=\"bg-warning subMenuHighlight\"> Metropolitan </div>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=6\"><img src=\"/images/6.png\"><span>CAR</span></a>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=9\"><img src=\"/images/19.png\">CBJ</a>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=18\"><img src=\"/images/4.png\">NJ</a>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=20\"><img src=\"/images/3.png\">NYR</a>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=19\"><img src=\"/images/2.png\">NYI</a>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=22\"><img src=\"/images/5.png\">PHL</a>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=24\"><img src=\"/images/1.png\">PIT</a>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=30\"><img src=\"/images/9.png\">WSH</a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=6\"><img src=\"images/6.png\"><span>CAR</span></a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=9\"><img src=\"images/19.png\">CBJ</a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=18\"><img src=\"images/4.png\">NJ</a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=20\"><img src=\"images/3.png\">NYR</a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=19\"><img src=\"images/2.png\">NYI</a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=22\"><img src=\"images/5.png\">PHL</a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=24\"><img src=\"images/1.png\">PIT</a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=30\"><img src=\"images/9.png\">WSH</a>";
         $menuMobileTeamsItems .= "</div>";
 
         $menuMobileTeamsItems .= "<div class=\"col  px-0 mx-0\">";
             $menuMobileTeamsItems .= "<div class=\"bg-warning subMenuHighlight\"> Central </div>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=7\"><img src=\"/images/18.png\">CHI</a>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=8\"><img src=\"/images/25.png\">COL</a>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=10\"><img src=\"/images/28.png\">DAL</a>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=15\"><img src=\"/images/21.png\">MIN</a>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=17\"><img src=\"/images/20.png\">NSH</a>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=25\"><img src=\"/images/16.png\">STL</a>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=23\"><img src=\"/images/27.png\">ARI</a>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=2\"><img src=\"/images/8.png\">WPG</a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=7\"><img src=\"images/18.png\">CHI</a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=8\"><img src=\"images/25.png\">COL</a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=10\"><img src=\"images/28.png\">DAL</a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=15\"><img src=\"images/21.png\">MIN</a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=17\"><img src=\"images/20.png\">NSH</a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=25\"><img src=\"images/16.png\">STL</a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=23\"><img src=\"images/27.png\">ARI</a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=2\"><img src=\"images/8.png\">WPG</a>";
         $menuMobileTeamsItems .= "</div>";
 
         $menuMobileTeamsItems .= "<div class=\"col  px-0 mx-0\">";
             $menuMobileTeamsItems .= "<div class=\"bg-warning subMenuHighlight\"> Pacific </div>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=1\"><img src=\"/images/29.png\">ANA</a>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=5\"><img src=\"/images/23.png\">CGY</a>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=12\"><img src=\"/images/22.png\">EDM</a>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=14\"><img src=\"/images/26.png\">LA</a>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=26\"><img src=\"/images/30.png\">SJ</a>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=32\"><img src=\"/images/33.png\">SEA</a>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=29\"><img src=\"/images/24.png\">VAN</a>";
-            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=31\"><img src=\"/images/32.png\">VGK</a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=1\"><img src=\"images/29.png\">ANA</a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=5\"><img src=\"images/23.png\">CGY</a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=12\"><img src=\"images/22.png\">EDM</a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=14\"><img src=\"images/26.png\">LA</a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=26\"><img src=\"images/30.png\">SJ</a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=32\"><img src=\"images/33.png\">SEA</a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=29\"><img src=\"images/24.png\">VAN</a>";
+            $menuMobileTeamsItems .= "<a href=\"ProTeam.php?Team=31\"><img src=\"images/32.png\">VGK</a>";
         $menuMobileTeamsItems .= "</div>";
 
     $menuMobileTeamsItems .= "</div>";  
@@ -215,6 +250,8 @@ if ($MenuQueryOK == True) {
                 <li><a href="Coaches.php">Coaches</a></li>
                 <li><a href="PlayersRoster.php?Team=0&Type=0">UFA</a></li>
                 <li><a href="Transaction.php?TradeLogHistory">Latest Transaction</a></li>
+                <li><a href="DraftRanking2025.php">Entry Draft 2025</a></li>
+                <li><a href="LHSQC_Cap_Summary.php">Salary Cap Summary</a></li>
                 <!-- <li><a href="PlayerContracts.php">Contracts</a></li> -->
             </ul>
         </li>
@@ -252,10 +289,15 @@ if ($MenuQueryOK == True) {
                 <li><a href="WebClientRoster.php?TeamID=<?php echo $CookieTeamNumber ?>">Roster Editor</a></li>
                 <li><a href="WebClientLines.php?TeamID=<?php echo $CookieTeamNumber ?>">Lines Editor NHL</a></li>
                 <li><a href="WebClientLines.php?League=Farm&TeamID=<?php echo $CookieTeamNumber ?>">Lines Editor AHL</a></li>
+                <li><a href="WebClientTeam.php">Gestion</a></li>
                 <li><a href="TeamSalaryCapDetail.php?TeamID=<?php echo $CookieTeamNumber ?>">Contract Overview</a></li>
                 <li><a href="PlayersCompare.php">Players Compare</a></li>
                 <li><a href="Trade.php">Trade</a></li>
                 <li><a href="EntryDraftProjection.php">Draft Projection</a></li>
+                <li><a href="Messages.php" id="messages-link">
+                    <i class="fas fa-envelope me-1"></i>Messagerie
+                    <span id="message-badge" class="badge bg-danger ms-1" style="display: none;">0</span>
+                </a></li>
                 <!-- <li><a href="upload.php">Upload Lines</a></li> -->
             </ul>
         </li>
@@ -266,6 +308,21 @@ if ($MenuQueryOK == True) {
         <?php else: ?>
             <li><a href="Login.php" class="button yellow-bg">LOGIN</a></li>
         <?php endif; ?>
+
+        <!-- Bouton Discord -->
+        <li><a href="https://discord.com/channels/576758362440597526/1279079731924307981" target="_blank" class="discord-btn" title="Ouvrir le salon Discord">
+            <img src="images/Discord.png" alt="Discord" class="discord-logo">
+        </a></li>
+
+        <!-- Bouton Mail -->
+        <li><a href="Messages.php" class="mail-btn<?php echo $hasUnreadMessages ? ' has-new-messages' : ''; ?>" title="Messagerie<?php echo $hasUnreadMessages ? ' - ' . $unreadMessagesCount . ' nouveau(x) message(s)!' : ''; ?>">
+            <div class="mail-icon-container">
+                <img src="images/Mail.png" alt="Mail" class="mail-logo">
+                <?php if ($hasUnreadMessages && $unreadMessagesCount > 0): ?>
+                    <span class="mail-notification-badge"><?php echo $unreadMessagesCount; ?></span>
+                <?php endif; ?>
+            </div>
+        </a></li>
     </ul>
 </nav>
 
@@ -279,31 +336,36 @@ if ($MenuQueryOK == True) {
             </div>
         </li>		
 
-        <li><div> Stats  <i class="fa fa-chevron-right"></i></div><ul> <?php echo $menuStatsItems; ?> </ul></li>
-        
+        <li><div> Stats  <i class="fas fa-chevron-right"></i></div><ul> <?php echo $menuStatsItems; ?> </ul></li>
 
-        <?php echo $menuTradesItems; ?>  
 
-        <li><div> Teams  <i class="fa fa-chevron-right"></i></div><ul> <?php echo $menuMobileTeamsItems; ?> </ul></li>
+        <?php echo $menuTradesItems; ?>
+
+        <li><div> Teams  <i class="fas fa-chevron-right"></i></div><ul> <?php echo $menuMobileTeamsItems; ?> </ul></li>
 
        
    
 
 <li>
-    <div> GM's Corner  <i class="fa fa-chevron-right"></i></div>
+    <div> GM's Corner  <i class="fas fa-chevron-right"></i></div>
     <ul>
         <li><a href="WebClientRoster.php?TeamID=<?php echo $CookieTeamNumber ?>">Roster Editor</a></li>
         <li><a href="WebClientLines.php?TeamID=<?php echo $CookieTeamNumber ?>">Lines Editor NHL</a></li>
         <li><a href="WebClientLines.php?League=Farm&TeamID=<?php echo $CookieTeamNumber ?>">Lines Editor AHL</a></li>
+        <li><a href="WebClientTeam.php">Gestion</a></li>
         <li><a href="TeamSalaryCapDetail.php?TeamID=<?php echo $CookieTeamNumber ?>">Contract Overview</a></li>
         <li><a href="PlayersCompare.php">Players Compare</a></li>
         <li><a href="Trade.php">Trade</a></li>
         <li><a href="EntryDraftProjection.php">Draft Projection</a></li>
+        <li><a href="Messages.php" id="messages-link-mobile">
+            <i class="fas fa-envelope me-1"></i>Messagerie
+            <span id="message-badge-mobile" class="badge bg-danger ms-1" style="display: none;">0</span>
+        </a></li>
     </ul>
-</li>  
+</li>
         
         
-        <li><div> League <i class="fa fa-chevron-right"></i></div>
+        <li><div> League <i class="fas fa-chevron-right"></i></div>
             <ul>
                 <li><a href="PlayersRoster.php">Players</a></li>
                 <li><a href="GoaliesRoster.php">Goalies</a></li>
@@ -311,16 +373,18 @@ if ($MenuQueryOK == True) {
                 <li><a href="Coaches.php">Coaches</a></li>
                 <li><a href="PlayersRoster.php?Type=0&FreeAgent=1">UFA</a></li>
                 <li><a href="Transaction.php?TradeLogHistory">Latest Transaction</a></li>
+                <li><a href="DraftRanking2025.php">Entry Draft 2025</a></li>
+                <li><a href="LHSQC_Cap_Summary.php">Salary Cap Summary</a></li>
             </ul>
         </li>
 
-        <li><div> Schedule  <i class="fa fa-chevron-right"></i></div>
+        <li><div> Schedule  <i class="fas fa-chevron-right"></i></div>
             <ul>
                 <li><a href="Schedule.php">LHSQC</a></li>
                 <li><a href="Schedule.php?Farm">AHL</a></li>
             </ul>
         </li>
-        <li><div> Standing  <i class="fa fa-chevron-right"></i></div>
+        <li><div> Standing  <i class="fas fa-chevron-right"></i></div>
             <ul>
                 <li><a href="Standing.php">LHSQC</a></li>
                 <li><a href="StandingAhl.php?Farm">AHL</a></li>
@@ -332,14 +396,74 @@ if ($MenuQueryOK == True) {
             <li><a href="Login.php?Logoff=STHS" class="button yellow-bg">LOGOUT</a></li>
         <?php else: ?>
             <li><a href="Login.php" class="button yellow-bg">LOGIN</a></li>
-        <?php endif; ?>     
-    </ul>	
+        <?php endif; ?>
 
-    <ul class="button-menu">			
+        <!-- Bouton Discord Mobile -->
+        <li><a href="https://discord.com/channels/576758362440597526/1279079731924307981" target="_blank" class="discord-btn-mobile" title="Ouvrir le salon Discord">
+            <img src="images/Discord.png" alt="Discord" class="discord-logo-mobile"> Discord
+        </a></li>
+
+        <!-- Bouton Mail Mobile -->
+        <li><a href="Messages.php" class="mail-btn-mobile<?php echo $hasUnreadMessages ? ' has-new-messages' : ''; ?>" title="Messagerie<?php echo $hasUnreadMessages ? ' - ' . $unreadMessagesCount . ' nouveau(x) message(s)!' : ''; ?>">
+            <div class="mail-icon-container-mobile">
+                <img src="images/Mail.png" alt="Mail" class="mail-logo-mobile"> Messages
+                <?php if ($hasUnreadMessages && $unreadMessagesCount > 0): ?>
+                    <span class="mail-notification-badge-mobile"><?php echo $unreadMessagesCount; ?></span>
+                <?php endif; ?>
+            </div>
+        </a></li>
+    </ul>
+
+    <ul class="button-menu">
         <li>
-        <i class="fa fa-bars" ></i>
+        <i class="fas fa-bars" ></i>
         </li>
-    </ul>								
+    </ul>
 </div>
 
+<!-- Script pour les notifications de messagerie -->
+<script>
+// Fonction pour vérifier les nouveaux messages
+function checkNewMessages() {
+    // Vérifier si l'utilisateur est connecté
+    <?php if ($CookieTeamNumber > 0 && $CookieTeamNumber <= 100): ?>
+    fetch('MessageAPI.php?action=checkNew')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success && data.newMessages > 0) {
+                // Mettre à jour les badges de notification
+                const badge = document.getElementById('message-badge');
+                const badgeMobile = document.getElementById('message-badge-mobile');
 
+                if (badge) {
+                    badge.textContent = data.newMessages;
+                    badge.style.display = 'inline';
+                }
+
+                if (badgeMobile) {
+                    badgeMobile.textContent = data.newMessages;
+                    badgeMobile.style.display = 'inline';
+                }
+            } else {
+                // Cacher les badges s'il n'y a pas de nouveaux messages
+                const badge = document.getElementById('message-badge');
+                const badgeMobile = document.getElementById('message-badge-mobile');
+
+                if (badge) badge.style.display = 'none';
+                if (badgeMobile) badgeMobile.style.display = 'none';
+            }
+        })
+        .catch(error => {
+            console.log('Erreur lors de la vérification des messages:', error);
+        });
+    <?php endif; ?>
+}
+
+// Vérifier les messages au chargement de la page
+document.addEventListener('DOMContentLoaded', function() {
+    checkNewMessages();
+
+    // Vérifier les nouveaux messages toutes les 30 secondes
+    setInterval(checkNewMessages, 30000);
+});
+</script>

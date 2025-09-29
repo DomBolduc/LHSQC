@@ -168,10 +168,11 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
+  min-width: 24px;
   height: 24px;
-  border-radius: 50%;
-  font-size: 0.75rem;
+  padding: 0 0.25rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
   font-weight: 700;
   color: white;
   margin-right: 0.5rem;
@@ -187,6 +188,15 @@
 
 .position-regular {
   background: var(--standings-text-muted);
+}
+
+.position-eliminated {
+  background: #6b7280;
+}
+
+/* Style pour les équipes éliminées - même apparence que les autres */
+.standings-table tbody tr:has(.position-eliminated) .team-name {
+  color: var(--standings-text-primary);
 }
 
 /* ========================================
@@ -287,9 +297,10 @@
   }
   
   .position-indicator {
-    width: 20px;
+    min-width: 20px;
     height: 20px;
-    font-size: 0.625rem;
+    font-size: 0.6rem;
+    padding: 0 0.2rem;
   }
 }
 

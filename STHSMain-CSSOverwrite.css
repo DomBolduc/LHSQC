@@ -61,28 +61,56 @@ body {
 
 
 /*  NAV MOBILE   ============================================================================= */
+.button-menu {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
 .button-menu li {
 	cursor: pointer;
 	color: #fff;
 	font-size: 30px;
 	padding: 10px 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 50px;
+	min-width: 50px;
+	list-style: none;
+}
+
+/* Fallback pour le menu hamburger si Font Awesome ne charge pas */
+.button-menu li i::before {
+	content: "☰";
+	font-family: Arial, sans-serif;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+/* Si Font Awesome charge correctement, utiliser l'icône normale */
+.button-menu li i.fas::before,
+.button-menu li i.fa::before {
+	font-family: "Font Awesome 6 Free", "Font Awesome 5 Free", "FontAwesome";
 }
 
 
 .nav-mobile {
-    width: 100vw;
-    max-width: 100vw;
-    margin: 0 auto;
-    left: 0;
-    right: 0;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
     position: relative;
     text-align: center;
+    box-sizing: border-box;
 }
 .nav-mobile-menu {
-    margin: 0 auto;
+    margin: 0;
     display: none;
-    width: 100vw;
+    width: 100%;
     text-align: center;
+    list-style: none;
+    padding: 0;
+    box-sizing: border-box;
 }
 .nav-mobile-menu.active {
     display: block;
@@ -132,6 +160,7 @@ body {
 	background: #2C2F36;
 	line-height: 44px;
 	border-top: 1px solid #E7BF3A;
+	list-style: none;
 }
 
 .nav-mobile ul li a{
@@ -152,6 +181,33 @@ body {
 .nav-mobile ul li ul li{
 	background: #3f444a;
 	border: none;
+	list-style: none;
+}
+
+.nav-mobile ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+/* Suppression complète des puces pour tous les éléments du menu mobile */
+.nav-mobile ul,
+.nav-mobile ul li,
+.nav-mobile-menu,
+.nav-mobile-menu li,
+.nav-mobile-menu ul,
+.nav-mobile-menu ul li {
+	list-style: none !important;
+	list-style-type: none !important;
+	padding-left: 0 !important;
+	margin-left: 0 !important;
+}
+
+/* Suppression des puces pour les sous-menus spécifiques */
+.nav-mobile-menu li ul,
+.nav-mobile-menu li ul li {
+	list-style: none !important;
+	list-style-type: none !important;
 }
 
 /* Hide the mobile menu by default */
@@ -499,16 +555,201 @@ header p {
 
 }
 
-div .active a {
-
-	color: #000000;
-
-	/*text-transform: uppercase;*/
-
-    font-weight: 550;
-
+/* Navigation principale - bouton Home actif en blanc */
+nav .active a {
+	color: #ffffff !important;
+	font-weight: 550;
     font-size: 14px;
+}
 
+/* Autres éléments actifs restent noirs */
+div .active a {
+	color: #000000;
+	/*text-transform: uppercase;*/
+    font-weight: 550;
+    font-size: 14px;
+}
+
+/* Bouton Discord dans la navigation principale */
+.discord-btn {
+	background-color: #5865F2 !important;
+	color: #ffffff !important;
+	padding: 8px 12px !important;
+	border-radius: 6px !important;
+	text-decoration: none !important;
+	font-size: 18px !important;
+	transition: all 0.3s ease !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	min-width: 40px !important;
+	height: 36px !important;
+}
+
+/* Logo Discord image */
+.discord-btn .discord-logo {
+	width: 20px !important;
+	height: 20px !important;
+	filter: brightness(0) invert(1) !important; /* Rend l'image blanche */
+	transition: all 0.3s ease !important;
+}
+
+.discord-btn:hover .discord-logo {
+	transform: scale(1.1) !important;
+	filter: brightness(0) invert(1) drop-shadow(0 0 3px rgba(255,255,255,0.5)) !important;
+}
+
+/* Bouton Mail dans la navigation principale */
+.mail-btn {
+	background-color: #28a745 !important; /* Vert pour la messagerie */
+	color: #ffffff !important;
+	padding: 8px 12px !important;
+	border-radius: 6px !important;
+	text-decoration: none !important;
+	font-size: 18px !important;
+	transition: all 0.3s ease !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	min-width: 40px !important;
+	height: 36px !important;
+}
+
+.mail-btn:hover {
+	background-color: #218838 !important;
+	color: #ffffff !important;
+	text-decoration: none !important;
+	transform: translateY(-1px) !important;
+	box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3) !important;
+}
+
+/* Container pour l'icône mail avec pastille */
+.mail-icon-container {
+	position: relative !important;
+	display: inline-block !important;
+}
+
+/* Logo Mail image */
+.mail-btn .mail-logo {
+	width: 20px !important;
+	height: 20px !important;
+	filter: brightness(0) invert(1) !important; /* Rend l'image blanche */
+	transition: all 0.3s ease !important;
+}
+
+.mail-btn:hover .mail-logo {
+	transform: scale(1.1) !important;
+	filter: brightness(0) invert(1) drop-shadow(0 0 3px rgba(255,255,255,0.5)) !important;
+}
+
+/* Pastille de notification pour les nouveaux messages */
+.mail-notification-badge {
+	position: absolute !important;
+	top: -8px !important;
+	right: -8px !important;
+	background-color: #ff4444 !important;
+	color: white !important;
+	border-radius: 50% !important;
+	width: 18px !important;
+	height: 18px !important;
+	font-size: 11px !important;
+	font-weight: bold !important;
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	border: 2px solid #ffffff !important;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
+	z-index: 10 !important;
+}
+
+.discord-btn:hover {
+	background-color: #4752C4 !important;
+	transform: scale(1.05) !important;
+	color: #ffffff !important;
+}
+
+/* Bouton Discord mobile */
+.discord-btn-mobile {
+	background-color: #5865F2 !important;
+	color: #ffffff !important;
+	padding: 10px 15px !important;
+	border-radius: 6px !important;
+	text-decoration: none !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	gap: 8px !important;
+	font-weight: 500 !important;
+	transition: all 0.3s ease !important;
+}
+
+.discord-btn-mobile:hover {
+	background-color: #4752C4 !important;
+	color: #ffffff !important;
+}
+
+/* Logo Discord mobile */
+.discord-btn-mobile .discord-logo-mobile {
+	width: 18px !important;
+	height: 18px !important;
+	filter: brightness(0) invert(1) !important; /* Rend l'image blanche */
+	margin-right: 8px !important;
+	vertical-align: middle !important;
+}
+
+/* Bouton Mail mobile */
+.mail-btn-mobile {
+	background-color: #28a745 !important; /* Vert pour la messagerie */
+	color: #ffffff !important;
+	padding: 12px 20px !important;
+	border-radius: 8px !important;
+	text-decoration: none !important;
+	font-size: 16px !important;
+	font-weight: 500 !important;
+	transition: all 0.3s ease !important;
+	display: flex !important;
+	align-items: center !important;
+	margin: 5px 0 !important;
+}
+
+.mail-btn-mobile:hover {
+	background-color: #218838 !important;
+	color: #ffffff !important;
+}
+
+/* Container pour l'icône mail mobile avec pastille */
+.mail-icon-container-mobile {
+	position: relative !important;
+	display: inline-flex !important;
+	align-items: center !important;
+}
+
+/* Logo Mail mobile */
+.mail-btn-mobile .mail-logo-mobile {
+	width: 18px !important;
+	height: 18px !important;
+	filter: brightness(0) invert(1) !important; /* Rend l'image blanche */
+	margin-right: 8px !important;
+	vertical-align: middle !important;
+}
+
+/* Pastille de notification mobile pour les nouveaux messages */
+.mail-notification-badge-mobile {
+	position: absolute !important;
+	top: -8px !important;
+	right: -8px !important;
+	background-color: #ff4444 !important;
+	color: white !important;
+	border-radius: 50% !important;
+	width: 16px !important;
+	height: 16px !important;
+	font-size: 10px !important;
+	font-weight: bold !important;
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	border: 1px solid #ffffff !important;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.3) !important;
+	z-index: 10 !important;
 }
 
 
@@ -1437,7 +1678,7 @@ footer .module-content {
 }
 
 .upcomingGame {
-    background-color: #e7bf3a61 !important; /* rgba(241, 200, 18, 0.904) ;*/
+    background-color: #f8f9fa !important; /* Gris clair au lieu d'orange */
     border-radius: 0%;
 }
 
@@ -2146,5 +2387,48 @@ body, html {
 @media (max-width: 890px) {
   .nav-mobile {
     display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .nav-mobile-menu {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .nav-mobile ul li {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Ajustements pour les colonnes Teams dans le menu mobile */
+  .nav-mobile-menu .row {
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .nav-mobile-menu .col {
+    padding: 0.5rem;
+    max-width: 100%;
+    flex: 1;
+  }
+
+  .nav-mobile-menu .col a {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Espacement supplémentaire pour éviter les chevauchements sur mobile */
+  .row .col-12 {
+    margin-bottom: 2rem !important;
+  }
+
+  .row .col-12:last-child {
+    margin-bottom: 1rem !important;
   }
 }

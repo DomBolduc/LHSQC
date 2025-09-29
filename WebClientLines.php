@@ -122,14 +122,154 @@
                 //$cpfields = rtrim($cpfields,",");
 
                 $bannertext = "";
-                
-                // If the updatelines submit button is clicked 
+
+                // Fonction pour obtenir les matchs par jour pour cette équipe
+                function getGamesByDayForTeam($db, $teamid, $league, $maxDays = 10) {
+                    $games = array();
+
+                    // Récupérer les paramètres de la ligue
+                    $Query = "SELECT ScheduleNextDay FROM LeagueGeneral";
+                    $LeagueGeneral = $db->querySingle($Query, true);
+                    $startDay = $LeagueGeneral['ScheduleNextDay'];
+
+                    // Récupérer les prochains matchs pour cette équipe
+                    for($day = $startDay; $day < $startDay + $maxDays; $day++) {
+                        $sql = "SELECT GameNumber, Day, VisitorTeamName, HomeTeamName, VisitorTeam, HomeTeam, ";
+                        $sql .= "CASE WHEN VisitorTeam = ". $teamid ." THEN 'at' ELSE 'vs' END AS AtVs, ";
+                        $sql .= "CASE WHEN VisitorTeam = ". $teamid ." THEN HomeTeamName ELSE VisitorTeamName END AS Opponent ";
+                        $sql .= "FROM Schedule" . $league . " ";
+                        $sql .= "WHERE (VisitorTeam = ". $teamid ." OR HomeTeam = ". $teamid .") AND Day = " . $day . " AND Play = 'False' ";
+                        $sql .= "LIMIT 1";
+
+                        $result = $db->query($sql);
+                        if($result && $row = $result->fetchArray()) {
+                            $games[$day - $startDay + 1] = array(
+                                'opponent' => $row['Opponent'],
+                                'atvs' => $row['AtVs'],
+                                'day' => $day
+                            );
+                        } else {
+                            $games[$day - $startDay + 1] = array(
+                                'opponent' => 'Pas de match',
+                                'atvs' => '',
+                                'day' => $day
+                            );
+                        }
+                    }
+                    return $games;
+                }
+
+                // Gérer la copie des alignements vers tous les jours
+                if(isset($_POST["copyToAllDays"])) {
+                    $currentDay = isset($_REQUEST["selectedDay"]) ? (int)$_REQUEST["selectedDay"] : 1;
+
+                    // Vérifier qu'on est bien sur le jour 1
+                    if($currentDay == 1) {
+                        try {
+                            $db->exec("BEGIN TRANSACTION;");
+
+                            // Obtenir toutes les données du jour 1
+                            $sql = "SELECT * FROM Team". $league ."Lines WHERE TeamNumber = " . $teamid . " AND Day = 1";
+                            $day1Data = $db->query($sql);
+                            $day1Row = $day1Data->fetchArray(SQLITE3_ASSOC);
+
+                            $sql = "SELECT * FROM Team". $league ."LinesNumberOnly WHERE TeamNumber = " . $teamid . " AND Day = 1";
+                            $day1DataNo = $db->query($sql);
+                            $day1RowNo = $day1DataNo->fetchArray(SQLITE3_ASSOC);
+
+                            if($day1Row && $day1RowNo) {
+                                // Copier vers les jours 2-10
+                                for($toDay = 2; $toDay <= 10; $toDay++) {
+                                    // S'assurer que le jour de destination existe
+                                    $checkSQL = "SELECT COUNT(*) as cnt FROM Team". $league ."Lines WHERE TeamNumber = " . $teamid . " AND Day = " . $toDay;
+                                    $count = $db->querySingle($checkSQL);
+
+                                    if ($count == 0) {
+                                        // Créer l'entrée si elle n'existe pas
+                                        $insertSQL = "INSERT INTO Team". $league ."Lines (TeamNumber, Day) VALUES (" . $teamid . ", " . $toDay . ")";
+                                        $db->exec($insertSQL);
+                                        $insertSQL = "INSERT INTO Team". $league ."LinesNumberOnly (TeamNumber, Day) VALUES (" . $teamid . ", " . $toDay . ")";
+                                        $db->exec($insertSQL);
+                                    }
+
+                                    // Construire la requête UPDATE pour Team[League]Lines
+                                    $updateFields = array();
+                                    foreach($day1Row as $field => $value) {
+                                        if($field != 'TeamNumber' && $field != 'Day') {
+                                            $updateFields[] = $field . " = '" . api_sqlite_escape($value) . "'";
+                                        }
+                                    }
+
+                                    if(!empty($updateFields)) {
+                                        $sql = "UPDATE Team". $league ."Lines SET " . implode(", ", $updateFields) . " WHERE TeamNumber = " . $teamid . " AND Day = " . $toDay;
+                                        $db->exec($sql);
+                                    }
+
+                                    // Construire la requête UPDATE pour Team[League]LinesNumberOnly
+                                    $updateFieldsNo = array();
+                                    foreach($day1RowNo as $field => $value) {
+                                        if($field != 'TeamNumber' && $field != 'Day') {
+                                            $updateFieldsNo[] = $field . " = '" . api_sqlite_escape($value) . "'";
+                                        }
+                                    }
+
+                                    if(!empty($updateFieldsNo)) {
+                                        $sql = "UPDATE Team". $league ."LinesNumberOnly SET " . implode(", ", $updateFieldsNo) . " WHERE TeamNumber = " . $teamid . " AND Day = " . $toDay;
+                                        $db->exec($sql);
+                                    }
+                                }
+
+                                $db->exec("COMMIT;");
+                                echo "<div class='alert alert-success' role='alert'>Alignements du Jour 1 copiés vers tous les autres jours avec succès!</div>";
+                            } else {
+                                $db->exec("ROLLBACK;");
+                                echo "<div class='alert alert-warning' role='alert'>Aucune donnée trouvée pour le Jour 1 à copier.</div>";
+                            }
+
+                        } catch (Exception $e) {
+                            $db->exec("ROLLBACK;");
+                            echo "<div class='alert alert-danger' role='alert'>Erreur lors de la copie: " . $e->getMessage() . "</div>";
+                        }
+                    } else {
+                        echo "<div class='alert alert-warning' role='alert'>La copie vers tous les jours n'est disponible que depuis le Jour 1.</div>";
+                    }
+                }
+
+                // Si le bouton de mise à jour des lignes est cliqué
                 if(isset($_POST["sbtUpdateLines"])){
                     $fminfo = "";
                     $dbfields = api_get_fields($db,$customOTlines,$league);
                     $fmfields = array_merge($_POST["txtLine"],$_POST["txtStrategies"]);
+                    
+                    // Utiliser le jour sélectionné
+                    $currentDay = isset($_REQUEST["selectedDay"]) ? (int)$_REQUEST["selectedDay"] : 1;
+                    
+                    try {
+                        $db->exec("BEGIN TRANSACTION;");
+                        
+                        // Pour chaque jour de 1 à 10, assurez-vous qu'il existe une entrée
+                        for($day = 1; $day <= 10; $day++) {
+                            $checkSQL = "SELECT COUNT(*) as cnt FROM Team". $league ."Lines WHERE TeamNumber = " . $teamid . " AND Day = " . $day;
+                            $count = $db->querySingle($checkSQL);
+                            
+                            if ($count == 0) {
+                                // Si le jour n'existe pas, créer une nouvelle entrée
+                                $insertSQL = "INSERT INTO Team". $league ."Lines (TeamNumber, Day) VALUES (" . $teamid . ", " . $day . ")";
+                                $db->exec($insertSQL);
+                                $insertSQL = "INSERT INTO Team". $league ."LinesNumberOnly (TeamNumber, Day) VALUES (" . $teamid . ", " . $day . ")";
+                                $db->exec($insertSQL);
+                            }
+                        }
+                        
+                        $db->exec("COMMIT;");
+                    } catch (Exception $e) {
+                        $db->exec("ROLLBACK;");
+                        echo "<div class='alert alert-danger'>Erreur lors de l'initialisation des jours : " . $e->getMessage() . "</div>";
+                        return;
+                    }
         
-                    $sql = "SELECT " . implode(" || ',' || ", $dbfields) . " AS LineValues FROM Team". $league ."Lines WHERE TeamNumber = " . $teamid . " AND Day = 1;";
+                    // Charger les données actuelles du jour sélectionné
+                    $sql = "SELECT " . implode(" || ',' || ", $dbfields) . " AS LineValues FROM Team". $league ."Lines WHERE TeamNumber = " . $teamid . " AND Day = " . $currentDay . ";";
                     $oRS = $db->query($sql);
                     $row = $oRS->fetchArray();
                     $dbinfo = $row["LineValues"];
@@ -145,10 +285,14 @@
                         
                         // Need 2 running query strings: one for the regular lines table
                         // And one for the numberonly table.
-                        // For now this will update all 10 game slots for lines.
+                        // Update only the selected day
+                        $currentDay = isset($_REQUEST["selectedDay"]) ? (int)$_REQUEST["selectedDay"] : 1;
+                        
+                        // Ne mettre à jour que le jour sélectionné
                         $sql   = "UPDATE Team". $league ."Lines SET ";
                         $sqlno = "UPDATE Team". $league ."LinesNumberOnly SET ";
                         
+                        // S'assurer que nous ne mettons à jour que le jour sélectionné
                         foreach($dbfields AS $i=>$f){
                             if($arrDB[$i] != $arrFM[$i]){
                                 if(is_numeric($arrFM[$i])){
@@ -167,12 +311,67 @@
                         $sql = rtrim($sql,", ");
                         $sqlno .= " WebClientModify = 'True' ";
                         $sqlno .= ", WebClientIP = '" . $_SERVER['REMOTE_ADDR'] . "' ";
-                        $sql .= " WHERE TeamNumber = " . $teamid . ";";
-                        $sqlno .= " WHERE TeamNumber = " . $teamid . ";";
-                        $db->busyTimeout(5000);
-                        $db->exec("pragma journal_mode=memory;");
-                        $db->exec($sql);
-                        $db->exec($sqlno);	
+                        
+                        // S'assurer que la mise à jour ne concerne que le jour sélectionné
+                        $sql .= " WHERE TeamNumber = " . $teamid . " AND Day = " . $currentDay . ";";
+                        $sqlno .= " WHERE TeamNumber = " . $teamid . " AND Day = " . $currentDay . ";";
+                        
+                        try {
+                            $db->busyTimeout(5000);
+                            $db->exec("BEGIN TRANSACTION;");
+                            $db->exec("pragma journal_mode=memory;");
+                            
+                            // Exécution des requêtes avec vérification des erreurs - uniquement pour le jour sélectionné
+                            if (trim($sql) != "UPDATE Team". $league ."Lines SET") {
+                                // Log de débogage
+                                error_log("Executing SQL for day " . $currentDay . ": " . $sql);
+                                
+                                if ($db->exec($sql) === false) {
+                                    throw new Exception("Erreur lors de la mise à jour des lignes: " . $db->lastErrorMsg());
+                                }
+                                
+                                // Vérification après mise à jour
+                                $verifySQL = "SELECT * FROM Team". $league ."Lines WHERE TeamNumber = " . $teamid . " AND Day = " . $currentDay;
+                                $verifyResult = $db->query($verifySQL);
+                                if (!$verifyResult) {
+                                    throw new Exception("Erreur de vérification après mise à jour des lignes");
+                                }
+                            }
+                            
+                            if (trim($sqlno) != "UPDATE Team". $league ."LinesNumberOnly SET") {
+                                // Log de débogage
+                                error_log("Executing SQLNO for day " . $currentDay . ": " . $sqlno);
+                                
+                                if ($db->exec($sqlno) === false) {
+                                    throw new Exception("Erreur lors de la mise à jour des numéros: " . $db->lastErrorMsg());
+                                }
+                                
+                                // Vérification après mise à jour
+                                $verifySQL = "SELECT * FROM Team". $league ."LinesNumberOnly WHERE TeamNumber = " . $teamid . " AND Day = " . $currentDay;
+                                $verifyResult = $db->query($verifySQL);
+                                if (!$verifyResult) {
+                                    throw new Exception("Erreur de vérification après mise à jour des numéros");
+                                }
+                            }
+                            
+                            // Vérifier que les données ont bien été sauvegardées
+                            $verifySQL = "SELECT COUNT(*) as cnt FROM Team". $league ."Lines WHERE TeamNumber = " . $teamid . " AND Day = " . $currentDay;
+                            $result = $db->querySingle($verifySQL);
+                            
+                            if ($result == 0) {
+                                throw new Exception("Les données n'ont pas été sauvegardées correctement");
+                            }
+                            
+                            $db->exec("COMMIT;");
+                            
+                            // Afficher un message de succès
+                            echo "<div class='alert alert-success' role='alert'>Alignement sauvegardé avec succès!</div>";
+                            
+                        } catch (Exception $e) {
+                            // En cas d'erreur, on annule la transaction
+                            $db->exec("ROLLBACK;");
+                            echo "<div class='alert alert-danger' role='alert'>Erreur: " . $e->getMessage() . "</div>";
+                        }
                         
                         $row = ($teamid > 0) ? api_dbresult_teamname($db,$teamid,$league) : array();
                         $teamname = (!empty($row)) ? $row["FullTeamName"] . " - " : "";
@@ -202,8 +401,14 @@
 
 <div id="lineeditor">
     <div class="container pagewrapper pagewrapperlineeditor ">
-      
-             <div class="lineSave pb-3 "> 
+
+             <?php
+             // Définir les variables nécessaires pour l'affichage des matchs
+             $currentDay = isset($_REQUEST['selectedDay']) ? (int)$_REQUEST['selectedDay'] : 1;
+             $gamesByDayGlobal = getGamesByDayForTeam($db, $t, $league);
+             ?>
+
+             <div class="lineSave pb-3 ">
                 <div class="row  darkText justify-content-center pt-1 m-0 px-0">
 
                     <div class="col-3 ">
@@ -213,7 +418,16 @@
                     <div class="col "> 
                         <div id="errors"></div>
                         <div id="confirmDiv" class="confirm banner"><?php if($bannertext) echo $bannertext; else  echo ""; ?>    </div>
-                        <h4 class="darkText"><?= api_make_nextgame($nextgames[1],$league);?></h4>
+                        <?php
+                        // Afficher le match du jour sélectionné
+                        $currentDayGame = isset($gamesByDayGlobal[$currentDay]) ? $gamesByDayGlobal[$currentDay] : array('opponent' => 'Pas de match', 'atvs' => '');
+                        if($currentDayGame['opponent'] != 'Pas de match') {
+                            $currentGameText = $league . " Jour " . $currentDay . ": " . $currentDayGame['atvs'] . " " . $currentDayGame['opponent'];
+                        } else {
+                            $currentGameText = $league . " Jour " . $currentDay . ": " . $currentDayGame['opponent'];
+                        }
+                        ?>
+                        <h4 class="darkText"><?= $currentGameText ?></h4>
                     </div> 
 
                     <div class="col-3"> 
@@ -225,23 +439,85 @@
        
  
 
-        <form id="submissionform" class="STHSWebClient_Form " name="frmEditLines" method="POST" onload="checkCompleteLines();">
+        <form id="submissionform" class="STHSWebClient_Form" name="frmEditLines" method="POST" onload="checkCompleteLines();">
+            <div class="container-fluid mb-3">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center">
+                            <label for="daySelect" class="me-2">Jour:</label>
+                            <select class="form-select" id="daySelect" name="selectedDay" style="width: auto;">
+                                <?php
+                                for($i = 1; $i <= 10; $i++) {
+                                    $selected = ($i == $currentDay) ? 'selected' : '';
+                                    $gameInfo = isset($gamesByDayGlobal[$i]) ? $gamesByDayGlobal[$i] : array('opponent' => 'Pas de match', 'atvs' => '');
 
-            
-                   
-           
+                                    if($gameInfo['opponent'] != 'Pas de match') {
+                                        $displayText = "Jour $i: " . $gameInfo['atvs'] . " " . $gameInfo['opponent'];
+                                    } else {
+                                        $displayText = "Jour $i: " . $gameInfo['opponent'];
+                                    }
 
-                    <?php  
+                                    echo "<option value='$i' $selected>$displayText</option>";
+                                }
+                                ?>
+                            </select>
+                            <?php if($currentDay == 1): ?>
+                            <button type="button" class="btn btn-outline-primary ms-2" onclick="copyToAllDays()">
+                                <i class="fas fa-copy"></i> Copier vers tous les jours
+                            </button>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-outline-secondary me-2" onclick="navigateDay('prev')">
+                                <i class="fas fa-chevron-left"></i> Jour précédent
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary" onclick="navigateDay('next')">
+                                Jour suivant <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <?php
                         $nextgames = api_get_nextgames($db,$t); // Create a next 10 games array to see the games both Pro and Farm will play.
-                                                
-                        if($league == "Pro"){ $status1 = 3; $isPro = true;  } // Set Pro variables  
+
+
+
+                        if($league == "Pro"){ $status1 = 3; $isPro = true;  } // Set Pro variables
                         else                { $status1 = 1; $isPro = false; } // Set Farm variables
                         
-                        // Select all the lines and players in them for the next game.
+                        // Select all the lines and players in them for the selected day.
                         $sql = "SELECT l.* FROM Team". $league ."Lines AS l LEFT JOIN Team". $league ."Info AS t ON t.Number = l.TeamNumber ";
-                        $sql .= "WHERE t.Number = '" . $teamid . "' AND Day = 1 ";
+                        $sql .= "WHERE t.Number = '" . $teamid . "' AND Day = " . $currentDay . " ";
                         $oRS = $db->query($sql);
                         $row = $oRS->fetchArray();
+
+                        // Si aucune donnée n'existe pour ce jour, créer une entrée vide
+                        if (!$row) {
+                            // Vérifier si le jour 1 existe pour copier la structure
+                            $sql = "SELECT l.* FROM Team". $league ."Lines AS l WHERE l.TeamNumber = '" . $teamid . "' AND Day = 1 ";
+                            $oRS = $db->query($sql);
+                            $day1Row = $oRS->fetchArray();
+
+                            if ($day1Row) {
+                                // Créer une nouvelle entrée pour ce jour en copiant la structure du jour 1 mais avec des valeurs vides pour les joueurs
+                                $insertSQL = "INSERT INTO Team". $league ."Lines (TeamNumber, Day) VALUES (" . $teamid . ", " . $currentDay . ")";
+                                $db->exec($insertSQL);
+                                $insertSQL = "INSERT INTO Team". $league ."LinesNumberOnly (TeamNumber, Day) VALUES (" . $teamid . ", " . $currentDay . ")";
+                                $db->exec($insertSQL);
+
+                                // Recharger les données du jour créé
+                                $sql = "SELECT l.* FROM Team". $league ."Lines AS l WHERE l.TeamNumber = '" . $teamid . "' AND Day = " . $currentDay . " ";
+                                $oRS = $db->query($sql);
+                                $row = $oRS->fetchArray();
+                            } else {
+                                // Si même le jour 1 n'existe pas, créer une structure de base
+                                $row = array();
+                            }
+                        }
 
                         //log2console($row);        
                         // Fill in arrays needed. // tabs = line pages, 	blocks =  section per page, positions = different position combination for the blocks,	strategy = strategy slider info.  
@@ -739,11 +1015,49 @@
 		}else{
 			echo "<div class=\"STHSDivInformationMessage\">" . $NoUserLogin . "<br /><br /></div>";		
 		}
-
-
 ?>
 
-  
+<script type="text/javascript">
+    function navigateDay(direction) {
+        const select = document.getElementById('daySelect');
+        const currentDay = parseInt(select.value);
+        let newDay = currentDay;
+
+        if (direction === 'prev' && currentDay > 1) {
+            newDay = currentDay - 1;
+        } else if (direction === 'next' && currentDay < 10) {
+            newDay = currentDay + 1;
+        }
+
+        if (newDay !== currentDay) {
+            const currentUrl = new URL(window.location);
+            currentUrl.searchParams.set('selectedDay', newDay);
+            window.location.href = currentUrl.toString();
+        }
+    }
+
+    function copyToAllDays() {
+        if (confirm('Voulez-vous copier les alignements du jour 1 vers tous les autres jours (2-10)?')) {
+            // Créer un champ caché pour indiquer l'action de copie vers tous les jours
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'copyToAllDays';
+            input.value = 'true';
+            document.getElementById('submissionform').appendChild(input);
+            
+            // Soumettre le formulaire
+            document.getElementById('submissionform').submit();
+        }
+    }
+
+    // Ajouter un écouteur d'événements pour le changement de jour
+    document.getElementById('daySelect').addEventListener('change', function() {
+        const selectedDay = this.value;
+        const currentUrl = new URL(window.location);
+        currentUrl.searchParams.set('selectedDay', selectedDay);
+        window.location.href = currentUrl.toString();
+    });
+</script>
 
 <?php
 	// Close the db connection
