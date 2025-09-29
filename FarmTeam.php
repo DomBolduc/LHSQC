@@ -413,7 +413,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
             
             <!-- Table des joueurs avec ratings -->
             <div class="roster-container">
-                <table class="roster-table" style="width: 100%; font-size: 10px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
+                <table class="roster-table tablesorter STHSFarmTeamPlayerRoster_Table" style="width: 100%; font-size: 10px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
                 <thead>
                         <tr style="background: #f5f5f5; border-bottom: 2px solid #ddd;">
                             <th style="width: 112px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: left; font-weight: bold;">Player</th>
@@ -532,7 +532,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
 
             <h3>Goaltenders</h3>
             <div class="roster-container">
-                <table class="roster-table" style="width: 100%; font-size: 10px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
+                <table class="roster-table tablesorter STHSFarmTeamGoalieRoster_Table" style="width: 100%; font-size: 10px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
                 <thead>
                         <tr style="background: #f5f5f5; border-bottom: 2px solid #ddd;">
                             <th style="width: 90px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: left; font-weight: bold;">Player</th>
@@ -710,7 +710,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
             
             <!-- Table des statistiques des joueurs -->
             <div class="stats-container">
-                <table class="stats-table" style="width: 100%; font-size: 10px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
+                <table class="stats-table tablesorter STHSFarmTeamPlayerStats_Table" style="width: 100%; font-size: 10px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
                 <thead>
                         <tr style="background: #f5f5f5; border-bottom: 2px solid #ddd;">
                             <th style="width: 120px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: left; font-weight: bold;">Player</th>
@@ -806,7 +806,7 @@ echo "<title>" . $LeagueName . " - " . $TeamName . " (Farm)</title>";
 
             <h3>Goaltenders Statistics</h3>
             <div class="stats-container">
-                <table class="stats-table" style="width: 100%; font-size: 10px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
+                <table class="stats-table tablesorter STHSFarmTeamGoalieStats_Table" style="width: 100%; font-size: 10px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
                 <thead>
                         <tr style="background: #f5f5f5; border-bottom: 2px solid #ddd;">
                             <th style="width: 120px !important; padding: 4px 2px !important; border: 1px solid #ddd; text-align: left; font-weight: bold;">Player</th>
@@ -1871,6 +1871,25 @@ document.addEventListener('DOMContentLoaded', function() {
             const targetId = this.getAttribute('href').substring(1);
             document.getElementById(targetId).classList.add('active');
         });
+    });
+});
+
+$(function() {
+	$(".STHSFarmTeamPlayerRoster_Table").tablesorter({
+        sortList: [[20,1]],
+        widgets: ['staticRow']
+    });
+	$(".STHSFarmTeamGoalieRoster_Table").tablesorter({
+        sortList: [[17,1]],
+        widgets: ['staticRow']
+    });
+	$(".STHSFarmTeamPlayerStats_Table").tablesorter({
+        sortList: [[5,1]],
+        widgets: ['staticRow']
+    });
+	$(".STHSFarmTeamGoalieStats_Table").tablesorter({
+        sortList: [[2,1]],
+        widgets: ['staticRow']
     });
 });
 </script>
