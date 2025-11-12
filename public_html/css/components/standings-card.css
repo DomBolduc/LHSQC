@@ -1,0 +1,459 @@
+/* ========================================
+   STANDINGS CARD - DESIGN MODERNE
+   ========================================
+   
+   Composant moderne pour afficher les classements
+   Design inspiré des sites sportifs modernes
+   ======================================== */
+
+/* ========================================
+   VARIABLES CSS
+   ======================================== */
+:root {
+  --standings-bg: #ffffff;
+  --standings-header-bg: linear-gradient(135deg, #1e40af, #3b82f6);
+  --standings-border: #e5e7eb;
+  --standings-hover: #f8fafc;
+  --standings-text-primary: #1f2937;
+  --standings-text-secondary: #6b7280;
+  --standings-text-muted: #9ca3af;
+  --standings-playoff-bg: #10b981;
+  --standings-wildcard-bg: #f59e0b;
+  --standings-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --standings-shadow-hover: 0 8px 25px -5px rgba(0, 0, 0, 0.15);
+  --standings-radius: 12px;
+  --standings-transition: all 0.3s ease;
+}
+
+/* ========================================
+   CONTAINER PRINCIPAL
+   ======================================== */
+.standings-card {
+  background: var(--standings-bg);
+  border-radius: var(--standings-radius);
+  box-shadow: var(--standings-shadow);
+  overflow: hidden;
+  transition: var(--standings-transition);
+  border: 1px solid var(--standings-border);
+  margin-bottom: 1.5rem;
+}
+
+.standings-card:hover {
+  box-shadow: var(--standings-shadow-hover);
+  transform: translateY(-2px);
+}
+
+/* ========================================
+   EN-TÊTE DE CARTE
+   ======================================== */
+.standings-header {
+  background: var(--standings-header-bg);
+  color: white;
+  padding: 1rem 1.5rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-align: center;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  position: relative;
+}
+
+.standings-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+}
+
+/* ========================================
+   CONTENU DE LA CARTE
+   ======================================== */
+.standings-content {
+  padding: 0;
+}
+
+/* ========================================
+   TABLEAU MODERNE
+   ======================================== */
+.standings-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.standings-table thead {
+  background: #f8fafc;
+  border-bottom: 2px solid var(--standings-border);
+}
+
+.standings-table th {
+  padding: 0.75rem 0.5rem;
+  font-weight: 600;
+  color: var(--standings-text-primary);
+  text-align: center;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: none;
+}
+
+.standings-table th:first-child {
+  text-align: left;
+  padding-left: 1rem;
+}
+
+.standings-table th:nth-child(2) {
+  text-align: center;
+  width: 40px;
+}
+
+.standings-table th:nth-child(3) {
+  text-align: left;
+}
+
+/* ========================================
+   LIGNES DU TABLEAU
+   ======================================== */
+.standings-table tbody tr {
+  transition: var(--standings-transition);
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.standings-table tbody tr:hover {
+  background: var(--standings-hover);
+}
+
+.standings-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.standings-table td {
+  padding: 0.75rem 0.5rem;
+  text-align: center;
+  color: var(--standings-text-primary);
+  font-weight: 500;
+  border: none;
+  vertical-align: middle;
+}
+
+.standings-table td:first-child {
+  text-align: left;
+  padding-left: 1rem;
+  font-weight: 600;
+  color: var(--standings-text-secondary);
+}
+
+.standings-table td:nth-child(2) {
+  text-align: center;
+  width: 40px;
+  padding: 0.75rem 0.25rem;
+}
+
+.standings-table td:nth-child(3) {
+  text-align: left;
+  font-weight: 600;
+  color: var(--standings-text-primary);
+}
+
+/* ========================================
+   INDICATEURS DE POSITION
+   ======================================== */
+.position-indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 0.25rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: white;
+  margin-right: 0.5rem;
+}
+
+.position-playoff {
+  background: var(--standings-playoff-bg);
+}
+
+.position-wildcard {
+  background: var(--standings-wildcard-bg);
+}
+
+.position-regular {
+  background: var(--standings-text-muted);
+}
+
+.position-eliminated {
+  background: #6b7280;
+}
+
+/* Style pour les équipes éliminées - même apparence que les autres */
+.standings-table tbody tr:has(.position-eliminated) .team-name {
+  color: var(--standings-text-primary);
+}
+
+/* ========================================
+   LOGOS D'ÉQUIPES
+   ======================================== */
+.team-info {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  width: 100%; /* Utiliser toute la largeur de la cellule */
+}
+
+.team-logo {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  border-radius: 4px;
+  display: block;
+  margin: 0 auto;
+}
+
+.team-name {
+  font-weight: 600;
+  color: var(--standings-text-primary);
+  flex: 1; /* Prendre l'espace restant après le logo */
+  text-align: left;
+}
+
+/* ========================================
+   EN-TÊTES DE DIVISION
+   ======================================== */
+.division-header {
+  background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+  font-weight: 700;
+  color: var(--standings-text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.75rem;
+  padding: 0.75rem 1rem !important;
+  text-align: left !important;
+  border-top: 2px solid var(--standings-border);
+  position: relative;
+}
+
+.division-header::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--standings-header-bg);
+}
+
+/* ========================================
+   STATISTIQUES MISES EN ÉVIDENCE
+   ======================================== */
+.stat-highlight {
+  font-weight: 700;
+  color: var(--standings-text-primary);
+}
+
+.points-column {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #1e40af;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 768px) {
+  .standings-card {
+    margin-bottom: 1rem;
+    border-radius: 8px;
+  }
+
+  .standings-header {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+  }
+
+  .standings-table {
+    font-size: 0.8rem; /* Légèrement plus grand pour mobile */
+    table-layout: fixed; /* Force les colonnes à utiliser tout l'espace */
+  }
+
+  .standings-table th,
+  .standings-table td {
+    padding: 0.75rem 0.5rem; /* Padding augmenté pour plus d'espace */
+  }
+
+  .standings-table th:first-child,
+  .standings-table td:first-child {
+    padding-left: 1rem;
+    width: 15%; /* Largeur fixe pour la colonne PO */
+  }
+
+  .standings-table th:nth-child(2),
+  .standings-table td:nth-child(2) {
+    width: 15%; /* Largeur fixe pour la colonne Logo */
+    text-align: center;
+  }
+
+  .standings-table th:nth-child(3),
+  .standings-table td:nth-child(3) {
+    width: 35%; /* Plus d'espace pour le nom d'équipe */
+    text-align: left;
+  }
+
+  /* Colonnes statistiques - répartition égale de l'espace restant */
+  .standings-table th:nth-child(4),
+  .standings-table td:nth-child(4),
+  .standings-table th:nth-child(5),
+  .standings-table td:nth-child(5),
+  .standings-table th:nth-child(6),
+  .standings-table td:nth-child(6),
+  .standings-table th:nth-child(7),
+  .standings-table td:nth-child(7),
+  .standings-table th:nth-child(8),
+  .standings-table td:nth-child(8) {
+    width: 7%; /* 35% restant divisé par 5 colonnes */
+    text-align: center;
+  }
+
+  .team-logo {
+    width: 22px;
+    height: 22px;
+  }
+
+  .position-indicator {
+    min-width: 22px;
+    height: 22px;
+    font-size: 0.65rem;
+    padding: 0 0.3rem;
+  }
+
+  /* Optimisation du contenu pour mobile */
+  .team-info {
+    width: 100%; /* Utiliser toute la largeur disponible */
+    justify-content: flex-start;
+    gap: 0.5rem;
+  }
+
+  .team-name {
+    flex: 1; /* Prendre tout l'espace restant après le logo */
+    text-align: left;
+    font-size: 0.8rem;
+    line-height: 1.2;
+    word-wrap: break-word;
+  }
+}
+
+@media (max-width: 480px) {
+  .standings-table {
+    font-size: 0.75rem; /* Taille de police adaptée aux petits écrans */
+  }
+
+  .standings-table th,
+  .standings-table td {
+    padding: 0.5rem 0.25rem; /* Padding augmenté pour plus de lisibilité */
+  }
+
+  .standings-table th:first-child,
+  .standings-table td:first-child {
+    padding-left: 0.75rem;
+    width: 12%; /* Réduction pour plus d'espace aux autres colonnes */
+  }
+
+  .standings-table th:nth-child(2),
+  .standings-table td:nth-child(2) {
+    width: 12%; /* Logo plus compact */
+  }
+
+  .standings-table th:nth-child(3),
+  .standings-table td:nth-child(3) {
+    width: 40%; /* Plus d'espace pour le nom d'équipe sur petit écran */
+  }
+
+  /* Colonnes statistiques - répartition de l'espace restant (36%) */
+  .standings-table th:nth-child(4),
+  .standings-table td:nth-child(4),
+  .standings-table th:nth-child(5),
+  .standings-table td:nth-child(5),
+  .standings-table th:nth-child(6),
+  .standings-table td:nth-child(6),
+  .standings-table th:nth-child(7),
+  .standings-table td:nth-child(7),
+  .standings-table th:nth-child(8),
+  .standings-table td:nth-child(8) {
+    width: 7.2%; /* 36% divisé par 5 colonnes */
+  }
+
+  .team-info {
+    gap: 0.25rem;
+    width: 100%; /* Utiliser toute la largeur disponible */
+    justify-content: flex-start;
+  }
+
+  .team-name {
+    flex: 1; /* Prendre tout l'espace restant */
+    text-align: left;
+    font-size: 0.75rem;
+    line-height: 1.1;
+    word-wrap: break-word;
+    overflow: hidden;
+  }
+
+  .team-logo {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0; /* Empêcher le logo de rétrécir */
+  }
+
+  .position-indicator {
+    min-width: 18px;
+    height: 18px;
+    font-size: 0.6rem;
+    flex-shrink: 0; /* Empêcher l'indicateur de rétrécir */
+  }
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.standings-card {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* ========================================
+   THÈME SOMBRE (OPTIONNEL)
+   ======================================== */
+[data-theme="dark"] .standings-card {
+  --standings-bg: #1f2937;
+  --standings-border: #374151;
+  --standings-hover: #374151;
+  --standings-text-primary: #f9fafb;
+  --standings-text-secondary: #d1d5db;
+  --standings-text-muted: #9ca3af;
+}
+
+[data-theme="dark"] .standings-table thead {
+  background: #374151;
+}
+
+[data-theme="dark"] .division-header {
+  background: linear-gradient(135deg, #374151, #4b5563);
+}

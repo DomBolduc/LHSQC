@@ -1,0 +1,433 @@
+/**
+ * Modern Player Report Styles
+ * Clean and cohesive design for player profile pages
+ */
+
+/* ========================================
+   MAIN CONTAINER
+   ======================================== */
+.player-report-main {
+    background: #f8f9fa;
+    min-height: 100vh;
+    padding: 40px 0;
+}
+
+.player-report-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ========================================
+   HEADER SECTION
+   ======================================== */
+.player-header-section {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e9ecef;
+}
+
+.player-title {
+    color: #212529;
+}
+
+.player-name {
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+.player-number {
+    color: #007bff;
+    font-size: 1.8rem;
+    margin-left: 15px;
+    font-weight: 500;
+}
+
+.player-team-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.team-name {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #495057;
+}
+
+.position-badge {
+    background: #007bff;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ========================================
+   PROFILE CARD
+   ======================================== */
+.player-profile-card {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e9ecef;
+}
+
+.player-photo-container {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.player-photo {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #e9ecef;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.player-photo:hover {
+    transform: scale(1.02);
+}
+
+.player-details {
+    padding: 0 15px;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #e9ecef;
+    margin-bottom: 5px;
+}
+
+.detail-item:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    font-weight: 600;
+    color: #495057;
+    font-size: 0.9rem;
+}
+
+.detail-value {
+    font-weight: 500;
+    color: #212529;
+    font-size: 0.95rem;
+}
+
+.cap-hit {
+    color: #28a745;
+    font-weight: 700;
+}
+
+.point-streak {
+    color: #007bff;
+    font-weight: 700;
+}
+
+.team-logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.team-logo {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    transition: transform 0.2s ease;
+}
+
+.team-logo:hover {
+    transform: scale(1.05);
+}
+
+.no-team-logo {
+    text-align: center;
+    padding: 20px;
+}
+
+/* ========================================
+   STATS CARDS
+   ======================================== */
+.stats-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e9ecef;
+    transition: box-shadow 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.stats-card:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+.card-header {
+    background: #f8f9fa;
+    color: #495057;
+    padding: 20px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.card-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #2c3e50;
+}
+
+.card-body {
+    padding: 25px;
+}
+
+/* ========================================
+   RATING BARS
+   ======================================== */
+.rating-item {
+    margin-bottom: 15px;
+}
+
+.rating-label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 5px;
+}
+
+.rating-bar {
+    position: relative;
+    background: #e9ecef;
+    height: 25px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.rating-fill {
+    height: 100%;
+    background: #28a745;
+    border-radius: 12px;
+    transition: width 0.8s ease;
+    position: relative;
+}
+
+.rating-value {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.skills-title {
+    color: #495057;
+    font-weight: 600;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.1rem;
+}
+
+/* ========================================
+   STATS GRID
+   ======================================== */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.stat-item {
+    background: #f8f9fa;
+    padding: 16px;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid #e9ecef;
+    transition: all 0.2s ease;
+}
+
+.stat-item:hover {
+    background: #e9ecef;
+    transform: translateY(-1px);
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #212529;
+}
+
+.stat-value.highlight {
+    color: #007bff;
+}
+
+.stat-value.highlight-primary {
+    color: #28a745;
+    font-size: 1.6rem;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+@media (max-width: 768px) {
+    .player-name {
+        font-size: 2rem;
+    }
+    
+    .player-number {
+        font-size: 1.5rem;
+        margin-left: 10px;
+    }
+    
+    .player-photo {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .team-logo {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 10px;
+    }
+    
+    .card-body {
+        padding: 20px;
+    }
+    
+    .player-header-section {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .player-profile-card {
+        padding: 20px;
+    }
+    
+    .player-photo {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* ========================================
+   FLAG ICONS
+   ======================================== */
+.fi {
+    margin-right: 8px;
+    font-size: 1.2rem;
+}
+
+/* ========================================
+   SUBTLE ANIMATIONS
+   ======================================== */
+.stats-card {
+    opacity: 1;
+    transform: none;
+}
+
+/* ========================================
+   TABLES
+   ======================================== */
+.table {
+    margin-bottom: 0;
+}
+
+.table th {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table td {
+    font-size: 0.9rem;
+    vertical-align: middle;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.05);
+}
+
+.table td.highlight {
+    color: #007bff;
+    font-weight: 600;
+}
+
+.table td.highlight-primary {
+    color: #28a745;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.table img {
+    border-radius: 50%;
+    border: 2px solid #e9ecef;
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+.text-success {
+    color: #28a745 !important;
+    font-weight: 600;
+}
+
+.text-danger {
+    color: #dc3545 !important;
+    font-weight: 600;
+}
+
+.text-muted {
+    color: #6c757d !important;
+}

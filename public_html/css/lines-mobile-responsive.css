@@ -1,0 +1,341 @@
+/* ========================================
+   ONGLET LINES - RESPONSIVE MOBILE
+   ========================================
+   
+   Optimisation de l'onglet Lines pour utiliser
+   toute la largeur disponible sur mobile
+   ======================================== */
+
+/* ========================================
+   MOBILE (768px et moins)
+   ======================================== */
+
+@media (max-width: 768px) {
+    
+    /* Container principal de l'onglet Lines */
+    #tabmain4 {
+        padding: 8px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: auto !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Titre principal */
+    #tabmain4 h3 {
+        margin: 0 0 16px 0 !important;
+        padding: 12px !important;
+        background: linear-gradient(135deg, #007bff, #0056b3) !important;
+        color: white !important;
+        border-radius: 8px !important;
+        text-align: center !important;
+        font-size: 18px !important;
+        font-weight: bold !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    /* Sections de lignes */
+    .lines-section {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-bottom: 20px !important;
+        background: white !important;
+        border-radius: 8px !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+        overflow: hidden !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Titres des sections */
+    .lines-section h4 {
+        margin: 0 !important;
+        padding: 12px 16px !important;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef) !important;
+        color: #495057 !important;
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        border-bottom: 2px solid #dee2e6 !important;
+        text-align: center !important;
+    }
+    
+    /* Container des tableaux */
+    .lines-table-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: auto !important;
+        overflow-y: visible !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+    
+    /* Tableaux des lignes */
+    .lines-table {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 100% !important;
+        border-collapse: collapse !important;
+        margin: 0 !important;
+        font-size: 12px !important;
+        background: white !important;
+        table-layout: fixed !important; /* Layout fixe pour contrôler les largeurs */
+    }
+    
+    /* Headers des tableaux */
+    .lines-table thead {
+        background: #f8f9fa !important;
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 10 !important;
+    }
+    
+    .lines-table thead th {
+        padding: 12px 8px !important;
+        font-weight: 700 !important;
+        font-size: 11px !important;
+        color: #495057 !important;
+        text-align: center !important;
+        border: 1px solid #dee2e6 !important;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef) !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Cellules du tableau */
+    .lines-table tbody td {
+        padding: 10px 6px !important;
+        font-size: 11px !important;
+        color: #212529 !important;
+        text-align: center !important;
+        border: 1px solid #dee2e6 !important;
+        background: white !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        box-sizing: border-box !important;
+        vertical-align: middle !important;
+    }
+    
+    /* Lignes alternées */
+    .lines-table tbody tr:nth-child(even) td {
+        background: #f8f9fa !important;
+    }
+    
+    /* Hover sur les lignes */
+    .lines-table tbody tr:hover td {
+        background: #e3f2fd !important;
+        color: #1976d2 !important;
+    }
+    
+    /* LARGEURS SPÉCIFIQUES PAR TYPE DE TABLEAU */
+
+    /* Tableaux 4 colonnes (Attaque 5vs5, PP) - Largeurs égales optimisées */
+    .lines-table thead th:nth-child(1) { width: 10% !important; } /* Ligne */
+    .lines-table thead th:nth-child(2) { width: 30% !important; } /* Ailier gauche */
+    .lines-table thead th:nth-child(3) { width: 30% !important; } /* Centre */
+    .lines-table thead th:nth-child(4) { width: 30% !important; } /* Ailier droit */
+
+    .lines-table tbody td:nth-child(1) { width: 10% !important; }
+    .lines-table tbody td:nth-child(2) { width: 30% !important; }
+    .lines-table tbody td:nth-child(3) { width: 30% !important; }
+    .lines-table tbody td:nth-child(4) { width: 30% !important; }
+
+    /* Tableaux 3 colonnes (Défense 5vs5) - Largeurs égales optimisées */
+    .lines-section:nth-child(2) .lines-table thead th:nth-child(1) { width: 10% !important; } /* Ligne */
+    .lines-section:nth-child(2) .lines-table thead th:nth-child(2) { width: 45% !important; } /* Défenseur 1 */
+    .lines-section:nth-child(2) .lines-table thead th:nth-child(3) { width: 45% !important; } /* Défenseur 2 */
+
+    .lines-section:nth-child(2) .lines-table tbody td:nth-child(1) { width: 10% !important; }
+    .lines-section:nth-child(2) .lines-table tbody td:nth-child(2) { width: 45% !important; }
+    .lines-section:nth-child(2) .lines-table tbody td:nth-child(3) { width: 45% !important; }
+
+    /* Tableaux 4 colonnes avec colonne vide (Défense 5vs5, PP) */
+    .lines-section:nth-child(3) .lines-table thead th:nth-child(1),
+    .lines-section:nth-child(5) .lines-table thead th:nth-child(1) { width: 15% !important; } /* Ligne */
+    .lines-section:nth-child(3) .lines-table thead th:nth-child(2),
+    .lines-section:nth-child(5) .lines-table thead th:nth-child(2) { width: 35% !important; } /* Défenseur 1 */
+    .lines-section:nth-child(3) .lines-table thead th:nth-child(3),
+    .lines-section:nth-child(5) .lines-table thead th:nth-child(3) { width: 35% !important; } /* Défenseur 2 */
+    .lines-section:nth-child(3) .lines-table thead th:nth-child(4),
+    .lines-section:nth-child(5) .lines-table thead th:nth-child(4) { width: 15% !important; } /* Vide */
+    
+    /* Tableaux 3 colonnes (PK 4 joueurs) */
+    .lines-section:nth-child(6) .lines-table thead th:nth-child(1),
+    .lines-section:nth-child(7) .lines-table thead th:nth-child(1) { width: 20% !important; } /* Ligne */
+    .lines-section:nth-child(6) .lines-table thead th:nth-child(2),
+    .lines-section:nth-child(7) .lines-table thead th:nth-child(2) { width: 40% !important; } /* Joueur 1 */
+    .lines-section:nth-child(6) .lines-table thead th:nth-child(3),
+    .lines-section:nth-child(7) .lines-table thead th:nth-child(3) { width: 40% !important; } /* Joueur 2 */
+    
+    /* Tableaux 1 colonne (Tirs de barrage, Gardiens, etc.) */
+    .lines-section:nth-child(9) .lines-table thead th,
+    .lines-section:nth-child(10) .lines-table thead th,
+    .lines-section:nth-child(11) .lines-table thead th,
+    .lines-section:nth-child(12) .lines-table thead th { width: 100% !important; }
+    
+    .lines-section:nth-child(9) .lines-table tbody td,
+    .lines-section:nth-child(10) .lines-table tbody td,
+    .lines-section:nth-child(11) .lines-table tbody td,
+    .lines-section:nth-child(12) .lines-table tbody td { width: 100% !important; }
+    
+    /* Message d'absence de données */
+    .no-lines-message {
+        text-align: center !important;
+        padding: 40px 20px !important;
+        background: #f8f9fa !important;
+        border-radius: 8px !important;
+        margin: 20px 0 !important;
+    }
+    
+    .no-lines-message p {
+        font-size: 16px !important;
+        color: #6c757d !important;
+        margin: 0 !important;
+    }
+}
+
+/* ========================================
+   TRÈS PETIT MOBILE (480px et moins)
+   ======================================== */
+
+@media (max-width: 480px) {
+    
+    #tabmain4 {
+        padding: 4px !important;
+    }
+    
+    #tabmain4 h3 {
+        font-size: 16px !important;
+        padding: 10px !important;
+        margin-bottom: 12px !important;
+    }
+    
+    .lines-section {
+        margin-bottom: 16px !important;
+    }
+    
+    .lines-section h4 {
+        font-size: 14px !important;
+        padding: 10px 12px !important;
+    }
+    
+    .lines-table {
+        font-size: 10px !important;
+    }
+    
+    .lines-table thead th {
+        padding: 8px 4px !important;
+        font-size: 9px !important;
+    }
+    
+    .lines-table tbody td {
+        padding: 8px 4px !important;
+        font-size: 9px !important;
+    }
+    
+    /* Réduction des largeurs pour très petit écran */
+    .lines-table thead th:nth-child(1) { width: 12% !important; } /* Ligne */
+    .lines-table thead th:nth-child(2) { width: 29% !important; }
+    .lines-table thead th:nth-child(3) { width: 29% !important; }
+    .lines-table thead th:nth-child(4) { width: 30% !important; }
+}
+
+/* ========================================
+   TABLETTE (769px à 1024px)
+   ======================================== */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    
+    #tabmain4 {
+        padding: 16px !important;
+    }
+    
+    .lines-table {
+        font-size: 14px !important;
+    }
+    
+    .lines-table thead th {
+        padding: 14px 10px !important;
+        font-size: 13px !important;
+    }
+    
+    .lines-table tbody td {
+        padding: 12px 8px !important;
+        font-size: 13px !important;
+    }
+}
+
+/* ========================================
+   AMÉLIORATION ACCESSIBILITÉ
+   ======================================== */
+
+@media (max-width: 768px) {
+    
+    /* Focus visible pour navigation clavier */
+    .lines-table:focus-within {
+        outline: 2px solid #007bff !important;
+        outline-offset: 2px !important;
+    }
+    
+    /* Amélioration du contraste */
+    .lines-table thead th {
+        color: #212529 !important;
+    }
+    
+    /* Scroll bar visible mais discrète */
+    .lines-table-container::-webkit-scrollbar {
+        height: 6px !important;
+    }
+    
+    .lines-table-container::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.05) !important;
+        border-radius: 3px !important;
+    }
+    
+    .lines-table-container::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.2) !important;
+        border-radius: 3px !important;
+    }
+    
+    .lines-table-container::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.4) !important;
+    }
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+
+@media (max-width: 768px) {
+    
+    /* Animation d'apparition des sections */
+    .lines-section {
+        animation: slideInUp 0.3s ease-out !important;
+        animation-fill-mode: both !important;
+    }
+    
+    .lines-section:nth-child(1) { animation-delay: 0.1s !important; }
+    .lines-section:nth-child(2) { animation-delay: 0.15s !important; }
+    .lines-section:nth-child(3) { animation-delay: 0.2s !important; }
+    .lines-section:nth-child(4) { animation-delay: 0.25s !important; }
+    .lines-section:nth-child(5) { animation-delay: 0.3s !important; }
+    
+    @keyframes slideInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Animation hover sur les lignes */
+    .lines-table tbody tr {
+        transition: all 0.2s ease !important;
+    }
+}

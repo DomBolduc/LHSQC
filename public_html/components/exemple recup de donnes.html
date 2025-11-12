@@ -1,0 +1,32 @@
+<!-- Les données des buteurs seront insérées ici -->
+<body>
+    <h1>Top 5 Scorers</h1>
+    <div id="top-scorers">
+        <!-- Les données des buteurs seront insérées ici -->
+    </div>
+
+    <!-- <script src="path/to/db2json.js" defer></script> pas besoin include dans header -->
+    <script>
+        // Appel pour récupérer et afficher les données
+        updateInfos(() => {
+            const scorers = getTop5Scorer(); // Appelle la fonction pour obtenir les données
+            const container = document.getElementById('top-scorers');
+            
+            if (scorers.length === 0) {
+                container.innerHTML = "<p>Aucun buteur à afficher.</p>";
+                return;
+            }
+            
+            // Crée une liste des buteurs
+            const ul = document.createElement('ul');
+            scorers.forEach(player => {
+                const li = document.createElement('li');
+                li.textContent = `${player.Name} - Goals: ${player.G} - GP: ${player.GP}`;
+                ul.appendChild(li);
+            });
+            
+            container.appendChild(ul);
+        });
+    </script>
+</body>
+</html>

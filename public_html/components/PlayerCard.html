@@ -1,0 +1,123 @@
+  
+    <div class="card" style="width: 18rem;">
+        <img id="tdImage" src="" class="card-img-top rounded-circle" alt="Player Image">
+
+        <div class="card-body">
+            <h5 id="tdName"></h5>
+            
+            <!-- Informations de base du joueur -->
+            <table class="table PlayerInfoTable">
+                <thead>
+                    <tr>
+                        <th scope="col">Pos</th>
+                        <th scope="col">Country</th>
+                        <th scope="col">Age</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="tdPos"></td>
+                        <td id="tdCountry"></td>
+                        <td id="tdAge"></td>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr>
+                        <th scope="col">Height</th>
+                        <th scope="col">Weight</th>
+                        <th scope="col">Born</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="tdHeight"></td>
+                        <td id="tdWeight"></td>
+                        <td id="tdBorn"></td>  
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Onglets pour les Ratings et Stats -->
+            <ul class="nav nav-tabs" id="playerTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="ratings-tab" data-bs-toggle="tab" data-bs-target="#ratings" type="button" role="tab" aria-controls="ratings" aria-selected="true">Ratings</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="stats-tab" data-bs-toggle="tab" data-bs-target="#stats" type="button" role="tab" aria-controls="stats" aria-selected="false">Stats</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="stats-tab" data-bs-toggle="tab" data-bs-target="#contract" type="button" role="tab" aria-controls="contracts" aria-selected="false">Contracts</button>
+              </li>
+            </ul>
+            
+            <div class="tab-content" id="playerTabsContent">
+                <!-- Ratings Tab -->
+                <div class="tab-pane fade show active" id="ratings" role="tabpanel" aria-labelledby="ratings-tab">
+                    <table class="table PlayerRatingsTable mt-3">
+                        <tbody>
+                            <tr><th scope="row">CON</th><td id="tdCON"></td></tr>
+                            <tr><th scope="row">CK</th><td id="tdCK"></td></tr>
+                            <tr><th scope="row">FG</th><td id="tdFG"></td></tr>
+                            <tr><th scope="row">DI</th><td id="tdDI"></td></tr>
+                            <tr><th scope="row">SK</th><td id="tdSK"></td></tr>
+                            <tr><th scope="row">ST</th><td id="tdST"></td></tr>
+                            <tr><th scope="row">EN</th><td id="tdEN"></td></tr>
+                            <tr><th scope="row">DU</th><td id="tdDU"></td></tr>
+                            <tr><th scope="row">PH</th><td id="tdPH"></td></tr>
+                            <tr><th scope="row">FO</th><td id="tdFO"></td></tr>
+                            <tr><th scope="row">PA</th><td id="tdPA"></td></tr>
+                            <tr><th scope="row">SC</th><td id="tdSC"></td></tr>
+                            <tr><th scope="row">DF</th><td id="tdDF"></td></tr>
+                            <tr><th scope="row">PS</th><td id="tdPS"></td></tr>
+                            <tr><th scope="row">EX</th><td id="tdEX"></td></tr>
+                            <tr><th scope="row">LD</th><td id="tdLD"></td></tr>
+                            <tr><th scope="row">OV</th><td id="tdOV"></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Stats Tab -->
+                <div class="tab-pane fade" id="stats" role="tabpanel" aria-labelledby="stats-tab">
+                    <table class="table PlayerStatsTable mt-3">
+                        <tbody>
+                            <tr><th scope="row">GP</th><td id="tdGP"></td></tr>
+                            <tr><th scope="row">G</th><td id="tdG"></td></tr>
+                            <tr><th scope="row">A</th><td id="tdA"></td></tr>
+                            <tr><th scope="row">PTS</th><td id="tdPTS"></td></tr>
+                            <tr><th scope="row">+/-</th><td id="td+/-"></td></tr>
+                            <tr><th scope="row">PPG</th><td id="tdPPG"></td></tr>
+                            <tr><th scope="row">SHG</th><td id="tdSHG"></td></tr>
+                            <tr><th scope="row">SHOTS</th><td id="tdSHOTS"></td></tr>
+                            <tr><th scope="row">BLOCKED SHOTS</th><td id="tdBS"></td></tr>
+                            <tr><th scope="row">CHECKS</th><td id="tdCHECKS"></td></tr>
+                            <tr><th scope="row">PIM</th><td id="tdPIM"></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                    <!-- Contracts Tab -->
+                    <div class="tab-pane fade" id="contract" role="tabpanel" aria-labelledby="contract-tab">
+                      <table class="table PlayerContractTable mt-3">
+                          <tbody>
+                              <tr><th scope="row">CapHit</th><td id="tdCapHit"></td></tr>
+                              <tr><th scope="row">NTC</th><td id="tdNTC"></td></tr>
+                              <tr><th scope="row">Years Left</th><td id="tdYearsLeft"></td></tr>
+                              <tr><th scope="row">Status</th><td id="tdStatus"></td></tr>
+                            </tbody>
+                      </table>
+                    </div>
+
+
+            </div>
+        </div>
+    </div> 
+    
+    
+
+
+<script>
+
+
+       
+
+</script>

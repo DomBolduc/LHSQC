@@ -1,0 +1,348 @@
+/* ========================================
+   THÈME CLAIR - LHSQC
+   ========================================
+   
+   Thème clair par défaut pour le site de hockey
+   Couleurs modernes et professionnelles
+   ======================================== */
+
+/* ========================================
+   COULEURS DE BASE
+   ======================================== */
+:root {
+  /* Couleurs primaires */
+  --color-primary: #1e40af;
+  --color-primary-light: #dbeafe;
+  --color-primary-dark: #1e3a8a;
+  
+  /* Couleurs de fond */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f8fafc;
+  --color-bg-tertiary: #f1f5f9;
+  --color-bg-overlay: rgba(0, 0, 0, 0.5);
+  
+  /* Couleurs de texte */
+  --color-text-primary: #1e293b;
+  --color-text-secondary: #64748b;
+  --color-text-tertiary: #94a3b8;
+  --color-text-inverse: #ffffff;
+  
+  /* Couleurs de bordure */
+  --color-border: #e2e8f0;
+  --color-border-light: #f1f5f9;
+  --color-border-dark: #cbd5e1;
+  
+  /* Couleurs d'état */
+  --color-success: #10b981;
+  --color-success-light: #d1fae5;
+  --color-success-dark: #059669;
+  
+  --color-warning: #f59e0b;
+  --color-warning-light: #fef3c7;
+  --color-warning-dark: #d97706;
+  
+  --color-danger: #ef4444;
+  --color-danger-light: #fee2e2;
+  --color-danger-dark: #dc2626;
+  
+  --color-info: #3b82f6;
+  --color-info-light: #dbeafe;
+  --color-info-dark: #2563eb;
+  
+  /* Couleurs neutres */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-gray-50: #f8fafc;
+  --color-gray-100: #f1f5f9;
+  --color-gray-200: #e2e8f0;
+  --color-gray-300: #cbd5e1;
+  --color-gray-400: #94a3b8;
+  --color-gray-500: #64748b;
+  --color-gray-600: #475569;
+  --color-gray-700: #334155;
+  --color-gray-800: #1e293b;
+  --color-gray-900: #0f172a;
+}
+
+/* ========================================
+   OMBRES
+   ======================================== */
+:root {
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+}
+
+/* ========================================
+   EFFETS SPÉCIAUX
+   ======================================== */
+:root {
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  --gradient-success: linear-gradient(135deg, var(--color-success), var(--color-success-dark));
+  --gradient-warning: linear-gradient(135deg, var(--color-warning), var(--color-warning-dark));
+  --gradient-danger: linear-gradient(135deg, var(--color-danger), var(--color-danger-dark));
+  --gradient-info: linear-gradient(135deg, var(--color-info), var(--color-info-dark));
+  
+  /* Effets de glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.25);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  
+  /* Effets de focus */
+  --focus-ring: 0 0 0 3px var(--color-primary-light);
+  --focus-ring-success: 0 0 0 3px var(--color-success-light);
+  --focus-ring-warning: 0 0 0 3px var(--color-warning-light);
+  --focus-ring-danger: 0 0 0 3px var(--color-danger-light);
+  --focus-ring-info: 0 0 0 3px var(--color-info-light);
+}
+
+/* ========================================
+   COULEURS SPÉCIALISÉES HOCKEY
+   ======================================== */
+:root {
+  /* Couleurs des divisions */
+  --color-division-atlantic: #1e40af;
+  --color-division-metropolitan: #dc2626;
+  --color-division-central: #059669;
+  --color-division-pacific: #7c3aed;
+  
+  /* Couleurs des positions */
+  --color-position-center: #3b82f6;
+  --color-position-wing: #10b981;
+  --color-position-defense: #f59e0b;
+  --color-position-goalie: #8b5cf6;
+  
+  /* Couleurs des statuts */
+  --color-status-active: #10b981;
+  --color-status-inactive: #6b7280;
+  --color-status-injured: #ef4444;
+  --color-status-suspended: #f59e0b;
+  --color-status-traded: #8b5cf6;
+  
+  /* Couleurs des événements */
+  --color-event-goal: #10b981;
+  --color-event-assist: #3b82f6;
+  --color-event-penalty: #ef4444;
+  --color-event-powerplay: #f59e0b;
+  --color-event-shorthanded: #8b5cf6;
+}
+
+/* ========================================
+   VARIABLES DE THÈME
+   ======================================== */
+:root {
+  /* Nom du thème */
+  --theme-name: "light";
+  --theme-version: "1.0.0";
+  
+  /* Mode de thème */
+  --theme-mode: "light";
+  
+  /* Support du thème sombre */
+  --theme-supports-dark: true;
+  
+  /* Couleur d'accent personnalisable */
+  --theme-accent: var(--color-primary);
+  --theme-accent-light: var(--color-primary-light);
+  --theme-accent-dark: var(--color-primary-dark);
+}
+
+/* ========================================
+   UTILITAIRES GÉNÉRAUX
+   ======================================== */
+:root {
+  /* Configuration générale */
+  color-scheme: light;
+}
+
+* {
+  /* S'assurer que tous les éléments utilisent les bonnes couleurs */
+  border-color: var(--color-border);
+}
+
+/* ========================================
+   TRANSITIONS GÉNÉRALES
+   ======================================== */
+* {
+  transition: background-color var(--transition-fast),
+              border-color var(--transition-fast),
+              color var(--transition-fast);
+}
+
+/* ========================================
+   STYLES SPÉCIFIQUES COMPOSANTS
+   ======================================== */
+.card {
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.table th {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.table tbody tr:nth-child(even) {
+  background: var(--color-bg-tertiary);
+}
+
+.table tbody tr:hover {
+  background: var(--color-bg-secondary);
+}
+
+.modal__content {
+  background: var(--color-bg-primary);
+  box-shadow: var(--shadow-xl);
+}
+
+.form__input {
+  background: var(--color-bg-primary);
+  border: 2px solid var(--color-border);
+  color: var(--color-text-primary);
+}
+
+.form__input:focus {
+  border-color: var(--color-primary);
+  box-shadow: var(--focus-ring);
+}
+
+.alert {
+  border: 1px solid transparent;
+}
+
+.alert--success {
+  background: var(--color-success-light);
+  border-color: var(--color-success);
+  color: var(--color-success-dark);
+}
+
+.alert--error {
+  background: var(--color-danger-light);
+  border-color: var(--color-danger);
+  color: var(--color-danger-dark);
+}
+
+.alert--warning {
+  background: var(--color-warning-light);
+  border-color: var(--color-warning);
+  color: var(--color-warning-dark);
+}
+
+.alert--info {
+  background: var(--color-info-light);
+  border-color: var(--color-info);
+  color: var(--color-info-dark);
+}
+
+/* ========================================
+   EFFETS SPÉCIAUX
+   ======================================== */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+.frosted {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.elevated {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.elevated:hover {
+  box-shadow: var(--shadow-xl);
+  transform: translateY(-4px);
+}
+
+/* ========================================
+   COULEURS D'ÉQUIPES (EXEMPLE)
+   ======================================== */
+.team-montreal {
+  --team-primary: #af1e2d;
+  --team-secondary: #192168;
+  --team-accent: #ffffff;
+}
+
+.team-toronto {
+  --team-primary: #00205b;
+  --team-secondary: #ffffff;
+  --team-accent: #d80621;
+}
+
+.team-boston {
+  --team-primary: #ffb81c;
+  --team-secondary: #000000;
+  --team-accent: #ffffff;
+}
+
+/* ========================================
+   RESPONSIVE THÈME
+   ======================================== */
+@media (prefers-color-scheme: light) {
+  :root {
+    /* Utiliser les préférences système si disponibles */
+    color-scheme: light;
+  }
+}
+
+@media (max-width: 768px) {
+  .glass {
+    backdrop-filter: blur(5px);
+  }
+
+  .frosted {
+    backdrop-filter: blur(10px);
+  }
+}
+
+/* ========================================
+   ACCESSIBILITÉ
+   ======================================== */
+body {
+  /* Améliorer la lisibilité */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.high-contrast {
+  /* Mode contraste élevé */
+  --color-text-primary: #000000;
+  --color-text-secondary: #333333;
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f0f0f0;
+  --color-border: #000000;
+}
+
+/* ========================================
+   ANIMATIONS GÉNÉRALES
+   ======================================== */
+.fade-in {
+  animation: fade-in 0.5s ease-out;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+} 

@@ -1,0 +1,342 @@
+/**
+ * Styles pour le système de messagerie
+ * Utilise des émojis Unicode pour une compatibilité maximale
+ */
+
+/* Styles pour les émojis utilisés comme icônes */
+.btn span,
+.form-label span,
+h2 span,
+h4 span,
+h5 span,
+h6 span {
+    font-size: 1.1em;
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+
+/* Effets hover pour les émojis dans les boutons */
+.btn:hover span {
+    transform: scale(1.1);
+}
+
+/* Émojis spécifiques avec animations */
+.btn-outline-danger:hover span {
+    animation: shake 0.5s ease-in-out;
+}
+
+.btn-outline-secondary:hover span {
+    animation: rotate 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-2px); }
+    75% { transform: translateX(2px); }
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Tailles spécifiques pour différents contextes */
+.btn-sm span {
+    font-size: 1em;
+}
+
+.btn-lg span {
+    font-size: 1.3em;
+}
+
+h2 span {
+    font-size: 1.2em;
+}
+
+h4 span,
+h5 span {
+    font-size: 1.1em;
+}
+
+/* Espacement cohérent */
+.me-1 {
+    margin-right: 0.25rem !important;
+}
+
+.me-2 {
+    margin-right: 0.5rem !important;
+}
+
+/* Styles pour les boutons de suppression avec icône X */
+.btn-outline-danger .fa-times,
+.btn-outline-danger .fa-xmark,
+.btn-outline-danger .fa-close {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+/* Effet hover pour les boutons de suppression */
+.btn-outline-danger:hover .fa-times,
+.btn-outline-danger:hover .fa-xmark,
+.btn-outline-danger:hover .fa-close {
+    transform: scale(1.1);
+    transition: transform 0.2s ease;
+}
+
+/* Styles pour les boutons de suppression dans la liste des messages */
+.btn-sm .fa-times,
+.btn-sm .fa-xmark,
+.btn-sm .fa-close {
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+/* Animation subtile pour l'icône X */
+.fa-times,
+.fa-xmark,
+.fa-close {
+    transition: all 0.2s ease;
+}
+
+.btn-outline-danger:hover .fa-times,
+.btn-outline-danger:hover .fa-xmark,
+.btn-outline-danger:hover .fa-close {
+    color: #dc3545;
+    text-shadow: 0 0 3px rgba(220, 53, 69, 0.3);
+}
+
+/* Fallback si Font Awesome ne charge pas - utiliser du texte */
+.btn-outline-danger .fa-times:empty::before,
+.btn-outline-danger .fa-xmark:empty::before,
+.btn-outline-danger .fa-close:empty::before {
+    content: "×";
+    font-family: Arial, sans-serif;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.btn-sm .fa-times:empty::before,
+.btn-sm .fa-xmark:empty::before,
+.btn-sm .fa-close:empty::before {
+    content: "×";
+    font-family: Arial, sans-serif;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+/* Styles pour les bulles de messages */
+.message-bubble {
+    max-width: 70%;
+    margin-bottom: 1rem;
+}
+
+.message-sent {
+    margin-left: auto;
+}
+
+.message-received {
+    margin-right: auto;
+}
+
+.message-content {
+    padding: 1rem;
+    border-radius: 1rem;
+    position: relative;
+}
+
+.message-sent .message-content {
+    background-color: #007bff;
+    color: white;
+}
+
+.message-received .message-content {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+}
+
+.message-meta {
+    font-size: 0.8rem;
+    opacity: 0.7;
+    margin-top: 0.5rem;
+}
+
+.thread-container {
+    height: 60vh;
+    overflow-y: auto;
+    border: 1px solid #dee2e6;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    background-color: #fafafa;
+}
+
+/* Styles pour les icônes d'action */
+.btn-outline-primary .fa-eye {
+    color: #0d6efd;
+    transition: all 0.2s ease;
+}
+
+.btn-outline-primary:hover .fa-eye {
+    transform: scale(1.1);
+    color: white;
+}
+
+.btn-primary .fa-plus-circle,
+.btn-primary .fa-paper-plane,
+.btn-primary .fa-envelope-open-text {
+    transition: all 0.2s ease;
+}
+
+.btn-primary:hover .fa-plus-circle,
+.btn-primary:hover .fa-paper-plane,
+.btn-primary:hover .fa-envelope-open-text {
+    transform: scale(1.05);
+}
+
+.btn-outline-secondary .fa-rotate-left {
+    transition: all 0.3s ease;
+}
+
+.btn-outline-secondary:hover .fa-rotate-left {
+    transform: rotate(-180deg);
+}
+
+/* Icônes de direction pour les messages */
+.fa-inbox {
+    color: #198754 !important;
+}
+
+.fa-paper-plane {
+    color: #0d6efd !important;
+}
+
+/* Animation pour les icônes de formulaire */
+.form-label .fa-heading,
+.form-label .fa-message,
+.form-label .fa-user {
+    transition: all 0.2s ease;
+}
+
+.form-label:hover .fa-heading,
+.form-label:hover .fa-message,
+.form-label:hover .fa-user {
+    transform: scale(1.1);
+}
+
+/* Amélioration des badges de notification */
+.badge.bg-danger {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(220, 53, 69, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
+    }
+}
+
+/* Styles pour les boutons d'action dans les threads */
+.thread-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+/* Amélioration de l'apparence des boutons de suppression */
+.btn-outline-danger {
+    border-color: #dc3545;
+    color: #dc3545;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-danger:hover {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(220, 53, 69, 0.2);
+}
+
+/* Styles responsives pour mobile */
+@media (max-width: 768px) {
+    .message-bubble {
+        max-width: 85%;
+    }
+    
+    .thread-container {
+        height: 50vh;
+    }
+    
+    .btn-sm {
+        padding: 0.25rem 0.4rem;
+        font-size: 0.8rem;
+    }
+    
+    .fa-times {
+        font-size: 0.8em;
+    }
+}
+
+/* Styles pour les notifications de messagerie dans le menu */
+.mail-notification-badge,
+.mail-notification-badge-mobile {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #dc3545;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    min-width: 18px;
+    text-align: center;
+    animation: pulse 2s infinite;
+}
+
+/* Amélioration de l'icône de mail dans le menu */
+.mail-icon-container,
+.mail-icon-container-mobile {
+    position: relative;
+    display: inline-block;
+}
+
+.mail-logo,
+.mail-logo-mobile {
+    transition: transform 0.2s ease;
+}
+
+.mail-btn:hover .mail-logo,
+.mail-btn-mobile:hover .mail-logo-mobile {
+    transform: scale(1.1);
+}
+
+/* Styles pour les conversations avec messages non lus */
+.list-group-item-warning {
+    background-color: #fff3cd;
+    border-color: #ffeaa7;
+}
+
+.list-group-item-warning:hover {
+    background-color: #ffecb5;
+}
+
+/* Animation pour les nouveaux messages */
+.new-message-indicator {
+    animation: fadeInUp 0.5s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

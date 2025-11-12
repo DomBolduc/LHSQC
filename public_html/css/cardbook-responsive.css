@@ -1,0 +1,330 @@
+/* ========================================
+   CARDBOOK RESPONSIVE - MOBILE-FIRST
+   ========================================
+   
+   Optimisation responsive de la div .cardbook
+   dans ProTeam.php pour une meilleure expérience mobile
+   ======================================== */
+
+/* ========================================
+   STYLES DE BASE - TOUS ÉCRANS
+   ======================================== */
+
+.cardbook {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    background-color: #ffffffbe;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+}
+
+/* ========================================
+   MOBILE FIRST (320px et plus)
+   ======================================== */
+
+@media (max-width: 768px) {
+    .cardbook {
+        /* Container responsive */
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        
+        /* Suppression des contraintes de largeur */
+        min-width: unset !important;
+        
+        /* Gestion du débordement */
+        overflow-x: auto !important;
+        overflow-y: visible !important;
+        
+        /* Amélioration visuelle */
+        background-color: #ffffff !important;
+        border-radius: 0 !important; /* Suppression des bordures arrondies sur mobile */
+        box-shadow: none !important; /* Suppression de l'ombre sur mobile */
+        
+        /* Positionnement */
+        position: relative !important;
+        
+        /* Espacement interne optimisé */
+        padding: 8px !important;
+    }
+    
+    /* Onglets à l'intérieur de cardbook */
+    .cardbook .tabmain {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 8px !important;
+        margin: 0 !important;
+        
+        /* Gestion du débordement pour les onglets */
+        overflow-x: auto !important;
+        overflow-y: visible !important;
+        
+        /* Suppression des contraintes */
+        min-width: unset !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Onglet actif */
+    .cardbook .tabmain.active {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    /* Contenu des onglets */
+    .cardbook .tabmain > * {
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Grilles et conteneurs à l'intérieur */
+    .cardbook .stats-grid,
+    .cardbook .leaders-grid,
+    .cardbook .roster-container,
+    .cardbook .schedule-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: auto !important;
+        margin: 0 !important;
+        padding: 4px !important;
+    }
+    
+    /* Tableaux à l'intérieur de cardbook */
+    .cardbook table {
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: none !important;
+        font-size: 12px !important;
+        border-collapse: collapse !important;
+    }
+    
+    /* Cellules de tableau */
+    .cardbook table th,
+    .cardbook table td {
+        padding: 4px 2px !important;
+        font-size: 11px !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+    
+    /* Cartes à l'intérieur */
+    .cardbook .card,
+    .cardbook .stat-card,
+    .cardbook .leader-card {
+        margin: 4px 0 !important;
+        padding: 8px !important;
+        border-radius: 6px !important;
+    }
+}
+
+/* ========================================
+   TRÈS PETIT MOBILE (480px et moins)
+   ======================================== */
+
+@media (max-width: 480px) {
+    .cardbook {
+        padding: 4px !important;
+        margin: 0 !important;
+    }
+    
+    .cardbook .tabmain {
+        padding: 4px !important;
+    }
+    
+    /* Réduction des espacements */
+    .cardbook .stats-grid,
+    .cardbook .leaders-grid {
+        gap: 8px !important;
+        padding: 2px !important;
+    }
+    
+    /* Tableaux encore plus compacts */
+    .cardbook table {
+        font-size: 10px !important;
+    }
+    
+    .cardbook table th,
+    .cardbook table td {
+        padding: 2px 1px !important;
+        font-size: 9px !important;
+    }
+    
+    /* Titres plus petits */
+    .cardbook h1,
+    .cardbook h2,
+    .cardbook h3 {
+        font-size: 1.2rem !important;
+        margin: 8px 0 !important;
+        padding: 4px !important;
+    }
+}
+
+/* ========================================
+   TABLETTE (769px à 1024px)
+   ======================================== */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .cardbook {
+        width: 100%;
+        max-width: 100%;
+        padding: 16px;
+        margin: 0 auto;
+        
+        /* Restauration des styles visuels */
+        background-color: #ffffffbe;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .cardbook .tabmain {
+        padding: 16px;
+    }
+    
+    /* Grilles adaptées pour tablette */
+    .cardbook .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 16px;
+    }
+    
+    .cardbook .leaders-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 12px;
+    }
+}
+
+/* ========================================
+   DESKTOP (1025px et plus)
+   ======================================== */
+
+@media (min-width: 1025px) {
+    .cardbook {
+        width: 100%;
+        max-width: 1400px; /* Largeur maximale pour très grands écrans */
+        padding: 24px;
+        margin: 0 auto;
+        
+        /* Styles visuels complets */
+        background-color: #ffffffbe;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .cardbook .tabmain {
+        padding: 24px;
+    }
+    
+    /* Grilles optimisées pour desktop */
+    .cardbook .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 24px;
+    }
+    
+    .cardbook .leaders-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+}
+
+/* ========================================
+   CORRECTIONS SPÉCIFIQUES MOBILE
+   ======================================== */
+
+@media (max-width: 768px) {
+    /* S'assurer que les parents ne bloquent pas */
+    .STHSPHPTeamStat_Main {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    .tabsmain.standard {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: visible !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    /* Container principal */
+    .container-flex {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 8px !important;
+        margin: 0 !important;
+        overflow-x: auto !important;
+    }
+    
+    /* Navigation des onglets responsive */
+    .tabmain-links {
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        padding: 8px 4px !important;
+        margin: 0 !important;
+        gap: 4px !important;
+    }
+    
+    .tabmain-links li {
+        margin: 2px !important;
+        flex: 0 0 auto !important;
+    }
+    
+    .tabmain-links a {
+        padding: 8px 12px !important;
+        font-size: 14px !important;
+        border-radius: 6px !important;
+        white-space: nowrap !important;
+    }
+    
+    /* Amélioration des performances */
+    .cardbook * {
+        box-sizing: border-box !important;
+    }
+    
+    /* Suppression des largeurs fixes problématiques */
+    .cardbook .STHSW250,
+    .cardbook .STHSW200,
+    .cardbook .STHSW140,
+    .cardbook .STHSW120 {
+        width: auto !important;
+        min-width: unset !important;
+        max-width: 100% !important;
+    }
+}
+
+/* ========================================
+   AMÉLIORATION ACCESSIBILITÉ
+   ======================================== */
+
+@media (max-width: 768px) {
+    /* Focus visible pour navigation tactile */
+    .cardbook a:focus,
+    .cardbook button:focus {
+        outline: 2px solid #007bff !important;
+        outline-offset: 2px !important;
+        border-radius: 4px !important;
+    }
+    
+    /* Zones de touch plus grandes */
+    .cardbook a,
+    .cardbook button {
+        min-height: 44px !important;
+        min-width: 44px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 8px 12px !important;
+    }
+    
+    /* Amélioration de la lisibilité */
+    .cardbook {
+        font-size: 16px !important; /* Taille minimale pour éviter le zoom sur iOS */
+        line-height: 1.5 !important;
+    }
+}

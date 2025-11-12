@@ -1,0 +1,51 @@
+# ===============================
+# LHSQC - Git Ignore Configuration
+# ===============================
+
+# --- 1. Fichiers dynamiques / générés automatiquement ---
+public_html/LHSQC-*.php
+public_html/GameScore/
+public_html/linesupload/
+public_html/test/
+public_html/old/
+public_html/BAKUP/
+public_html/BACKUP/
+
+# --- 2. Bases de données SQLite ---
+public_html/*.db
+public_html/*.sqlite
+
+# --- 3. Configs locales sensibles ---
+public_html/config.php
+public_html/STHSSetting.php
+public_html/Language*.php
+
+# --- 4. Dossiers temporaires et cache ---
+public_html/cache/
+public_html/tmp/
+public_html/logs/
+public_html/sessions/
+
+# --- 5. Contenus uploadés (non versionnés) ---
+public_html/uploads/
+public_html/images/uploads/
+public_html/images/portraits/
+public_html/images/screenshots/
+
+# --- 6. Fichiers système / IDE ---
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+
+# --- 7. Fichiers de test ou de build ---
+*.zip
+*.bak
+*.old
+*.json
+*.csv
+
+# --- 8. Environnement local (XAMPP, dev) ---
+xampp/
+xampp_public/

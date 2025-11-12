@@ -1,0 +1,361 @@
+/* ========================================
+   SCHEDULE PAGE - DESIGN MODERNE
+   ========================================
+   
+   Style moderne pour la page Schedule.php
+   Basé sur le design de l'onglet Schedule de ProTeam.php
+   ======================================== */
+
+/* ========================================
+   VARIABLES CSS
+   ======================================== */
+:root {
+  --schedule-bg: #ffffff;
+  --schedule-header-bg: #f8f9fa;
+  --schedule-border: #ddd;
+  --schedule-hover: #f8f9fa;
+  --schedule-text-primary: #495057;
+  --schedule-text-secondary: #6c757d;
+  --schedule-home-bg: #f0f8ff;
+  --schedule-away-bg: #fff8f0;
+  --schedule-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  --schedule-radius: 8px;
+  --schedule-transition: all 0.3s ease;
+}
+
+/* ========================================
+   CONTAINER PRINCIPAL
+   ======================================== */
+.schedule-page-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* ========================================
+   EN-TÊTE ET FILTRES
+   ======================================== */
+.schedule-page-header {
+  background: var(--schedule-bg);
+  border-radius: var(--schedule-radius);
+  box-shadow: var(--schedule-shadow);
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid var(--schedule-border);
+}
+
+.schedule-page-header h1 {
+  margin: 0 0 20px 0;
+  color: var(--schedule-text-primary);
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.schedule-filters {
+  margin-bottom: 20px;
+  padding: 15px;
+  background: var(--schedule-header-bg);
+  border-radius: var(--schedule-radius);
+  border: 1px solid var(--schedule-border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+}
+
+.tablesorter_ColumnSelectorWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.tablesorter_ColumnSelectorWrapper a,
+.tablesorter_ColumnSelectorWrapper button {
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: var(--schedule-transition);
+  cursor: pointer;
+}
+
+.tablesorter_ColumnSelectorWrapper a:hover,
+.tablesorter_ColumnSelectorWrapper button:hover {
+  background: #0056b3;
+  transform: translateY(-1px);
+}
+
+/* ========================================
+   TABLEAU MODERNE
+   ======================================== */
+.schedule-table-container {
+  background: var(--schedule-bg);
+  border-radius: var(--schedule-radius);
+  box-shadow: var(--schedule-shadow);
+  overflow: hidden;
+  border: 1px solid var(--schedule-border);
+}
+
+.STHSPHPSchedule_ScheduleTable {
+  width: 100%;
+  min-width: 900px;
+  font-size: 13px;
+  border-collapse: collapse;
+  background: white;
+  margin: 0;
+}
+
+.STHSPHPSchedule_ScheduleTable th {
+  background: var(--schedule-header-bg);
+  border: 1px solid var(--schedule-border);
+  padding: 12px 8px;
+  text-align: center;
+  font-weight: 600;
+  color: var(--schedule-text-primary);
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.STHSPHPSchedule_ScheduleTable td {
+  border: 1px solid var(--schedule-border);
+  padding: 10px 6px;
+  text-align: center;
+  vertical-align: middle;
+  transition: var(--schedule-transition);
+}
+
+.STHSPHPSchedule_ScheduleTable tr:hover {
+  background-color: var(--schedule-hover);
+}
+
+.STHSPHPSchedule_ScheduleTable tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.STHSPHPSchedule_ScheduleTable tr:nth-child(even):hover {
+  background-color: var(--schedule-hover);
+}
+
+/* ========================================
+   STYLES SPÉCIAUX POUR LES MATCHS
+   ======================================== */
+.home-game {
+  background-color: var(--schedule-home-bg) !important;
+}
+
+.away-game {
+  background-color: var(--schedule-away-bg) !important;
+}
+
+.played-game {
+  opacity: 1;
+}
+
+.upcoming-game {
+  opacity: 0.8;
+}
+
+/* ========================================
+   LOGOS D'ÉQUIPES
+   ======================================== */
+.team-logo {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  border-radius: 4px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+/* ========================================
+   SCORES ET RÉSULTATS
+   ======================================== */
+.score-display {
+  font-weight: 600;
+  color: var(--schedule-text-primary);
+}
+
+.win-score {
+  color: #28a745;
+  font-weight: 700;
+}
+
+.loss-score {
+  color: #dc3545;
+  font-weight: 700;
+}
+
+.overtime-indicator {
+  font-size: 0.8em;
+  color: var(--schedule-text-secondary);
+  font-style: italic;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+@media (max-width: 1200px) {
+  .STHSPHPSchedule_ScheduleTable {
+    min-width: 800px;
+    font-size: 12px;
+  }
+  
+  .STHSPHPSchedule_ScheduleTable th,
+  .STHSPHPSchedule_ScheduleTable td {
+    padding: 8px 4px;
+  }
+  
+  .schedule-page-container {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .schedule-page-container {
+    padding: 10px;
+  }
+  
+  .schedule-page-header {
+    padding: 15px;
+  }
+  
+  .schedule-page-header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .schedule-filters {
+    padding: 10px;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .tablesorter_ColumnSelectorWrapper {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .STHSPHPSchedule_ScheduleTable {
+    min-width: 700px;
+    font-size: 11px;
+  }
+  
+  .team-logo {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .schedule-page-header h1 {
+    font-size: 1.25rem;
+  }
+  
+  .STHSPHPSchedule_ScheduleTable {
+    min-width: 600px;
+    font-size: 10px;
+  }
+  
+  .STHSPHPSchedule_ScheduleTable th,
+  .STHSPHPSchedule_ScheduleTable td {
+    padding: 6px 2px;
+  }
+  
+  .team-logo {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .tablesorter_ColumnSelectorWrapper a,
+  .tablesorter_ColumnSelectorWrapper button {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}
+
+/* ========================================
+   TABLESORTER CUSTOMIZATION
+   ======================================== */
+.tablesorter-header {
+  cursor: pointer;
+  position: relative;
+}
+
+.tablesorter-header:hover {
+  background-color: #e9ecef !important;
+}
+
+.tablesorter-headerAsc,
+.tablesorter-headerDesc {
+  background-color: #dee2e6 !important;
+}
+
+.tablesorter-filter-row {
+  background-color: #f8f9fa !important;
+}
+
+.tablesorter-filter-row td {
+  padding: 8px 4px !important;
+}
+
+.tablesorter-filter {
+  width: 100%;
+  padding: 4px 6px;
+  border: 1px solid var(--schedule-border);
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.schedule-table-container {
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* ========================================
+   SCROLL HORIZONTAL
+   ======================================== */
+.schedule-table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+
+.schedule-table-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.schedule-table-wrapper::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.schedule-table-wrapper::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.schedule-table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}

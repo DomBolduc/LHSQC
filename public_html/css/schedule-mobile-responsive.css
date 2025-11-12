@@ -1,0 +1,318 @@
+/* ========================================
+   SCHEDULE MOBILE RESPONSIVE - CARD STYLE
+   ========================================
+   
+   CSS mobile-only pour transformer le tableau Schedule
+   en cartes modernes style NHL/ESPN sur mobile uniquement
+   ======================================== */
+
+/* Ne s'applique QUE sur mobile (max-width: 768px) */
+@media (max-width: 768px) {
+  
+  /* ========================================
+     MASQUER LE TABLEAU ORIGINAL SUR MOBILE
+     ======================================== */
+  .schedule-table-container .schedule-table-wrapper {
+    display: none;
+  }
+  
+  /* Masquer aussi les contrôles du tableau */
+  .tablesorter_ColumnSelectorWrapper,
+  .tablesorter_Reset {
+    display: none;
+  }
+  
+  /* ========================================
+     CONTAINER POUR LES CARTES MOBILES
+     ======================================== */
+  .schedule-mobile-cards {
+    display: block;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* ========================================
+     CARTE INDIVIDUELLE DE MATCH
+     ======================================== */
+  .schedule-game-card {
+    background: #ffffff;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .schedule-game-card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+  }
+  
+  /* ========================================
+     HEADER DE LA CARTE (Game info + status)
+     ======================================== */
+  .game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #f3f4f6;
+  }
+  
+  .game-info {
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+  }
+  
+  .game-status {
+    font-size: 12px;
+    font-weight: 500;
+    color: #6b7280;
+    background: #f3f4f6;
+    padding: 4px 8px;
+    border-radius: 6px;
+  }
+  
+  .game-status.final {
+    background: #dcfce7;
+    color: #166534;
+  }
+  
+  .game-status.live {
+    background: #fef3c7;
+    color: #92400e;
+  }
+  
+  .game-status.upcoming {
+    background: #e0f2fe;
+    color: #0369a1;
+  }
+  
+  /* ========================================
+     MATCHUP PRINCIPAL (Équipes + Scores)
+     ======================================== */
+  .game-matchup {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  
+  .team-section {
+    display: flex;
+    align-items: center;
+    flex: 1;
+  }
+  
+  .team-section.visitor {
+    justify-content: flex-start;
+  }
+  
+  .team-section.home {
+    justify-content: flex-end;
+    flex-direction: row-reverse;
+  }
+  
+  .team-logo {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin: 0 8px;
+  }
+  
+  .team-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111827;
+    text-align: center;
+    min-width: 80px;
+  }
+  
+  .team-score {
+    font-size: 24px;
+    font-weight: 800;
+    color: #111827;
+    margin: 0 12px;
+    min-width: 30px;
+    text-align: center;
+  }
+  
+  .vs-separator {
+    font-size: 14px;
+    font-weight: 500;
+    color: #6b7280;
+    margin: 0 8px;
+  }
+  
+  /* ========================================
+     DÉTAILS DU MATCH
+     ======================================== */
+  .game-details {
+    background: #f9fafb;
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 12px;
+  }
+  
+  .game-detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    font-size: 13px;
+  }
+  
+  .game-detail-row:last-child {
+    margin-bottom: 0;
+  }
+  
+  .detail-label {
+    font-weight: 600;
+    color: #374151;
+  }
+  
+  .detail-value {
+    color: #6b7280;
+    text-align: right;
+  }
+  
+  /* ========================================
+     BADGES ET INDICATEURS
+     ======================================== */
+  .game-badges {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+  
+  .game-badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .badge-ot {
+    background: #fef3c7;
+    color: #92400e;
+  }
+  
+  .badge-so {
+    background: #e0f2fe;
+    color: #0369a1;
+  }
+  
+  .badge-rivalry {
+    background: #fce7f3;
+    color: #be185d;
+  }
+  
+  /* ========================================
+     LIEN VERS LE MATCH
+     ======================================== */
+  .game-link {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    color: #3b82f6;
+    font-size: 18px;
+    text-decoration: none;
+  }
+  
+  .game-link:hover {
+    color: #1d4ed8;
+  }
+  
+  /* ========================================
+     ANIMATIONS
+     ======================================== */
+  .schedule-game-card {
+    animation: slideInUp 0.4s ease-out;
+  }
+  
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* ========================================
+     ÉTATS SPÉCIAUX
+     ======================================== */
+  .schedule-game-card.completed {
+    border-left: 4px solid #10b981;
+  }
+  
+  .schedule-game-card.live {
+    border-left: 4px solid #f59e0b;
+    animation: pulse 2s infinite;
+  }
+  
+  .schedule-game-card.upcoming {
+    border-left: 4px solid #3b82f6;
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    50% {
+      box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
+    }
+  }
+  
+  /* ========================================
+     RESPONSIVE POUR TRÈS PETITS ÉCRANS
+     ======================================== */
+  @media (max-width: 480px) {
+    .schedule-game-card {
+      margin-bottom: 12px;
+      padding: 12px;
+    }
+    
+    .team-name {
+      font-size: 14px;
+      min-width: 70px;
+    }
+    
+    .team-score {
+      font-size: 20px;
+      margin: 0 8px;
+    }
+    
+    .team-logo {
+      width: 28px;
+      height: 28px;
+    }
+    
+    .game-details {
+      padding: 10px;
+    }
+    
+    .game-detail-row {
+      font-size: 12px;
+    }
+  }
+}
+
+/* ========================================
+   DESKTOP - Garder le tableau normal
+   ======================================== */
+@media (min-width: 769px) {
+  .schedule-mobile-cards {
+    display: none;
+  }
+}

@@ -1,0 +1,206 @@
+/* 
+
+    CSS NHL Color Theme
+
+Author:  Yanik Beaulieu & Dominic Bolduc
+RGB Source:    https://teamcolorcodes.com/nhl-team-color-codes/   
+*/
+
+
+.teamColorDark {color: #000000;}
+
+
+.teamColorDark1 { color: #000000; background-color: #CFC493;}   /*   1 - Pinguins      */ 
+.teamColorPale1 { color: #ffffff; } /* */
+.teamColorBright1 { color: #FCB514;  }
+.teamColorSecondary1 { color: #CFC493; }
+.teamColorShadow1 { text-shadow: 1.5px 1.5px 1.5px #FCB514; }
+.teamColorMenu1 li a { color: #000000; }  
+
+.teamColorDark2 { color: #000000; background-color: #f47e30a1;}   /*   2 - Islanders     */ 
+.teamColorPale2 { color: #ffffff; } 
+.teamColorBright2 { color: #00539b;}
+.teamColorSecondary2  { color: #f47d30; }
+.teamColorMenu2 li a { color: #00539b; }  
+
+.teamColorDark3 { color: #000000; background-color: #0038A8;}   /*   3 - Rangers    */ 
+.teamColorPale3 { color: #ffffff; } 
+.teamColorBright3 { color: #f47d30;}
+.teamColorSecondary3 { color: #CE1126; }
+.teamColorMenu3 li a { color: #ffffff; }  
+
+.teamColorDark4 { color: #000000; background-color: 	#CE1126;}   /*   4 - Devils     */ 
+.teamColorPale4 { color: #ffffff; } 
+.teamColorBright4 { color: 	#CE1126;}
+.teamColorSecondary4  { color: #CE1126; }
+.teamColorMenu4 li a { color: #000000; }  
+
+.teamColorDark5 { color: #000000; background-color:#F74902;}   /*   5 - Flyers     */ 
+.teamColorPale5 { color: #ffffff; } 
+.teamColorBright5 { color: 	#F74902;}
+.teamColorSecondary5 { color: #CE1126; }
+.teamColorMenu5 li a { color: #000000; }  
+
+.teamColorDark6 { color: #000000; background-color:#CE1126;}   /*   6 - Hurricanes     */ 
+.teamColorPale6 { color: #ffffff; } 
+.teamColorBright6 { color: 	#CE1126;}
+.teamColorSecondary6 { color: #A4A9AD; }
+.teamColorMenu6 li a { color: #A4A9AD; }  
+
+.teamColorDark7 { color: #000000; background-color:#002868;}   /*   7 - Lightning    */
+.teamColorBright7 { color: 	#002868;}
+.teamColorSecondary7 { color: #A4A9AD; }
+.teamColorMenu7 li a { color: white; }  
+
+.teamColorDark8 { color: #000000; background-color:#8E9090;}   /*   8 - Jets     */ 
+.teamColorPale8 { color: #ffffff; } 
+.teamColorBright8 { color: 	#041E42;}
+.teamColorSecondary8 { color: #004C97; }
+.teamColorMenu8 li a { color: #004C97; }  
+
+.teamColorDark9 { color: #000000; background-color:#041E42;}   /*   9 - Capitals      */ 
+.teamColorPale9 { color: #ffffff; } 
+.teamColorBright9 { color: 	#041E42;}
+.teamColorSecondary9 { color: #C8102E; }
+.teamColorMenu9 li a { color: #C8102E; }  
+
+.teamColorDark10 { color: #000000; background-color:#B9975B;}   /*   10 - Panthers      */ 
+.teamColorPale10 { color: #ffffff; } 
+.teamColorBright10 { color: #041E42;}
+.teamColorSecondary10 { color: #B9975B; }
+.teamColorMenu10 li a { color: #041E42; }  
+
+.teamColorDark11 { color: #000000; background-color:#FFB81C;}   /*   11 - Bruins      */ 
+.teamColorPale11 { color: #ffffff; } 
+.teamColorBright11 { color: #FFB81C;}
+.teamColorSecondary11 { color: #000000; }
+.teamColorMenu11 li a { color: #000000; }  
+
+.teamColorDark12 { color: #000000;  background-color: #B79257;  border: 2px solid #B79257;  }  /*   12 - Ottawa                   */
+.teamColorPale12 { color: #ffffff;  background-color: #000000;  border: 2px solid #B79257;}
+.teamColorBright12 { color: #DA1A32;  background-color: #B79257; border: 2px solid #B79257; }
+.teamColorSecondary12 { color: #B79257;  background-color: #DA1A32; border: 1px solid #DA1A32; }
+.teamColorMenu12 li a { color: #DA1A32; }  
+
+.teamColorDark13 { color: #000000;  background-color: #AF1E2D; }  /*   13 - Canadiens                  */
+.teamColorPale13 { color: #ffffff;  }
+.teamColorBright13 { color: #AF1E2D;  }
+.teamColorSecondary13 { color: #192168; }
+.teamColorMenu13 li a { color: #ffffff; }  
+
+.teamColorDark14 { color: #000000;  background-color: #002f87a4; }  /*   14 - Sabres                  */
+.teamColorPale14 { color: #ffffff;  }
+.teamColorBright14 li a { color: #FFB81C;  }
+.teamColorSecondary14 { color: #003087; }
+.teamColorMenu14 li a { color: #000000; }  
+
+.teamColorDark15 { color: #000000;  background-color: #00205b; }  /*   15 - Maple Leafs                  */
+.teamColorPale15 { color: #ffffff;  }
+.teamColorBright15 { color: #00205b;;  }
+.teamColorSecondary15 { color: #B79257; }
+.teamColorMenu15 li a { color: #ffffff; }  
+
+.teamColorDark16 { color: #000000;  background-color: #041E42; }  /*   16 - Blues                  */
+.teamColorPale16 { color: #ffffff;  }
+.teamColorBright16 { color: #FCB514;  }
+.teamColorSecondary16 { color: #002F87; }
+.teamColorMenu16 li a { color: #FCB514; }  
+
+.teamColorDark17 { color: #000000;  background-color: #ce1126; }  /*   17 - Red Wings                 */
+.teamColorPale17 { color: #ffffff;  }
+.teamColorBright17 { color: #ce1126;  }
+.teamColorSecondary17 { color: #B79257; }
+.teamColorMenu17 li a { color: #ffffff; }  
+
+.teamColorDark18 { color: #000000;  background-color:#CF0A2C; }  /*   18 - Blackhawks                  */
+.teamColorPale18 { color: #ffffff;  }
+.teamColorBright18 { color: #ffd100;  }
+.teamColorSecondary18 { color: #00833E; }
+.teamColorMenu18 li a { color: #ffd100; }  
+
+.teamColorDark19 { color: #000000;  background-color:#002654; }  /*   19 - BlueJackets                  */
+.teamColorPale19 { color: #ffffff;  }
+.teamColorBright19 { color: #ce1126;  }
+.teamColorSecondary19 { color: #A4A9AD; }
+.teamColorMenu19 li a { color: #ffffff; }  
+
+.teamColorDark20 { color: #000000;  background-color:#041E42; }  /*   20 - Predators                  */
+.teamColorPale20 { color: #ffffff;  }
+.teamColorBright20 { color: #FFB81C;  }
+.teamColorSecondary20 { color:#041E42; }
+.teamColorMenu20 li a { color: #FFB81C; }  
+
+.teamColorDark21 { color: #000000;  background-color:#DDCBA4; }  /*   21 - Wilds                  */
+.teamColorPale21 { color: #ffffff;  }
+.teamColorBright21 { color:#EAAA00;  }
+.teamColorSecondary21 { color: #154734; }
+.teamColorMenu21 li a { color: #154734; }
+
+.teamColorDark22 { color: #000000;  background-color: #041E42; }  /*   22 - oilers                 */
+.teamColorPale22 { color: #ffffff;  }
+.teamColorBright22 { color: #FF4C00; }
+.teamColorSecondary22 { color: #041E42; }
+.teamColorMenu22 li a { color: #FF4C00; }
+
+.teamColorDark23 { color: #000000;  background-color:#d2001c; }  /*   23 - Flames                 */
+.teamColorPale23 { color: #ffffff;  }
+.teamColorBright23 { color: #FAAF19; }
+.teamColorSecondary23 { color: #D2001C; }
+.teamColorMenu23 li a { color: #ffffff; }
+
+.teamColorDark24 { color: #000000;  background-color: #00205B; }  /*   24 - Canucks                 */
+.teamColorPale24 { color: #ffffff;  }
+.teamColorBright24 { color: #00843d; }
+.teamColorSecondary24 { color: #041C2C; }
+.teamColorMenu24 li a { color: #00843d; }
+
+.teamColorDark25 { color: #000000;  background-color: #236192; }  /*   25 - Avs                 */
+.teamColorPale25 { color: #ffffff;  }
+.teamColorBright25 { color: #236192; }
+.teamColorSecondary25 { color: #6F263D; }
+.teamColorMenu25 li a { color: #6F263D; }
+
+.teamColorDark26 { color: #000000;  background-color: #111111; }  /*   26 - Kings                */
+.teamColorPale26 { color: #ffffff;  }
+.teamColorBright26 { color:#A2AAAD; }
+.teamColorSecondary26 { color: #FFFFFF; }
+.teamColorMenu26 li a { color: #A2AAAD; }
+
+.teamColorDark27 { color: #000000;  background-color: #090909; }  /*   27 - UTAH                */
+.teamColorPale27 { color: #ffffff;  }
+.teamColorBright27 { color:  #71AFE5; }
+.teamColorSecondary27 { color: #090909; }
+.teamColorMenu27 li a { color: #71AFE5; }
+
+.teamColorDark28 { color: #000000;  background-color: #006847; }  /*   28 - Stars                */
+.teamColorPale28 { color: #ffffff;  }
+.teamColorBright28 { color: #8F8F8C; }
+.teamColorSecondary28 { color: #090909; }
+.teamColorMenu28 li a { color: #ffffff; }
+
+.teamColorDark29 { color: #000000;  background-color: #F47A38; }  /*   29 - Ducks              */
+.teamColorPale29 { color: #ffffff;  }
+.teamColorBright29 { color:  #B9975B; }
+.teamColorSecondary29 { color:#C1C6C8; }
+.teamColorMenu29 li a { color: #ffffff; }
+
+
+.teamColorDark30 { color: #000000;  background-color: #006D75; }  /*   30 - Sharks               */
+.teamColorPale30 { color: #ffffff;  }
+.teamColorBright30 { color:  #EA7200; }
+.teamColorSecondary30 { color: #090909; }
+.teamColorMenu30 li a { color: #EA7200; }
+
+.teamColorDark32 { color: #000000;  background-color: #333f42; }  /*   32 - Golden Knights                */
+.teamColorPale32 { color: #ffffff;  }
+.teamColorBright32 { color:  #B4975A; }
+.teamColorSecondary32 { color: #c8102E; }
+.teamColorMenu32 li a { color: #B4975A; }  
+
+
+.teamColorDark33 { color: #000000;  background-color: #355464; }  /*   33 - Krakens                */
+.teamColorPale33 { color: #ffffff;  }
+.teamColorBright33 { color:  #99d9d9; }
+.teamColorSecondary33 { color: #001628; }
+.teamColorMenu33 li a { color: #99d9d9; }  
+

@@ -1,0 +1,264 @@
+/* ========================================
+   FOOTER MODERNE - LHSQC
+   ========================================
+   
+   Footer moderne avec design noir et logo LHSQC
+   ======================================== */
+
+/* ========================================
+   VARIABLES FOOTER
+   ======================================== */
+:root {
+  /* Couleurs du footer */
+  --footer-bg-primary: #000000;
+  --footer-bg-secondary: #1a1a1a;
+  --footer-bg-accent: #2d2d2d;
+  
+  /* Couleurs de texte */
+  --footer-text-primary: #ffffff;
+  --footer-text-secondary: #cccccc;
+  --footer-text-muted: #999999;
+  
+  /* Couleurs d'accent */
+  --footer-accent: #3b82f6;
+  --footer-accent-hover: #2563eb;
+  
+  /* Espacements */
+  --footer-padding: 3rem 0;
+  --footer-section-gap: 2rem;
+  --footer-item-gap: 0.75rem;
+  
+  /* Transitions */
+  --footer-transition: all 0.3s ease;
+}
+
+/* ========================================
+   FOOTER PRINCIPAL
+   ======================================== */
+.modern-footer {
+  background: linear-gradient(135deg, var(--footer-bg-primary) 0%, var(--footer-bg-secondary) 100%);
+  color: var(--footer-text-primary);
+  padding: var(--footer-padding);
+  margin-top: 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.modern-footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--footer-accent), transparent);
+}
+
+/* ========================================
+   CONTAINER ET LAYOUT
+   ======================================== */
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+/* ========================================
+   SECTIONS DU FOOTER
+   ======================================== */
+.footer-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--footer-item-gap);
+}
+
+.footer-section h4 {
+  color: var(--footer-text-primary);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.footer-section h4::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 30px;
+  height: 2px;
+  background: var(--footer-accent);
+  border-radius: 1px;
+}
+
+/* ========================================
+   LOGO SECTION
+   ======================================== */
+.footer-logo-section {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.footer-logo {
+  width: 120px;
+  height: auto;
+  transition: var(--footer-transition);
+  filter: brightness(1.1);
+}
+
+.footer-logo:hover {
+  transform: scale(1.05);
+  filter: brightness(1.3);
+}
+
+.footer-league-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--footer-text-primary);
+  text-align: center;
+  margin: 0.5rem 0;
+}
+
+.footer-league-subtitle {
+  font-size: 1rem;
+  color: var(--footer-text-secondary);
+  text-align: center;
+  margin: 0;
+}
+
+
+
+/* ========================================
+   COPYRIGHT
+   ======================================== */
+.footer-copyright {
+  border-top: 1px solid var(--footer-bg-accent);
+  padding-top: 1.5rem;
+  text-align: center;
+  color: var(--footer-text-muted);
+  font-size: 0.875rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-copyright-text {
+  flex: 1;
+  text-align: left;
+}
+
+.footer-easter-egg {
+  color: var(--footer-text-muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: var(--footer-transition);
+  padding: 0.5rem;
+  border-radius: 50%;
+}
+
+.footer-easter-egg:hover {
+  color: var(--footer-accent);
+  background: var(--footer-bg-accent);
+  transform: scale(1.1);
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 768px) {
+  .footer-content {
+    text-align: center;
+  }
+
+  .footer-copyright {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .footer-copyright-text {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .modern-footer {
+    padding: 2rem 0;
+  }
+
+  .footer-logo {
+    width: 100px;
+  }
+
+  .footer-league-name {
+    font-size: 1.25rem;
+  }
+
+  .footer-league-subtitle {
+    font-size: 0.875rem;
+  }
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.footer-section {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.footer-section:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.footer-section:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+/* ========================================
+   EFFETS SPÉCIAUX
+   ======================================== */
+.footer-glow {
+  position: relative;
+}
+
+.footer-glow::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, var(--footer-accent), transparent, var(--footer-accent));
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.footer-glow:hover::before {
+  opacity: 0.3;
+}

@@ -1,0 +1,272 @@
+/* ========================================
+   TABLEAU ROSTER MOBILE - SCROLL HORIZONTAL
+   ========================================
+   
+   Rendre les tableaux Roster scrollables horizontalement
+   sur mobile pour une meilleure expérience utilisateur
+   ======================================== */
+
+/* ========================================
+   MOBILE ET TABLETTE (768px et moins)
+   ======================================== */
+
+@media (max-width: 768px) {
+    /* Container principal de l'onglet Roster */
+    #tabmain1 {
+        padding: 10px !important;
+        overflow: visible !important; /* Permettre le débordement */
+    }
+
+    /* CORRECTION CRITIQUE - Le parent .tabsmain bloque le scroll */
+    .tabsmain.standard {
+        overflow: visible !important; /* Au lieu de hidden */
+    }
+
+    /* S'assurer que les autres parents ne bloquent pas */
+    .cardbook {
+        overflow: visible !important;
+    }
+
+    /* Conteneurs des tableaux Roster - spécificité maximale */
+    div.roster-container,
+    #tabmain1 .roster-container,
+    #tabmain1 div.roster-container {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: auto !important;
+        overflow-y: visible !important;
+        -webkit-overflow-scrolling: touch !important; /* Scroll fluide sur iOS */
+        border: 1px solid #ddd !important;
+        border-radius: 8px !important;
+        background: white !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+        margin-bottom: 20px !important;
+        position: relative !important;
+    }
+
+    /* Tables Roster - spécificité maximale pour surcharger les styles inline */
+    table.roster-table,
+    #roster-table,
+    #goalie-table,
+    .roster-container table,
+    #tabmain1 .roster-container table {
+        min-width: 900px !important; /* Force le scroll horizontal */
+        width: 900px !important; /* Largeur fixe pour forcer le scroll */
+        max-width: none !important;
+        border-collapse: collapse !important;
+        font-size: 11px !important;
+        background: white !important;
+        margin: 0 !important;
+        display: table !important;
+    }
+    
+    /* Headers des tableaux - spécificité maximale */
+    .roster-table thead th,
+    #roster-table thead th,
+    #goalie-table thead th,
+    .roster-container table thead th,
+    #tabmain1 .roster-container table thead th {
+        position: sticky !important;
+        top: 0 !important;
+        background: #f5f5f5 !important;
+        z-index: 10 !important;
+        border: 1px solid #ddd !important;
+        padding: 8px 4px !important;
+        font-weight: bold !important;
+        text-align: center !important;
+        white-space: nowrap !important;
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) !important;
+        min-width: 35px !important;
+    }
+
+    /* Cellules du tableau - spécificité maximale */
+    .roster-table tbody td,
+    #roster-table tbody td,
+    #goalie-table tbody td,
+    .roster-container table tbody td,
+    #tabmain1 .roster-container table tbody td {
+        border: 1px solid #ddd !important;
+        padding: 6px 4px !important;
+        text-align: center !important;
+        white-space: nowrap !important;
+        vertical-align: middle !important;
+        min-width: 35px !important;
+    }
+    
+    /* Première colonne (nom du joueur) - sticky */
+    .roster-table th:first-child,
+    .roster-table td:first-child {
+        position: sticky !important;
+        left: 0 !important;
+        background: white !important;
+        z-index: 5 !important;
+        box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1) !important;
+        font-weight: bold !important;
+        text-align: left !important;
+        min-width: 120px !important;
+        max-width: 120px !important;
+    }
+    
+    /* Header de la première colonne */
+    .roster-table th:first-child {
+        background: #f5f5f5 !important;
+        z-index: 15 !important;
+    }
+    
+    /* Liens dans la première colonne */
+    .roster-table td:first-child a {
+        color: #007bff !important;
+        text-decoration: none !important;
+        font-weight: bold !important;
+    }
+    
+    .roster-table td:first-child a:hover {
+        text-decoration: underline !important;
+        color: #0056b3 !important;
+    }
+    
+    /* Colonnes de stats - largeur optimisée */
+    .roster-table th:not(:first-child),
+    .roster-table td:not(:first-child) {
+        min-width: 35px !important;
+        max-width: 50px !important;
+        text-align: center !important;
+    }
+    
+    /* Indicateurs de tri */
+    .sort-indicator {
+        font-size: 10px !important;
+        margin-left: 4px !important;
+    }
+    
+    /* Scroll bar styling - discret et élégant */
+    .roster-container::-webkit-scrollbar {
+        height: 6px !important;
+    }
+
+    .roster-container::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.05) !important;
+        border-radius: 3px !important;
+    }
+
+    .roster-container::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.2) !important;
+        border-radius: 3px !important;
+    }
+
+    .roster-container::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.4) !important;
+    }
+    
+    /* Titres des sections */
+    #tabmain1 h3 {
+        margin: 20px 0 10px 0 !important;
+        padding: 10px !important;
+        background: linear-gradient(135deg, #007bff, #0056b3) !important;
+        color: white !important;
+        border-radius: 8px !important;
+        text-align: center !important;
+        font-size: 16px !important;
+        font-weight: bold !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    /* Premier titre */
+    #tabmain1 h3:first-of-type {
+        margin-top: 0 !important;
+    }
+}
+
+/* ========================================
+   TRÈS PETIT MOBILE (480px et moins)
+   ======================================== */
+
+@media (max-width: 480px) {
+    /* Ajustements pour très petits écrans */
+    .roster-table {
+        min-width: 700px !important;
+        font-size: 10px !important;
+    }
+    
+    .roster-table thead th {
+        padding: 6px 3px !important;
+        font-size: 10px !important;
+    }
+    
+    .roster-table tbody td {
+        padding: 4px 3px !important;
+        font-size: 10px !important;
+    }
+    
+    .roster-table th:first-child,
+    .roster-table td:first-child {
+        min-width: 100px !important;
+        max-width: 100px !important;
+    }
+    
+    .roster-table th:not(:first-child),
+    .roster-table td:not(:first-child) {
+        min-width: 30px !important;
+        max-width: 40px !important;
+    }
+    
+    #tabmain1 h3 {
+        font-size: 14px !important;
+        padding: 8px !important;
+    }
+}
+
+
+
+/* ========================================
+   AMÉLIORATION ACCESSIBILITÉ
+   ======================================== */
+
+@media (max-width: 768px) {
+    /* Focus pour navigation clavier */
+    .roster-container:focus-within {
+        outline: 2px solid #007bff !important;
+        outline-offset: 2px !important;
+    }
+    
+    /* Améliorer la lisibilité des liens */
+    .roster-table a {
+        display: inline-block !important;
+        padding: 2px 4px !important;
+        border-radius: 3px !important;
+        transition: background-color 0.2s ease !important;
+    }
+    
+    .roster-table a:focus {
+        background-color: rgba(0, 123, 255, 0.1) !important;
+        outline: 2px solid #007bff !important;
+        outline-offset: 1px !important;
+    }
+}
+
+/* ========================================
+   ANIMATION DE SCROLL
+   ======================================== */
+
+@media (max-width: 768px) {
+    .roster-container {
+        scroll-behavior: smooth !important;
+    }
+    
+    /* Animation d'apparition */
+    .roster-table {
+        animation: fadeInTable 0.3s ease-in-out !important;
+    }
+    
+    @keyframes fadeInTable {
+        from {
+            opacity: 0 !important;
+            transform: translateY(10px) !important;
+        }
+        to {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+    }
+}

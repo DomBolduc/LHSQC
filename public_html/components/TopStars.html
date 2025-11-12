@@ -1,0 +1,290 @@
+<!-- Inclusion du CSS moderne -->
+<link rel="stylesheet" href="css/components/top-stars.css">
+
+<div class="topstars-container">
+  <!-- Bloc Top Scorers -->
+  <div class="topstars-card">
+    <div class="topstars-header">Top Scorers</div>
+    <div class="topstars-content">
+      <!-- Section joueur principal -->
+      <div class="featured-player">
+        <img id="general-player-photo" src="/images/default.png" alt="Profile Picture" class="player-photo">
+        <div class="player-info">
+          <div id="general-player-number"></div>
+          <div class="player-name" id="general-player-name">Player Name</div>
+        </div>
+      </div>
+      <!-- Section classement -->
+      <div class="leaderboard-section">
+        <div class="leaderboard-header">
+          <div class="col-player">Player</div>
+          <div class="col-stat">PTS</div>
+        </div>
+        <div id="leaderboard-general">
+          <!-- Les lignes des joueurs seront insérées ici par JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Bloc Top Goals -->
+  <div class="topstars-card">
+    <div class="topstars-header">Top Goals</div>
+    <div class="topstars-content">
+      <!-- Section joueur principal -->
+      <div class="featured-player">
+        <img id="player-photo" src="/images/default.png" alt="Profile Picture" class="player-photo">
+        <div class="player-info">
+          <div id="player-number"></div>
+          <div class="player-name" id="player-name">Player Name</div>
+        </div>
+      </div>
+      <!-- Section classement -->
+      <div class="leaderboard-section">
+        <div class="leaderboard-header">
+          <div class="col-player">Player</div>
+          <div class="col-stat">Goals</div>
+        </div>
+        <div id="leaderboard">
+          <!-- Les lignes des joueurs seront insérées ici par JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- Bloc Goalie Leaders -->
+  <div class="topstars-card">
+    <div class="topstars-header">Goalie Leaders</div>
+    <div class="topstars-content">
+      <!-- Section joueur principal -->
+      <div class="featured-player">
+        <img id="goalie-player-photo" src="/images/default.png" alt="Profile Picture" class="player-photo">
+        <div class="player-info">
+          <div id="goalie-player-number"></div>
+          <div class="player-name" id="goalie-player-name">Player Name</div>
+        </div>
+      </div>
+      <!-- Section classement -->
+      <div class="leaderboard-section">
+        <div class="leaderboard-header">
+          <div class="col-player">Player</div>
+          <div class="col-stat">PCT</div>
+          <div class="col-stat2">W</div>
+        </div>
+        <div id="leaderboard-goalie">
+          <!-- Les lignes des gardiens seront insérées ici par JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Fonction pour mettre à jour le tableau des leaders
+function updateLeaderboard() {
+    const topScorers = getTop5Scorer();
+
+    const leaderboard = document.getElementById('leaderboard');
+    const playerPhoto = document.getElementById('player-photo');
+    const playerNumber = document.getElementById('player-number'); // Utilisé pour afficher le logo
+    const playerName = document.getElementById('player-name');
+    const baseURL = "https://assets.nhle.com/mugs/nhl/latest/";
+
+    leaderboard.innerHTML = "";
+
+    if (topScorers.length === 0) {
+        leaderboard.innerHTML = `<div class="text-center">Aucune donnée disponible</div>`;
+        return;
+    }
+
+    const mainPlayer = topScorers[0];
+    console.log("Données du joueur principal :", mainPlayer); // Vérifier les champs disponibles
+
+    // Photo du joueur avec fallback
+    if (mainPlayer.NHLID && mainPlayer.NHLID !== '') {
+        const imageURL = `${baseURL}${mainPlayer.NHLID}.png`;
+        playerPhoto.src = imageURL;
+
+        // Gestion d'erreur pour l'image
+        playerPhoto.onerror = function() {
+            this.src = '/images/default.png';
+            this.onerror = null; // Éviter les boucles infinies
+        };
+    } else {
+        // Pas d'ID NHL, utiliser l'image par défaut directement
+        playerPhoto.src = '/images/default.png';
+    }
+
+    // Nom du joueur
+    playerName.textContent = mainPlayer.Name;
+
+    // Logo de l'équipe avec fallback
+    if (mainPlayer.TeamThemeID && mainPlayer.TeamThemeID > 0) {
+        const logoURL = `/images/${mainPlayer.TeamThemeID}.png`;
+        playerNumber.innerHTML = `<img src="${logoURL}" alt="Team Logo" class="team-logo" onerror="this.style.display='none';">`;
+    } else {
+        playerNumber.innerHTML = ''; // Pas de logo disponible
+    }
+
+    // Ajouter les joueurs dans le tableau
+    topScorers.forEach((player, index) => {
+        const row = document.createElement('div');
+        row.className = "leaderboard-row";
+
+        const rankClass = index === 0 ? 'rank-1' : index === 1 ? 'rank-2' : index === 2 ? 'rank-3' : 'rank-other';
+
+        row.innerHTML = `
+            <div class="col-player">
+                <span class="player-rank ${rankClass}">${index + 1}</span>
+                <span class="player-name-row">${player.Name}</span>
+            </div>
+            <div class="col-stat">${player.G}</div>
+        `;
+        leaderboard.appendChild(row);
+    });
+}
+
+function updateGeneralLeaderboard() {
+    const generalLeaders = getLeaders(); // Appel à la fonction getLeaders()
+
+    const leaderboardGeneral = document.getElementById('leaderboard-general');
+    const generalPlayerPhoto = document.getElementById('general-player-photo');
+    const generalPlayerNumber = document.getElementById('general-player-number');
+    const generalPlayerName = document.getElementById('general-player-name');
+    const baseURL = "https://assets.nhle.com/mugs/nhl/latest/";
+
+    leaderboardGeneral.innerHTML = "";
+
+    if (generalLeaders.length === 0) {
+        leaderboardGeneral.innerHTML = `<div class="text-center">Aucune donnée disponible</div>`;
+        return;
+    }
+
+    // Joueur principal
+    const mainPlayer = generalLeaders[0];
+    console.log("Données du joueur principal (General Leaders) :", mainPlayer);
+
+    // Photo du joueur avec fallback
+    if (mainPlayer.NHLID && mainPlayer.NHLID !== '') {
+        const imageURL = `${baseURL}${mainPlayer.NHLID}.png`;
+        generalPlayerPhoto.src = imageURL;
+
+        // Gestion d'erreur pour l'image
+        generalPlayerPhoto.onerror = function() {
+            this.src = '/images/default.png';
+            this.onerror = null; // Éviter les boucles infinies
+        };
+    } else {
+        // Pas d'ID NHL, utiliser l'image par défaut directement
+        generalPlayerPhoto.src = '/images/default.png';
+    }
+
+    // Nom du joueur
+    generalPlayerName.textContent = mainPlayer.Name;
+
+    // Logo de l'équipe avec fallback
+    if (mainPlayer.TeamThemeID && mainPlayer.TeamThemeID > 0) {
+        const logoURL = `/images/${mainPlayer.TeamThemeID}.png`;
+        generalPlayerNumber.innerHTML = `<img src="${logoURL}" alt="Team Logo" class="team-logo" onerror="this.style.display='none';">`;
+    } else {
+        generalPlayerNumber.innerHTML = ''; // Pas de logo disponible
+    }
+
+    // Ajouter les joueurs dans le tableau
+    generalLeaders.forEach((player, index) => {
+        const row = document.createElement('div');
+        row.className = "leaderboard-row";
+
+        const rankClass = index === 0 ? 'rank-1' : index === 1 ? 'rank-2' : index === 2 ? 'rank-3' : 'rank-other';
+
+        row.innerHTML = `
+            <div class="col-player">
+                <span class="player-rank ${rankClass}">${index + 1}</span>
+                <span class="player-name-row">${player.Name}</span>
+            </div>
+            <div class="col-stat">${player.P}</div>
+        `;
+        leaderboardGeneral.appendChild(row);
+    });
+}
+
+function updateGoalieLeaderboard() {
+    const goalieLeaders = getGoalerLeaders(); // Appel à la fonction getGoalerLeaders()
+
+    const leaderboardGoalie = document.getElementById('leaderboard-goalie');
+    const goaliePlayerPhoto = document.getElementById('goalie-player-photo');
+    const goaliePlayerNumber = document.getElementById('goalie-player-number');
+    const goaliePlayerName = document.getElementById('goalie-player-name');
+    const baseURL = "https://assets.nhle.com/mugs/nhl/latest/";
+
+    leaderboardGoalie.innerHTML = "";
+
+    if (goalieLeaders.length === 0) {
+        leaderboardGoalie.innerHTML = `<div class="text-center">Aucune donnée disponible</div>`;
+        return;
+    }
+
+    // Joueur principal
+    const mainPlayer = goalieLeaders[0];
+    console.log("Données du joueur principal (Goalie Leaders) :", mainPlayer);
+
+    // Photo du joueur avec fallback
+    if (mainPlayer.NHLID && mainPlayer.NHLID !== '') {
+        const imageURL = `${baseURL}${mainPlayer.NHLID}.png`;
+        goaliePlayerPhoto.src = imageURL;
+
+        // Gestion d'erreur pour l'image
+        goaliePlayerPhoto.onerror = function() {
+            this.src = '/images/default.png';
+            this.onerror = null; // Éviter les boucles infinies
+        };
+    } else {
+        // Pas d'ID NHL, utiliser l'image par défaut directement
+        goaliePlayerPhoto.src = '/images/default.png';
+    }
+
+    // Nom du joueur
+    goaliePlayerName.textContent = mainPlayer.Name;
+
+    // Logo de l'équipe avec fallback
+    if (mainPlayer.TeamThemeID && mainPlayer.TeamThemeID > 0) {
+        const logoURL = `/images/${mainPlayer.TeamThemeID}.png`;
+        goaliePlayerNumber.innerHTML = `<img src="${logoURL}" alt="Team Logo" class="team-logo" onerror="this.style.display='none';">`;
+    } else {
+        goaliePlayerNumber.innerHTML = ''; // Pas de logo disponible
+    }
+
+    // Ajouter les gardiens dans le tableau
+    goalieLeaders.forEach((player, index) => {
+        const row = document.createElement('div');
+        row.className = "leaderboard-row";
+
+        const rankClass = index === 0 ? 'rank-1' : index === 1 ? 'rank-2' : index === 2 ? 'rank-3' : 'rank-other';
+
+        row.innerHTML = `
+            <div class="col-player">
+                <span class="player-rank ${rankClass}">${index + 1}</span>
+                <span class="player-name-row">${player.Name}</span>
+            </div>
+            <div class="col-stat">${player.PCT}</div>
+            <div class="col-stat2">${player.W}</div>
+        `;
+        leaderboardGoalie.appendChild(row);
+    });
+}
+
+
+
+updateInfos(() => {
+    updateLeaderboard(); // Met à jour le tableau Offensive Leaders
+    updateGeneralLeaderboard(); // Met à jour le tableau General Leaders
+    updateGoalieLeaderboard(); // Met à jour le tableau Goalie Leaders
+});
+
+
+
+</script>
+
+
+
+
+
+ 

@@ -1,0 +1,410 @@
+/* ========================================
+   TODAY GAMES - STYLE MLB MODERNE
+   ========================================
+   
+   Design inspiré de MLB.com avec cartes modernes
+   Layout en grille responsive et animations
+   ======================================== */
+
+/* ========================================
+   VARIABLES CSS
+   ======================================== */
+:root {
+  --today-games-bg: #f8f9fa;
+  --card-bg: #ffffff;
+  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --card-shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.15);
+  --border-radius: 12px;
+  --text-primary: #1a1a1a;
+  --text-secondary: #6c757d;
+  --text-muted: #9ca3af;
+  --accent-color: #1e40af;
+  --accent-color-light: #3b82f6;
+  --success-color: #28a745;
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --transition: all 0.3s ease;
+}
+
+/* ========================================
+   CONTAINER PRINCIPAL
+   ======================================== */
+.today-games-container {
+  background: var(--today-games-bg);
+  min-height: 100vh;
+  padding: var(--spacing-xl) var(--spacing-md);
+}
+
+.today-games-header {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.today-games-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm);
+  letter-spacing: -0.02em;
+}
+
+.today-games-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+/* ========================================
+   GRILLE DE MATCHS
+   ======================================== */
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--spacing-md);
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+/* ========================================
+   CARTES DE MATCHS
+   ======================================== */
+.game-card {
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+  transition: var(--transition);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.game-card:hover {
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-2px);
+}
+
+/* ========================================
+   EN-TÊTE DE CARTE
+   ======================================== */
+.game-header {
+  background: linear-gradient(135deg, var(--accent-color), var(--accent-color-light));
+  color: white;
+  padding: var(--spacing-sm) var(--spacing-md);
+  text-align: center;
+}
+
+.game-status {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--spacing-xs);
+}
+
+.game-time {
+  font-size: 1.1rem;
+  font-weight: 500;
+  opacity: 0.95;
+}
+
+/* ========================================
+   CONTENU PRINCIPAL DE LA CARTE
+   ======================================== */
+.game-content {
+  padding: var(--spacing-md);
+}
+
+.teams-container {
+  margin-bottom: var(--spacing-md);
+}
+
+.team-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-xs) 0;
+  border-bottom: 1px solid #f1f3f4;
+}
+
+.team-row:last-child {
+  border-bottom: none;
+}
+
+.team-info {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.team-logo {
+  width: 24px;
+  height: 24px;
+  margin-right: var(--spacing-sm);
+  object-fit: contain;
+}
+
+.team-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.team-record {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 1px;
+}
+
+.team-score {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  min-width: 30px;
+  text-align: center;
+}
+
+.team-score.winner {
+  color: var(--success-color);
+}
+
+/* ========================================
+   SECTION 3 ÉTOILES
+   ======================================== */
+.stars-section {
+  background: #f8f9fa;
+  border-radius: 6px;
+  padding: var(--spacing-sm);
+  margin-top: var(--spacing-sm);
+}
+
+.stars-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--spacing-xs);
+  text-align: center;
+}
+
+.star-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2px;
+  font-size: 0.75rem;
+}
+
+.star-item:last-child {
+  margin-bottom: 0;
+}
+
+.star-icons {
+  display: flex;
+  margin-right: var(--spacing-xs);
+  min-width: 45px;
+  justify-content: flex-end;
+}
+
+.star-icon {
+  width: 12px;
+  height: 12px;
+  margin-left: 1px;
+}
+
+.star-player {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* ========================================
+   ACTIONS DE CARTE
+   ======================================== */
+.game-actions {
+  padding: var(--spacing-sm);
+  border-top: 1px solid #f1f3f4;
+  background: #fafbfc;
+}
+
+.boxscore-link {
+  display: inline-block;
+  background: var(--accent-color);
+  color: white;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: var(--transition);
+  width: 100%;
+  text-align: center;
+}
+
+.boxscore-link:hover {
+  background: #1e3a8a;
+  color: white;
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+/* ========================================
+   SECTION PROCHAINS MATCHS
+   ======================================== */
+.upcoming-games-section {
+  margin-top: var(--spacing-xl);
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-lg);
+  text-align: center;
+}
+
+.upcoming-games-table {
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+}
+
+.table-modern {
+  margin: 0;
+  width: 100%;
+}
+
+.table-modern thead th {
+  background: #f8f9fa;
+  border: none;
+  padding: var(--spacing-md);
+  font-weight: 600;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  letter-spacing: 0.5px;
+}
+
+.table-modern tbody td {
+  padding: var(--spacing-md);
+  border-top: 1px solid #f1f3f4;
+  vertical-align: middle;
+}
+
+.table-modern tbody tr:hover {
+  background: #f8f9fa;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+/* Responsive pour tablettes */
+@media (max-width: 1200px) {
+  .games-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .today-games-container {
+    padding: var(--spacing-md) var(--spacing-sm);
+  }
+
+  .today-games-title {
+    font-size: 2rem;
+  }
+
+  .games-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: var(--spacing-sm);
+  }
+
+  .game-content {
+    padding: var(--spacing-sm);
+  }
+
+  .team-logo {
+    width: 20px;
+    height: 20px;
+  }
+
+  .team-name {
+    font-size: 0.8rem;
+  }
+
+  .team-score {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .today-games-title {
+    font-size: 1.75rem;
+  }
+
+  .games-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .team-info {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .team-logo {
+    width: 18px;
+    height: 18px;
+  }
+
+  .team-name {
+    font-size: 0.75rem;
+  }
+
+  .team-score {
+    font-size: 1rem;
+  }
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.game-card {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.game-card:nth-child(2) { animation-delay: 0.1s; }
+.game-card:nth-child(3) { animation-delay: 0.2s; }
+.game-card:nth-child(4) { animation-delay: 0.3s; }
+.game-card:nth-child(5) { animation-delay: 0.4s; }
+.game-card:nth-child(6) { animation-delay: 0.5s; }
+
+/* ========================================
+   ÉTATS SPÉCIAUX
+   ======================================== */
+.no-games-message {
+  text-align: center;
+  padding: var(--spacing-xl);
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--card-shadow);
+}

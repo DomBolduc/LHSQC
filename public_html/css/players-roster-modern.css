@@ -1,0 +1,554 @@
+/* ========================================
+   PLAYERS ROSTER - DESIGN MODERNE
+   ========================================
+   
+   Style moderne pour la page PlayersRoster.php
+   Avec sélection alphabétique
+   ======================================== */
+
+/* ========================================
+   VARIABLES CSS
+   ======================================== */
+:root {
+  --roster-bg: #ffffff;
+  --roster-header-bg: #f8f9fa;
+  --roster-border: #ddd;
+  --roster-hover: #f8f9fa;
+  --roster-text-primary: #495057;
+  --roster-text-secondary: #6c757d;
+  --roster-accent: #007bff;
+  --roster-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  --roster-radius: 8px;
+  --roster-transition: all 0.3s ease;
+}
+
+/* ========================================
+   CONTAINER PRINCIPAL
+   ======================================== */
+.players-roster-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* ========================================
+   EN-TÊTE
+   ======================================== */
+.players-roster-header {
+  background: var(--roster-bg);
+  border-radius: var(--roster-radius);
+  box-shadow: var(--roster-shadow);
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid var(--roster-border);
+  text-align: center;
+}
+
+.players-roster-header h1 {
+  margin: 0;
+  color: var(--roster-text-primary);
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+/* ========================================
+   SÉLECTION ALPHABÉTIQUE
+   ======================================== */
+.alphabet-selector {
+  background: var(--roster-bg);
+  border-radius: var(--roster-radius);
+  box-shadow: var(--roster-shadow);
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid var(--roster-border);
+}
+
+.alphabet-selector h3 {
+  margin: 0 0 15px 0;
+  color: var(--roster-text-primary);
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.alphabet-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.alphabet-btn {
+  background: var(--roster-header-bg);
+  border: 2px solid var(--roster-border);
+  color: var(--roster-text-primary);
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: var(--roster-transition);
+  text-decoration: none;
+  min-width: 40px;
+  text-align: center;
+}
+
+.alphabet-btn:hover {
+  background: var(--roster-accent);
+  color: white;
+  border-color: var(--roster-accent);
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+.alphabet-btn.active {
+  background: var(--roster-accent);
+  color: white;
+  border-color: var(--roster-accent);
+}
+
+.alphabet-btn.all {
+  background: #28a745;
+  color: white;
+  border-color: #28a745;
+  font-weight: 700;
+  padding: 8px 16px;
+}
+
+.alphabet-btn.all:hover {
+  background: #218838;
+  border-color: #218838;
+}
+
+/* ========================================
+   STATISTIQUES DE FILTRAGE
+   ======================================== */
+.filter-stats {
+  background: var(--roster-header-bg);
+  border-radius: var(--roster-radius);
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  border: 1px solid var(--roster-border);
+  text-align: center;
+  font-size: 14px;
+  color: var(--roster-text-secondary);
+}
+
+.filter-stats strong {
+  color: var(--roster-text-primary);
+}
+
+/* ========================================
+   TABLEAU MODERNE
+   ======================================== */
+.roster-table-container {
+  background: var(--roster-bg);
+  border-radius: var(--roster-radius);
+  box-shadow: var(--roster-shadow);
+  overflow: hidden;
+  border: 1px solid var(--roster-border);
+}
+
+/* ========================================
+   SCROLL HORIZONTAL POUR MOBILE
+   ======================================== */
+.table-scroll-wrapper {
+  overflow-x: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--roster-accent) var(--roster-header-bg);
+}
+
+/* Personnalisation de la scrollbar pour WebKit */
+.table-scroll-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.table-scroll-wrapper::-webkit-scrollbar-track {
+  background: var(--roster-header-bg);
+  border-radius: 4px;
+}
+
+.table-scroll-wrapper::-webkit-scrollbar-thumb {
+  background: var(--roster-accent);
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.table-scroll-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #0056b3;
+}
+
+/* ========================================
+   INDICATEUR DE SCROLL MOBILE
+   ======================================== */
+@media (max-width: 768px) {
+  .table-scroll-wrapper::before {
+    content: "← Faites glisser pour voir plus de colonnes →";
+    display: block;
+    text-align: center;
+    padding: 8px;
+    background: linear-gradient(90deg, transparent, rgba(0, 123, 255, 0.1), transparent);
+    color: var(--roster-text-secondary);
+    font-size: 12px;
+    font-style: italic;
+    border-bottom: 1px solid var(--roster-border);
+    animation: fadeInOut 3s ease-in-out;
+  }
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+/* ========================================
+   INDICATEUR DE CONTENU SUPPLÉMENTAIRE
+   ======================================== */
+@media (max-width: 768px) {
+  .table-scroll-wrapper::after {
+    content: "→";
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 123, 255, 0.8);
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: bold;
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+  }
+
+  .table-scroll-wrapper:hover::after {
+    opacity: 0.5;
+  }
+
+  /* Masquer l'indicateur quand on est au bout */
+  .table-scroll-wrapper.scrolled-to-end::after {
+    display: none;
+  }
+}
+
+.STHSPHPAllPlayerRoster_Table {
+  width: 100%;
+  font-size: 13px;
+  border-collapse: collapse;
+  background: white;
+  margin: 0;
+}
+
+.STHSPHPAllPlayerRoster_Table th {
+  background: var(--roster-header-bg);
+  border: 1px solid var(--roster-border);
+  padding: 12px 8px;
+  text-align: center;
+  font-weight: 600;
+  color: var(--roster-text-primary);
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.STHSPHPAllPlayerRoster_Table td {
+  border: 1px solid var(--roster-border);
+  padding: 8px 6px;
+  text-align: center;
+  vertical-align: middle;
+  transition: var(--roster-transition);
+}
+
+.STHSPHPAllPlayerRoster_Table tr:hover {
+  background-color: var(--roster-hover);
+}
+
+.STHSPHPAllPlayerRoster_Table tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.STHSPHPAllPlayerRoster_Table tr:nth-child(even):hover {
+  background-color: var(--roster-hover);
+}
+
+/* ========================================
+   LOGOS D'ÉQUIPES
+   ======================================== */
+.STHSPHPPlayersRosterTeamImage {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  border-radius: 4px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+/* ========================================
+   LIENS DE JOUEURS
+   ======================================== */
+.STHSPHPAllPlayerRoster_Table a {
+  color: var(--roster-accent);
+  text-decoration: none;
+  font-weight: 500;
+  transition: var(--roster-transition);
+}
+
+.STHSPHPAllPlayerRoster_Table a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+@media (max-width: 1200px) {
+  .players-roster-container {
+    padding: 15px;
+  }
+  
+  .STHSPHPAllPlayerRoster_Table {
+    font-size: 12px;
+  }
+  
+  .STHSPHPAllPlayerRoster_Table th,
+  .STHSPHPAllPlayerRoster_Table td {
+    padding: 6px 4px;
+  }
+}
+
+@media (max-width: 768px) {
+  .players-roster-container {
+    padding: 10px;
+  }
+
+  .players-roster-header {
+    padding: 15px;
+  }
+
+  .players-roster-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .alphabet-selector {
+    padding: 15px;
+  }
+
+  .alphabet-buttons {
+    gap: 6px;
+  }
+
+  .alphabet-btn {
+    padding: 6px 8px;
+    font-size: 12px;
+    min-width: 32px;
+  }
+
+  .STHSPHPAllPlayerRoster_Table {
+    font-size: 11px;
+    min-width: 1600px; /* Largeur augmentée pour toutes les colonnes */
+    width: 1600px; /* Largeur fixe pour forcer le scroll */
+  }
+
+  .STHSPHPPlayersRosterTeamImage {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Amélioration du scroll horizontal sur mobile */
+  .table-scroll-wrapper {
+    border-radius: var(--roster-radius);
+    margin: 0 -10px; /* Étendre jusqu'aux bords sur mobile */
+    padding: 0 10px;
+    overflow-x: auto !important; /* Forcer le scroll horizontal */
+    max-width: 100vw; /* Largeur maximale de l'écran */
+  }
+
+  .table-scroll-wrapper::-webkit-scrollbar {
+    height: 12px; /* Scrollbar plus épaisse sur mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  .players-roster-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .alphabet-btn {
+    padding: 4px 6px;
+    font-size: 11px;
+    min-width: 28px;
+  }
+
+  .STHSPHPAllPlayerRoster_Table {
+    font-size: 10px;
+    min-width: 1400px; /* Largeur augmentée même pour petits écrans */
+    width: 1400px; /* Largeur fixe pour forcer le scroll */
+  }
+
+  .STHSPHPPlayersRosterTeamImage {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Scroll optimisé pour très petits écrans */
+  .table-scroll-wrapper {
+    margin: 0 -10px;
+    padding: 0 10px;
+    overflow-x: auto !important;
+    max-width: calc(100vw - 20px); /* Largeur maximale moins les marges */
+  }
+
+  .table-scroll-wrapper::-webkit-scrollbar {
+    height: 10px;
+  }
+
+  /* Réduction du padding des cellules pour plus d'espace */
+  .STHSPHPAllPlayerRoster_Table th,
+  .STHSPHPAllPlayerRoster_Table td {
+    padding: 4px 2px;
+  }
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.roster-table-container {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.alphabet-selector {
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* ========================================
+   TABLESORTER CUSTOMIZATION
+   ======================================== */
+.tablesorter-header {
+  cursor: pointer;
+  position: relative;
+}
+
+.tablesorter-header:hover {
+  background-color: #e9ecef !important;
+}
+
+.tablesorter-headerAsc,
+.tablesorter-headerDesc {
+  background-color: #dee2e6 !important;
+}
+
+.tablesorter-filter-row {
+  background-color: #f8f9fa !important;
+}
+
+.tablesorter-filter-row td {
+  padding: 8px 4px !important;
+}
+
+.tablesorter-filter {
+  width: 100%;
+  padding: 4px 6px;
+  border: 1px solid var(--roster-border);
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+/* ========================================
+   MASQUAGE DES LIGNES FILTRÉES
+   ======================================== */
+.player-row.hidden {
+  display: none !important;
+}
+
+.player-row {
+  transition: var(--roster-transition);
+}
+
+/* ========================================
+   FORCER L'AFFICHAGE DE TOUTES LES COLONNES SUR MOBILE
+   ======================================== */
+@media (max-width: 768px) {
+  /* Surcharger les styles TableSorter qui masquent les colonnes */
+  .STHSPHPAllPlayerRoster_Table th,
+  .STHSPHPAllPlayerRoster_Table td {
+    display: table-cell !important;
+    visibility: visible !important;
+  }
+
+  /* S'assurer que les colonnes avec data-priority restent visibles */
+  .STHSPHPAllPlayerRoster_Table th[data-priority],
+  .STHSPHPAllPlayerRoster_Table td[data-priority] {
+    display: table-cell !important;
+  }
+
+  /* Forcer l'affichage des colonnes masquées par columnSelector */
+  .STHSPHPAllPlayerRoster_Table .columnSelector-false {
+    display: table-cell !important;
+  }
+
+  /* S'assurer que les colonnes ont des largeurs minimales appropriées */
+  .STHSPHPAllPlayerRoster_Table th.STHSW10,
+  .STHSPHPAllPlayerRoster_Table td.STHSW10 {
+    min-width: 30px !important;
+    width: 30px !important;
+  }
+
+  .STHSPHPAllPlayerRoster_Table th.STHSW25,
+  .STHSPHPAllPlayerRoster_Table td.STHSW25 {
+    min-width: 40px !important;
+    width: 40px !important;
+  }
+
+  .STHSPHPAllPlayerRoster_Table th.STHSW45,
+  .STHSPHPAllPlayerRoster_Table td.STHSW45 {
+    min-width: 60px !important;
+    width: 60px !important;
+  }
+
+  .STHSPHPAllPlayerRoster_Table th.STHSW65,
+  .STHSPHPAllPlayerRoster_Table td.STHSW65 {
+    min-width: 80px !important;
+    width: 80px !important;
+  }
+
+  .STHSPHPAllPlayerRoster_Table th.STHSW75,
+  .STHSPHPAllPlayerRoster_Table td.STHSW75 {
+    min-width: 90px !important;
+    width: 90px !important;
+  }
+
+  .STHSPHPAllPlayerRoster_Table th.STHSW100,
+  .STHSPHPAllPlayerRoster_Table td.STHSW100 {
+    min-width: 100px !important;
+    width: 100px !important;
+  }
+
+  .STHSPHPAllPlayerRoster_Table th.STHSW140,
+  .STHSPHPAllPlayerRoster_Table td.STHSW140,
+  .STHSPHPAllPlayerRoster_Table th.STHSW140Min,
+  .STHSPHPAllPlayerRoster_Table td.STHSW140Min {
+    min-width: 120px !important;
+    width: 120px !important;
+  }
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navbar Toggle Divs</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .content-section {
+      display: none; /* Masque toutes les sections par défaut */
+    }
+    .content-section.active {
+      display: block; /* Affiche uniquement la section active */
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Toggle Navbar</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" href="#" data-target="section1">Section 1</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-target="section2">Section 2</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-target="section3">Section 3</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-4">
+    <div id="section1" class="content-section active">
+      <h1>Section 1</h1>
+      <p>This is the content of Section 1.</p>
+    </div>
+    <div id="section2" class="content-section">
+      <h1>Section 2</h1>
+      <p>This is the content of Section 2.</p>
+    </div>
+    <div id="section3" class="content-section">
+      <h1>Section 3</h1>
+      <p>This is the content of Section 3.</p>
+    </div>
+  </div>
+
+  <!-- Bootstrap Bundle JS (with Popper.js) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const navLinks = document.querySelectorAll('.nav-link');
+      const sections = document.querySelectorAll('.content-section');
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+
+          // Remove 'active' class from all sections and nav links
+          sections.forEach(section => section.classList.remove('active'));
+          navLinks.forEach(nav => nav.classList.remove('active'));
+
+          // Add 'active' class to the clicked link and its target section
+          const target = this.getAttribute('data-target');
+          document.getElementById(target).classList.add('active');
+          this.classList.add('active');
+        });
+      });
+    });
+  </script>
+</body>
+</html>

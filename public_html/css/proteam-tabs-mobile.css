@@ -1,0 +1,316 @@
+/* ========================================
+   NAVIGATION ONGLETS PROTEAM - MOBILE
+   ========================================
+   
+   Navigation en 2 lignes horizontales sur mobile :
+   Ligne 1: Home - Roster - Stats - Schedule
+   Ligne 2: Lines - Depth - Capology - Prospects
+   ======================================== */
+
+/* ========================================
+   MOBILE (768px et moins)
+   ======================================== */
+
+@media (max-width: 768px) {
+    
+    /* Container principal des onglets */
+    .tabmain-links {
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr) !important; /* 4 colonnes égales */
+        grid-template-rows: repeat(2, auto) !important; /* 2 lignes */
+        gap: 4px !important;
+        padding: 8px 4px !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        justify-content: stretch !important;
+        align-items: stretch !important;
+        background: #f8f9fa !important;
+        border-radius: 8px 8px 0 0 !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    /* Éléments de liste - suppression des styles par défaut */
+    .tabmain-links li {
+        list-style: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        float: none !important;
+        display: block !important;
+        width: 100% !important;
+        height: 100% !important;
+    }
+    
+    /* Positionnement spécifique des onglets */
+    .tabmain-links li:nth-child(1) { grid-column: 1; grid-row: 1; } /* Home */
+    .tabmain-links li:nth-child(2) { grid-column: 2; grid-row: 1; } /* Roster */
+    .tabmain-links li:nth-child(3) { grid-column: 3; grid-row: 1; } /* Stats */
+    .tabmain-links li:nth-child(4) { grid-column: 4; grid-row: 1; } /* Schedule */
+    .tabmain-links li:nth-child(5) { grid-column: 1; grid-row: 2; } /* Lines */
+    .tabmain-links li:nth-child(6) { grid-column: 2; grid-row: 2; } /* Depth */
+    .tabmain-links li:nth-child(7) { grid-column: 3; grid-row: 2; } /* Capology */
+    .tabmain-links li:nth-child(8) { grid-column: 4; grid-row: 2; } /* Prospects */
+    
+    /* Liens des onglets */
+    .tabmain-links a {
+        display: block !important;
+        width: 100% !important;
+        height: 100% !important;
+        padding: 10px 4px !important;
+        margin: 0 !important;
+        
+        /* Texte */
+        font-size: 12px !important;
+        font-weight: 600 !important;
+        text-align: center !important;
+        text-decoration: none !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        
+        /* Couleurs */
+        color: #6c757d !important;
+        background: white !important;
+        
+        /* Bordures et effets */
+        border: 1px solid #dee2e6 !important;
+        border-radius: 6px !important;
+        transition: all 0.2s ease !important;
+        
+        /* Flexbox pour centrer le texte */
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        
+        /* Hauteur minimale */
+        min-height: 44px !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* État hover */
+    .tabmain-links a:hover {
+        background: #e9ecef !important;
+        color: #495057 !important;
+        border-color: #adb5bd !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    /* Onglet actif */
+    .tabmain-links .activemain a,
+    .tabmain-links a.active {
+        background: white !important;
+        color: #007bff !important;
+        border: 2px solid #007bff !important;
+        font-weight: 700 !important;
+        box-shadow: 0 3px 6px rgba(0, 123, 255, 0.2) !important;
+        transform: translateY(-2px) !important;
+    }
+
+    /* État actif hover */
+    .tabmain-links .activemain a:hover,
+    .tabmain-links a.active:hover {
+        background: #f8f9fa !important;
+        color: #0056b3 !important;
+        border: 2px solid #0056b3 !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3) !important;
+    }
+    
+    /* Élément actif */
+    .activemain {
+        background: none !important;
+        border-bottom: none !important;
+    }
+}
+
+/* ========================================
+   TRÈS PETIT MOBILE (480px et moins)
+   ======================================== */
+
+@media (max-width: 480px) {
+    
+    .tabmain-links {
+        gap: 2px !important;
+        padding: 6px 2px !important;
+    }
+    
+    .tabmain-links a {
+        padding: 8px 2px !important;
+        font-size: 10px !important;
+        min-height: 40px !important;
+        border-radius: 4px !important;
+    }
+    
+    /* Textes plus courts sur très petit écran */
+    .tabmain-links a[href="#tabmain3"]::after { content: "Sched"; } /* Schedule → Sched */
+    .tabmain-links a[href="#tabmain6"]::after { content: "Cap"; }   /* Capology → Cap */
+    .tabmain-links a[href="#tabmain7"]::after { content: "Pros"; }  /* Prospects → Pros */
+    
+    .tabmain-links a[href="#tabmain3"],
+    .tabmain-links a[href="#tabmain6"],
+    .tabmain-links a[href="#tabmain7"] {
+        font-size: 0 !important; /* Masquer le texte original */
+    }
+    
+    .tabmain-links a[href="#tabmain3"]::after,
+    .tabmain-links a[href="#tabmain6"]::after,
+    .tabmain-links a[href="#tabmain7"]::after {
+        font-size: 10px !important;
+        font-weight: 600 !important;
+    }
+}
+
+/* ========================================
+   MOBILE PAYSAGE (481px à 768px)
+   ======================================== */
+
+@media (min-width: 481px) and (max-width: 768px) {
+    
+    .tabmain-links {
+        gap: 6px !important;
+        padding: 10px 6px !important;
+    }
+    
+    .tabmain-links a {
+        padding: 12px 6px !important;
+        font-size: 13px !important;
+        min-height: 48px !important;
+    }
+}
+
+/* ========================================
+   TABLETTE (769px à 1024px)
+   ======================================== */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    
+    /* Retour à la navigation horizontale classique */
+    .tabmain-links {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        padding: 12px 8px !important;
+    }
+    
+    .tabmain-links li {
+        flex: 0 0 auto !important;
+        margin: 0 !important;
+    }
+    
+    .tabmain-links a {
+        padding: 12px 16px !important;
+        font-size: 14px !important;
+        min-height: auto !important;
+        white-space: nowrap !important;
+    }
+}
+
+/* ========================================
+   DESKTOP (1025px et plus)
+   ======================================== */
+
+@media (min-width: 1025px) {
+    
+    /* Navigation desktop normale - pas de changements */
+    .tabmain-links {
+        display: flex !important;
+        justify-content: center !important;
+        gap: 12px !important;
+        padding: 15px 10px !important;
+    }
+    
+    .tabmain-links a {
+        padding: 15px 20px !important;
+        font-size: 16px !important;
+        min-height: auto !important;
+    }
+}
+
+/* ========================================
+   ANIMATIONS ET TRANSITIONS
+   ======================================== */
+
+@media (max-width: 768px) {
+    
+    /* Animation d'apparition */
+    .tabmain-links {
+        animation: slideInTop 0.3s ease-out !important;
+    }
+    
+    @keyframes slideInTop {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Animation des onglets */
+    .tabmain-links a {
+        animation: fadeInScale 0.3s ease-out !important;
+        animation-fill-mode: both !important;
+    }
+    
+    .tabmain-links li:nth-child(1) a { animation-delay: 0.05s !important; }
+    .tabmain-links li:nth-child(2) a { animation-delay: 0.1s !important; }
+    .tabmain-links li:nth-child(3) a { animation-delay: 0.15s !important; }
+    .tabmain-links li:nth-child(4) a { animation-delay: 0.2s !important; }
+    .tabmain-links li:nth-child(5) a { animation-delay: 0.25s !important; }
+    .tabmain-links li:nth-child(6) a { animation-delay: 0.3s !important; }
+    .tabmain-links li:nth-child(7) a { animation-delay: 0.35s !important; }
+    .tabmain-links li:nth-child(8) a { animation-delay: 0.4s !important; }
+    
+    @keyframes fadeInScale {
+        from {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+}
+
+/* ========================================
+   AMÉLIORATION ACCESSIBILITÉ
+   ======================================== */
+
+@media (max-width: 768px) {
+    
+    /* Focus visible */
+    .tabmain-links a:focus {
+        outline: 3px solid #80bdff !important;
+        outline-offset: 2px !important;
+        z-index: 10 !important;
+    }
+    
+    /* Amélioration du contraste */
+    .tabmain-links a {
+        color: #495057 !important;
+    }
+    
+    .tabmain-links a:hover {
+        color: #212529 !important;
+    }
+    
+    /* Zone de touch élargie */
+    .tabmain-links a::before {
+        content: '' !important;
+        position: absolute !important;
+        top: -2px !important;
+        left: -2px !important;
+        right: -2px !important;
+        bottom: -2px !important;
+        z-index: -1 !important;
+    }
+    
+    .tabmain-links li {
+        position: relative !important;
+    }
+}

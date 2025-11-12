@@ -1,0 +1,278 @@
+
+#tabs .ui-state-focus a {
+    border: 0 !important;
+    background-color:#E7BF3A;
+    color: black;
+}
+
+#tabs .ui-state-focus  li {
+    border: 0 !important;
+    background-color:#E7BF3A;
+    
+    }
+
+#tabs .ui-state-active a {
+    border: 0 !important;
+    background-color:#E7BF3A;
+    
+    }
+
+
+#tabs .nav-tabs .nav-item .nav-link {
+    background-color: black;
+    color: #747474;
+}
+
+#tabs  .tabsItem button:hover {
+    background-color: #1e2022 !important;
+    color: #E7BF3A !important;
+    /* transform: scale(1.05); /* Slightly enlarges the box */
+    cursor: pointer; /* Changes the cursor to indicate it's interactive */
+    font-size: 110%;
+}
+
+#tabs  .nav-tabs .nav-item .nav-link.active {
+    color: #303336 ;
+    background-color:  #E7BF3A;
+    border-bottom: none !important;
+    font-weight: bold;
+    font-size: 115%;
+}
+
+#tabs .tabcontainer {
+    /*background-color:#E7BF3A;*/
+}
+
+#tabs .tab-content {
+   /* background-color:#E7BF3A;
+    border: 2px solid #f5cc44;*/
+    border-bottom-left-radius: 10px;  
+    border-bottom-right-radius: 10px; 
+    border-top-right-radius: 10px; 
+    padding: 5px;
+}
+
+
+
+
+
+.linetabs .stratvalue{width:80px;}
+.linetabs .stratlabel{ margin-top:3px;}
+.linetabs .startinggoalie{margin-bottom:10px;}
+
+.strats, .time {
+    display: flex;
+    flex-direction: column; /* Stack labels and inputs vertically */
+}
+.stratlabel, .timelabel {
+    margin-bottom: 5px; /* Space between label and input */
+}
+
+
+.slotcard {
+    display: inline-block;
+}
+
+
+
+
+#lineeditor  .linesection{
+
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 1);
+    margin-bottom: 4px;
+   
+
+}
+
+
+.positionname{
+   
+    font-family: 'Roboto Condensed', sans-serif;
+    
+}
+#lineeditor  #tabs .colorName {
+    color:  #529e71;
+
+    padding: 5px;
+   
+}
+
+
+.sliders {
+    display: none; /* Start as inactive */
+}
+.sliders.active {
+    display: block; /* Show when active */
+}
+
+.persona {
+    display: none; 
+}
+.persona.active {
+    display: block; 
+}
+
+
+.lineSave .btn {
+    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5) !important;
+}
+
+
+#lineeditor  .playerlist{margin:2px; padding:2px;}
+
+#lineeditor  .playerlist li{ border:1px thin #f5f5ff2f; align-content: start;  }
+#lineeditor  .playerlist li:active {background-color: #E7BF3A ;}
+
+#lineeditor  .stratval{text-align: center;border:1px solid #cccccc;}
+
+
+
+#lineeditor  .updown{width:12px;background-repeat:no-repeat;border-width:0px;background-color: transparent;background-position:center center;}
+#lineeditor  .up {background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAIAAADZF8uwAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyBpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBXaW5kb3dzIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjFCMUU3QUUxNEMxQzExRTVBNTQ4OEM1RkJFQTQ4MkNBIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjFCMUU3QUUyNEMxQzExRTVBNTQ4OEM1RkJFQTQ4MkNBIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MUIxRTdBREY0QzFDMTFFNUE1NDg4QzVGQkVBNDgyQ0EiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MUIxRTdBRTA0QzFDMTFFNUE1NDg4QzVGQkVBNDgyQ0EiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4Rx+9MAAABRklEQVR42mI8cur6nTt3nz59xsbGxoAKfv36JS0tpaGhzgJUoSQvZayvzsTEBJQQFRUFkq9fvwaS//79+/Dxy5Ur11iAZlib66koyUJ0nzh+DEhaWFpBuDdvP9ix5zAL0JafP3/BrcjJzQOSZ86cgXC/f//BwcHBAmT9/v0broiPjw/ZWSysrAz//7NA3HHgwIH6hgYmRqYLF87////f0dHx759f7e0d6lqGQAUgxzL8/8fw/w/DX6B5f/79+8PExAw2gx0k8/8/iA3yy6sXDo7OBw+7ANl2dtYcHDy7du2EWHfl2h2oIlZ2LgYGRojo168/vn37CXcTJFxYgCHGzo4IxqlTJzOArYAANlbWHz9+sgDD9PmLN0AWRJOyqi6QvHbjHiQw33/4rKgozwIM9StXrz148IgdI1p+/vqloCBnaKgPEGAADaOEApnhhG0AAAAASUVORK5CYII=');margin:2px 0px 0px -4px;}
+#lineeditor  .down {background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAIAAADZF8uwAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyBpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBXaW5kb3dzIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjIzMkJDMTUwNEMxQzExRTVCRjM0RjdCRjY3OTc2ODBFIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjIzMkJDMTUxNEMxQzExRTVCRjM0RjdCRjY3OTc2ODBFIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjMyQkMxNEU0QzFDMTFFNUJGMzRGN0JGNjc5NzY4MEUiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MjMyQkMxNEY0QzFDMTFFNUJGMzRGN0JGNjc5NzY4MEUiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4SZB2+AAABBUlEQVR42nRRS0vDQBCeLJPd4D2XFu0DIcWDJXjw4EXR32Wv9R958BC0J88xIkYIQrWoYEWhySbdcbaF4qP5DsvszDevb5zR9W2aPozHT1JK+A2tdbPZ6PUCZEa31djrB0KIPyRjzPTjK44T5BoH+7vb3U1Yh7v77PziSnCXotBQg9ks9zzPtijLso6ErgtEyJbv+1EUnQ4GDjhEhoh9BDQfDs+CndBSLZ8MUAXzqqIKUSEunGCXpUWG/b++TA6Pji9HJ7z1MrZCnKT82plctQHgrLJ/YqmLYMWUknWDS9fN8wJZ0+fJG1trxXyffnY6LWTV45skyx7Vv7MUWrfbW2HY/xZgANNXaYpKnG/oAAAAAElFTkSuQmCC');margin:2px -4px 0px 0px;}
+
+#lineeditor .goalies .blockcontainer{margin-bottom:5px;}
+
+
+
+.teamstrategy{overflow:hidden;}
+.strategyamount{padding:0px 10px;}
+.strategystrategies{float:right;background-color:#e8e8e8;padding:0px 10px;margin-right:0px;}
+.strategieswrapper input[type=text]{text-align:center;}
+.strategieswrapper{width:98%;margin-left:0px;}
+
+
+.strats, .time {
+    display: flex;
+    flex-direction: row; /* This stacks labels and inputs vertically */
+}
+
+#lineeditor input[type="text"] {
+    text-align: center;
+    line-height: 20px; /* Adjust this to match the height of the input */
+    
+   /* line-height: normal;*/
+}
+
+
+.list-group-item:hover {
+    background-color: #E7BF3A;
+  }
+
+
+/* Side navigation styles */
+.sidenavR {
+    height: calc(100% - 120px); /* Reduce the height to leave space for sticky nav */
+    width: 0; /* Hidden initially */
+    position: fixed;
+    right: 0;
+    top: 100px; /* Lower the side nav by 80px from the top */
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 20px; /* Adjust padding as needed */
+    color: white;
+    z-index:20;
+  }
+  
+  .sidenavR a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+  }
+  
+  .sidenavR a:hover {
+    color: #f1f1f1;
+  }
+  
+  .sidenavR .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+  }
+  
+  #sideNavContent {
+    margin: 10px;
+  }
+
+
+
+
+
+
+    .button-container {
+     
+     
+      text-align: right; /* Align button group to the right */
+    }
+
+
+    .btn-custom {
+    /* width: 50px; /* Adjust the button width as needed */
+    /* height: 50px; /* Adjust the button height as needed */
+      padding: 3px;
+      margin: 0 6px; /* Add margin to create separation between buttons */
+    }
+    .btn-custom img {
+      max-width: 30px;
+      height: auto;
+      display: block;
+      margin: 0 auto; /* Center the image */
+    }
+
+
+     .btn-lg img {
+        max-width: 60px;
+        height: auto;
+        display: block;
+        margin: 0 auto; /* Center the image */
+      }
+
+
+
+
+    
+/* Side navigation styles */
+.sideList {
+    height: calc(100% - 120px); /* Reduce the height to leave space for sticky nav */
+    width: 0; /* Hidden initially */
+    position: fixed;
+    right: 0;
+    top: 100px; /* Lower the side nav by 80px from the top */
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 20px; /* Adjust padding as needed */
+    color: white;
+    z-index: 12;
+  }
+  
+  .sideList a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+  }
+  
+  .sideList a:hover {
+    color: #f1f1f1;
+  }
+  
+  .sideList .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+  }
+  
+
+  

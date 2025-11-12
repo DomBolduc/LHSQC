@@ -1,0 +1,2461 @@
+@media only screen and (max-width: 600px) {
+    /* Styles for mobile devices */
+}
+
+
+
+/* RESET */
+
+/* -----#------------------------------------ */
+
+*,html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,label,fieldset,input,p,blockquote,th,td{margin:0; padding:0;}
+table{border-collapse:collapse;border-spacing:0;}
+fieldset,img {border:0 none;}
+address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}
+ol,ul,li{list-style:none outside none;}
+caption,th{text-align:left;}
+table p{display: inline;}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}
+q:before,q:after{content:"";}
+a img { border:medium none;}
+img{border:medium none;display:inline;margin-right: 3%;float: left;}
+a{color: #000; text-decoration:none;}
+a:hover {color: #E7BF3A;}
+strong{font-weight: bold;}
+iframe{display: block;}
+
+
+.last { margin-right: 0!important; }
+.fl { float: left }
+.fr { float: right }
+.no-margin{ margin: 0!important; }
+.no-border {border: none!important;}
+.mt-50 { margin-top: 50px; }
+
+.text-align-center { text-align: center!important;}
+
+
+p { color: #444; line-height: 13px; line-height: 22px; font-family: 'Open Sans', Arial, sans-serif; }
+h1 { font-size: 40px; color: #2c2f36; font-weight: 600; text-transform: uppercase; }
+h2 { font-size: 30px; color: #2c2f36; font-weight: 300; text-transform: uppercase;}
+h3 { font-size: 22px; color: #2c2f36; font-weight: 400; text-transform: uppercase;}
+h4 { font-size: 16px; color: #2c2f36; font-weight: 400; }
+h5 { font-size: 15px; color: #2c2f36; font-weight: 400; }
+h6 { font-size: 13px; color: #2c2f36; font-weight: 400; }
+a h1:hover, a h2:hover {
+	color: #E7BF3A;
+}
+
+
+/************** Master ***************/
+/* ----------------------------------------- */
+/************** General Sections **************/
+body { 
+	font-family: 'teko', Open Sans, Arial, sans-serif;
+	font-size: 14px;
+}
+
+
+
+
+
+
+/*  NAV MOBILE   ============================================================================= */
+.button-menu {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.button-menu li {
+	cursor: pointer;
+	color: #fff;
+	font-size: 30px;
+	padding: 10px 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 50px;
+	min-width: 50px;
+	list-style: none;
+}
+
+/* Fallback pour le menu hamburger si Font Awesome ne charge pas */
+.button-menu li i::before {
+	content: "☰";
+	font-family: Arial, sans-serif;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+/* Si Font Awesome charge correctement, utiliser l'icône normale */
+.button-menu li i.fas::before,
+.button-menu li i.fa-solid::before,
+.button-menu li i.fa::before {
+	font-family: "Font Awesome 6 Free", "Font Awesome 5 Free", "FontAwesome";
+}
+
+
+.nav-mobile {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    position: relative;
+    text-align: center;
+    box-sizing: border-box;
+}
+.nav-mobile-menu {
+    margin: 0;
+    display: none;
+    width: 100%;
+    text-align: center;
+    list-style: none;
+    padding: 0;
+    box-sizing: border-box;
+}
+.nav-mobile-menu.active {
+    display: block;
+}
+
+
+/*  GO FULL WIDTH AT LESS THAN XXX PIXELS */
+@media (max-width: 991px) {
+    header h1 {
+        margin: 80px 0 20px!important;
+        padding: 0 20px;
+        font-size: 40px!important;
+        color: #fff;
+        display: inline-block;
+        background-color: rgba(0,0,0,0.4); 
+    }
+    header h2 {
+        margin: 30px 0 10px!important;
+        padding: 0 20px;
+        font-size: 20px!important;
+        font-weight: 700;
+        color: #fff;
+    }
+    header p {
+        margin: 0 auto 30px;
+        color: #fff;
+        width: 90%!important;
+    }
+    .module-content {
+        padding: 30px 20px;
+    }
+    .content {
+        padding: 30px 10px;
+    }
+    nav {
+        display: none!important;
+    }
+    .module img {
+        width: 100%;
+    }
+}
+
+
+
+.nav-mobile ul li {
+	display: block;
+	background: #2C2F36;
+	line-height: 44px;
+	border-top: 1px solid #E7BF3A;
+	list-style: none;
+}
+
+.nav-mobile ul li a{
+	display: block;
+	color: #fff;
+}
+
+.nav-mobile ul li div {
+	color: #fff;
+	cursor: pointer;
+}
+
+.nav-mobile ul li div i {
+	margin-left: 10px;
+	font-size: 10px;
+}
+
+.nav-mobile ul li ul li{
+	background: #3f444a;
+	border: none;
+	list-style: none;
+}
+
+.nav-mobile ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+/* Suppression complète des puces pour tous les éléments du menu mobile */
+.nav-mobile ul,
+.nav-mobile ul li,
+.nav-mobile-menu,
+.nav-mobile-menu li,
+.nav-mobile-menu ul,
+.nav-mobile-menu ul li {
+	list-style: none !important;
+	list-style-type: none !important;
+	padding-left: 0 !important;
+	margin-left: 0 !important;
+}
+
+/* Suppression des puces pour les sous-menus spécifiques */
+.nav-mobile-menu li ul,
+.nav-mobile-menu li ul li {
+	list-style: none !important;
+	list-style-type: none !important;
+}
+
+/* Hide the mobile menu by default */
+.nav-mobile-menu {
+    display: none;
+    width: 100%;
+}
+
+/* Show the mobile menu when active */
+.nav-mobile-menu.active {
+    display: block; 
+}
+
+
+
+/* Hide all submenus by default */
+.nav-mobile-menu ul {
+    display: none;
+}
+
+
+
+/* Show the submenu when the 'active' class is applied */
+.nav-mobile-menu li > ul.active {
+    display: block;
+}
+
+/* Show nested menus when parent is active */
+
+.nav-mobile ul li.active > ul {
+    display: block;
+}
+
+.nav-mobile-menu  img {
+    width:48px;
+    margin: 0 auto;
+    vertical-align:middle;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.nav-mobile-menu  span {
+    padding-top: 0;
+    padding-bottom: 0;
+    line-height: 10px;
+}
+
+.subMenuHighlight {
+    color: #2C2F36 !important;
+    line-height: 20px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    font-size: 110%;
+}
+
+
+
+
+
+/*  HEADER   ============================================================================= */
+header {
+
+	/*background-color: #ededed;*/
+	background-size: cover;
+	text-align: center;
+	border-bottom: 5px solid rgba(0,0,0,0.4);
+}
+
+.header-content {
+	padding-bottom: 150px;
+}
+
+.logo {
+
+	display: inline-block;
+	margin-left: 20px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+
+}
+
+.header-logo {
+
+    width:64px !important ;
+    padding-left:0px;
+    padding-right:0px;
+    padding-top:0px;
+    padding-bottom:0px;
+    vertical-align:middle;
+    display: inline;
+
+}
+
+nav .logo a {
+
+	color: #fff;
+
+}
+
+
+nav a:visited {
+	color: #ffffff;
+}
+
+nav a:visited:hover {
+	color: #E7BF3A;
+}
+
+
+nav {
+
+	text-align: left;
+
+	width: 100%;
+
+	padding: 6px 0 0 0;
+
+	background-color: rgb(0, 0, 0);  /* Noir original */
+
+	display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+	z-index: 9999;
+
+	border-bottom: 3px solid rgba(0,0,0,0.1);
+
+}
+
+
+
+nav ul {
+
+	float: right;
+
+	
+}
+
+
+
+nav ul li {
+
+	display: inline;
+
+	padding: 18px 0;
+
+	margin-left: 30px;
+
+	line-height: 24px;
+
+    vertical-align: middle;
+
+	color: #ffffff;
+
+
+
+}
+
+
+
+nav ul>li { 
+
+	position: relative; 
+
+}
+
+
+
+nav ul>li>ul {
+
+	width: 220px;
+
+	position: absolute;
+
+	left: -9999px;
+
+	z-index: 9999;
+
+	top: 36px;
+
+}
+
+
+
+nav ul>li:hover>ul { 
+
+	left: -10px; 
+
+}
+
+
+
+nav ul li:hover ul {
+
+	border-bottom: none!important;
+
+}
+
+
+
+nav ul li ul li {
+
+	padding: 4px 16px;
+
+	margin-left: 0px;
+
+	display: block;
+
+	background-color: rgba(0,0,0,0.8);
+
+	text-align: left;
+
+	border-bottom: 1px solid rgba(0,0,0,0.1);
+
+    color: #ffffff;
+
+}
+
+
+
+nav ul li ul li:hover {
+
+	border-bottom: 2px solid #F8C630;
+	background-color: rgba(0,0,0,0.9);
+
+}
+
+
+
+nav ul li ul li:hover>a { 
+
+	color: #F8C630;
+
+	padding-left: 6px;
+
+	margin: 5px 0;
+
+	font-size: 16px;
+
+}
+
+
+
+nav ul>li>ul { 
+
+	display: block; 
+
+	position: absolute; 
+
+	left: -9999px; 
+
+    color: #fff; 
+
+}
+
+
+
+nav ul>li>ul>li:hover>ul { 
+
+	width: 210px; 
+
+	left: 165px; 
+
+	margin-top: -35px; 
+
+}
+
+
+
+nav ul li a {
+
+	font-size: 15px;
+
+	text-transform: uppercase;
+
+	color: #fff;
+
+}
+
+
+
+nav ul li ul li a { 
+
+	display: block; 
+
+	line-height: 30px; 
+
+	font-size: 15px;
+
+	margin: 0; 
+
+	text-transform: capitalize; 
+
+    color: #ffffff; 
+
+}
+
+
+
+header h1 {
+
+	margin: 150px 0 40px;
+
+	padding: 0 20px;
+
+	font-size: 80px;
+
+	color: #fff;
+
+	display: inline-block;
+
+	background-color: rgba(0,0,0,0.4); 
+
+}
+
+header h2 {
+
+	margin: 50px 0 20px;
+
+	padding: 0 20px;
+
+	font-size: 50px;
+
+	font-weight: 700;
+
+	color: #000000;
+
+}
+
+header p {
+
+	margin: 0 auto 30px;
+
+	color: #000000;
+
+	width: 40%;
+
+}
+
+.active a {
+
+	color: #F8C630;
+
+}
+
+/* Navigation principale - bouton Home actif en blanc */
+nav .active a {
+	color: #ffffff !important;
+	font-weight: 550;
+    font-size: 14px;
+}
+
+/* Autres éléments actifs restent noirs */
+div .active a {
+	color: #000000;
+	/*text-transform: uppercase;*/
+    font-weight: 550;
+    font-size: 14px;
+}
+
+/* Bouton Discord dans la navigation principale */
+.discord-btn {
+	background-color: #5865F2 !important;
+	color: #ffffff !important;
+	padding: 8px 12px !important;
+	border-radius: 6px !important;
+	text-decoration: none !important;
+	font-size: 18px !important;
+	transition: all 0.3s ease !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	min-width: 40px !important;
+	height: 36px !important;
+}
+
+/* Logo Discord image */
+.discord-btn .discord-logo {
+	width: 20px !important;
+	height: 20px !important;
+	filter: brightness(0) invert(1) !important; /* Rend l'image blanche */
+	transition: all 0.3s ease !important;
+}
+
+.discord-btn:hover .discord-logo {
+	transform: scale(1.1) !important;
+	filter: brightness(0) invert(1) drop-shadow(0 0 3px rgba(255,255,255,0.5)) !important;
+}
+
+/* Bouton Mail dans la navigation principale */
+.mail-btn {
+	background-color: #28a745 !important; /* Vert pour la messagerie */
+	color: #ffffff !important;
+	padding: 8px 12px !important;
+	border-radius: 6px !important;
+	text-decoration: none !important;
+	font-size: 18px !important;
+	transition: all 0.3s ease !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	min-width: 40px !important;
+	height: 36px !important;
+}
+
+.mail-btn:hover {
+	background-color: #218838 !important;
+	color: #ffffff !important;
+	text-decoration: none !important;
+	transform: translateY(-1px) !important;
+	box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3) !important;
+}
+
+/* Container pour l'icône mail avec pastille */
+.mail-icon-container {
+	position: relative !important;
+	display: inline-block !important;
+}
+
+/* Logo Mail image */
+.mail-btn .mail-logo {
+	width: 20px !important;
+	height: 20px !important;
+	filter: brightness(0) invert(1) !important; /* Rend l'image blanche */
+	transition: all 0.3s ease !important;
+}
+
+.mail-btn:hover .mail-logo {
+	transform: scale(1.1) !important;
+	filter: brightness(0) invert(1) drop-shadow(0 0 3px rgba(255,255,255,0.5)) !important;
+}
+
+/* Pastille de notification pour les nouveaux messages */
+.mail-notification-badge {
+	position: absolute !important;
+	top: -8px !important;
+	right: -8px !important;
+	background-color: #ff4444 !important;
+	color: white !important;
+	border-radius: 50% !important;
+	width: 18px !important;
+	height: 18px !important;
+	font-size: 11px !important;
+	font-weight: bold !important;
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	border: 2px solid #ffffff !important;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
+	z-index: 10 !important;
+}
+
+.discord-btn:hover {
+	background-color: #4752C4 !important;
+	transform: scale(1.05) !important;
+	color: #ffffff !important;
+}
+
+/* Bouton Discord mobile */
+.discord-btn-mobile {
+	background-color: #5865F2 !important;
+	color: #ffffff !important;
+	padding: 10px 15px !important;
+	border-radius: 6px !important;
+	text-decoration: none !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	gap: 8px !important;
+	font-weight: 500 !important;
+	transition: all 0.3s ease !important;
+}
+
+.discord-btn-mobile:hover {
+	background-color: #4752C4 !important;
+	color: #ffffff !important;
+}
+
+/* Logo Discord mobile */
+.discord-btn-mobile .discord-logo-mobile {
+	width: 18px !important;
+	height: 18px !important;
+	filter: brightness(0) invert(1) !important; /* Rend l'image blanche */
+	margin-right: 8px !important;
+	vertical-align: middle !important;
+}
+
+/* Bouton Mail mobile */
+.mail-btn-mobile {
+	background-color: #28a745 !important; /* Vert pour la messagerie */
+	color: #ffffff !important;
+	padding: 12px 20px !important;
+	border-radius: 8px !important;
+	text-decoration: none !important;
+	font-size: 16px !important;
+	font-weight: 500 !important;
+	transition: all 0.3s ease !important;
+	display: flex !important;
+	align-items: center !important;
+	margin: 5px 0 !important;
+}
+
+.mail-btn-mobile:hover {
+	background-color: #218838 !important;
+	color: #ffffff !important;
+}
+
+/* Container pour l'icône mail mobile avec pastille */
+.mail-icon-container-mobile {
+	position: relative !important;
+	display: inline-flex !important;
+	align-items: center !important;
+}
+
+/* Logo Mail mobile */
+.mail-btn-mobile .mail-logo-mobile {
+	width: 18px !important;
+	height: 18px !important;
+	filter: brightness(0) invert(1) !important; /* Rend l'image blanche */
+	margin-right: 8px !important;
+	vertical-align: middle !important;
+}
+
+/* Pastille de notification mobile pour les nouveaux messages */
+.mail-notification-badge-mobile {
+	position: absolute !important;
+	top: -8px !important;
+	right: -8px !important;
+	background-color: #ff4444 !important;
+	color: white !important;
+	border-radius: 50% !important;
+	width: 16px !important;
+	height: 16px !important;
+	font-size: 10px !important;
+	font-weight: bold !important;
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	border: 1px solid #ffffff !important;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.3) !important;
+	z-index: 10 !important;
+}
+
+
+
+
+
+/*  STICKY NAV   ============================================================================= */
+
+
+
+#stickynav {
+
+	position:fixed;
+
+	z-index:999;
+
+	top:-1000px;
+
+	left:0;
+
+	background-color: rgba(0,0,0,0.7);
+
+	border-bottom: 5px solid rgba(0,0,0,0.1);
+
+	}
+
+
+
+body:not(.mobile) #stickynav{
+
+	-webkit-transition:all .2s ease-in-out;
+
+	-moz-transition:all .2s ease-in-out;
+
+	-o-transition:all .2s ease-in-out;
+
+	transition:all .2s ease-in-out
+
+	}
+
+#stickynav.animate{
+
+	top:0
+
+}
+
+
+
+
+
+
+
+
+
+/*  MODULES  ============================================================================= */
+
+.module {
+
+	margin-bottom: 60px;
+
+}
+
+.module img {
+
+	width: 100%;
+
+}
+
+
+
+.module-content i {
+
+	margin-right: 20px;
+
+}
+
+
+
+.module-content {
+
+	padding: 60px 45px;
+
+	color: #fff;
+
+}
+
+
+
+.module-content:after {
+
+	clear: both; content: ""; display: block; height: 0;
+
+}
+
+
+
+.module-content p {
+
+	margin: 20px 0 20px;
+
+	line-height: 22px;
+
+	font-size: 13px;
+
+	font-weight: 500;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*  LIST   ============================================================================= */
+
+.list {
+
+	margin: 20px 0;
+
+}
+
+.list li {
+
+	font-size: 13px;
+
+	margin-bottom: 5px;
+
+}
+
+
+
+/*  ALERTS   ============================================================================= */
+
+
+
+.alert {
+
+	padding: 15px;
+
+	margin: 30px 10px;
+
+	font-size: 14px;
+
+	color: white;
+
+	position: relative;
+
+}
+
+.alert ul{
+
+	padding-right: 20px; 
+
+	display: inline-block;
+
+}
+
+.alert ul ul{
+
+	display: block;
+
+}
+
+.alert-success {
+
+	background: #2ecc71;
+
+	border-bottom: 5px solid #27ae60;
+
+	color: #fff;	
+
+}
+
+.alert-success i {
+
+	color: #27ae60;
+
+}
+
+
+
+.alert-info {
+	background: #f1c40f;
+	border-bottom: 5px solid #f39c12;
+	color: #fff;
+    display: flex;
+    align-items: center;
+    padding-bottom: 2px;
+}
+
+.alert-info i {
+	color: #f39c12;
+    max-height: 100%; /* Ensure the icon stays within the div */
+}
+
+
+
+
+.alert-notice {
+
+	color: #333;
+
+	background: #ecf0f1;
+
+	border-bottom: 5px solid #bdc3c7;	
+
+}
+
+.alert-notice i {
+
+	color: #bdc3c7;
+
+}
+
+
+
+.alert-error {
+
+	background: #e74c3c;
+
+	border-bottom: 5px solid #c0392b;
+
+	color: #fff;	
+
+}
+
+.alert-error i {
+
+	color: #c0392b;
+
+}
+
+
+
+.alert-success i, .alert-info i, .alert-notice i, .alert-error i {
+
+	width: 40px;
+
+	text-align: center;
+
+	float: left;
+
+	vertical-align: middle;
+
+	font-size: 40px;
+
+	margin-right: 20px;
+
+}
+
+.close i{
+
+	float: right;
+
+	padding: 10px 2px;
+
+	position: absolute;
+
+	top: 0;
+
+	right: 0;
+
+	font-size: 18px!important;
+
+	margin:0!important;
+
+	cursor: pointer;
+
+}
+
+
+
+/*  VERTICAL TABS   ============================================================================= */
+
+
+
+.vertical li{
+
+	cursor: pointer;
+
+}
+
+.tab-nav li h4 {
+
+	padding: 15px 0;	
+
+	margin: 0;
+
+	font-size: 14px;
+
+	text-align: center;
+
+}
+
+.vertical li {
+
+	margin-right: 10px;
+
+}
+
+
+
+
+.horizontal li{
+
+	/*float: left;*/
+
+	cursor: pointer;
+
+	display: inline-block;
+
+}
+
+
+
+.tab-dark-blue li h4 {
+
+	color: #fff;
+
+	border-bottom: 5px solid #E7BF3A;
+
+}
+
+.tab-dark-blue .tab-content{
+
+	color: #fff;
+
+	background-color: rgba(0,0,0,0.4);
+
+}
+
+.tab-dark-blue .active {
+
+	background-color: rgba(0,0,0,0.4);
+
+}
+
+
+
+.tab-grey li h4 {
+
+	color: #555;
+
+	border-bottom: 5px solid #999;
+
+}
+
+.tab-grey p {
+
+	color: #555;
+
+	background-color: rgba(255,255,255,0.4);
+
+}
+
+.tab-grey .active {
+
+	background: #fff;
+
+}
+
+
+
+.tab-orange li h4 {
+
+	color: #2c2f36;
+
+	border-bottom: 5px solid #2c2f36;
+
+}
+
+.tab-orange p {
+
+	color: #fff;
+
+	background-color: rgba(0,0,0,0.4);
+
+}
+
+.tab-orange .active {
+
+	background-color: rgba(0,0,0,0.4);
+
+}
+
+
+
+.tab-dark-blue:after, .tab-grey:after, .tab-orange:after {
+
+ clear: both; content: ""; display: block; height: 0;
+
+}
+
+
+
+
+
+
+
+/*  FOOTER   ==================================================================== */
+
+footer {
+
+	width: 100%;
+
+	border-bottom: 5px solid #E7BF3A; 
+
+}
+
+footer h4 {
+
+	margin-bottom: 20px;
+
+}
+
+footer ul li a {
+
+	color: #999;
+
+	padding: 5px 0;
+
+	display: block;
+
+}
+
+footer ul li a:hover {
+
+	padding-left: 10px;
+
+	color: #000;
+
+}
+
+
+
+footer .module-content {
+
+	text-align: center;
+
+}
+
+
+
+
+
+.scrollup{ width:40px; height:40px; opacity:0.3; position:fixed; bottom:50px; right:25px; display:none; text-indent:-9999px; background: url('../images/icon_top.png') no-repeat;}
+
+
+.STHSDivInformationMessage{
+    color:rgba(0, 191, 0, 1.0); 
+    font-weight: bold;
+    padding:10px 1px 1px 1px;
+    text-align:center;
+    background-color: rgba(0,0,0,0.8);
+    border:rgb(0, 191, 0) 2px solid;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.STHSDivAlertMessage{
+    color:#FF0000; 
+    font-weight: bold;
+    padding:10px 1px 1px 1px;
+    text-align:center;
+    background-color: rgba(0,0,0,0.8);
+    border:red 2px solid;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+
+/*  COLORS   ===================================================  */
+
+.bg-grey {
+
+	background: #e8e8e8;
+
+}
+
+
+
+.bg-orange {
+
+	background: #E7BF3A;
+
+}
+
+
+
+
+/*   Top5    =============================================     */
+/*
+.Headshot {display: inline;}*/
+.STHSPHPIndexLeadersHeadshot { width: 80px; box-shadow: 0 2px 3px 1px #ddd; border-radius: 50%; /* margin-left: 15px; margin-right: auto;   */}
+
+.player-container { display: flex; 
+    flex-direction: column; /* Stack the children vertically */
+     align-items: center; /* Center-align the text and image */ 
+     text-align: center; /* Center-align the text */ 
+} 
+.Headshot img {  margin-bottom:7px;   }
+
+.playerLeaderLine:has(.Headshot) {
+    /* Styles applied to .player-container if it contains a child with .Headshot class */
+    margin-bottom: 20px !important;
+    padding:50px;
+    border: 2px solid green;
+}
+
+
+
+
+/* ///////////////////////////////////*/
+
+
+
+
+
+/* LHSQC specifics  */
+
+
+
+/*/////////////////////////////////////*/
+
+
+
+.ProTeamsBar { 
+
+    text-align:center;
+
+    margin-top:10px;
+
+    margin-bottom:10px; 
+
+    vertical-align: bottom;
+
+}
+
+
+
+.TeamLink {
+
+    display: inline-block;
+
+}
+
+.ProTeamsBarTeamImage {
+
+    width:36px;
+
+    padding-left:0px;
+
+    padding-right:8px;
+
+    vertical-align:middle;
+
+   
+
+}
+
+
+
+
+
+.ProTeamsBarTeamImage:hover {
+
+    width:40px;
+
+}
+
+
+
+.cardTeamImage {
+
+    width:48px;
+
+    margin: 0 auto;
+
+    vertical-align:middle;
+
+}
+
+
+
+.frontpage-card {
+
+    background-color: white ; 
+    border: 1px solid rgb(20, 20, 20);
+    overflow: hidden;
+
+
+  }
+
+  .frontpage-card th { font-weight: bold;font-size: 1.3em;padding: 15px; }
+
+  .frontpage-card td { padding-left: 5px;padding-right: 10px; }
+
+  .frontpage-card td > a { text-decoration: none; }
+
+
+
+  .frontpage-card .card-header {
+
+    font-size: 1.2em;
+
+    text-align:center;
+
+    background-color:black ; 
+
+    color:white;
+
+  }
+
+
+  .boxscorecontainer {
+
+   
+
+    background-color:black; 
+
+    
+
+  }
+
+
+
+
+
+  .frontpage-card .card-body  {
+
+    
+
+    text-align:center;
+
+    vertical-align: middle;
+
+  
+
+  }
+
+
+
+.innerRep {
+
+    background-color: rgba(245, 245, 245, 0.45) ; 
+
+ 
+
+}
+
+
+
+
+
+/* Change the cursor when hovering over a draggable div */
+
+.draggable {
+
+    cursor: grab; /* Changes the cursor to a "grab" hand */
+    touch-action: none; /* Prevents default touch actions like scroll or zoom */
+}
+
+
+
+.draggable:active {
+
+    cursor: grabbing; /* Changes the cursor to a "grabbing" hand when being dragged */
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/***    Scroller   ***********************/
+.gamesScroller {
+    z-index: 1;
+    position: relative;
+}
+
+
+.gamesScroller div .active a {
+    text-transform: inherit ;
+    color: inherit !important;
+    font-weight: inherit ;
+    font-size: inherit ;
+}
+
+
+
+
+.scrollButtons {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    pointer-events: none; /* Pass through events */
+    padding: 0px;
+}
+
+.scroll-container {
+    overflow: hidden;  /* hides the scrollbar  */
+    background: rgba(255, 255, 255);
+    margin: 0px;
+    padding:0;
+    position: relative;
+    border-radius: 10px;
+    height: auto; /* Adjust the height to fit content */
+    display: flex;
+    align-items: center; /* Center the content vertically */
+}
+
+.scrollDivTop, .scrollDivBot {
+    height: 42px;
+    width: 45px;
+    cursor: pointer;
+    background:  #0c0c0c; /* rgba(216, 215, 238, 1);*/
+}
+.scrollDivTop {
+    border-top-left-radius: 10px;
+}
+.scrollDivBot {
+    border-bottom-left-radius: 10px;
+}
+
+.scrollBtnRight {
+    border-bottom-left-radius: 10px;
+}
+.scrollBtnLeft {
+    border-top-left-radius: 10px;
+}
+.scrollBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin: 0%;
+    padding: 0%;
+    pointer-events: auto; /* Allow interaction with buttons */
+}
+.scrollBtn:hover {
+    background:  #383838ce; /* rgba(216, 215, 238, 1);*/
+}
+.scrollBtn img {
+    /*background:  #ccad00; /* rgba(216, 215, 238, 1);*/
+    width: 100%;
+    height: 100%;
+}
+
+
+.scrollerBoxScore{
+    font-size:8px;
+    text-align:center;
+    font-weight:bold;
+    width: 100%;
+    padding: 2px !important;
+}
+
+
+.active {
+    cursor: grabbing;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.StarTable  {width: 100%;border-collapse: separate;border-spacing: 0;border-radius: 10px;-moz-border-radius: 10px;padding: 5px;margin-bottom: 5px;}
+
+.StarTable  th {font-weight: bold;font-size: 1.3em;padding: 15px;}
+
+.StarTable  td {padding-left: 5px;padding-right: 10px;vertical-align:bottom;}
+
+.StarTable  td > a {text-decoration: none;}
+
+.StarTable  tr:hover {font-weight: 900;}
+
+
+.StarTableHeader { padding: 5px; }
+
+.StarTableHeader img {
+        max-width: 100%; 
+        width: 100%;
+        height: auto;
+        object-fit:cover;
+    }
+
+
+.card-date {
+    text-align:right;
+    vertical-align: top;
+}
+
+
+
+.team-list li a {
+    align-items: center;
+    display: flex;
+}
+
+.team-list li a img {
+    height: 24px;
+    width: 24px;
+    margin-left: 0px;
+    padding-right: 6px;
+
+}
+
+
+
+.footer-logo {
+
+    max-width:80px ;
+    padding-left:0px;
+    padding-right:0px;
+    padding-top:0px;
+    padding-bottom:0px;
+    vertical-align:middle;
+    text-align: center;
+
+}
+
+
+
+.STHSTodayGame_GameOverall {
+
+    vertical-align: top;
+    padding: 0px;
+    margin-bottom: 5px;
+    background-color:  white;
+    -webkit-column-break-inside: avoid;	
+    page-break-inside: avoid; 
+    break-inside: avoid;
+
+}
+
+
+
+.GameDayTable {
+
+    border-collapse:collapse;
+    min-width:142px;
+    width:142px;
+    background-repeat:no-repeat;
+    background-position:right;
+    border:none;
+    border-right-style:solid;
+    border-right-color:#cecece;
+    border-right-width:1px;
+    
+}
+
+.pastGame {
+    /*background-color: rgba(32, 32, 32, 0.315) ;*/
+    border-radius: 0%;
+}
+
+.upcomingGame {
+    background-color: #f8f9fa !important; /* Gris clair au lieu d'orange */
+    border-radius: 0%;
+}
+
+
+.roster-container {
+    /*border: 1px solid black;  Black thin border */
+    color: #529e71;
+    padding: 5px;
+}
+
+.textName {
+    color: #18201b;
+   
+}
+
+.roster-container .card-body {
+    color: #27ae60;
+    border: 1px solid rgb(2, 168, 24);
+}
+
+.roster-container p {
+    color: #27ae60;
+}
+
+.roster-container .card-text {
+    color: #27ae60;
+}
+
+
+
+.Roster  {
+    padding: 10px;
+}
+
+
+
+.rosterElm {
+    color: rgb(2, 168, 24);
+    border: 1px solid rgb(2, 168, 24);
+    padding: 5px;
+    margin-bottom: 2px;
+    display: block; /* Ensure it displays as a block element */
+}
+
+
+
+.rosterElm p {
+    color: #27ae60;
+}
+
+
+
+
+
+
+
+
+.scratch {
+
+    color: red;
+    border: 1px solid red;
+    padding: 5px;
+    margin-bottom: 2px;
+    display: block; /* Ensure it displays as a block element */
+
+}
+
+
+
+.Scratched {
+    padding: 0px;
+}
+
+.Scratched p {
+    color: red;
+}
+
+
+
+
+
+
+.showMe {border: 1px dotted #2e7bdf;}
+
+.paleText {color:#cccccc !important;}
+
+.darkText {color:#0f0f0f !important;}
+.darkText a  {color:#0f0f0f !important;}
+.darkText .active a  {color:#0f0f0f !important;}
+
+
+.btn-warning,
+.btn-warning:hover,
+.btn-warning:focus,
+.btn-warning:active {
+
+    background-color:#E7BF3A  !important;
+
+   /* border: 3px solid #221f42 !important;*/
+
+}
+
+
+.error, .linesincomplete{color:#D8000C;background-color: #FFBABA;font-size:large;margin-bottom:5px;padding:5px;}
+.errorwrapper{padding:10px;overflow:hidden;}
+.erroritem{font-size:13px;float:left;margin-right:15px;}
+
+.rostercomplete,.linescomplete{
+    color: #4F8A10;
+    background-color: #DFF2BF;
+    font-size:large;
+    padding:2px; 
+}
+
+.confirm{
+    color: #4F8A10;
+    background-color: #DFF2BF;
+    font-size:x-large;
+    margin-bottom:2px;
+    padding:2px;
+}
+
+
+
+
+.lineButtons{padding-bottom:10px;  text-align:center; }
+.lineButtons input {color:#333; }
+
+
+
+li.activemain a,li.activemain a:hover{text-decoration:none;font-size:125%;color:#990000;}
+
+
+.positionlist { 
+
+    border-bottom:1px solid #999999;
+    border-top:1px solid #999999; 
+   
+
+}
+
+
+.positionlist .checkbox * {
+    cursor: pointer;
+   /* border:1px solid #999999 !important;*/
+}
+.positionlist .checkbox {
+   
+    margin-top: 1px;
+   
+}
+.positionlist .checkbox input::hover {
+    margin-top: 2px;
+}
+
+.positionlist .checkbox label {
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    padding-left: 5px;
+}
+
+.positionlist .checkbox label::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    left: 0;
+    margin-left: -20px;
+    border: 1px solid #555;
+    border-radius: 3px;
+    background-color: #fff;
+    -webkit-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+    -o-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+    transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+}
+
+.positionlist .checkbox label::after {
+    display: inline-block;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    left: 0;
+    top: 2px;
+    margin-left: -21px;
+    padding-left: 3px;
+    padding-top: 1px;
+    font-size: 11px;
+    color: #555555;
+}
+
+.positionlist .checkbox input[type="checkbox"] {
+    opacity: 0;
+    z-index: 1;
+    width: 20px;
+    height: 20px;
+}
+
+.positionlist .checkbox input[type="checkbox"]:checked + label::after {
+	font-family: "Font Awesome 6 Free", "Font Awesome 5 Free", "FontAwesome";
+    content: "\f00c";
+}
+
+.positionlist .checkbox.checkbox-circle label::before {
+    border-radius: 50%;
+}
+
+.positionlist .checkbox.checkbox-inline {
+    margin-top: 0;
+}
+
+.positionlist .checkbox-red input[type="checkbox"] + label::before {
+    background-color: #990000;
+    border-color: #990000;
+}
+
+.positionlist .checkbox-yellow input[type="checkbox"] + label::before {
+    background-color: #face00;
+    border-color: #face00;
+}
+.positionlist .checkbox-yellow input[type="checkbox"] + label::hover {
+    background-color: #face00;
+    border-color: #0f0e0ad5;
+}
+
+.positionlist .checkbox-green input[type="checkbox"] + label::before {
+    background-color: #008000;
+    border-color: #008000;
+}
+
+.positionlist .checkbox-blue input[type="checkbox"] + label::before {
+    background-color: #428bca;
+    border-color: #428bca;
+}
+
+.positionlist .checkbox-black input[type="checkbox"] + label::before {
+    background-color: #000000;
+    border-color: #000000;
+}
+
+.positionlist .checkbox-red input[type="checkbox"]:checked + label::after,
+.positionlist .checkbox-yellow input[type="checkbox"]:checked + label::after,
+.positionlist .checkbox-green input[type="checkbox"]:checked + label::after,
+.positionlist .checkbox-blue input[type="checkbox"]:checked + label::after,
+.positionlist .checkbox-black input[type="checkbox"]:checked + label::after {
+    color: rgb(27, 27, 27);  /* checkmark color  */
+}
+
+
+
+.positionlist .form-check-label {
+    
+    font-size:small;  
+    margin:0px 2px 0px 2px; 
+    color: rgb(27, 27, 27);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.positionlist .form-check {
+
+    display: flex;
+    align-items: center; /* Ensures vertical alignment */
+    gap: 0px; /* Controls the space between checkbox and label */
+    padding: 1%;
+    margin: 0;
+
+}
+
+
+
+.cardbook {
+    background-color: #ffffffbe;
+}
+
+
+
+
+
+
+
+
+
+.deckCard { 
+
+    border: 2px solid rgba(0,0,0,0.8);
+    padding:0;
+    margin:1px;
+    padding: 1 ;
+    margin: 1 ;
+
+}
+
+
+
+.deckCard .card-header { 
+
+    background-color:   rgba(0,0,0,0.8);
+    color:#ffffff;
+
+}
+
+
+
+.StandingsCard tbody tr.static td {
+    
+    vertical-align: middle; 
+    background-color:#ff1717;
+    color: white;
+    font-size: larger;
+}
+
+
+.StandingsCard thead th {
+    
+    vertical-align: middle; 
+    background-color:#000000;
+    color: white;
+}
+
+.StandingsCard span {
+    color: black !important;
+}
+
+.StandingsCard {
+    color:black !important;
+    
+}
+
+.containerMainPage
+
+{
+    
+    border: 1px solid black;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    overflow: hidden;
+}
+
+
+.STHSPHPStandingTeamImageMainPage {
+    
+    width:24px;
+    height:24px;
+    padding-left:4px;
+    float: left;
+    vertical-align:middle;
+}
+
+.desktop-only {
+    display: none;
+}
+
+@media screen and (min-width: 1024px) {
+    .desktop-only {
+        display: block;
+    }
+}
+
+.tablesorter STHSPHPTeam_PlayersRosterTable {
+
+background-color: #27ae60;
+
+
+}
+
+#tabmain2{
+
+
+overflow-x:scroll; 
+width: 100%;
+
+
+
+}
+
+
+
+
+.tradetable {
+    background-color: white;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;  
+}
+
+
+
+
+
+
+/* Set a maximum width for the Transaction card */ 
+.transaction-card .card { 
+    max-width: 100%; overflow: auto; /* Allow scrolling if the content exceeds the width */ 
+}    
+
+
+
+
+
+
+
+
+
+
+
+
+.tab-content {
+    border: 1px solid #dee2e6;
+    border-top: transparent;
+    padding: 15px;
+}
+
+.tab-content .tab-pane {
+   /* background-color: #FFF;*/
+    color: #148a80;
+    min-height: 200px;
+    height: auto;
+}
+    
+
+
+
+.menuPin { 
+    position: relative; /* Wrapper div with relative positioning */ 
+    width: 100%; /* Adjust width as necessary */
+    height: 50px;
+}
+
+.tabsMenu {
+    width: 200px;
+    position: absolute;
+    top: 0px; /* Adjust this value to move the menu higher */
+    left: 0; /* Adjust as needed for horizontal positioning */
+    z-index: 0; 
+  }
+
+.tabsMenu {
+    z-index: 10; /* Ensure tabsMenu is on top */
+}
+
+.tabsMenu li {
+    color: black;
+    /*border: 2px solid black;*/
+    padding: 6px;
+    text-decoration: none;
+    position: relative; /* Stack items naturally within the container */
+    width: 100%; /* Ensure it covers the full width */ 
+    left: 0; /* Align to the left */ 
+   
+}
+
+.tabsMenu li button {
+   
+    color: black;
+    display: block; /* Make button a block-level element */ 
+    width: 100%; /* Make button take up the full width of the parent li */ 
+    height: 100%; /* Make button take up the full height of the parent li */ 
+    padding: 10px; 
+    box-sizing: border-box; /* Ensure padding is included in the element's total width and height */
+}
+
+.tabsMenu li button:focus, .tabsMenu li button:hover  {
+    color: black;
+}
+
+.tabsMenu li:not(.active) {
+    display: none;
+}
+
+.tabsMenu li.active {
+    background-color: #E7BF3A;
+    border-top-left-radius: 10px; 
+    border-top-right-radius: 10px;
+   
+}
+
+.tabsMenu li button .active {
+   
+    border-top-left-radius: 10px; 
+    border-top-right-radius: 10px;
+   
+}
+
+
+
+.tabsMenu:hover li {
+    display: block;
+    background-color: white; /* Add background color for better visibility */
+ 
+}
+
+.tabsMenu:hover li.active {
+    background-color: #E7BF3A;
+    border-top-left-radius: 0px; 
+    border-top-right-radius: 0px;
+   
+}
+
+.tabsMenu li:hover {
+    background-color: #ccc;
+}
+
+
+.tabsMenu .active li {
+   
+    display: block; 
+}
+
+#letter-links {
+    width:100%; 
+    padding-left:100px;
+    padding-right: 100px; 
+    padding-top:15px; 
+    padding-bottom: 15px; 
+    display: flex; 
+    justify-content: space-between;
+}
+
+.letter-links a {
+    padding: 5px;
+    color: black;
+    background-color: #E7BF3A;
+    border: 2px solid black;
+}
+
+
+.toggle-vis {
+    padding: 2px;
+    color: black;
+    background-color: #f7f0d9;
+    border: 1px solid black;
+}
+
+.dataTables_wrapper {
+    width:98%;
+    margin:auto
+}
+
+
+
+
+
+
+
+.customStanding {
+
+    width: 100%;
+    max-width: 1284px;
+    margin: auto;
+  
+  }
+  
+  .ConferenceName1 {background-color: rgb(197, 16, 49) !important;}
+  .ConferenceName2 {background-color: #0d243c !important;}
+  
+  .ConferenceOoP1 hr { 
+  background-color: rgb(197, 16, 49);
+  height: 12px;
+  margin:0px;
+  border: 0px;
+  }
+  
+  .ConferenceOoP2 hr { 
+    background-color: #0d243c;
+    height: 12px;
+    margin:0px;
+    border: 0px;
+    }
+  
+    .conference-iconW{
+  
+      width: 150px;
+      height: 150px;
+    }
+  
+    .conference-iconE{
+  
+      width: 150px;  
+      height: 150px;
+    }
+  
+    .STHSPHPStanding_Table td.streak-win {
+      color: green ;
+      font-weight: bold;
+  }
+  .STHSPHPStanding_Table td.streak-loss {
+      color: red;
+      font-weight: bold;
+  }
+  
+  .team-logo {
+    width: 30px; /* Ajustez la taille du logo */
+    height: auto;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  
+
+  .mugshotTop5 {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 2px solid #ddd;
+    
+}
+
+
+.STHSIndex_TheNews {
+   
+    
+    background-color: rgb(255, 255, 255);
+    margin: 5px;
+}
+
+.STHSIndex_NewsDiv {
+   
+    background-color: rgb(255, 255, 255);
+    margin-left: 30%;
+    margin-right: 30%;
+    
+}
+
+.STHSIndex_NewsDiv H2{
+   
+   font-size: 12px;
+    
+}
+
+.STHSIndex_TheNewsTeamImage {
+    width:48px;
+    height:48px;
+    margin-left: 100px;
+    padding-left:0px;
+    padding-right:0px;
+    vertical-align:middle
+}
+
+.tdPlayoff {
+    border-style: hidden;
+    
+}
+
+/* Corrige l'espacement à gauche des équipes dans le menu mobile */
+.nav-mobile-menu .col > a {
+    display: flex;
+    align-items: center;
+    padding-left: 12px;
+    margin-bottom: 2px;
+}
+
+.nav-mobile-menu .col > a img {
+    margin-right: 8px;
+    margin-left: 0;
+    float: none !important;
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+/* Empêche le débordement horizontal en mobile */
+body, html {
+    overflow-x: hidden;
+}
+
+@media (max-width: 991px) {
+    .container-fluid, .row, .col-12, .col-lg-4, .col {
+        max-width: 100vw !important;
+        box-sizing: border-box;
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    /* Pour les composants qui débordent, forcer le wrap ou le scroll horizontal */
+    table, .table-responsive {
+        width: 100% !important;
+        display: block;
+        overflow-x: auto;
+    }
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+/* Cacher le menu hamburger sur desktop */
+.nav-mobile {
+  display: none;
+}
+
+/* Afficher le menu hamburger seulement sur mobile */
+@media (max-width: 890px) {
+  .nav-mobile {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .nav-mobile-menu {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .nav-mobile ul li {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Ajustements pour les colonnes Teams dans le menu mobile */
+  .nav-mobile-menu .row {
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .nav-mobile-menu .col {
+    padding: 0.5rem;
+    max-width: 100%;
+    flex: 1;
+  }
+
+  .nav-mobile-menu .col a {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Espacement supplémentaire pour éviter les chevauchements sur mobile */
+  .row .col-12 {
+    margin-bottom: 2rem !important;
+  }
+
+  .row .col-12:last-child {
+    margin-bottom: 1rem !important;
+  }
+}
+
+.nav-mobile-menu li > div.open,
+.nav-mobile-menu li > a.open {
+	font-weight: 600;
+}
+
+.nav-mobile-trigger {
+	position: relative;
+	display: block;
+	padding-right: 30px;
+}
+
+.nav-mobile-trigger::after {
+	content: "\f107";
+	font-family: "Font Awesome 6 Free", "Font Awesome 5 Free", "FontAwesome";
+	font-weight: 900;
+	position: absolute;
+	right: 12px;
+	top: 50%;
+	transform: translateY(-50%);
+	transition: transform 0.2s ease-in-out;
+}
+
+.nav-mobile-trigger.open::after {
+	transform: translateY(-50%) rotate(180deg);
+}

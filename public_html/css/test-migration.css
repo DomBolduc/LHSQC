@@ -1,0 +1,67 @@
+/* ========================================
+   FICHIER DE TEST - MIGRATION PHASE 2
+   ========================================
+   
+   Ce fichier teste l'importation des nouveaux styles
+   et la compatibilité avec l'existant
+   ======================================== */
+
+/* Import des nouveaux styles de base */
+@import url('variables.css');
+@import url('base/reset.css');
+@import url('base/typography.css');
+@import url('base/layout.css');
+
+/* ========================================
+   TESTS DE COMPATIBILITÉ
+   ======================================== */
+
+/* Test des variables CSS */
+.test-variables {
+  color: var(--color-primary);
+  background-color: var(--color-bg-secondary);
+  padding: var(--spacing-4);
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-lg);
+}
+
+/* Test des classes utilitaires */
+.test-utilities {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: var(--spacing-4);
+  padding: var(--spacing-6);
+}
+
+/* Test responsive */
+.test-responsive {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+}
+
+/* ========================================
+   COMPATIBILITÉ AVEC STHS EXISTANT
+   ======================================== */
+
+/* Surcharges pour compatibilité */
+.STHSHeaderTitle {
+  font-size: var(--font-size-xl) !important;
+  font-weight: var(--font-weight-bold) !important;
+}
+
+.STHSTableFullW {
+  width: 100% !important;
+  border-spacing: 0 !important;
+}
+
+/* ========================================
+   TESTS MOBILE
+   ======================================== */
+@media (max-width: 768px) {
+  .test-mobile {
+    font-size: var(--font-size-base);
+    padding: var(--spacing-3);
+  }
+} 

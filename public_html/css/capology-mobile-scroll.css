@@ -1,0 +1,287 @@
+/* ========================================
+   TABLEAU CAPOLOGY MOBILE - SCROLL HORIZONTAL
+   ========================================
+   
+   Rendre le tableau Capology scrollable horizontalement
+   sur mobile pour une meilleure expérience utilisateur
+   (similaire à l'onglet Roster)
+   ======================================== */
+
+/* ========================================
+   MOBILE ET TABLETTE (768px et moins)
+   ======================================== */
+
+@media (max-width: 768px) {
+    /* Container principal de l'onglet Capology */
+    #tabmain6 {
+        padding: 10px !important;
+        overflow: visible !important; /* Permettre le débordement */
+    }
+
+    /* CORRECTION CRITIQUE - Le parent .tabsmain bloque le scroll */
+    .tabsmain.standard {
+        overflow: visible !important; /* Au lieu de hidden */
+    }
+
+    /* S'assurer que les autres parents ne bloquent pas */
+    .cardbook {
+        overflow: visible !important;
+    }
+
+    /* Container du tableau Capology avec scroll horizontal */
+    .cap-table-container,
+    #tabmain6 .cap-table-container {
+        overflow-x: auto !important;
+        overflow-y: visible !important;
+        -webkit-overflow-scrolling: touch !important; /* Scroll fluide sur iOS */
+        border-radius: 8px !important;
+        background: white !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+        margin: 10px 0 !important;
+        padding: 0 !important;
+        
+        /* Indicateurs visuels de scroll */
+        background: 
+            /* Ombre gauche */
+            linear-gradient(90deg, rgba(0,0,0,0.1) 0%, transparent 10px),
+            /* Ombre droite */
+            linear-gradient(270deg, rgba(0,0,0,0.1) 0%, transparent 10px),
+            /* Fond blanc */
+            white;
+        background-attachment: local, local, scroll;
+        background-size: 10px 100%, 10px 100%, 100% 100%;
+        background-position: 0 0, 100% 0, 0 0;
+        background-repeat: no-repeat;
+    }
+
+    /* Table Capology - spécificité maximale pour surcharger les styles inline */
+    table#capology-table,
+    table#farm-capology-table,
+    #capology-table,
+    #farm-capology-table,
+    .cap-table,
+    .cap-table-container table,
+    #tabmain6 .cap-table-container table {
+        min-width: 1000px !important; /* Force le scroll horizontal */
+        width: 1000px !important; /* Largeur fixe pour forcer le scroll */
+        max-width: none !important;
+        border-collapse: collapse !important;
+        font-size: 10px !important;
+        background: white !important;
+        margin: 0 !important;
+        display: table !important;
+        border: 1px solid #ddd !important;
+    }
+
+    /* Headers du tableau Capology */
+    #capology-table thead th,
+    #farm-capology-table thead th,
+    .cap-table thead th,
+    #tabmain6 table thead th {
+        background: linear-gradient(135deg, #1e40af, #3b82f6) !important;
+        color: white !important;
+        font-weight: 600 !important;
+        text-align: center !important;
+        padding: 8px 4px !important;
+        border: 1px solid #1e40af !important;
+        font-size: 9px !important;
+        white-space: nowrap !important;
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 10 !important;
+    }
+
+    /* Cellules du tableau Capology */
+    #capology-table tbody td,
+    #farm-capology-table tbody td,
+    .cap-table tbody td,
+    #tabmain6 table tbody td {
+        padding: 6px 3px !important;
+        border: 1px solid #e9ecef !important;
+        font-size: 9px !important;
+        text-align: center !important;
+        white-space: nowrap !important;
+        vertical-align: middle !important;
+        background: white !important;
+    }
+
+    /* Colonne des noms de joueurs plus large */
+    #capology-table tbody td:first-child,
+    #capology-table thead th:first-child {
+        text-align: left !important;
+        min-width: 120px !important;
+        max-width: 140px !important;
+        padding-left: 6px !important;
+        font-weight: 500 !important;
+    }
+
+    /* Liens des joueurs */
+    #capology-table a,
+    .cap-table a {
+        color: #1976d2 !important;
+        text-decoration: none !important;
+        font-weight: 600 !important;
+        display: block !important;
+        padding: 2px 0 !important;
+    }
+
+    #capology-table a:hover,
+    .cap-table a:hover {
+        color: #0d47a1 !important;
+        text-decoration: underline !important;
+    }
+
+    /* Lignes alternées */
+    #capology-table tbody tr:nth-child(even),
+    .cap-table tbody tr:nth-child(even) {
+        background: #f8f9fa !important;
+    }
+
+    #capology-table tbody tr:hover,
+    .cap-table tbody tr:hover {
+        background: #e3f2fd !important;
+        color: #1976d2 !important;
+    }
+
+    /* Colonnes de salaires avec couleurs */
+    #capology-table td[style*="color: red"],
+    .cap-table td[style*="color: red"] {
+        background: #ffebee !important;
+        color: #c62828 !important;
+        font-weight: 600 !important;
+    }
+
+    #capology-table td[style*="color: green"],
+    .cap-table td[style*="color: green"] {
+        background: #e8f5e8 !important;
+        color: #2e7d32 !important;
+        font-weight: 600 !important;
+    }
+
+    /* Lignes de séparateurs (Forwards, Defensemen, etc.) */
+    #capology-table tr[style*="background"],
+    .cap-table tr[style*="background"] {
+        background: #495057 !important;
+        color: white !important;
+        font-weight: 700 !important;
+    }
+
+    #capology-table tr[style*="background"] td,
+    .cap-table tr[style*="background"] td {
+        background: #495057 !important;
+        color: white !important;
+        text-align: center !important;
+        font-weight: 700 !important;
+        padding: 8px 4px !important;
+    }
+
+    /* Indicateur de scroll horizontal */
+    .cap-table-container::after {
+        content: "← Faites glisser pour voir plus →";
+        display: block;
+        text-align: center;
+        font-size: 11px;
+        color: #6c757d;
+        padding: 8px;
+        background: #f8f9fa;
+        border-top: 1px solid #dee2e6;
+        font-style: italic;
+    }
+
+    /* Masquer l'indicateur si le tableau n'a pas besoin de scroll */
+    .cap-table-container:not([scrollWidth]) .cap-table-container::after {
+        display: none;
+    }
+}
+
+/* ========================================
+   TRÈS PETITS ÉCRANS (480px et moins)
+   ======================================== */
+
+@media (max-width: 480px) {
+    /* Réduire encore plus les espacements */
+    #tabmain6 {
+        padding: 5px !important;
+    }
+
+    .cap-table-container {
+        margin: 5px 0 !important;
+    }
+
+    /* Table encore plus compacte */
+    #capology-table,
+    .cap-table {
+        font-size: 8px !important;
+        min-width: 900px !important;
+        width: 900px !important;
+    }
+
+    /* Headers plus compacts */
+    #capology-table thead th,
+    .cap-table thead th {
+        padding: 6px 2px !important;
+        font-size: 8px !important;
+    }
+
+    /* Cellules plus compactes */
+    #capology-table tbody td,
+    .cap-table tbody td {
+        padding: 4px 2px !important;
+        font-size: 8px !important;
+    }
+
+    /* Colonne des noms plus petite */
+    #capology-table tbody td:first-child,
+    #capology-table thead th:first-child {
+        min-width: 100px !important;
+        max-width: 120px !important;
+        padding-left: 4px !important;
+    }
+}
+
+/* ========================================
+   AMÉLIORATIONS TACTILES
+   ======================================== */
+
+@media (max-width: 768px) {
+    /* Zones de touch plus grandes pour les liens */
+    #capology-table a,
+    .cap-table a {
+        min-height: 32px !important;
+        line-height: 32px !important;
+        padding: 0 4px !important;
+        margin: -2px !important;
+        border-radius: 4px !important;
+    }
+
+    /* Focus visible pour navigation tactile */
+    #capology-table a:focus,
+    .cap-table a:focus {
+        outline: 2px solid #1976d2 !important;
+        outline-offset: 2px !important;
+        background: #e3f2fd !important;
+    }
+
+    /* Améliorer la lisibilité des headers triables */
+    #capology-table th.sortable,
+    #farm-capology-table th.sortable,
+    .cap-table th.sortable {
+        cursor: pointer !important;
+        user-select: none !important;
+        position: relative !important;
+    }
+
+    #capology-table th.sortable:hover,
+    #farm-capology-table th.sortable:hover,
+    .cap-table th.sortable:hover {
+        background: linear-gradient(135deg, #1565c0, #1976d2) !important;
+    }
+
+    /* Indicateurs de tri plus visibles */
+    #capology-table .sort-indicator,
+    #farm-capology-table .sort-indicator,
+    .cap-table .sort-indicator {
+        font-size: 10px !important;
+        margin-left: 4px !important;
+    }
+}
