@@ -49,3 +49,5 @@ desktop.ini
 # --- 8. Environnement local (XAMPP, dev) ---
 xampp/
 xampp_public/
+
+gitwebhook.php

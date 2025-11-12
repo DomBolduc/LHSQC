@@ -300,8 +300,13 @@ if ($MenuQueryOK == True) {
             <a href="#">GM's Corner</a>
             <ul>
                 <li><a href="WebClientRoster.php?TeamID=<?php echo $CookieTeamNumber ?>">Roster Editor</a></li>
-                <li><a href="WebClientLines.php?TeamID=<?php echo $CookieTeamNumber ?>">Lines Editor NHL</a></li>
-                <li><a href="WebClientLines.php?League=Farm&TeamID=<?php echo $CookieTeamNumber ?>">Lines Editor AHL</a></li>
+                <li>
+                    <a href="#">Lines Editor</a>
+                    <ul>
+                        <li><a href="WebClientLines.php?TeamID=<?php echo $CookieTeamNumber ?>">PRO</a></li>
+                        <li><a href="WebClientLines.php?League=Farm&TeamID=<?php echo $CookieTeamNumber ?>">FARM</a></li>
+                    </ul>
+                </li>
                 <li><a href="WebClientTeam.php">Gestion</a></li>
                 <li><a href="TeamSalaryCapDetail.php?TeamID=<?php echo $CookieTeamNumber ?>">Contract Overview</a></li>
                 <li><a href="PlayersCompare.php">Players Compare</a></li>
@@ -364,8 +369,13 @@ if ($MenuQueryOK == True) {
     <div> GM's Corner  <i class="fas fa-chevron-right"></i></div>
     <ul>
         <li><a href="WebClientRoster.php?TeamID=<?php echo $CookieTeamNumber ?>">Roster Editor</a></li>
-        <li><a href="WebClientLines.php?TeamID=<?php echo $CookieTeamNumber ?>">Lines Editor NHL</a></li>
-        <li><a href="WebClientLines.php?League=Farm&TeamID=<?php echo $CookieTeamNumber ?>">Lines Editor AHL</a></li>
+        <li>
+            <a href="#">Lines Editor</a>
+            <ul>
+                <li><a href="WebClientLines.php?TeamID=<?php echo $CookieTeamNumber ?>">PRO</a></li>
+                <li><a href="WebClientLines.php?League=Farm&TeamID=<?php echo $CookieTeamNumber ?>">FARM</a></li>
+            </ul>
+        </li>
         <li><a href="WebClientTeam.php">Gestion</a></li>
         <li><a href="TeamSalaryCapDetail.php?TeamID=<?php echo $CookieTeamNumber ?>">Contract Overview</a></li>
         <li><a href="PlayersCompare.php">Players Compare</a></li>
