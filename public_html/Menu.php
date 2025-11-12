@@ -245,8 +245,8 @@ if ($MenuQueryOK == True) {
         <li>
             <a href="Standing.php">Standings</a>
             <ul>
-                <li><a href="Standing.php">LHSQC</a></li>
-                <li><a href="StandingAhl.php?Farm">AHL</a></li>
+                <li><a href="Standing.php">PRO</a></li>
+                <li><a href="StandingAhl.php?Farm">FARM</a></li>
             </ul>
         </li>
 
@@ -434,8 +434,8 @@ if ($MenuQueryOK == True) {
         </li>
         <li><div> Standing  <i class="fas fa-chevron-right"></i></div>
             <ul>
-                <li><a href="Standing.php">LHSQC</a></li>
-                <li><a href="StandingAhl.php?Farm">AHL</a></li>
+                <li><a href="Standing.php">PRO</a></li>
+                <li><a href="StandingAhl.php?Farm">FARM</a></li>
             </ul>
         </li>
         
