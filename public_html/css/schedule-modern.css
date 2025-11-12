@@ -114,13 +114,20 @@
   margin: 0;
 }
 
-.STHSPHPSchedule_ScheduleTable th {
-  background: var(--schedule-header-bg);
-  border: 1px solid var(--schedule-border);
+.STHSPHPSchedule_ScheduleTable th,
+.STHSPHPSchedule_ScheduleTable thead th,
+table.STHSPHPSchedule_ScheduleTable th,
+table.STHSPHPSchedule_ScheduleTable thead th,
+.table.STHSPHPSchedule_ScheduleTable th,
+.table.STHSPHPSchedule_ScheduleTable thead th,
+table.table.STHSPHPSchedule_ScheduleTable th,
+table.table.STHSPHPSchedule_ScheduleTable thead th {
+  background: #1e40af !important;
+  border: 1px solid #1e40af !important;
   padding: 12px 8px;
   text-align: center;
   font-weight: 600;
-  color: var(--schedule-text-primary);
+  color: white !important;
   white-space: nowrap;
   position: sticky;
   top: 0;
@@ -286,18 +293,23 @@
 /* ========================================
    TABLESORTER CUSTOMIZATION
    ======================================== */
-.tablesorter-header {
+.STHSPHPSchedule_ScheduleTable .tablesorter-header {
   cursor: pointer;
   position: relative;
 }
 
-.tablesorter-header:hover {
-  background-color: #e9ecef !important;
+.STHSPHPSchedule_ScheduleTable .tablesorter-header:hover,
+.STHSPHPSchedule_ScheduleTable th.tablesorter-header:hover {
+  background-color: #3b82f6 !important;
+  color: white !important;
 }
 
-.tablesorter-headerAsc,
-.tablesorter-headerDesc {
-  background-color: #dee2e6 !important;
+.STHSPHPSchedule_ScheduleTable .tablesorter-headerAsc,
+.STHSPHPSchedule_ScheduleTable .tablesorter-headerDesc,
+.STHSPHPSchedule_ScheduleTable th.tablesorter-headerAsc,
+.STHSPHPSchedule_ScheduleTable th.tablesorter-headerDesc {
+  background-color: #1e40af !important;
+  color: white !important;
 }
 
 .tablesorter-filter-row {

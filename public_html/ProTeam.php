@@ -1106,16 +1106,16 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
             <div class="schedule-container">
                 <table class="schedule-table" style="width: 100%; font-size: 12px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
                     <thead>
-                        <tr style="background: #f5f5f5; border-bottom: 2px solid #ddd;">
-                            <th style="width: 60px !important; padding: 8px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Game #</th>
-                            <th style="width: 80px !important; padding: 8px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Jour</th>
-                            <th style="width: 120px !important; padding: 8px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Visiteur</th>
-                            <th style="width: 30px !important; padding: 8px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">@</th>
-                            <th style="width: 120px !important; padding: 8px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Local</th>
-                            <th style="width: 80px !important; padding: 8px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Score</th>
-                            <th style="width: 60px !important; padding: 8px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Résultat</th>
-                            <th style="width: 80px !important; padding: 8px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Type</th>
-                            <th style="width: 80px !important; padding: 8px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Boxscore</th>
+                        <tr style="background: #1e40af; border-bottom: 2px solid #1e40af;">
+                            <th style="width: 60px !important; padding: 8px 4px !important; border: 1px solid #1e40af; text-align: center; font-weight: bold; color: white; background: #1e40af;">Game #</th>
+                            <th style="width: 80px !important; padding: 8px 4px !important; border: 1px solid #1e40af; text-align: center; font-weight: bold; color: white; background: #1e40af;">Jour</th>
+                            <th style="width: 120px !important; padding: 8px 4px !important; border: 1px solid #1e40af; text-align: center; font-weight: bold; color: white; background: #1e40af;">Visiteur</th>
+                            <th style="width: 30px !important; padding: 8px 4px !important; border: 1px solid #1e40af; text-align: center; font-weight: bold; color: white; background: #1e40af;">@</th>
+                            <th style="width: 120px !important; padding: 8px 4px !important; border: 1px solid #1e40af; text-align: center; font-weight: bold; color: white; background: #1e40af;">Local</th>
+                            <th style="width: 80px !important; padding: 8px 4px !important; border: 1px solid #1e40af; text-align: center; font-weight: bold; color: white; background: #1e40af;">Score</th>
+                            <th style="width: 60px !important; padding: 8px 4px !important; border: 1px solid #1e40af; text-align: center; font-weight: bold; color: white; background: #1e40af;">Résultat</th>
+                            <th style="width: 80px !important; padding: 8px 4px !important; border: 1px solid #1e40af; text-align: center; font-weight: bold; color: white; background: #1e40af;">Type</th>
+                            <th style="width: 80px !important; padding: 8px 4px !important; border: 1px solid #1e40af; text-align: center; font-weight: bold; color: white; background: #1e40af;">Boxscore</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -2197,20 +2197,20 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
             <div class="cap-table-container" style="overflow-x: auto;">
                 <table class="cap-table" style="width: 100%; font-size: 11px; border-collapse: collapse; border: 1px solid #ddd; background: white;">
                     <thead>
-                        <tr style="background: #f5f5f5; border-bottom: 2px solid #ddd;">
-                            <th style="width: 140px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: left; font-weight: bold;">Player Name</th>
-                            <th style="width: 45px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">POS</th>
-                            <th style="width: 25px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Age</th>
-                            <th style="width: 45px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Birthday</th>
-                            <th style="width: 35px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Terms</th>
-                            <th style="width: 25px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Contract</th>
-                            <th style="width: 25px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;">Cap %</th>
+                        <tr style="background: #1e40af; border-bottom: 2px solid #1e40af;">
+                            <th style="width: 140px !important; padding: 6px 4px !important; border: 1px solid rgba(255, 255, 255, 0.3); text-align: left; font-weight: bold; color: white; background: #1e40af;">Player Name</th>
+                            <th style="width: 45px !important; padding: 6px 4px !important; border: 1px solid rgba(255, 255, 255, 0.3); text-align: center; font-weight: bold; color: white; background: #1e40af;">POS</th>
+                            <th style="width: 25px !important; padding: 6px 4px !important; border: 1px solid rgba(255, 255, 255, 0.3); text-align: center; font-weight: bold; color: white; background: #1e40af;">Age</th>
+                            <th style="width: 45px !important; padding: 6px 4px !important; border: 1px solid rgba(255, 255, 255, 0.3); text-align: center; font-weight: bold; color: white; background: #1e40af;">Birthday</th>
+                            <th style="width: 35px !important; padding: 6px 4px !important; border: 1px solid rgba(255, 255, 255, 0.3); text-align: center; font-weight: bold; color: white; background: #1e40af;">Terms</th>
+                            <th style="width: 25px !important; padding: 6px 4px !important; border: 1px solid rgba(255, 255, 255, 0.3); text-align: center; font-weight: bold; color: white; background: #1e40af;">Contract</th>
+                            <th style="width: 25px !important; padding: 6px 4px !important; border: 1px solid rgba(255, 255, 255, 0.3); text-align: center; font-weight: bold; color: white; background: #1e40af;">Cap %</th>
                             <?php
-                            echo "<th style=\"width: 75px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;\">Year " . $LeagueYear . "</th>";
-                            echo "<th style=\"width: 75px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;\">Year " . ($LeagueYear + 1) . "</th>";
-                            echo "<th style=\"width: 75px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;\">Year " . ($LeagueYear + 2) . "</th>";
-                            echo "<th style=\"width: 75px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;\">Year " . ($LeagueYear + 3) . "</th>";
-                            echo "<th style=\"width: 75px !important; padding: 6px 4px !important; border: 1px solid #ddd; text-align: center; font-weight: bold;\">Year " . ($LeagueYear + 4) . "</th>";
+                            echo "<th style=\"width: 75px !important; padding: 6px 4px !important; border: 1px solid rgba(255, 255, 255, 0.3); text-align: center; font-weight: bold; color: white; background: #1e40af;\">Year " . $LeagueYear . "</th>";
+                            echo "<th style=\"width: 75px !important; padding: 6px 4px !important; border: 1px solid rgba(255, 255, 255, 0.3); text-align: center; font-weight: bold; color: white; background: #1e40af;\">Year " . ($LeagueYear + 1) . "</th>";
+                            echo "<th style=\"width: 75px !important; padding: 6px 4px !important; border: 1px solid rgba(255, 255, 255, 0.3); text-align: center; font-weight: bold; color: white; background: #1e40af;\">Year " . ($LeagueYear + 2) . "</th>";
+                            echo "<th style=\"width: 75px !important; padding: 6px 4px !important; border: 1px solid rgba(255, 255, 255, 0.3); text-align: center; font-weight: bold; color: white; background: #1e40af;\">Year " . ($LeagueYear + 3) . "</th>";
+                            echo "<th style=\"width: 75px !important; padding: 6px 4px !important; border: 1px solid rgba(255, 255, 255, 0.3); text-align: center; font-weight: bold; color: white; background: #1e40af;\">Year " . ($LeagueYear + 4) . "</th>";
                             ?>
                         </tr>
                     </thead>
