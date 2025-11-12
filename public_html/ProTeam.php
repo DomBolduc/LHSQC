@@ -62,6 +62,10 @@ try {
             $Query = "SELECT * FROM TeamProFinance WHERE Number = " . $Team;
             $TeamFinance = $db->querySingle($Query, true);
             
+            // Récupération des informations de la ligue pour le salary cap
+            $Query = "Select ProSalaryCapValue from LeagueFinance";
+            $LeagueFinance = $db->querySingle($Query, true);
+            
             $Query = "SELECT PlayerProStat.*, PlayerInfo.Name, PlayerInfo.NHLID, PlayerInfo.Team, PlayerInfo.PosC, PlayerInfo.PosLW, PlayerInfo.PosRW, PlayerInfo.PosD, ROUND((CAST(PlayerProStat.G AS REAL) / (PlayerProStat.Shots))*100,2) AS ShotsPCT, ROUND((CAST(PlayerProStat.SecondPlay AS REAL) / 60 / (PlayerProStat.GP)),2) AS AMG, ROUND((CAST(PlayerProStat.FaceOffWon AS REAL) / (PlayerProStat.FaceOffTotal))*100,2) as FaceoffPCT, ROUND((CAST(PlayerProStat.P AS REAL) / (PlayerProStat.SecondPlay) * 60 * 20),2) AS P20 FROM PlayerInfo INNER JOIN PlayerProStat ON PlayerInfo.Number = PlayerProStat.Number WHERE ((PlayerInfo.Team=" . $Team . ") AND (PlayerInfo.Status1 >= 2) AND (PlayerProStat.GP>0)) ORDER BY PlayerProStat.P DESC, PlayerProStat.GP ASC LIMIT 1";
             $TeamLeaderP = $db->querySingle($Query, true);
             
@@ -630,15 +634,23 @@ echo "<title>" . $LeagueName . " - " . $TeamName . "</title>";
                     </div>
                     <div class="stat-item">
                         <span class="stat-label">Budget</span>
-                        <span class="stat-value">$<?php echo number_format($TeamFinance['Budget'] ?? 0); ?></span>
+                        <span class="stat-value">$<?php echo number_format($TeamFinance['CurrentBankAccount'] ?? 0); ?></span>
                     </div>
                     <div class="stat-item">
                         <span class="stat-label">Available</span>
-                        <span class="stat-value">$<?php echo number_format(($TeamFinance['Budget'] ?? 0) - ($TeamFinance['TotalPlayersSalaries'] ?? 0)); ?></span>
+                        <span class="stat-value">$<?php 
+                            $ProSalaryCapValue = (int)($LeagueFinance['ProSalaryCapValue'] ?? 0);
+                            $TeamSalaryCap = (int)($TeamFinance['TotalPlayersSalaries'] ?? 0);
+                            echo number_format($ProSalaryCapValue - $TeamSalaryCap); 
+                        ?></span>
                     </div>
                     <div class="stat-item">
                         <span class="stat-label">Cap Space</span>
-                        <span class="stat-value"><?php echo ($TeamFinance['Budget'] ?? 0) > 0 ? number_format((($TeamFinance['Budget'] ?? 0) - ($TeamFinance['TotalPlayersSalaries'] ?? 0)) / ($TeamFinance['Budget'] ?? 1) * 100, 1) : "0.0"; ?>%</span>
+                        <span class="stat-value"><?php 
+                            $ProSalaryCapValue = (int)($LeagueFinance['ProSalaryCapValue'] ?? 0);
+                            $TeamSalaryCap = (int)($TeamFinance['TotalPlayersSalaries'] ?? 0);
+                            echo $ProSalaryCapValue > 0 ? number_format((($ProSalaryCapValue - $TeamSalaryCap) / $ProSalaryCapValue) * 100, 1) : "0.0"; 
+                        ?>%</span>
                     </div>
                 </div>
 
