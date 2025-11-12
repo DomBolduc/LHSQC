@@ -111,10 +111,20 @@ $menuMobileTeamsItems = '';
 
 if ($MenuQueryOK == True) {
 
-    $menuStatsItems .= "<li><a href=\"PlayersStat.php?\">" . $TopMenuLang['PlayersLeader'] . "</a></li>";
-    $menuStatsItems .= "<li><a href=\"GoaliesStat.php?\">" . $TopMenuLang['GoaliesLeader'] . "</a></li>";
-    $menuStatsItems .= "<li><a href=\"PlayersStat.php?Farm\">" . $TopMenuLang['PlayersLeaderAhl'] . "</a></li>";
-    $menuStatsItems .= "<li><a href=\"GoaliesStat.php?Farm\">" . $TopMenuLang['GoaliesLeaderAhl'] . "</a></li>";
+    $menuStatsItems .= "<li>";
+    $menuStatsItems .= "<a href=\"#\">Players Stats</a>";
+    $menuStatsItems .= "<ul>";
+    $menuStatsItems .= "<li><a href=\"PlayersStat.php?\">PRO</a></li>";
+    $menuStatsItems .= "<li><a href=\"PlayersStat.php?Farm\">FARM</a></li>";
+    $menuStatsItems .= "</ul>";
+    $menuStatsItems .= "</li>";
+    $menuStatsItems .= "<li>";
+    $menuStatsItems .= "<a href=\"#\">Goalies Stats</a>";
+    $menuStatsItems .= "<ul>";
+    $menuStatsItems .= "<li><a href=\"GoaliesStat.php?\">PRO</a></li>";
+    $menuStatsItems .= "<li><a href=\"GoaliesStat.php?Farm\">FARM</a></li>";
+    $menuStatsItems .= "</ul>";
+    $menuStatsItems .= "</li>";
     $menuStatsItems .= "<li><a href=\"TeamsStat.php?\">" . $TopMenuLang['TeamsStats'] . "</a></li>";
    // $menuStatsItems .= "<li><a href=\"Transaction.php?SinceLast\">" . $TopMenuLang['TodaysTransactions'] . "</a></li>";
     $menuStatsItems .= "<li><a href=\"PowerRanking.php\"> Power Ranking </a></li>";
