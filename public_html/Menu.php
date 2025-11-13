@@ -322,6 +322,9 @@ if ($MenuQueryOK == True) {
                 <li><a href="PlayersCompare.php">Players Compare</a></li>
                 <li><a href="Trade.php">Trade</a></li>
                 <li><a href="TradeBoardManage.php">Trade Market</a></li>
+                <?php if ($CookieTeamNumber == 102): ?>
+                <li><a href="TradeCommissioner.php">Approuver Trades</a></li>
+                <?php endif; ?>
                 <li><a href="EntryDraftProjection.php">Draft Projection</a></li>
                 <li><a href="Messages.php" id="messages-link">
                     <i class="fas fa-envelope me-1"></i>Messagerie
@@ -391,6 +394,9 @@ if ($MenuQueryOK == True) {
         <li><a href="PlayersCompare.php">Players Compare</a></li>
         <li><a href="Trade.php">Trade</a></li>
         <li><a href="TradeBoardManage.php">Trade Market</a></li>
+        <?php if ($CookieTeamNumber == 102): ?>
+        <li><a href="TradeCommissioner.php">Approuver Trades</a></li>
+        <?php endif; ?>
         <li><a href="EntryDraftProjection.php">Draft Projection</a></li>
         <li><a href="Messages.php" id="messages-link-mobile">
             <i class="fas fa-envelope me-1"></i>Messagerie
@@ -538,14 +544,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
     topLevelTriggers.forEach(trigger => {
         trigger.classList.add(SUBMENU_TRIGGER_CLASS);
-        trigger.addEventListener('click', function() {
+        trigger.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
             const li = this.parentElement;
             const sub = li.querySelector(':scope > ul');
             const isOpen = li.classList.contains('active');
 
-            closeAllTopLevel();
-
-            if (!isOpen) {
+            // Si le menu est déjà ouvert, on le ferme simplement
+            if (isOpen) {
+                li.classList.remove('active');
+                this.classList.remove('open');
+                if (sub) {
+                    sub.classList.remove('active');
+                }
+            } else {
+                // Sinon, on ferme tous les autres menus et on ouvre celui-ci
+                closeAllTopLevel();
                 li.classList.add('active');
                 this.classList.add('open');
                 if (sub) {
@@ -564,57 +579,62 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             e.preventDefault();
-
-            const parentTopLi = this.closest('.nav-mobile-menu > li');
-            if (parentTopLi) {
-                document.querySelectorAll('.nav-mobile-menu > li').forEach(li => {
-                    if (li !== parentTopLi) {
-                        li.classList.remove('active');
-                        const liSub = li.querySelector(':scope > ul');
-                        if (liSub) {
-                            liSub.classList.remove('active');
-                            liSub.querySelectorAll(':scope > li').forEach(nestedLi => nestedLi.classList.remove('active'));
-                        }
-                        const liTrigger = li.querySelector(':scope > .' + SUBMENU_TRIGGER_CLASS);
-                        if (liTrigger) {
-                            liTrigger.classList.remove('open');
-                        }
-                    }
-                });
-
-                parentTopLi.classList.add('active');
-                const topTrigger = parentTopLi.querySelector(':scope > .' + SUBMENU_TRIGGER_CLASS);
-                if (topTrigger) {
-                    topTrigger.classList.add('open');
-                }
-                const topSub = parentTopLi.querySelector(':scope > ul');
-                if (topSub) {
-                    topSub.classList.add('active');
-                }
-            }
+            e.stopPropagation();
 
             const parentLi = this.parentElement;
             const isOpen = parentLi.classList.contains('active');
 
-            parentLi.parentElement.querySelectorAll(':scope > li').forEach(li => {
-                if (li !== parentLi) {
-                    li.classList.remove('active');
-                    const liTrigger = li.querySelector(':scope > a.' + SUBMENU_TRIGGER_CLASS);
-                    if (liTrigger) {
-                        liTrigger.classList.remove('open');
-                    }
-                    const liSub = li.querySelector(':scope > ul');
-                    if (liSub) {
-                        liSub.classList.remove('active');
-                    }
-                }
-            });
-
+            // Si le sous-menu est déjà ouvert, on le ferme simplement
             if (isOpen) {
                 parentLi.classList.remove('active');
                 this.classList.remove('open');
                 sub.classList.remove('active');
             } else {
+                // Sinon, on ferme tous les autres sous-menus du même niveau et on ouvre celui-ci
+                parentLi.parentElement.querySelectorAll(':scope > li').forEach(li => {
+                    if (li !== parentLi) {
+                        li.classList.remove('active');
+                        const liTrigger = li.querySelector(':scope > a.' + SUBMENU_TRIGGER_CLASS);
+                        if (liTrigger) {
+                            liTrigger.classList.remove('open');
+                        }
+                        const liSub = li.querySelector(':scope > ul');
+                        if (liSub) {
+                            liSub.classList.remove('active');
+                        }
+                    }
+                });
+
+                // S'assurer que le menu parent de premier niveau est ouvert
+                const parentTopLi = this.closest('.nav-mobile-menu > li');
+                if (parentTopLi) {
+                    document.querySelectorAll('.nav-mobile-menu > li').forEach(li => {
+                        if (li !== parentTopLi) {
+                            li.classList.remove('active');
+                            const liSub = li.querySelector(':scope > ul');
+                            if (liSub) {
+                                liSub.classList.remove('active');
+                                liSub.querySelectorAll(':scope > li').forEach(nestedLi => nestedLi.classList.remove('active'));
+                            }
+                            const liTrigger = li.querySelector(':scope > .' + SUBMENU_TRIGGER_CLASS);
+                            if (liTrigger) {
+                                liTrigger.classList.remove('open');
+                            }
+                        }
+                    });
+
+                    parentTopLi.classList.add('active');
+                    const topTrigger = parentTopLi.querySelector(':scope > .' + SUBMENU_TRIGGER_CLASS);
+                    if (topTrigger) {
+                        topTrigger.classList.add('open');
+                    }
+                    const topSub = parentTopLi.querySelector(':scope > ul');
+                    if (topSub) {
+                        topSub.classList.add('active');
+                    }
+                }
+
+                // Ouvrir le sous-menu cliqué
                 parentLi.classList.add('active');
                 this.classList.add('open');
                 sub.classList.add('active');

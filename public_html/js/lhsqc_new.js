@@ -25,7 +25,8 @@ $(document).ready(function() {
 
 
     // Toggle submenus within the mobile menu
-
+    // DÉSACTIVÉ - La gestion du menu mobile est maintenant dans Menu.php avec JavaScript vanilla
+    /*
     $('.nav-mobile-menu > li > div').on('click', function() {
 
         console.log('SubMenu button clicked'); // Check if the event is triggered
@@ -49,6 +50,7 @@ $(document).ready(function() {
         $(this).parent().siblings().find('ul').slideUp(); // Hide other open submenus
 
     });
+    */
 
 
 
