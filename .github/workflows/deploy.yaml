@@ -15,14 +15,14 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Deploy to FTP Server
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        uses: SamKirkland/FTP-Deploy-Action@4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftp
           port: 21
-          local-dir: ./public_html
+          local-dir: ./public_html/
           server-dir: /
           exclude: |
             **/*.db
@@ -32,3 +32,4 @@ jobs:
             **/node_modules/**
             **/uploads/**
             **/.htaccess
+
