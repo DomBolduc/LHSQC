@@ -275,6 +275,7 @@ if ($MenuQueryOK == True) {
                 <li><a href="Transaction.php?TradeLogHistory">Latest Transaction</a></li>
                 <li><a href="DraftRanking2025.php">Entry Draft 2025</a></li>
                 <li><a href="LHSQC_Cap_Summary.php">Salary Cap Summary</a></li>
+                <li><a href="https://showtimehockey.ca/directory/sths-ratings/2025-26/" target="_blank">Rating</a></li>
                 <!-- <li><a href="PlayerContracts.php">Contracts</a></li> -->
             </ul>
         </li>
@@ -429,6 +430,7 @@ if ($MenuQueryOK == True) {
                 <li><a href="Transaction.php?TradeLogHistory">Latest Transaction</a></li>
                 <li><a href="DraftRanking2025.php">Entry Draft 2025</a></li>
                 <li><a href="LHSQC_Cap_Summary.php">Salary Cap Summary</a></li>
+                <li><a href="https://showtimehockey.ca/directory/sths-ratings/2025-26/" target="_blank">Rating</a></li>
             </ul>
         </li>
 
