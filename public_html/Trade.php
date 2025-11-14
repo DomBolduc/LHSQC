@@ -74,8 +74,27 @@ If (file_exists($DatabaseFile) == false){
 
 		echo "<style>#Trade{display:none}</style>";
 	}else{
-				
-		$Query = "SELECT Count(ToTeam) as CountNumber FROM Trade WHERE (ToTeam = " . $Team1 . " OR ToTeam =  " . $Team2 . ")  AND (ConfirmTo = 'False' OR ConfirmFrom ='False')";
+		// Vérifier s'il y a des trades vraiment en attente (où une équipe n'a pas encore confirmé)
+		// Ne pas bloquer les trades où les deux équipes ont confirmé mais attendent l'approbation du commissaire
+		$TradeApprovalDBFile = "LHSQC-TradeApproval.db";
+		
+		// Si la base d'approbation existe, vérifier les trades où une équipe n'a pas encore confirmé
+		if(file_exists($TradeApprovalDBFile)){
+			$db->exec("ATTACH DATABASE '" . realpath($TradeApprovalDBFile) . "' AS ApprovalDB");
+			// Bloquer seulement si Team1 n'a pas confirmé OU si Team2 n'a pas confirmé (pas de confirmation dans la base séparée)
+			$Query = "SELECT COUNT(DISTINCT t.FromTeam || '-' || t.ToTeam) as CountNumber 
+				FROM Trade t 
+				LEFT JOIN ApprovalDB.TradeCommissionerApproval a ON t.FromTeam = a.FromTeam AND t.ToTeam = a.ToTeam
+				WHERE (t.ToTeam = " . $Team1 . " OR t.ToTeam = " . $Team2 . ") 
+				AND (
+					(t.ConfirmFrom = 'False') 
+					OR (t.ConfirmTo = 'False' AND (a.Team2Confirmed IS NULL OR a.Team2Confirmed != 'True'))
+				)";
+		}else{
+			// Si la base d'approbation n'existe pas encore, utiliser l'ancienne logique
+			$Query = "SELECT Count(ToTeam) as CountNumber FROM Trade WHERE (ToTeam = " . $Team1 . " OR ToTeam =  " . $Team2 . ")  AND (ConfirmTo = 'False' OR ConfirmFrom ='False')";
+		}
+		
 		$Result1 = $db->querySingle($Query,true);
 		
 		If ($Result1['CountNumber'] == 0){

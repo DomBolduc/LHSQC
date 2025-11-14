@@ -1,0 +1,2 @@
+<?php
+echo "Déploiement OK – " . date('Y-m-d H:i:s');
