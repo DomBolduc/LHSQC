@@ -1,0 +1,34 @@
+name: Deploy to HostPapa via FTP
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  ftp-deploy:
+    name: FTP Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Deploy to FTP Server
+        uses: SamKirkland/FTP-Deploy-Action@4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftp
+          port: 21
+          local-dir: ./public_html
+          server-dir: /
+          exclude: |
+            **/*.db
+            **/*.sqlite
+            LHSQC-*.php
+            .git*
+            **/node_modules/**
+            **/uploads/**
+            **/.htaccess
