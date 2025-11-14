@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/lhsqc542/public_html/
+    - export DEPLOYPATH=/home/lhsqc542/public_html_real/
     - /bin/rsync -av --exclude='*.db' --exclude='*.sqlite' --exclude='LHSQC-*.php' /home/lhsqc542/repo_lhsqc/public_html/ $DEPLOYPATH/
